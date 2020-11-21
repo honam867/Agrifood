@@ -1,0 +1,110 @@
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+th,
+td {
+  overflow: hidden;
+  max-width: 250px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+
+.col-4 {
+  padding: 0;
+}
+
+mat-paginator {
+  background: none;
+}
+
+.table-row:hover {
+  background-color: #f2f2f2;
+}
+.table-row:active{
+  background-color: #c0c0c0;
+  color: white;
+}
+
+.text-btnn {
+  display: none;
+  position: absolute;
+  background-color: gray;
+  width: 100px;
+  font-size: 14px;
+  padding: 7px 5px;
+  z-index: 99;
+  right: 20px;
+}
+
+.btndelete:hover,
+.btnresset:hover {
+  .text-btnn {
+    display: block;
+  }
+}
+
+.row-button {
+  margin-top: 10px;
+  // width: 170%;
+}
+
+.example-full-width {
+  width: 40%;
+}
+button{
+  outline: none;
+}
+.mgr{
+  margin-right: 5px;
+}
+.bg-custom_white{
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+
+// // IPhone
+// @media screen and (max-width: 375px) {
+//   .offset-6 {
+//     margin-left: 25%;
+//   }
+
+//   .col-2 {
+//     max-width: 41.666667%;
+//     flex: none;
+//     padding-right: 0px;
+//     padding-left: 49px;
+//   }
+// }
+
+// //IPAD
+
+// @media screen and (max-width: 768px) {
+//   .col-2 {
+//     max-width: 41.666667%;
+//     flex: none;
+//     padding-right: 0px;
+//     padding-left: 49px;
+//   }
+
+//   .offset-6 {
+//     margin-left: 25%;
+//   }
+
+//   .col-md-8 {
+//     padding-left: 0px;
+//     padding-right: 0px;
+//     margin-bottom: 15px;
+//   }
+
+// }
+

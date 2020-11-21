@@ -1,0 +1,8 @@
+<button mat-icon-button (click)="exit()" matTooltip="Quay lại">
+    <mat-icon style="color:green">keyboard_backspace</mat-icon>
+</button>
+<div >
+    <dx-report-viewer [reportUrl]="reportUrl" height="800px">
+        <dxrv-request-options [invokeAction]="invokeAction" [host]="hostUrl"></dxrv-request-options>
+    </dx-report-viewer>
+</div>

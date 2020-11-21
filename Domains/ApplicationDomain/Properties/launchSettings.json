@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "ApplicationDomain": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "nativeDebugging": false
+    }
+  }
+}

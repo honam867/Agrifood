@@ -1,0 +1,17 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.DbMigration", "Infrastructure.DbMigration.csproj", "{CAA07E29-4479-4D36-A255-296BD8C185CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAA07E29-4479-4D36-A255-296BD8C185CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAA07E29-4479-4D36-A255-296BD8C185CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAA07E29-4479-4D36-A255-296BD8C185CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAA07E29-4479-4D36-A255-296BD8C185CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

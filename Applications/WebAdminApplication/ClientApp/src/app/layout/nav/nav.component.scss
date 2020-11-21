@@ -1,0 +1,81 @@
+h1.app-name {
+  display: inline-block;
+  font-size: 17px;
+}
+
+.app-icon {
+  margin: 0 8px;
+  color: white;
+  fill: white;
+}
+
+.app-spacer {
+  flex: 1 1 auto;
+}
+
+form.example input[type=text] {
+  padding: 0px 10px;
+  font-size: 12px;
+  border: 1px solid grey;
+  float: left;
+  width: 90%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 10%;
+  padding: 0px 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 12px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: #0b7dda;
+}
+
+.icon-menu:hover {
+  color: white;
+}
+
+
+#account {
+  // margin: 6px;
+  border-radius: 50%;
+}
+
+#account::after {
+  content: none !important;
+}
+
+mat-toolbar {
+  min-height: 50px !important;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+}
+.nav-link {
+  color: white;
+}
+.avatar-preview {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  border-radius: 100%;
+  border: 2px solid #F8F8F8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  >div {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+}

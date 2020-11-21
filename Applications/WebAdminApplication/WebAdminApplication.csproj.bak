@@ -1,0 +1,173 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Reports\QuotationProductReport.repx" />
+    <None Remove="Reports\rptAssetPart.repx" />
+    <None Remove="Reports\rptContractCommerce.repx" />
+    <None Remove="Reports\rptCustomers.repx" />
+    <None Remove="Reports\rptInventoryDelivery1NoteReport.repx" />
+    <None Remove="Reports\rptInventoryReceiptNoteReport.repx" />
+    <None Remove="Reports\rptQuotationCommerceReport.repx" />
+    <None Remove="Reports\rptQuotationProductReport.repx" />
+    <None Remove="Reports\rptQuotationRepairingReport.repx" />
+    <None Remove="Reports\rptQuotationRepairMonthlyRevenueReport.repx" />
+    <None Remove="Reports\rptQuotationService.repx" />
+    <None Remove="Reports\rptQuotationServiceReport.repx" />
+    <None Remove="Reports\rptQuotationSurveyReport.repx" />
+    <None Remove="Reports\XtraReport.repx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\QuotationProductReport.repx" />
+    <EmbeddedResource Include="Reports\rptAssetPart.repx" />
+    <EmbeddedResource Include="Reports\rptContractCommerce.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptCustomers.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptInventoryReceiptNoteReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationCommerceReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptInventoryDelivery1NoteReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationProductReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationRepairingReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationRepairMonthlyRevenueReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationServiceReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationSurveyReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\XtraReport.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\rptQuotationService.repx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DevExpress.AspNetCore.Reporting" Version="20.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\AutoGenerate\AspNetCore.AutoGenerate\AspNetCore.AutoGenerate.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\IoC\AspNetCore.IoC.Autofact\AspNetCore.IoC.Autofact.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\MVC\AspNetCore.Mvc.JwtBearer\AspNetCore.Mvc.JwtBearer.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\MVC\AspNetCore.Mvc\AspNetCore.Mvc.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\Validation\AspNetCore.FluentValidation\AspNetCore.FluentValidation.csproj" />
+    <ProjectReference Include="..\..\Domains\ApplicationDomain\ApplicationDomain.csproj" />
+    <ProjectReference Include="..\..\Infrastructures\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Reports\QuotationProductReport.cs">
+      <DependentUpon>QuotationProductReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\QuotationProductReport.Designer.cs">
+      <DependentUpon>QuotationProductReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptAssetPart.cs">
+      <DependentUpon>rptAssetPart.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptAssetPart.Designer.cs">
+      <DependentUpon>rptAssetPart.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptContractCommerce.cs">
+      <DependentUpon>rptContractCommerce.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptContractCommerce.Designer.cs">
+      <DependentUpon>rptContractCommerce.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptCustomers.cs">
+      <DependentUpon>rptCustomers.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptCustomers.Designer.cs">
+      <DependentUpon>rptCustomers.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptInventoryReceiptNoteReport.cs">
+      <DependentUpon>rptInventoryReceiptNoteReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptInventoryReceiptNoteReport.Designer.cs">
+      <DependentUpon>rptInventoryReceiptNoteReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptInventoryDelivery1NoteReport.cs">
+      <DependentUpon>rptInventoryDelivery1NoteReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptInventoryDelivery1NoteReport.Designer.cs">
+      <DependentUpon>rptInventoryDelivery1NoteReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationCommerceReport.cs">
+      <DependentUpon>rptQuotationCommerceReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationCommerceReport.Designer.cs">
+      <DependentUpon>rptQuotationCommerceReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationProductReport.cs">
+      <DependentUpon>rptQuotationProductReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationProductReport.Designer.cs">
+      <DependentUpon>rptQuotationProductReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationRepairingReport.cs">
+      <DependentUpon>rptQuotationRepairingReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationRepairingReport.Designer.cs">
+      <DependentUpon>rptQuotationRepairingReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationRepairMonthlyRevenueReport.cs">
+      <DependentUpon>rptQuotationRepairMonthlyRevenueReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationRepairMonthlyRevenueReport.Designer.cs">
+      <DependentUpon>rptQuotationRepairMonthlyRevenueReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationServiceReport.cs">
+      <DependentUpon>rptQuotationServiceReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationServiceReport.Designer.cs">
+      <DependentUpon>rptQuotationServiceReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationSurveyReport.cs">
+      <DependentUpon>rptQuotationSurveyReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationSurveyReport.Designer.cs">
+      <DependentUpon>rptQuotationSurveyReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\XtraReport.cs">
+      <DependentUpon>XtraReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\XtraReport.Designer.cs">
+      <DependentUpon>XtraReport.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationService.cs">
+      <DependentUpon>rptQuotationService.repx</DependentUpon>
+    </Compile>
+    <Compile Update="Reports\rptQuotationService.Designer.cs">
+      <DependentUpon>rptQuotationService.repx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

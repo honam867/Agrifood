@@ -1,0 +1,68 @@
+.new {
+  color: #007bff;
+  border: 2px solid #007bff;
+  padding-left: 10px;
+}
+
+.waiting {
+  color: #ffc107;
+  border: 2px solid #ffc107;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.cancel {
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  padding-left: 10px;
+}
+.rejected {
+  color: red;
+  border: 2px solid red;
+  padding-left: 10px;
+}
+.crud-statusName-rejected {
+  color: red;
+}
+
+.checked {
+  color: #90ee02;
+  border: 2px solid #90ee02;
+  padding-left: 5px;
+}
+
+.approved {
+  color: #3ae963;
+  border: 2px solid #3ae963;
+  padding-left: 5px;
+}
+
+.confirm {
+  color: #75e900;
+  border: 2px solid #75e900;
+  padding-left: 5px;
+}
+
+.crud-statusName-new {
+  color: #007bff;
+}
+
+.crud-statusName-waiting {
+  color: #ffc107;
+}
+
+.crud-statusName-cancel {
+  color: #dc3545;
+}
+
+.crud-statusName-checked {
+  color: #61d800;
+}
+
+.crud-statusName-approved {
+  color: #09af00;
+}
+
+.crud-statusName-confirm {
+  color: #90ee02;
+}

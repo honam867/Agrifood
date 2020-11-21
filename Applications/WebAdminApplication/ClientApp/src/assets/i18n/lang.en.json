@@ -1,0 +1,11 @@
+{
+  "LOGIN_FAILED": "Email or password is incorrect.Try again or click Forgot password to reset it.",
+  "PASSWORD_MIN_CHARACTER_VALIDATION": "Use 8 characters or more for your password",
+  "RECOVERY_TRUE": "The password reset link has been sent to the Email",
+  "RECOVERY_FAILED": "Password recovery failed. Please make sure the email you entered is correct.",
+  "NEWPASSWORD_TRUE":"The password has been updated, After 3 seconds will return to the Login Page",
+  "NEWPASSWORD_FAILED":"Password change failed, the password must be at least 8 characters which must include alphanumeric characters and special characters.",
+  "CHANGE_TRUE":"The password has been updated, After 3 seconds will return to the Homepage",
+  "CHANGE_FAILED":"Password change failed, Please make sure you enter the old password correctly"
+
+}

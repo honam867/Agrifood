@@ -1,0 +1,24 @@
+mat-sidenav-content {
+  transition: margin-left 0.3s;
+}
+
+.collapse-arrow .icon {
+  transform: rotate(-180deg);
+  transition: 0.3s transform ease-in-out;
+  display: inline-block;
+}
+
+.collapse-arrow .collapsed .icon {
+  transform: rotate(0deg);
+}
+
+.menu-level1 {
+  margin-left: 32px;
+}
+
+.menu-level2 {
+  margin-left: 48px;
+}
+span{
+  font-size: 14px;
+}

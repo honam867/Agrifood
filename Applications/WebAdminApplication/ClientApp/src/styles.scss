@@ -1,0 +1,87 @@
+$bg-default: #1A9DEF;
+$bg-gray: #F7F7F7;
+$bg-dark: #333333;
+$bg-orange: #FF7D09;
+$bg-red: #E92701;
+$bg-primary: #007BFF;
+$bg-secondary: #6C757D;
+$bg-info: #17A2B8;
+$bg-danger: #DC3545;
+$bg-warning: #FFC107;
+$bg-success: #28A745;
+$bg-light: #F8F9FA;
+$bg-light-green: #C2EDD6;
+$bg-light-yellow: #FAEAC8;
+$bg-light-blue: #66b0ff;
+$bg-light-pink: #FFDBDC;
+$bg-dark-orange: #FFC549;
+$bg-dark-pink: #F38888;
+$bg-dark-green: #A4CC36;
+$bg-light-gray: #e6e6e6;
+$bg-dark-blue: #003e80;
+
+:root {
+  --defaut: #1A9DEF;
+}
+
+table {
+  width: 100%;
+}
+
+tr.detail-row {
+  height: 0 !important;
+}
+
+tr.element-row:not(.expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.element-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+tr.expanded-row td {
+  background-color: #e8f0fe;
+  color: #1a68d2 !important;
+  font-size: 500 !important;
+}
+
+.element-row td {
+  border-bottom-width: 0 !important;
+}
+
+.element-detail {
+  overflow: hidden;
+  display: flex;
+  text-align: justify;
+}
+
+.input-fluid {
+  width: 100% !important;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+  margin: 0;
+}
+
+.basic-container {
+  padding: 30px;
+}
+
+.version-info {
+  font-size: 8pt;
+  float: right;
+}
+
+.app-full-width {
+  width: 100%;
+}

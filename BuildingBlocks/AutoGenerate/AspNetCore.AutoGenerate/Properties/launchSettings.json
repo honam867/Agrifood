@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AspNetCore.AutoGenerate": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Key": "Value"
+      }
+    }
+  }
+}

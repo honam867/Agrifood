@@ -1,0 +1,79 @@
+table {
+  width: 100%;
+}
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.4em;
+}
+
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+  width: 133.33333%;
+}
+
+// Thead center content
+::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+// Style cho thead
+.mat-header-cell {
+  background: #3962db;
+  color: #ffffff;
+}
+th,
+td {
+  cursor: pointer;
+}
+// Hover từng dòng
+.table-row:hover {
+  background-color: #f4f2f8;
+  border-left: 2px solid #673ab7;
+}
+.table-row:active {
+  background-color: #c0c0c0;
+  color: white;
+}
+.mat-table-sticky:first-child:hover {
+  border-left: 3px solid #673ab7;
+}
+
+// Custome thẻ card header
+.bg-custom_white {
+  background-color: #ffffff;
+  color: #000000;
+}
+// Phân trang
+// .mat-paginator {
+//   background: #fafafa;
+// }
+// ::ng-deep .mat-paginator-container {
+//   min-height: 40px !important;
+// }
+// Chiều cao của thead
+tr.mat-header-row {
+  // border: 1px solid #e0e0e0;
+  height: 31px;
+}
+
+.mat-header-cell {
+  border-right: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+}
+.mat-cell {
+  border-right: 1px solid #e0e0e0;
+  border-left: 1px solid #e0e0e0;
+  padding: 3px;
+  white-space: nowrap;
+}
+button {
+  outline: none;
+}

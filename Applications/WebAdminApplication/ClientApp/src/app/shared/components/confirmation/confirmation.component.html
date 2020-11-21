@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Thông báo xác nhận</h1>
+<div mat-dialog-content>
+  <p>{{data.message}}</p>
+</div>
+<div class="d-flex justify-content-end" mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Huỷ</button>
+  <button mat-button (click)="onYesClick()">Đồng ý</button>
+</div>

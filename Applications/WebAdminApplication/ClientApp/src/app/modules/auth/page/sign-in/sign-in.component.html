@@ -1,0 +1,88 @@
+<!-- <div class="auth-form-center">
+    <app-progress-bar-loader></app-progress-bar-loader>
+    <div class="auth-form-header">
+        <img src="../../../assets/images/logo.png" />
+        <h4>{{'Sign in' | translate | titlecase}}</h4>
+    </div>
+    <div class="auth-form-body">
+        <form novalidate [formGroup]="signInForm" (ngSubmit)="signIn()" class="form-row">
+            <div class="col-12">
+                <mat-form-field appearance="outline" class="input-fluid">
+                    <mat-label>{{'Username'|translate | titlecase}}</mat-label>
+                    <input id="userName" formControlName="userName" matInput
+                        placeholder="{{'Username'|translate | titlecase}}">
+                    <mat-error *ngIf="userName.hasError('required')">
+                        {{'Username'|translate | titlecase}} {{'is required'|translate | titlecase}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-12">
+                <mat-form-field appearance="outline" class="input-fluid">
+                    <mat-label>{{'password' | translate | titlecase}}</mat-label>
+                    <input  id="password" formControlName="password" matInput
+                    placeholder="{{'password' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
+                    <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                     </a>
+                    <mat-error *ngIf="password.hasError('required')">
+                        {{'password' | translate | titlecase}} {{'is required' | translate | titlecase}}
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <div class="col-12">
+                <mat-error *ngIf="loginFail">
+                    {{'LOGIN_FAILED'|translate}}
+                </mat-error>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a routerLink="../forgotpassword">{{ 'Forgot' | translate | titlecase}}
+                        {{'password' | translate| titlecase}} ?</a>
+                    <button type="submit" class="btn btn-primary"
+                       >{{'Sign in' | translate | titlecase}}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="auth-form-footer">
+    </div>
+</div> -->
+<mat-progress-bar mode="indeterminate" *ngIf="showLoading"></mat-progress-bar>
+<h3 class="login-heading mb-4">Đăng nhập</h3>
+<form novalidate [formGroup]="signInForm" (ngSubmit)="signIn()">
+    <mat-form-field appearance="outline" class="input-fluid">
+        <mat-label>{{'Username'|translate | titlecase}}</mat-label>
+        <input id="userName" formControlName="userName" matInput placeholder="{{'Username'|translate | titlecase}}">
+        <mat-error *ngIf="userName.hasError('required')">
+            {{'Username'|translate | titlecase}} {{'is required'|translate | titlecase}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="input-fluid">
+        <mat-label>{{'password' | translate | titlecase}}</mat-label>
+        <input required id="password" formControlName="password" matInput
+            placeholder="{{'password' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
+        <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </a>
+        <mat-error *ngIf="password.hasError('required')">
+            {{'password' | translate | titlecase}} {{'is required' | translate | titlecase}}
+        </mat-error>
+    </mat-form-field>
+    <div class="row">
+        <div class="col">
+            <mat-error *ngIf="loginFail">
+                {{'LOGIN_FAILED'|translate}}
+            </mat-error>
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-between mt-4">
+        <a class="text-info" routerLink="../forgotpassword">{{ 'Forgot' | translate | titlecase}}
+            {{'password' | translate| titlecase}} ?</a>
+        <button type="submit" class="btn btn-info"> <i class="material-icons">login</i>
+            {{'Sign in' | translate | titlecase}}</button>
+    </div>
+</form>

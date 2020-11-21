@@ -1,0 +1,124 @@
+.info-box {
+    // box-shadow: 0 0 1px rgba(0,0,0,.125), 0 1px 3px rgba(0,0,0,.2);
+    border-radius: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: 1rem;
+    min-height: 80px;
+    padding: 0.5rem;
+    position: relative;
+    transition: all 0.1s ease-in;
+  }
+  
+  .info-box:hover {
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 10px rgba(0, 0, 0, 0.2);
+    background: #fff;
+  }
+  
+  .info-box .info-box-icon {
+    border-radius: 0.25rem;
+    align-items: center;
+    display: flex;
+    font-size: 1.875rem;
+    justify-content: center;
+    text-align: center;
+    width: 15%;
+  }
+  
+  .info-box .info-box-text,
+  .info-box .progress-description {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-left: 15px;
+    margin-top: 15px;
+  }
+  
+  .info-box-icon img {
+    width: 100%;
+  }
+  .header-component h3 {
+    align-items: center;
+    color: #673ab7;
+    font-size: 20px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  
+    margin-top: 20px;
+  }
+  //Iphone X
+  @media only screen and (max-width: 375px) {
+    .info-box .info-box-text,
+    .info-box .info-box-text,
+    .info-box .progress-description {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .info-box {
+      min-height: 0px;
+      margin-bottom: 0.5rem;
+      flex-direction: column;
+    }
+    .info-box .info-box-icon {
+      width: 30%;
+    }
+    .info-box .info-box-text {
+      margin-left: 0px;
+      margin-top: 0.9rem;
+    }
+  
+    .info-box .info-box-content .info-box-text {
+      margin-left: 0px;
+      margin-top: 0px;
+    }
+    .header-component h3 {
+      align-items: center;
+      color: #673ab7;
+      font-size: 20px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+  //Iphone 6/7/8Plus
+  @media only screen and (max-width: 414px) {
+    .info-box .info-box-text,
+    .info-box .info-box-text,
+    .info-box .progress-description {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .info-box {
+      min-height: 0px;
+      margin-bottom: 0.5rem;
+      flex-direction: column;
+    }
+    .info-box .info-box-icon {
+      width: 30%;
+    }
+    .info-box .info-box-text {
+      margin-left: 0px;
+      margin-top: 0.9rem;
+    }
+  
+    .info-box .info-box-content .info-box-text {
+      margin-left: 0px;
+      margin-top: 0px;
+    }
+    .header-component h3 {
+      align-items: center;
+      color: #673ab7;
+      font-size: 20px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 20px;
+    }
+  }
+  
