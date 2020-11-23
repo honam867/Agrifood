@@ -108,7 +108,8 @@ namespace ApplicationDomain.Identity.Services
                 {
                     user.CreateBy(issuer).UpdateBy(issuer);
                 }
-                string password = AutoGenerate.AutoGeneratePassword(8, true, true);
+                //string password = AutoGenerate.AutoGeneratePassword(8, true, true);
+                string password = "Agrifoodsystem1";
                 var identityResult = await _userManagement.CreateAsync(user, password);
 
                 if (!identityResult.Succeeded)
@@ -276,29 +277,29 @@ namespace ApplicationDomain.Identity.Services
 
    
 
-        public async Task<IEnumerable<User>> GetManagerUsersAsync()
-        {
-            try
-            {
-                return await _userRepository.GetManagerUsers().ToListAsync();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        } 
+        //public async Task<IEnumerable<User>> GetManagerUsersAsync()
+        //{
+        //    try
+        //    {
+        //        return await _userRepository.GetManagerUsers().ToListAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //} 
 
-        public async Task<IEnumerable<User>> GetDirectorUsersAsync()
-        {
-            try
-            {
-                return await _userRepository.GetDirectorUsers().ToListAsync();
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
-        } 
+        //public async Task<IEnumerable<User>> GetDirectorUsersAsync()
+        //{
+        //    try
+        //    {
+        //        return await _userRepository.GetDirectorUsers().ToListAsync();
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //} 
         public async Task<IEnumerable<User>> GetEmployeeUsersAsync()
         {
             try

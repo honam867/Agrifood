@@ -61,14 +61,12 @@ namespace Infrastructure.SeedData
                 await SeedRoleAsync(dbContext);
             }
             var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var systemAdmin = userManagement.FindByNameAsync("system").Result;
+            var systemAdmin = userManagement.FindByNameAsync("sysadmin").Result;
             await userManagement.AddToRoleAsync(systemAdmin, ROLE_CONSTANT.SYSADMIN);
-
+            await SeedEmailTemplate(dbContext);
             await SeedDistrictAsync(dbContext,
-                    await SeedProvinceAsync(dbContext));
-                await SeedDepartmentAsync(dbContext,
-                    await SeedBranchAsync(dbContext,
-                        await SeedCompanyAsync(dbContext)));
+               await SeedProvinceAsync(dbContext));
+                        await SeedCompanyAsync(dbContext);
       
           
 
@@ -81,7 +79,7 @@ namespace Infrastructure.SeedData
         {
             var roleManagers = _serviceProvider.GetService<RoleManager<Role>>();
             var userManager = _serviceProvider.GetService<UserManager<User>>();
-            var user = userManager.FindByNameAsync("system").Result;
+            var user = userManager.FindByNameAsync("sysadmin").Result;
             var roleSystem = new Role
 
             {
@@ -107,9 +105,9 @@ namespace Infrastructure.SeedData
             };
             await roleManagers.CreateAsync(roleEmployee);
             await dbContext.SaveChangesAsync();
-            var roleCustomer = new Role
+            var roleFarmer = new Role
             {
-                Name = ROLE_CONSTANT.CUSTOMER,
+                Name = ROLE_CONSTANT.FARMER,
                 CreatedByUserId = user.Id,
                 CreatedDate = DateTimeOffset.UtcNow,
                 CreatedByUserName = user.UserName,
@@ -117,7 +115,19 @@ namespace Infrastructure.SeedData
                 UpdatedDate = DateTimeOffset.UtcNow,
                 UpdatedByUserName = user.UserName
             };
-            await roleManagers.CreateAsync(roleCustomer);
+            await roleManagers.CreateAsync(roleFarmer);
+            await dbContext.SaveChangesAsync();
+            //var roleCustomer = new Role
+            //{
+            //    Name = ROLE_CONSTANT.CUSTOMER,
+            //    CreatedByUserId = user.Id,
+            //    CreatedDate = DateTimeOffset.UtcNow,
+            //    CreatedByUserName = user.UserName,
+            //    UpdatedByUserId = user.Id,
+            //    UpdatedDate = DateTimeOffset.UtcNow,
+            //    UpdatedByUserName = user.UserName
+            //};
+            //await roleManagers.CreateAsync(roleCustomer);
             await dbContext.SaveChangesAsync();
 
             var roleAdmin = new Role
@@ -146,15 +156,15 @@ namespace Infrastructure.SeedData
                     var userManagement = _serviceProvider.GetService<UserManager<User>>();
                     var user = new User
                     {
-                        UserName = "system",
-                        Email = "system@gmail.com",
-                        PhoneNumber = "0909123207",
+                        UserName = "sysadmin",
+                        Email = "nam.t171846@gmail.com",
+                        PhoneNumber = "0868336756",
                         CreatedByUserId = 1,
                         CreatedDate = DateTimeOffset.UtcNow,
-                        CreatedByUserName = "system",
+                        CreatedByUserName = "sysadmin",
                         UpdatedByUserId = 1,
                         UpdatedDate = DateTimeOffset.UtcNow,
-                        UpdatedByUserName = "system",
+                        UpdatedByUserName = "sysadmin",
                         Status = true,
 
                     };
@@ -178,7 +188,7 @@ namespace Infrastructure.SeedData
         {
             Console.WriteLine("Start to seed Company");
             var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("system").Result;
+            var system = userManagement.FindByNameAsync("sysadmin").Result;
             var model = new Company
             {
                 Code = "VNT",
@@ -204,64 +214,64 @@ namespace Infrastructure.SeedData
         }
 
 
-        private static async Task<int> SeedBranchAsync(ApplicationDbContext dbContext, int companyid)
-        {
-            Console.WriteLine("Start to seed Branch");
-            var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("system").Result;
-            var model = new Branch
-            {
-                Code = "HCM",
-                Email = "VNThcm@gmail.com",
-                Address = "Binh tan",
-                Fax = "123456789",
-                ForeignName = "Tuloc HCM tech Vietnam",
-                LogoURL = "https://testurl.com/corp001.png",
-                Name = "Chi nhanh HCM",
-                PhoneNumber = "0936915227",
-                ShortName = "VNT HCM Tech",
-                TaxCode = "123456789",
-                CompanyId = companyid,
-                DistrictId = 1,
-                CreatedByUserId = system.Id,
-                CreatedByUserName = system.UserName,
-                UpdatedByUserId = system.Id,
-                UpdatedByUserName = system.UserName,
-            };
-            await dbContext.AddAsync(model);
-            await dbContext.SaveChangesAsync();
-            Console.WriteLine("Finished seed Branch");
-            return model.Id;
-        }
+        //private static async Task<int> SeedBranchAsync(ApplicationDbContext dbContext, int companyid)
+        //{
+        //    Console.WriteLine("Start to seed Branch");
+        //    var userManagement = _serviceProvider.GetService<UserManager<User>>();
+        //    var system = userManagement.FindByNameAsync("sysadmin").Result;
+        //    var model = new Branch
+        //    {
+        //        Code = "HCM",
+        //        Email = "VNThcm@gmail.com",
+        //        Address = "Binh tan",
+        //        Fax = "123456789",
+        //        ForeignName = "Tuloc HCM tech Vietnam",
+        //        LogoURL = "https://testurl.com/corp001.png",
+        //        Name = "Chi nhanh HCM",
+        //        PhoneNumber = "0936915227",
+        //        ShortName = "VNT HCM Tech",
+        //        TaxCode = "123456789",
+        //        CompanyId = companyid,
+        //        DistrictId = 1,
+        //        CreatedByUserId = system.Id,
+        //        CreatedByUserName = system.UserName,
+        //        UpdatedByUserId = system.Id,
+        //        UpdatedByUserName = system.UserName,
+        //    };
+        //    await dbContext.AddAsync(model);
+        //    await dbContext.SaveChangesAsync();
+        //    Console.WriteLine("Finished seed Branch");
+        //    return model.Id;
+        //}
 
-        private static async Task<int> SeedDepartmentAsync(ApplicationDbContext dbContext, int branchId)
-        {
-            Console.WriteLine("Start to seed Department");
-            var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("system").Result;
-            var model = new Department
-            {
-                Code = "VNT",
-                Email = "department@gmail.com",
-                Name = "Department",
-                PhoneNumber = "0936915227",
-                BranchId = branchId,
-                CreatedByUserId = system.Id,
-                CreatedByUserName = system.UserName,
-                UpdatedByUserId = system.Id,
-                UpdatedByUserName = system.UserName,
-            };
-            await dbContext.AddAsync(model);
-            await dbContext.SaveChangesAsync();
-            Console.WriteLine("Finished seed Department");
-            return model.Id;
-        }
+        //private static async Task<int> SeedDepartmentAsync(ApplicationDbContext dbContext, int branchId)
+        //{
+        //    Console.WriteLine("Start to seed Department");
+        //    var userManagement = _serviceProvider.GetService<UserManager<User>>();
+        //    var system = userManagement.FindByNameAsync("sysadmin").Result;
+        //    var model = new Department
+        //    {
+        //        Code = "VNT",
+        //        Email = "department@gmail.com",
+        //        Name = "Department",
+        //        PhoneNumber = "0936915227",
+        //        BranchId = branchId,
+        //        CreatedByUserId = system.Id,
+        //        CreatedByUserName = system.UserName,
+        //        UpdatedByUserId = system.Id,
+        //        UpdatedByUserName = system.UserName,
+        //    };
+        //    await dbContext.AddAsync(model);
+        //    await dbContext.SaveChangesAsync();
+        //    Console.WriteLine("Finished seed Department");
+        //    return model.Id;
+        //}
 
         private static async Task<int> SeedProvinceAsync(ApplicationDbContext dbContext)
         {
             Console.WriteLine("Start to seed Province");
             var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("system").Result;
+            var system = userManagement.FindByNameAsync("sysadmin").Result;
             var model = new Province
             {
                 Code = "01",
@@ -282,7 +292,7 @@ namespace Infrastructure.SeedData
         {
             Console.WriteLine("Start to seed District");
             var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("system").Result;
+            var system = userManagement.FindByNameAsync("sysadmin").Result;
             var model = new District
             {
                 Code = "01",
@@ -309,39 +319,39 @@ namespace Infrastructure.SeedData
                 Name = "NewUserEmail",
                 EmailContent = "<span>" +
                 "Xin chào #email<br /><br />" +
-                "Dưới đây là thông tin đăng nhập của bạn vào hệ thống của chúng tôi:< br />" +
-                "Tên đăng nhập: < b >#username</b><br />" +
-                "Mật khẩu: < b >#password</b><br />" +
-                "Để an toàn cho việc đăng nhập vào hệ thống, bạn vui lòng đăng nhập vào hệ thống và sử dụng chức năng đổi mật khẩu.< br />< br />" +
-                "Xin cảm ơn,< br />" +
-                "VNT support" +
-                "</ span > ",
-                EmailSubject = "Thông tin đăng nhập hệ thống [VNTtech.vn]"
+                "Dưới đây là thông tin đăng nhập của bạn vào hệ thống của chúng tôi:<br />" +
+                "Tên đăng nhập: <b />#username</b><br />" +
+                "Mật khẩu: <b />#password</b><br />" +
+                "Để an toàn cho việc đăng nhập vào hệ thống, bạn vui lòng đăng nhập vào hệ thống và sử dụng chức năng đổi mật khẩu.<br /><br />" +
+                "Xin cảm ơn,<br />" +
+                "Agrifood support" +
+                "</span> ",
+                EmailSubject = "Thông tin đăng nhập hệ thống [Agrifood.vn]"
             });
             emailTemplates.Add(new EmailTemplate()
             {
                 Name = "ResetUserPasswordEmail",
                 EmailContent = "<span>" +
-                "Xin chào < b >#email</b>,<br /><br />" +
-                "Mật khẩu cho tài khoản < b >#username</b> của bạn đã thay đổi:<br />" +
-                "Mật khẩu mới: < b >#password</b><br />" +
+                "Xin chào <b>#email</b>,<br /><br />" +
+                "Mật khẩu cho tài khoản <b>#username</b> của bạn đã thay đổi:<br />" +
+                "Mật khẩu mới: <b>#password</b><br />" +
                 "Để an toàn cho việc đăng nhập vào hệ thống," +
-                "bạn vui lòng đăng nhập vào hệ thống và sử dụng chức năng đổi mật khẩu.< br />< br />" +
-                "Xin cảm ơn,< br />" +
-                "VNT support" +
+                "bạn vui lòng đăng nhập vào hệ thống và sử dụng chức năng đổi mật khẩu.<br /><br />" +
+                "Xin cảm ơn,<br />" +
+                "Agrifood Support" +
                 "</ span > ",
-                EmailSubject = "Khôi phục mật khẩu đăng nhập hệ thống [VNTtech.vn]"
+                EmailSubject = "Khôi phục mật khẩu đăng nhập hệ thống [Agrifood.vn]"
             });
             emailTemplates.Add(new EmailTemplate()
             {
                 Name = "ChangeUserPasswordEmail",
                 EmailContent = "<span>" +
-                "Xin chào < b >#email</b>,<br /><br />" +
-                "Mật khẩu cho tài khoản < b >#username</b> của bạn đã thay đổi.<br /><br />" +
-                "Xin cảm ơn,< br />" +
-                "VNT support" +
+                "Xin chào <b>#email</b>,<br /><br />" +
+                "Mật khẩu cho tài khoản <b>#username</b> của bạn đã thay đổi.<br /><br />" +
+                "Xin cảm ơn,<br />" +
+                "Agrifood support" +
                 "</ span > ",
-                EmailSubject = "Thay đổi mật khẩu đăng nhập hệ thống [VNTtech.vn]"
+                EmailSubject = "Thay đổi mật khẩu đăng nhập hệ thống [Agrifood.vn]"
             });
             dbContext.AddRange(emailTemplates);
             await dbContext.SaveChangesAsync();

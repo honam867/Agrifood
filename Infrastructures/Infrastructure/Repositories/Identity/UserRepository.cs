@@ -55,34 +55,34 @@ namespace Infrastructure.Repositories.Identity
             return entity ;
         }
 
-        public IQueryable<User> GetManagerUsers()
-        {
-            var managers = from uRole in _dbContext.UserRoles
-                from user in _userManager.Users
-                from role in _dbContext.Roles
-                where role.Name == ROLE_CONSTANT.MANAGER && uRole.RoleId == role.Id && uRole.UserId == user.Id
-                select new User()
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    UserName = user.UserName
-                };
-            return managers;
-        } 
-        public IQueryable<User> GetDirectorUsers()
-        {
-            var directors = from uRole in _dbContext.UserRoles
-                from user in _userManager.Users
-                from role in _dbContext.Roles
-                where role.Name == ROLE_CONSTANT.DIRECTOR && uRole.RoleId == role.Id && uRole.UserId == user.Id
-                select new User()
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    UserName = user.UserName
-                };
-            return directors;
-        }
+        //public IQueryable<User> GetManagerUsers()
+        //{
+        //    var managers = from uRole in _dbContext.UserRoles
+        //        from user in _userManager.Users
+        //        from role in _dbContext.Roles
+        //        where role.Name == ROLE_CONSTANT.MANAGER && uRole.RoleId == role.Id && uRole.UserId == user.Id
+        //        select new User()
+        //        {
+        //            Id = user.Id,
+        //            Email = user.Email,
+        //            UserName = user.UserName
+        //        };
+        //    return managers;
+        //} 
+        //public IQueryable<User> GetDirectorUsers()
+        //{
+        //    var directors = from uRole in _dbContext.UserRoles
+        //        from user in _userManager.Users
+        //        from role in _dbContext.Roles
+        //        where role.Name == ROLE_CONSTANT.DIRECTOR && uRole.RoleId == role.Id && uRole.UserId == user.Id
+        //        select new User()
+        //        {
+        //            Id = user.Id,
+        //            Email = user.Email,
+        //            UserName = user.UserName
+        //        };
+        //    return directors;
+        //}
         public IQueryable<User> GetEmployeeUsers()
         {
             var employee = from uRole in _dbContext.UserRoles

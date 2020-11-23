@@ -61,14 +61,14 @@ namespace Infrastructure.Repositories.Identity
             return rs;
         }
 
-        public int GetRoleQuotationManager()
-        {
-            int rs = this.dbSet
-                .Where(r => r.Name == ROLE_CONSTANT.MANAGER)
-                .Select(r => r.Id)
-                .FirstOrDefault();
-            return rs;
-        }
+        //public int GetRoleQuotationManager()
+        //{
+        //    int rs = this.dbSet
+        //        .Where(r => r.Name == ROLE_CONSTANT.MANAGER)
+        //        .Select(r => r.Id)
+        //        .FirstOrDefault();
+        //    return rs;
+        //}
 
         public int GetRoleQuotationCommerce()
         {
@@ -89,26 +89,26 @@ namespace Infrastructure.Repositories.Identity
             return rs;
         }
 
-        public int GetRoleQuotationDirector()
-        {
-            int rs = this.dbSet
-                .Where(r => r.Name == ROLE_CONSTANT.DIRECTOR)
-                .Select(r => r.Id)
-                .FirstOrDefault();
-            return rs;
-        }
+        //public int GetRoleQuotationDirector()
+        //{
+        //    int rs = this.dbSet
+        //        .Where(r => r.Name == ROLE_CONSTANT.DIRECTOR)
+        //        .Select(r => r.Id)
+        //        .FirstOrDefault();
+        //    return rs;
+        //}
 
-        public async Task<string> GetRoleQuotationManagerAsync()
-        {
-            var rs = (await this.dbSet.FirstOrDefaultAsync(r => r.Name == ROLE_CONSTANT.MANAGER));
-            return rs == null ? string.Empty : rs.Name;
-        }
+        //public async Task<string> GetRoleQuotationManagerAsync()
+        //{
+        //    var rs = (await this.dbSet.FirstOrDefaultAsync(r => r.Name == ROLE_CONSTANT.MANAGER));
+        //    return rs == null ? string.Empty : rs.Name;
+        //}
 
-        public async Task<string> GetRoleQuotationDirectorAsync()
-        {
-            var rs = (await this.dbSet.FirstOrDefaultAsync(r => r.Name == ROLE_CONSTANT.DIRECTOR));
-            return rs == null ? string.Empty : rs.Name;
-        }
+        //public async Task<string> GetRoleQuotationDirectorAsync()
+        //{
+        //    var rs = (await this.dbSet.FirstOrDefaultAsync(r => r.Name == ROLE_CONSTANT.DIRECTOR));
+        //    return rs == null ? string.Empty : rs.Name;
+        //}
 
         public async Task<string> GetRoleQuotationServiceAsync()
         {
@@ -190,23 +190,23 @@ namespace Infrastructure.Repositories.Identity
             return rs;
         }
 
-        public int GetRoleManager()
-        {
-            int rs = this.dbSet
-                 .Where(r => r.Name == ROLE_CONSTANT.MANAGER)
-                 .Select(r => r.Id)
-                 .FirstOrDefault();
-            return rs;
-        }
+        //public int GetRoleManager()
+        //{
+        //    int rs = this.dbSet
+        //         .Where(r => r.Name == ROLE_CONSTANT.MANAGER)
+        //         .Select(r => r.Id)
+        //         .FirstOrDefault();
+        //    return rs;
+        //}
 
-        public int GetRoleDirector()
-        {
-            int rs = this.dbSet
-                 .Where(r => r.Name == ROLE_CONSTANT.DIRECTOR)
-                 .Select(r => r.Id)
-                 .FirstOrDefault();
-            return rs;
-        }
+        //public int GetRoleDirector()
+        //{
+        //    int rs = this.dbSet
+        //         .Where(r => r.Name == ROLE_CONSTANT.DIRECTOR)
+        //         .Select(r => r.Id)
+        //         .FirstOrDefault();
+        //    return rs;
+        //}
 
         public string GetNameRoleEmployee()
         {
@@ -214,16 +214,16 @@ namespace Infrastructure.Repositories.Identity
             return rs == null ? string.Empty : rs.Name;
         }
 
-        public string GetNameRoleManager()
-        {
-            var rs = (this.dbSet.FirstOrDefault(r => r.Name == ROLE_CONSTANT.MANAGER));
-            return rs == null ? string.Empty : rs.Name;
-        }
+        //public string GetNameRoleManager()
+        //{
+        //    var rs = (this.dbSet.FirstOrDefault(r => r.Name == ROLE_CONSTANT.MANAGER));
+        //    return rs == null ? string.Empty : rs.Name;
+        //}
 
-        public string GetNameRoleDirector()
-        {
-            var rs = (this.dbSet.FirstOrDefault(r => r.Name == ROLE_CONSTANT.DIRECTOR));
-            return rs == null ? string.Empty : rs.Name;
-        }
+        //public string GetNameRoleDirector()
+        //{
+        //    var rs = (this.dbSet.FirstOrDefault(r => r.Name == ROLE_CONSTANT.DIRECTOR));
+        //    return rs == null ? string.Empty : rs.Name;
+        //}
     }
 }

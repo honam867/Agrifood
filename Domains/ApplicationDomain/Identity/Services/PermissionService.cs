@@ -39,7 +39,7 @@ namespace ApplicationDomain.Identity.Services
         public async Task<GrantedPermission> GetGrantedPermission(int userId, IList<string> roles = null)
         {
             GrantedPermission grantedPermission = new GrantedPermission();
-            grantedPermission.IsManagerOrDirector = await IsManagerOrDirector(userId, roles);
+            //grantedPermission.IsManagerOrDirector = await IsManagerOrDirector(userId, roles);
 
             // Quotaion
             grantedPermission.CanAccessQuotationsMenu = true;
@@ -83,16 +83,16 @@ namespace ApplicationDomain.Identity.Services
             grantedPermission.CanAccessServiceMenu = true;
             return grantedPermission;
         }
-        private async Task<bool> IsManagerOrDirector(int userId, IList<string> roles = null)
-        {
-            if(roles == null)
-                roles = await _userService.GetRoleByUser(userId);
-            if (roles.Contains(ROLE_CONSTANT.DIRECTOR) || roles.Contains(ROLE_CONSTANT.MANAGER))
-            {
-                return true;
-            }
-            return false;
-        }
+        //private async Task<bool> IsManagerOrDirector(int userId, IList<string> roles = null)
+        //{
+        //    if(roles == null)
+        //        roles = await _userService.GetRoleByUser(userId);
+        //    if (roles.Contains(ROLE_CONSTANT.DIRECTOR) || roles.Contains(ROLE_CONSTANT.MANAGER))
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
        
 

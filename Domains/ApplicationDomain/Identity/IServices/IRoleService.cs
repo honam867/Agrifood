@@ -18,8 +18,8 @@ namespace ApplicationDomain.Identity.IServices
         Task<IEnumerable<RoleListModel>> GetRoleNotExistsInUserRoleId(int userId);
         Task<bool> CreateDefaultEntityRolesAsync(UserIdentity<int> issuer);
         Task<string> GetRoleQuotationEmployee();
-        Task<string> GetRoleQuotationManager();
-        Task<string> GetRoleQuotationDirector();
+        //Task<string> GetRoleQuotationManager();
+        //Task<string> GetRoleQuotationDirector();
         Task<string> GetRoleQuotationCommerce();
         Task<string> GetRoleQuotationService();
     }

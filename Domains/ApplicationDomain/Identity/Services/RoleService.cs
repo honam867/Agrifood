@@ -111,22 +111,22 @@ namespace ApplicationDomain.Identity.Services
                     {
                         Name = ROLE_CONSTANT.EMPLOYEE
                     },
-                    new RoleCreatedModelRq()
-                    {
-                        Name = ROLE_CONSTANT.CUSTOMER
-                    },
+                    //new RoleCreatedModelRq()
+                    //{
+                    //    Name = ROLE_CONSTANT.CUSTOMER
+                    //},
                     new RoleCreatedModelRq()
                     {
                         Name = ROLE_CONSTANT.ADMIN
                     },
-                    new RoleCreatedModelRq()
-                    {
-                        Name = ROLE_CONSTANT.MANAGER
-                    },
-                    new RoleCreatedModelRq()
-                    {
-                        Name = ROLE_CONSTANT.DIRECTOR
-                    }
+                    //new RoleCreatedModelRq()
+                    //{
+                    //    Name = ROLE_CONSTANT.MANAGER
+                    //},
+                    //new RoleCreatedModelRq()
+                    //{
+                    //    Name = ROLE_CONSTANT.DIRECTOR
+                    //}
                 };
                 foreach (var item in menusDefault)
                 {
@@ -152,15 +152,15 @@ namespace ApplicationDomain.Identity.Services
             return await _roleRepository.GetRoleQuotationEmployeeAsync();
         }
 
-        public async Task<string> GetRoleQuotationManager()
-        {
-            return await _roleRepository.GetRoleQuotationManagerAsync();
-        }
+        //public async Task<string> GetRoleQuotationManager()
+        //{
+        //    return await _roleRepository.GetRoleQuotationManagerAsync();
+        //}
 
-        public async Task<string> GetRoleQuotationDirector()
-        {
-            return await _roleRepository.GetRoleQuotationDirectorAsync();
-        }
+        //public async Task<string> GetRoleQuotationDirector()
+        //{
+        //    return await _roleRepository.GetRoleQuotationDirectorAsync();
+        //}
 
         public async Task<string> GetRoleQuotationService()
         {
