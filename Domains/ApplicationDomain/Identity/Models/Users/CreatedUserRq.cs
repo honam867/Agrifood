@@ -28,7 +28,7 @@ namespace ApplicationDomain.Identity.Models
         public CreatedUserRqValidator()
         {
             RuleFor(p => p.UserName).NotEmpty();
-            RuleFor(p => p.UserName).MinimumLength(6);
+            RuleFor(p => p.UserName).MinimumLength(3);
             RuleFor(p => p.Email).NotEmpty().EmailAddress();
         }
     }

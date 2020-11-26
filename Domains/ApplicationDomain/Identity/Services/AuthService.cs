@@ -240,13 +240,15 @@ namespace ApplicationDomain.Identity.Services
     
             try
             {
+
                 var user = await _userManager.FindByEmailAsync(model.Email);
+                string code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 if (user == null)
                 {
                     return false;
                 }
 
-                var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+                var result = await _userManager.ResetPasswordAsync(user, code, model.Password);
 
                 if (!result.Succeeded)
                 {
