@@ -81,7 +81,31 @@ namespace WebAdminApplication.Controllers
             }
         }
 
- 
+
+        [Route("farmersignup")]
+        [HttpPost]
+        public async Task<IActionResult> FarmerSignUpAsync([FromBody]CreatedFarmerRq model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection modelErrors = new Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection();
+                    foreach (var entry in ModelState.Values)
+                        foreach (var error in entry.Errors)
+                            modelErrors.Add(error);
+                    return BadRequest(modelErrors);
+                }
+                return Ok(await _userService.FarmerSignUpAsync(model));
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        }
+
+     
+
 
         [Route("{id}")]
         [HttpPut]
@@ -158,5 +182,13 @@ namespace WebAdminApplication.Controllers
         {
             return OkValueObject(await _userService.CheckEmailAsync(email));
         }
+
+        [Route("phonechecking/{phone}")]
+        [HttpGet]
+        public async Task<IActionResult> CheckPhoneNumberFarmerAsync(string phone)
+        {
+            return OkValueObject(await _userService.CheckPhoneNumberAsync(phone));
+        }
+
     }
 }

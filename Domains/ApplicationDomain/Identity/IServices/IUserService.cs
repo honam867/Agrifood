@@ -24,5 +24,7 @@ namespace ApplicationDomain.Identity.IServices
         Task<IEnumerable<User>> GetEmployeeUsersAsync();
         Task<IList<string>> GetRoleByUser(User user);
         Task<bool> CheckEmailAsync(string email);
+        Task<int> FarmerSignUpAsync(CreatedFarmerRq model, UserIdentity<int> issuer = null);
+        Task<string> CheckPhoneNumberAsync(string phone);
     }
 }

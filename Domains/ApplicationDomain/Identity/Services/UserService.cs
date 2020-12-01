@@ -138,6 +138,53 @@ namespace ApplicationDomain.Identity.Services
             }
         }
 
+        public async Task<int> FarmerSignUpAsync(CreatedFarmerRq model, UserIdentity<int> issuer = null)
+        {
+            try
+            {
+                model.Status = true;
+                var farmer = _mapper.Map<User>(model);
+                if (issuer != null)
+                {
+                    farmer.CreateBy(issuer).UpdateBy(issuer);
+                }
+                var identityResult = await _userManagement.CreateAsync(farmer, model.Password);
+
+                if (!identityResult.Succeeded)
+                {
+                    throw CreateException(identityResult.Errors);
+                }
+
+                await _userManagement.AddToRoleAsync(farmer, ROLE_CONSTANT.FARMER);
+                return farmer.Id;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<string> CheckPhoneNumberAsync(string phone)
+        {
+            try
+            {
+
+                var user = await _userRepository.GetUserByPhoneNumber(phone);
+                if (user != null)
+                {
+                    return "1";
+                }
+                else
+                {
+                    return "0";
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         private Exception CreateException(IEnumerable<IdentityError> errors)
         {
             var exception = new UserDefinedException();
