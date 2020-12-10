@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
 class LoginComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       appBar: AppBar(

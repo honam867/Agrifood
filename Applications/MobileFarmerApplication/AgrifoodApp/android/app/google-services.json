@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "641426356498",
+    "project_id": "agrifoodapp-de649",
+    "storage_bucket": "agrifoodapp-de649.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641426356498:android:b44af786a0dfb1f451dbcb",
+        "android_client_info": {
+          "package_name": "com.example.AgrifoodApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641426356498-jfr0fvjbh4kcg1ajrfc64olc1jbcu24g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.AgrifoodApp",
+            "certificate_hash": "f532dc1d2fd081cee0c523c1f40895f089fe1bd3"
+          }
+        },
+        {
+          "client_id": "641426356498-hl5nmb0l7aach35lohd7o0o12os6etu8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA62V8w3WtV9XIaLRnBdIcBBAwxmnWh2Qw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641426356498-hl5nmb0l7aach35lohd7o0o12os6etu8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
