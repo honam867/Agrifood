@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:63646/api/',
-  host: 'http://localhost:63646/',
+  apiUrl: 'http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api',
+  host: 'http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/',
   tokenKey: 'F78CN6nmLQ',
   defaultAvatarURL: 'assets/images/icon/professions-and-jobs.svg',
 };
