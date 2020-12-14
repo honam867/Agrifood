@@ -172,7 +172,6 @@
 import { Component, OnInit, Input, Renderer2, ViewChild, ElementRef, Directive } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Router, ActivatedRoute, NavigationEnd, NavigationStart } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AuthService } from 'src/app/modules/auth/auth.service';
 import { ProfileUser } from './../../modules/auth/models/profile-user';
@@ -232,7 +231,7 @@ export class NavComponent implements OnInit {
     private router: Router,
     private authService: AuthService
 
-    ) {
+  ) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
