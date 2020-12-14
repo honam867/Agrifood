@@ -4,6 +4,7 @@ using ApplicationDomain.Identity.Models;
 using AspNetCore.Common.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
 namespace ApplicationDomain.Identity.IServices
 {
