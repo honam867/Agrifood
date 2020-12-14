@@ -221,7 +221,6 @@ export class NavComponent implements OnInit {
   private nativeElement: Node;
   private toggleButton: any;
   private sidebarVisible: boolean;
-  private _router: Subscription;
   @ViewChild('app-navbar-cmp', { static: false }) button: any;
 
   constructor(
