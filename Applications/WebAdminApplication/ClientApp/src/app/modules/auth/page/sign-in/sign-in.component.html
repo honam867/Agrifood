@@ -52,23 +52,23 @@
 <h3 class="login-heading mb-4">Đăng nhập</h3>
 <form novalidate [formGroup]="signInForm" (ngSubmit)="signIn()">
     <mat-form-field appearance="outline" class="input-fluid">
-        <mat-label>{{'Username'|translate | titlecase}}</mat-label>
-        <input id="userName" formControlName="userName" matInput placeholder="{{'Username'|translate | titlecase}}">
+        <mat-label>{{'Tài khoản *'|translate | titlecase}}</mat-label>
+        <input id="userName" formControlName="userName" matInput placeholder="{{'Nhập Tài khoản'|translate | titlecase}}">
         <mat-error *ngIf="userName.hasError('required')">
-            {{'Username'|translate | titlecase}} {{'is required'|translate | titlecase}}
+            {{'Tài khoản'|translate | titlecase}} {{'không được bỏ trống !!!'|translate | titlecase}}
         </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="input-fluid">
-        <mat-label>{{'password' | translate | titlecase}}</mat-label>
+        <mat-label>{{'Mật khẩu' | translate | titlecase}}</mat-label>
         <input required id="password" formControlName="password" matInput
-            placeholder="{{'password' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
+            placeholder="{{'Nhập Mật khẩu' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
         <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
         </a>
         <mat-error *ngIf="password.hasError('required')">
-            {{'password' | translate | titlecase}} {{'is required' | translate | titlecase}}
+            {{'Mật khẩu' | translate | titlecase}} {{'không được bỏ trống !!!' | translate | titlecase}}
         </mat-error>
     </mat-form-field>
     <div class="row">
@@ -80,9 +80,9 @@
 
     </div>
     <div class="d-flex justify-content-between mt-4">
-        <a class="text-info" routerLink="../forgotpassword">{{ 'Forgot' | translate | titlecase}}
-            {{'password' | translate| titlecase}} ?</a>
-        <button type="submit" class="btn btn-info"> <i class="material-icons">login</i>
-            {{'Sign in' | translate | titlecase}}</button>
+        <a class="text-success" routerLink="../forgotpassword">{{ 'Quên' | translate | titlecase}}
+            {{'Mật Khẩu' | translate| titlecase}} ?</a>
+        <button type="submit" class="btn btn-success"> <i class="material-icons">login</i>
+            {{'Đăng nhập' | translate | titlecase}}</button>
     </div>
 </form>
