@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using WebAdminApplication.Models;
+using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
 namespace WebAdminApplication.Controllers
 {
@@ -22,18 +23,22 @@ namespace WebAdminApplication.Controllers
     {
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IAuthService _authService;
+        private readonly IUserService _userService;
         private readonly IOptions<IdentityOptions> _identityOptions;
         private readonly IPermissionService _permissionService;
         public AuthController(
             IJwtTokenService jwtTokenService,
             IAuthService authService,
+
             IOptions<IdentityOptions> identityOptions,
+
             IPermissionService permissionService,
             IUserService userService
             )
         {
             _jwtTokenService = jwtTokenService;
             _authService = authService;
+            _userService = userService;
             _identityOptions = identityOptions;
             _permissionService = permissionService;
         }
@@ -54,7 +59,9 @@ namespace WebAdminApplication.Controllers
             {
                 GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
                 List<Claim> additionClaims = new List<Claim>();
-                additionClaims.Add(new Claim("permission", JsonConvert.SerializeObject(grantedPermission)));
+                //additionClaims.Add(new Claim("permission", JsonConvert.SerializeObject(grantedPermission)));
+                UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
                 var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);
                 return Ok(token);
             }
@@ -176,7 +183,8 @@ namespace WebAdminApplication.Controllers
             {
                 try
                 {
-                     var issuer = GetCurrentUserIdentity<int>();
+                    UserIdentity<int> issuer = null;
+                    issuer = GetCurrentUserIdentity<int>();
                     return Ok(await _authService.ChangePasswordAsync(model, issuer));
                 }
                 catch (Exception e)
