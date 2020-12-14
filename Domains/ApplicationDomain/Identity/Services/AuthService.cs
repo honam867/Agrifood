@@ -110,7 +110,7 @@ namespace ApplicationDomain.Identity.Services
 
         public async Task<bool> ChangePasswordAsync(UserChangePasswordRq model, UserIdentity<int> issuer)
         {
-            var user = await _userManager.FindByIdAsync(issuer.Id.ToString());
+            var user = await _userManager.FindByIdAsync(issuer.Id.ToString()) ;
             if (user == null)
             {
                 return false;

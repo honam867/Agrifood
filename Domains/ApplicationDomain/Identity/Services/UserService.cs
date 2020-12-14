@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
 namespace ApplicationDomain.Identity.Services
 {
