@@ -21,7 +21,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public District District { get; set; }
         public int? ProvinceId { get; set; }
         public Province Province { get; set; }
-        public bool isBlock { get; set; }
+        public bool IsBlock { get; set; }
         public DateTime ContractCreatetionDate { get; set; }
         public int? UserId { get; set; }
         public User User { get; set; }

@@ -71,9 +71,9 @@ namespace AspNetCore.Mvc
                         Convert.ToString(GetValueFromToken("employeeinfo")), typeof(EmployeeInfoModel));*/
                     issuer.UserModel = (UserModel)JsonConvert.DeserializeObject(
                         Convert.ToString(GetValueFromToken("userInfo")), typeof(UserModel));
-                    issuer.MenuPermission =
+                    /*issuer.MenuPermission =
                         (GrantedPermission)JsonConvert.DeserializeObject(
-                            Convert.ToString(GetValueFromToken("permission")), typeof(GrantedPermission));
+                            Convert.ToString(GetValueFromToken("permission")), typeof(GrantedPermission));*/
                     /*issuer.QuotationPermission = (GrantedQuotationPermission)JsonConvert.DeserializeObject(
                         Convert.ToString(GetValueFromToken("quotationPermission")), typeof(GrantedQuotationPermission));*/
 

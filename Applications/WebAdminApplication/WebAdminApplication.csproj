@@ -135,8 +135,4 @@
       <DependentUpon>rptQuotationService.repx</DependentUpon>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\FarmerModels\" />
-  </ItemGroup>
 </Project>
