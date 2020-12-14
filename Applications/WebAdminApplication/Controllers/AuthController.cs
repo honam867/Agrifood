@@ -183,8 +183,7 @@ namespace WebAdminApplication.Controllers
             {
                 try
                 {
-                    UserIdentity<int> issuer = null;
-                    issuer = GetCurrentUserIdentity<int>();
+                     var issuer = GetCurrentUserIdentity<int>();
                     return Ok(await _authService.ChangePasswordAsync(model, issuer));
                 }
                 catch (Exception e)
