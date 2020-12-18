@@ -18,14 +18,14 @@ namespace WebAdminApplication
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                        .AddJsonFile($"appsettings.{envName}.json", optional: true, reloadOnChange: true);
-                })
-                .UseStartup<Startup>()
-                .Build();
+          WebHost.CreateDefaultBuilder(args)
+              .ConfigureAppConfiguration((hostingContext, config) =>
+              {
+                  var envName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                  config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                      .AddJsonFile($"appsettings.{envName}.json", optional: true, reloadOnChange: true);
+              })
+              .UseStartup<Startup>()
+              .Build();
     }
 }

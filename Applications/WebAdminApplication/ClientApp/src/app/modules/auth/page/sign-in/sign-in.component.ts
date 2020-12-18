@@ -27,9 +27,13 @@ export class SignInComponent implements OnInit {
   ) {
   }
 
+
   ngOnInit() {
     this.createFormControls();
     this.createForm();
+    this.authService.test().subscribe(result => {
+      console.log(result);
+    });
   }
 
   createFormControls() {

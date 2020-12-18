@@ -23,6 +23,10 @@ export class AuthService {
     return this.http.post(`auth/signin`, formData);
   }
 
+  test(): Observable<any> {
+    return this.http.get(`branch`);
+  }
+
   forgotPassword(formData: any): Observable<any> {
     return this.http.post(`auth/forgotpassword`, formData);
 

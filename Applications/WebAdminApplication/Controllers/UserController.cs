@@ -20,6 +20,12 @@ namespace WebAdminApplication.Controllers
             _userService = userService;
       
         }
+        [Route("test")]
+        [HttpGet]
+        public IActionResult GetTest()
+        {
+            return Ok("hello world");
+        }
 
         [Route("")]
         [HttpGet]
