@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // apiUrl: 'https://cntttest.vanlanguni.edu.vn:18081/CP23Team2/api/',
-  apiUrl: 'http://115.79.56.78:8888/api/',
+  apiUrl: 'https://115.79.56.78:8888/api/',
   host: 'https://cntttest.vanlanguni.edu.vn:18081/CP23Team2/',
   tokenKey: 'F78CN6nmLQ',
   defaultAvatarURL: 'assets/images/icon/professions-and-jobs.svg',
