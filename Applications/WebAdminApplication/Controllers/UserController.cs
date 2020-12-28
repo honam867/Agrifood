@@ -12,7 +12,10 @@ namespace WebAdminApplication.Controllers
     public class UserController : BaseController
     {
         private readonly IUserService _userService;
-
+        private static string[] Summaries = new[]
+		{
+			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+		};
         public UserController(IUserService userService
           
             )
@@ -24,7 +27,8 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public IActionResult GetTest()
         {
-            return Ok("hello world");
+
+            return Ok(Summaries);
         }
 
         [Route("")]

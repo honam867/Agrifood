@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   test(): Observable<any> {
-    return this.http.get(`branch`);
+    return this.http.get(`user/test`);
   }
 
   forgotPassword(formData: any): Observable<any> {

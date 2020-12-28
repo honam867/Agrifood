@@ -58,6 +58,7 @@ export class HttpService {
   private beforeSendRequest() { }
 
   public get(url: string): Observable<any> {
+    console.log('GETTT')
     this.beforeSendRequest();
     return this.subscribeForRequest(
       this.http.get(this.getAbsoluteUrl(url), {
@@ -66,7 +67,7 @@ export class HttpService {
     );
   }
 
-  public getBody(url: string , body: any): Observable<any> {
+  public getBody(url: string, body: any): Observable<any> {
     this.beforeSendRequest();
     return this.subscribeForRequest(
       this.http.get(this.getAbsoluteUrl(url), {
