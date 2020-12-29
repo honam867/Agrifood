@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/',
+  apiUrl: 'http://apitestrufa.ap-southeast-1.elasticbeanstalk.com/api/',
   // apiUrl: 'https://115.79.56.78:8888/api/',
-  host: 'http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/',
+  host: 'http://apitestrufa.ap-southeast-1.elasticbeanstalk.com/',
   tokenKey: 'F78CN6nmLQ',
   defaultAvatarURL: 'assets/images/icon/professions-and-jobs.svg',
 };
