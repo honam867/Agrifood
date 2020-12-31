@@ -1,4 +1,5 @@
-﻿using ApplicationDomain.Identity.Entities;
+﻿using ApplicationDomain.BOA.Entities;
+using ApplicationDomain.Identity.Entities;
 using AutoMapper;
 using FluentValidation;
 
@@ -30,6 +31,7 @@ namespace ApplicationDomain.Identity.Models
             RuleFor(p => p.UserName).NotEmpty();
             RuleFor(p => p.UserName).MinimumLength(3);
             RuleFor(p => p.Email).NotEmpty().EmailAddress();
+            RuleFor(p => p.Role).NotEmpty();
         }
     }
 }

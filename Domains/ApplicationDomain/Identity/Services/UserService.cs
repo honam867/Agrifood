@@ -1,4 +1,8 @@
 ﻿
+using ApplicationDomain.BOA.IRepositories;
+using ApplicationDomain.BOA.IServices;
+using ApplicationDomain.BOA.Models.Employees;
+using ApplicationDomain.BOA.Models.Farmers;
 using ApplicationDomain.Core.Entities;
 using ApplicationDomain.Core.IRepositories;
 using ApplicationDomain.Helper;
@@ -30,10 +34,16 @@ namespace ApplicationDomain.Identity.Services
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailSender _emailSender;
         private readonly IEmailRepository _emailTemplateRepository;
+        private readonly IEmployeeService _EmployeeService;
+        private readonly IFarmerService _FarmerService;
+        private readonly IEmployeeRepository _EmployeeRepository;
         private readonly UserManager<User> _userManagement;
         private readonly RoleManager<Role> _roleManager;
         public UserService(
             IMapper mapper,
+            IEmployeeRepository EmployeeRepository,
+            IEmployeeService EmployeeService,
+            IFarmerService FarmerService,
             IUnitOfWork uow,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
@@ -45,7 +55,10 @@ namespace ApplicationDomain.Identity.Services
         {
             _userRepository = userRepository;
             _userManagement = userManagement;
+            _EmployeeRepository = EmployeeRepository;
+            _EmployeeService = EmployeeService;
             _emailSender = emailSender;
+            _FarmerService = FarmerService;
             _roleManager = roleManager;
             _roleRepository = roleRepository;
             _emailTemplateRepository = emailTemplateRepository;
@@ -99,12 +112,15 @@ namespace ApplicationDomain.Identity.Services
             return result;
         }
 
-        public async Task<int> CreateUserAsync(CreatedUserRq model, UserIdentity<int> issuer = null)
+        public async Task<int> CreateUserAsync(CreatedUserRq model, UserIdentity<int> issuer)
         {
             try
             {
                 model.Status = true;
+                
                 var user = _mapper.Map<User>(model);
+                
+               
                 if (issuer != null)
                 {
                     user.CreateBy(issuer).UpdateBy(issuer);
@@ -113,12 +129,24 @@ namespace ApplicationDomain.Identity.Services
                 string password = "Agrifoodsystem1";
                 var identityResult = await _userManagement.CreateAsync(user, password);
 
+                if (model.Role == "Employee")
+                {
+                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
+                    employeeModelRq2.UserId = user.Id;
+                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
+                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.EMPLOYEE);
+                }
+                else if (model.Role == "Farmer")
+                {
+                    FarmerModelRq farmerModelRq = new FarmerModelRq();
+                    farmerModelRq.UserId = user.Id;
+                    var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
+                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.FARMER);
+                }
                 if (!identityResult.Succeeded)
                 {
                     throw CreateException(identityResult.Errors);
                 }
-
-                await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.EMPLOYEE);
                 EmailTemplate emailTemplate = await _emailTemplateRepository.GetEmailTemplateByNameAsync("NewUserEmail");
                 emailTemplate.EmailContent = emailTemplate.EmailContent.Replace("#email", model.Email);
                 emailTemplate.EmailContent = emailTemplate.EmailContent.Replace("#username", model.UserName);
