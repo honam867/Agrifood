@@ -10,6 +10,7 @@ namespace ApplicationDomain.BOA.Entities
     {
         public int UserId { set; get; }
         public User User { get; set; }
+        public string Code { get; set; }
         public string Name { set; get; }
         public string FullName { set; get; }
         public string UserName { set; get; }
