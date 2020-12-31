@@ -73,7 +73,8 @@ namespace WebAdminApplication.Controllers
                             modelErrors.Add(error);
                     return BadRequest(modelErrors);
                 }
-                return Ok(await _userService.CreateUserAsync(model));
+                var issuer = GetCurrentUserIdentity<int>();
+                return Ok(await _userService.CreateUserAsync(model, issuer));
             }
             catch (Exception exception)
             {
