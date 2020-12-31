@@ -1,11 +1,13 @@
 ﻿using ApplicationDomain.BOA.Entities;
+using ApplicationDomain.BOA.Models.Employees;
 using ApplicationDomain.Identity.Entities;
 using AutoMapper;
+using FluentValidation;
 using System;
 
-namespace ApplicationDomain.BOA.Models.Farmers
+namespace ApplicationDomain.BOA.Models.Employees
 {
-    public class FarmerModel
+    public class EmployeeModelRq
     {
         public string Name { set; get; }
         public string Code { set; get; }
@@ -26,12 +28,21 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public string AvatarURL { set; get; }
         public int? MilkCollectionStationId { get; set; }
     }
+}
 
-    public class FarmerModelMapper : Profile
+public class EmployeeModelRqMapper : Profile
+{
+    public EmployeeModelRqMapper()
     {
-        public FarmerModelMapper()
-        {
-            CreateMap<Farmer, FarmerModel>();
-        }
+        CreateMap<EmployeeModelRq, Employee>();
+        var mapers = CreateMap<Employee, EmployeeModelRq>();
     }
 }
+
+public class EmployeeModelRqValidator : AbstractValidator<EmployeeModelRq>
+{
+    public EmployeeModelRqValidator()
+    {
+    }
+}
+
