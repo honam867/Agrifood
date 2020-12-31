@@ -1,8 +1,8 @@
+import 'package:AgrifoodApp/authentication/login/page/onboarding.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'authentication/authentication.dart';
-import 'authentication/login/page/login.dart';
-import 'authentication/login/page/onboarding.dart';
+import 'authentication/bloc/authentication.dart';
 import 'respository/authentication_repository.dart';
 import 'ui/splash_page.dart';
 import 'ui/utils/palette.dart';
@@ -34,14 +34,16 @@ class AppBlocDelegate extends BlocObserver {
   }
 }
 
-void main() {
+void main() async {
   Bloc.observer = AppBlocDelegate();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   final authenticationRepository = AuthenticationRepository();
 
   runApp(
     BlocProvider<AuthenticationBloc>(
       create: (context) {
-        return AuthenticationBloc(authenticationRepository)..add(AppStarted());
+        return AuthenticationBloc(authenticationRepository)..add(AppStarted(loginModel: null));
       },
       child: App(authenticationRepository: authenticationRepository),
     ),
@@ -57,23 +59,21 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tuloc Technology',
+      title: 'Agrifood App',
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.white,
       ),
-      // routes: {'/home': (_) => LayoutPageNew()},
+       routes: {'/home': (_) => InitPage()},
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
             return HomePage();
           }
           if (state is AuthenticationLoginPage) {
-            return LoginPage(
-              authenticationRepository: authenticationRepository,
-            );
+            return InitPage(authenticationRepository: authenticationRepository,);
           }
           if (state is AuthenticationUnauthenticated) {
-            return InitPage();
+            return OnBoardingPage();
           }
           if (state is AuthenticationLoading) {
             return SplashPage();
