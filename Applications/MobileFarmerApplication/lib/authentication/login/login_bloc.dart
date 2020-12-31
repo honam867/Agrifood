@@ -1,10 +1,8 @@
+import 'package:AgrifoodApp/authentication/bloc/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../core/storage.dart';
 import '../../respository/authentication_repository.dart';
-import '../authentication_bloc.dart';
-import '../authentication_event.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
@@ -38,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
                 loginModel: event.loginModel, );
           }
           authenticationBloc
-              .add(LoggedIn(token: storageToken, loginModel: event.loginModel, fingerId: event.accessFinger));
+              .add(LoggedIn(token: storageToken, loginModel: event.loginModel));
           yield LoginInitial();
         } else {
           yield LoginFailure(error: 'Đăng nhập không thành công');

@@ -1,9 +1,8 @@
 import 'dart:async';
+import 'package:AgrifoodApp/authentication/bloc/authentication.dart';
+import 'package:AgrifoodApp/authentication/login/page/initpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../authentication.dart';
-import '../../authentication_event.dart';
 
 
 class OnBoardingPage extends StatefulWidget {
@@ -43,7 +42,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         body: Center(
           child: AnimatedContainer(
             child: Image(
-              image: AssetImage('image/ic_launcher.png'),
+              image: AssetImage('assets/illustration.png'),
               width: _width,
               height: _height,
               fit: BoxFit.contain,
