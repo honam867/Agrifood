@@ -13,8 +13,9 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
 
+export class UserListComponent implements OnInit {
+  value = '';
   page = 1;
   showLoad = false;
   displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'role', 'status', 'action'];

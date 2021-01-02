@@ -22,10 +22,10 @@ legend {
 }
 
 a{
-  color: $link-color;
+  color: #4caf50;
   &:hover,
   &:focus{
-      color: darken($link-color, 5%);
+      color: darken(#4caf50, 5%);
       text-decoration: none;
   }
 
