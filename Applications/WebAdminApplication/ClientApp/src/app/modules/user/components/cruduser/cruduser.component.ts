@@ -1,7 +1,7 @@
+import { UserService } from './../../user.service';
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { User } from '../../models/user';
-// import { UserService } from '../../user.service';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 // import { Role } from 'src/app/modules/system/models/role';
 // import { RoleOfUser } from './../../models/roleofUser';
@@ -41,7 +41,7 @@ export class CRUDUserComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CRUDUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    // private userService: UserService,
+    public userService: UserService
     // private roleService: RoleService,
     // private systemService: SystemService,
   ) { }
@@ -72,14 +72,14 @@ export class CRUDUserComponent implements OnInit {
     this.sourceView = this.user;
   }
 
-  // save() {
-  //   this.userService.updateUser(this.user.id, this.sourceView).subscribe(
-  //     result => {
-  //       this.isView = true;
-  //       this.user = this.sourceView;
-  //     }
-  //   );
-  // }
+  save() {
+    this.userService.updateUser(this.user.id, this.sourceView).subscribe(
+      result => {
+        this.isView = true;
+        this.user = this.sourceView;
+      }
+    );
+  }
 
   delete() {
     const deleteDialog = this.dialog.open(ConfirmationComponent, {
@@ -89,20 +89,20 @@ export class CRUDUserComponent implements OnInit {
       disableClose: true,
     });
 
-    // deleteDialog.afterClosed().subscribe(
-    //   result => {
-    //     if (result.confirmed) {
-    //       this.userService.deleteUser(this.user.id).subscribe(
-    //         success => {
-    //           this.dialogRef.close({
-    //             action: StatusForm.DETELE,
-    //             data: this.user,
-    //           });
-    //         }
-    //       );
-    //     }
-    //   }
-    // );
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.userService.deleteUser(this.user.id).subscribe(
+            success => {
+              this.dialogRef.close({
+                action: StatusForm.DETELE,
+                data: this.user,
+              });
+            }
+          );
+        }
+      }
+    );
   }
 
   close() {
@@ -113,15 +113,32 @@ export class CRUDUserComponent implements OnInit {
   }
 
   create() {
-    // this.userService.createUser(this.sourceView).subscribe(
-    //   result => {
-    //     this.dialogRef.close({
-    //       data: result,
-    //     });
-    //   }
-    // );
-    console.log('concac');
+    this.userService.createUser(this.sourceView).subscribe(
+      result => {
+        this.dialogRef.close({
+          data: result,
+        });
+      }
+    );
   }
+  // create() {
+  //   // this.userService.createUser(this.sourceView).subscribe(
+  //   //   result => {
+  //   //     this.dialogRef.close({
+  //   //       data: result,
+  //   //     });
+  //   //   }
+  //   // );
+  //   console.log(this.sourceView);
+  //   const data = {
+  //     email: ''
+  //   }
+  //   data.email = this.sourceView.email;
+  //   console.log(data);
+
+  //   // console.log(this.data.user);
+
+  // }
 
   // get role of user
   // fetchRoleinUser() {

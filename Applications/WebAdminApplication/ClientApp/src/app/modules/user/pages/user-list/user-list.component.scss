@@ -1,6 +1,11 @@
 @import '../../../../shared/css/table.component.scss';
-.example-button-row {
-    width: 100%;
-    text-align: right;
-    color: #000;
+.user-list {
+    padding-left: 10px;
+    max-height: fit-content;
+    padding-right: 10px;
+}
+
+.test {
+    justify-content: center;
+    padding-left: 10px;
 }
