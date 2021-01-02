@@ -30,7 +30,6 @@ export class CrudRolesUserComponent implements OnInit {
   isView = true;
   isCreate = true;
   name = [];
-  notification: Notification = new Notification(this.snackBar);
   roles: Role[] = [];
   RolesSelected: Role[] = [];
   sourceView: RoleOfUser = new RoleOfUser();
@@ -46,6 +45,7 @@ export class CrudRolesUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService,
     private snackBar: MatSnackBar,
+    private notification: Notification
   ) {
 
   }
@@ -65,6 +65,10 @@ export class CrudRolesUserComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Role>(this.roles);
         this.dataSource.paginator = this.paginator;
         this.loaded = true;
+      }, error => {
+        if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+          this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
+        }
       });
   }
 
@@ -80,7 +84,6 @@ export class CrudRolesUserComponent implements OnInit {
   }
 
   create() {
-
     this.rqListRoles.roles = this.selection.selected;
     this.rqListRoles.userId = this.sourceView.userId;
     this.userService.addRolesOfUser(this.rqListRoles).subscribe(

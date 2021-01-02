@@ -37,6 +37,7 @@ export class UserListComponent implements OnInit {
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
       width: '40%',
+      height: '90%',
       data: {
         action: StatusForm.CREATE,
         user: new User(),
@@ -46,9 +47,11 @@ export class UserListComponent implements OnInit {
 
     createDialog.afterClosed().subscribe(
       result => {
-        if (Object.keys(result.data).length !== 0) {
-          this.users.push(result.data);
-          this.dataSource.data = this.users;
+        if (Object.keys(result).length !== 0) {
+          if (Object.keys(result.data).length !== 0) {
+            this.users.push(result.data);
+            this.dataSource.data = this.users;
+          }
         }
       }
     );
@@ -131,6 +134,8 @@ export class UserListComponent implements OnInit {
                 this.notification.showNotification('danger', 'top', 'center', `UserName: ${user.userName} và Mã User: ${user.id} đã được sử dụng cho một trường dữ liệu khác !
                 Xin hãy xóa dữ liệu đã được sử dụng trước.
                 `)
+              } else if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+                this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
               }
 
             }
@@ -143,6 +148,7 @@ export class UserListComponent implements OnInit {
   viewDetail(user: User) {
     const viewDialog = this.dialog.open(CRUDUserComponent, {
       width: '40%',
+      height: '80%',
       data: {
         action: StatusForm.VIEW,
         user,

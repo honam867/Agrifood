@@ -47,6 +47,7 @@ export class CRUDUserComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: User = new User();
   loading: boolean;
+  userNameExist: boolean;
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CRUDUserComponent>,
@@ -68,13 +69,21 @@ export class CRUDUserComponent implements OnInit {
     this.sourceView = Object.assign({}, this.user);
     if (this.isView) {
       this.fetchRoleinUser();
+    } else {
+
+      this.fetchRoles();
     }
-    this.fetchRoles();
   }
 
   fetchRoles() {
     this.roleService.getRoles().subscribe(result => {
       this.roles = result;
+    }, (error) => {
+      if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+        this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
+      } else if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+        this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
+      }
     })
   }
 
@@ -138,10 +147,14 @@ export class CRUDUserComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close({
-      action: StatusForm.VIEW,
-      data: this.sourceView,
-    });
+    if (this.sourceView.id > 0) {
+      this.dialogRef.close({
+        action: StatusForm.VIEW,
+        data: this.sourceView,
+      });
+    } else {
+      this.dialogRef.close({})
+    }
   }
 
   create() {
@@ -207,12 +220,20 @@ export class CRUDUserComponent implements OnInit {
     if (email !== '') {
       this.userService.checkEmailExist(email).subscribe(result => {
         this.valueObject = result;
-        if (this.valueObject.value) {
-          this.emailExist = true;
-        }
+        this.emailExist = this.valueObject.value;
       })
     } else {
       this.emailExist = false;
+    }
+  }
+  checkUserName(username) {
+    if (username !== '') {
+      this.userService.checkUserNameExist(username).subscribe(result => {
+        this.valueObject = result;
+        this.userNameExist = this.valueObject.value;
+      })
+    } else {
+      this.userNameExist = false;
     }
   }
 }

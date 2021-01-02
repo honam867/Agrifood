@@ -6,3 +6,4 @@ export const TAB = 'tab';
 export const ID = 'id';
 export const EMPLOYEEINFO = 'employeeinfo';
 export const ROLES = 'rolelist';
+export const USERINFO = 'userinfo';

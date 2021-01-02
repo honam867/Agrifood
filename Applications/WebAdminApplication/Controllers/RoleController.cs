@@ -1,4 +1,5 @@
-﻿using ApplicationDomain.Identity.IServices;
+﻿using ApplicationDomain.Helper;
+using ApplicationDomain.Identity.IServices;
 using ApplicationDomain.Identity.Models;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,20 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public IActionResult GetRoles()
         {
-            return Ok(_roleService.GetListRoles());
+            try
+            {
+                var issuer = GetCurrentUserIdentity<int>();
+                if (issuer.Roles.Contains(ROLE_CONSTANT.SYSADMIN) || issuer.Roles.Contains(ROLE_CONSTANT.ADMIN))
+                {
+                    return Ok(_roleService.GetListRoles());
+                }
+                return BadRequest("You need the role of Admin or SysAdmin to perform this action.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
         }
 
         [Route("{id}")]
@@ -39,7 +53,19 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> GetRoleNotExistsInUserRoleId(int id)
         {
-            return Ok(await _roleService.GetRoleNotExistsInUserRoleId(id));
+            try
+            {
+                var issuer = GetCurrentUserIdentity<int>();
+                if (issuer.Roles.Contains(ROLE_CONSTANT.ADMIN) || issuer.Roles.Contains(ROLE_CONSTANT.SYSADMIN))
+                {
+                    return Ok(await _roleService.GetRoleNotExistsInUserRoleId(id));
+                }
+                return BadRequest("You need the role of Admin or SysAdmin to perform this action.");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         //[Route("checkingquotationemployee")]
@@ -135,12 +161,18 @@ namespace WebAdminApplication.Controllers
         {
             try
             {
-                return Ok(await _roleService.DeleteRoleAsync(id));
+                var issuer = GetCurrentUserIdentity<int>();
+                if (issuer.Roles.Contains(ROLE_CONSTANT.ADMIN) || issuer.Roles.Contains(ROLE_CONSTANT.SYSADMIN))
+                {
+                    return Ok(await _roleService.DeleteRoleAsync(id));
+                }
+                return BadRequest("You need the role of Admin or SysAdmin to perform this action.");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
+
         }
 
         [Route("default")]

@@ -130,17 +130,17 @@ namespace WebAdminApplication.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
+                var issuer = GetCurrentUserIdentity<int>();
+                if (issuer.Roles.Contains("Admin") || issuer.Roles.Contains("SysAdmin"))
                 {
-                    return BadRequest(ModelState);
+                    return Ok(await _userService.DeleteUserAsync(id));
                 }
-                return Ok(await _userService.DeleteUserAsync(id));
+                return BadRequest("You need the role of Admin or SysAdmin to perform this action.");
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-              return BadRequest(ex.Message);
+                return BadRequest(e.Message);
             }
-            
         }
 
         [Route("role")]
@@ -190,6 +190,14 @@ namespace WebAdminApplication.Controllers
         public async Task<IActionResult> CheckEmailAsync(string email)
         {
             return OkValueObject(await _userService.CheckEmailAsync(email));
+
+        }
+
+        [Route("usernamechecking/{username}")]
+        [HttpGet]
+        public async Task<IActionResult> CheckUserNameAsync(string username)
+        {
+            return OkValueObject(await _userService.CheckUserNameAsync(username));
         }
 
         [Route("phonechecking/{phone}")]

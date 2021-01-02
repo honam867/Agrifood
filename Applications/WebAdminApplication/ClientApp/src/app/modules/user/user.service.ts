@@ -49,5 +49,8 @@ export class UserService {
   checkEmailExist(email: string): Observable<any> {
     return this.http.get(`user/emailchecking/${email}`);
   }
+  checkUserNameExist(userName: string): Observable<any> {
+    return this.http.get(`user/usernamechecking/${userName}`);
+  }
 
 }

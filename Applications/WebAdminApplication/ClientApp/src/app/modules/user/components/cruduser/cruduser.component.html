@@ -26,12 +26,15 @@
                     <div class="col">
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Username</mat-label>
-                            <input required id="userName" [(ngModel)]="sourceView.userName" name="userName"
-                                #name="ngModel" matInput placeholder="Username" [disabled]="!isCreate">
+                            <input appBlockCopyPaste (keydown.space)="$event.preventDefault();"
+                                (keyup)="checkUserName(sourceView.userName)" required id="userName"
+                                [(ngModel)]="sourceView.userName" name="userName" #name="ngModel" matInput
+                                placeholder="Username" [disabled]="!isCreate">
                             <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Username không được
                                 bỏ trống
                             </mat-error>
                         </mat-form-field>
+                        <mat-error *ngIf="userNameExist">UserName đã tồn tại</mat-error>
                     </div>
                 </div>
                 <div class="row">
@@ -45,8 +48,8 @@
                                 được
                                 bỏ trống
                             </mat-error>
-                            <mat-error *ngIf="emailExist">Email đã tồn tại</mat-error>
                         </mat-form-field>
+                        <mat-error *ngIf="emailExist">Email đã tồn tại</mat-error>
                     </div>
                 </div>
                 <div class="row">
@@ -75,7 +78,7 @@
                 </div>
                 <div style="margin:0 auto;text-align: center;">
                     <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
-                        <i class="fas fa-save"></i> Thêm
+                        <mat-icon>add</mat-icon> Thêm
                     </button>
                 </div>
             </form>

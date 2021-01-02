@@ -1,4 +1,4 @@
-import { EMPLOYEEINFO, ROLES } from './../../shared/constant';
+import { EMPLOYEEINFO, ROLES, USERINFO } from './../../shared/constant';
 import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -54,23 +54,20 @@ export class AuthService {
     return false;
   }
 
-  // storageEmployeeInfo() {
-  //   console.log('fsdfd')
-  //   const token = localStorage.getItem(environment.tokenKey);
-  //   const tokenPayload = decode(token);
-  //   const test = Object.values(tokenPayload);
-  //   console.log("🚀 ~ file: auth.service.ts ~ line 63 ~ AuthService ~ storageEmployeeInfo ~ test", test[1])
-  //   localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
-  // }
-
-
-  storageRoles() {
+  storageUserInfo() {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
-    const roles = Object.values(tokenPayload);
-    const listRoles = { roles: roles[1] }
-    localStorage.setItem(ROLES, JSON.stringify(listRoles.roles));
+    localStorage.setItem(USERINFO, tokenPayload.userInfo);
   }
+
+
+  // storageRoles() {
+  //   const token = localStorage.getItem(environment.tokenKey);
+  //   const tokenPayload = decode(token);
+  //   const roles = Object.values(tokenPayload);
+  //   const listRoles = { roles: roles[1] }
+  //   localStorage.setItem(ROLES, JSON.stringify(listRoles.roles));
+  // }
   // storagePermission() {
   //   const token = localStorage.getItem(environment.tokenKey);
   //   const tokenPayload = decode(token);
