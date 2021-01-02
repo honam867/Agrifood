@@ -245,17 +245,25 @@ namespace ApplicationDomain.Identity.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _userManagement.FindByIdAsync(id.ToString());
-
-            if (user == null)
+            try
             {
-                return false;
+                var user = await _userManagement.FindByIdAsync(id.ToString());
+
+                if (user == null)
+                {
+                    return false;
+                }
+                _userRepository.Delete(user);
+
+                await _uow.SaveChangesAsync();
+
+                return true;
             }
-            _userRepository.Delete(user);
+            catch (Exception ex)
+            {
 
-            await _uow.SaveChangesAsync();
-
-            return true;
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> AddRoleToUserAsync(UpdateUserRoleModelRq model)

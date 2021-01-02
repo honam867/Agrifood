@@ -1,3 +1,4 @@
+import { Notification } from './../../../../shared/components/notification/notification';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,7 +26,8 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     public dialog: MatDialog,
-    public userService: UserService
+    public userService: UserService,
+    private notification: Notification
   ) { }
 
   ngOnInit(): void {
@@ -33,8 +35,7 @@ export class UserListComponent implements OnInit {
   }
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
-      height: '75%',
-      width: '80%',
+      width: '40%',
       data: {
         action: StatusForm.CREATE,
         user: new User(),
@@ -44,14 +45,10 @@ export class UserListComponent implements OnInit {
 
     createDialog.afterClosed().subscribe(
       result => {
-        this.userService.getUserById(result.data).subscribe(
-          createdUser => {
-            if (createdUser !== null) {
-              this.users.push(createdUser);
-              this.dataSource.data = this.users;
-            }
-          }
-        );
+        if (Object.keys(result.data).length !== 0) {
+          this.users.push(result.data);
+          this.dataSource.data = this.users;
+        }
       }
     );
   }
@@ -82,7 +79,7 @@ export class UserListComponent implements OnInit {
 
   editUser(user: User) {
     const editDialog = this.dialog.open(CRUDUserComponent, {
-      width: '80%',
+      width: '40%',
       data: {
         action: StatusForm.EDIT,
         user,
@@ -128,8 +125,15 @@ export class UserListComponent implements OnInit {
                 this.users.splice(userIndex, 1);
                 this.dataSource.data = this.users;
               }
+            }, (error) => {
+              if (error.error.message === 'An error occurred while updating the entries. See the inner exception for details.') {
+                this.notification.showNotification('danger', 'top', 'center', `UserName: ${user.userName} và Mã User: ${user.id} đã được sử dụng cho một trường dữ liệu khác !
+                Xin hãy xóa dữ liệu đã được sử dụng trước.
+                `)
+              }
+
             }
-          );
+          )
         }
       }
     );
@@ -137,8 +141,7 @@ export class UserListComponent implements OnInit {
 
   viewDetail(user: User) {
     const viewDialog = this.dialog.open(CRUDUserComponent, {
-      height: '75%',
-      width: '80%',
+      width: '40%',
       data: {
         action: StatusForm.VIEW,
         user,

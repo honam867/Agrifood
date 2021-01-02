@@ -1,4 +1,4 @@
-import { EMPLOYEEINFO } from './../../shared/constant';
+import { EMPLOYEEINFO, ROLES } from './../../shared/constant';
 import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -55,15 +55,26 @@ export class AuthService {
   }
 
   storageEmployeeInfo() {
+    console.log('fsdfd')
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
+    const test = Object.values(tokenPayload);
+    console.log("🚀 ~ file: auth.service.ts ~ line 63 ~ AuthService ~ storageEmployeeInfo ~ test", test[1])
     localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
   }
-  storagePermission() {
+
+  storageRoles() {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
-    localStorage.setItem(PERMISSION, tokenPayload.permission);
+    const roles = Object.values(tokenPayload);
+    const listRoles = { roles: roles[1] }
+    localStorage.setItem(ROLES, listRoles.roles.toString());
   }
+  // storagePermission() {
+  //   const token = localStorage.getItem(environment.tokenKey);
+  //   const tokenPayload = decode(token);
+  //   localStorage.setItem(PERMISSION, tokenPayload.permission);
+  // }
 
   changePassword(formData: any): Observable<any> {
     return this.http.put(`auth/changepassword`, formData);

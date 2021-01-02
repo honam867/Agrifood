@@ -388,9 +388,15 @@ export class NavComponent implements OnInit {
   sidebarToggle() {
     if (this.sidebarVisible === false) {
       this.sidebarOpen();
+
     } else {
       this.sidebarClose();
     }
+  }
+
+  test() {
+    this.authService.storageEmployeeInfo();
+
   }
 
   logout() {

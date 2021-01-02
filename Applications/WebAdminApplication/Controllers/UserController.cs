@@ -128,11 +128,19 @@ namespace WebAdminApplication.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                return Ok(await _userService.DeleteUserAsync(id));
             }
-            return Ok(await _userService.DeleteUserAsync(id));
+            catch (Exception ex)
+            {
+              return BadRequest(ex.Message);
+            }
+            
         }
 
         [Route("role")]
