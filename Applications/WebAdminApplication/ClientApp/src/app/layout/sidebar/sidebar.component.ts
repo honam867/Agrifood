@@ -137,7 +137,7 @@ export const ROUTES: RouteInfo[] = [{
     },
     {
       path: '/user',
-      title: 'Quản lý người dùng',
+      title: 'Quản Lý Tài Khoản',
       type: 'link',
       icontype: 'people_alt'
     }
