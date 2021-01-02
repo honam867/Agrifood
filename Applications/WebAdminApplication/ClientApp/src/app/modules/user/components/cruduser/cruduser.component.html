@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse">
+        <button class="" mat-icon-button (click)="close()">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-card-title class="card-header text-center" *ngIf="isView">
+    Thông tin người dùng
+    <button mat-icon-button *ngIf="isView" (click)="edit()" matTooltip="Chỉnh sửa">
+        <mat-icon>edit</mat-icon>
+    </button>
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="isCreate">
+    Thêm người dùng
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="!isView && !isCreate">
+    Chỉnh sửa thông tin người dùng
+</mat-card-title>
+<mat-tab-group>
+    <mat-tab label="Thông tin">
+        <mat-card class="app-card">
+            <form class="form-row" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Username</mat-label>
+                    <input id="userName" [(ngModel)]="sourceView.userName" name="userName" #name="ngModel" matInput placeholder="Username" [disabled]="!isCreate">
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Username không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input id="email" [(ngModel)]="sourceView.email" name="email" matInput placeholder="Email" [disabled]="isView">
+                </mat-form-field>
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Phone number</mat-label>
+                    <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput placeholder="Phone number" [disabled]="isView">
+                </mat-form-field>
+                <mat-form-field class="input-fluid" appearance="outline" *ngIf="!isCreate">
+                    <mat-label>Role</mat-label>
+                    <input id="role" [(ngModel)]="sourceView.role" name="role" matInput placeholder="Role" [disabled]="!isCreate">
+                </mat-form-field>
+                <!-- <mat-form-field class="input-fluid" appearance="outline" *ngIf="isCreate">
+                    <mat-label>Role</mat-label>
+                    <mat-select value="{{sourceView.role}}" [(ngModel)]="sourceView.role" name="selectionRole">
+                        <mat-option *ngFor="let role of roles" value="{{role.name}}">{{role.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+                <div style="margin:0 auto;text-align: center;">
+                    <button mat-raised-button color="primary" type="submit" *ngIf="isCreate">
+                        <span class="material-icons">
+                          save
+                        </span>
+                        Thêm
+                    </button>
+                </div>
+            </form>
+            <!-- <div style="margin:0 auto;text-align: center;">
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i class="fas fa-trash-alt"></i> Xóa</button>
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()"><i class="fas fa-window-close"></i> Bỏ thay đổi</button>
+                <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()"><i class="fas fa-save"></i> Lưu thay đổi</button>
+            </div> -->
+        </mat-card>
+    </mat-tab>
+    <!-- <mat-tab label="Quyền hạn" *ngIf="!isCreate">
+        <button mat-icon-button color="warn" matTooltip="Thêm mới" *ngIf="isView || isCreate"
+            (click)="popUpCrudAddRoles()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <div class="mat-elevation-z8">
+            <div style="max-height: 730px; overflow: auto;">
+                <mat-paginator [pageSizeOptions]="[10,20,50]"></mat-paginator>
+
+                <table mat-table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên vai trò</th>
+                        <td mat-cell *matCellDef="let rolesOfUser">{{rolesOfUser}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef width="5%"></th>
+                        <td mat-cell *matCellDef="let rolesOfUser">
+                            <button mat-icon-button color="primary" (click)="deleteRolesOfUser(rolesOfUser)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    <tr mat-row class="table-row" *matRowDef="let assetCategoryPart; columns: displayedColumns; ">
+                    </tr>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
+                </table>
+            </div>
+        </div>
+    </mat-tab> -->
+</mat-tab-group>
