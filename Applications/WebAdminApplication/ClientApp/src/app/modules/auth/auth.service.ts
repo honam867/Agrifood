@@ -54,21 +54,22 @@ export class AuthService {
     return false;
   }
 
-  storageEmployeeInfo() {
-    console.log('fsdfd')
-    const token = localStorage.getItem(environment.tokenKey);
-    const tokenPayload = decode(token);
-    const test = Object.values(tokenPayload);
-    console.log("🚀 ~ file: auth.service.ts ~ line 63 ~ AuthService ~ storageEmployeeInfo ~ test", test[1])
-    localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
-  }
+  // storageEmployeeInfo() {
+  //   console.log('fsdfd')
+  //   const token = localStorage.getItem(environment.tokenKey);
+  //   const tokenPayload = decode(token);
+  //   const test = Object.values(tokenPayload);
+  //   console.log("🚀 ~ file: auth.service.ts ~ line 63 ~ AuthService ~ storageEmployeeInfo ~ test", test[1])
+  //   localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
+  // }
+
 
   storageRoles() {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
     const roles = Object.values(tokenPayload);
     const listRoles = { roles: roles[1] }
-    localStorage.setItem(ROLES, listRoles.roles.toString());
+    localStorage.setItem(ROLES, JSON.stringify(listRoles.roles));
   }
   // storagePermission() {
   //   const token = localStorage.getItem(environment.tokenKey);

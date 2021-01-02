@@ -394,11 +394,6 @@ export class NavComponent implements OnInit {
     }
   }
 
-  test() {
-    this.authService.storageEmployeeInfo();
-
-  }
-
   logout() {
     this.authService.logout();
   }

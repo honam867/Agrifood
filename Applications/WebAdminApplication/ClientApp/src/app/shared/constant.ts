@@ -5,4 +5,4 @@ export const EVENT_INDEX = 'eventIndex';
 export const TAB = 'tab';
 export const ID = 'id';
 export const EMPLOYEEINFO = 'employeeinfo';
-export const ROLES = 'roles';
+export const ROLES = 'rolelist';
