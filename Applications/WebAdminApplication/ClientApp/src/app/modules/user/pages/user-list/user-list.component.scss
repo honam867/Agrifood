@@ -1,4 +1,19 @@
 @import '../../../../shared/css/table.component.scss';
+.form-setting{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  .user-filter{
+    padding-left: 10px ;
+    padding-right: 10px ;
+    justify-content: flex-end;
+  }
+  .create-user{
+    padding-left: 10px ;
+    padding-right: 10px ;
+    justify-content: flex-start;
+  }
+}
 .user-list {
     padding-left: 10px;
     max-height: fit-content;

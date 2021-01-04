@@ -1,3 +1,4 @@
+import { Notification } from './../../../../shared/components/notification/notification';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,8 +14,9 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
 
+export class UserListComponent implements OnInit {
+  value = '';
   page = 1;
   showLoad = false;
   displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'role', 'status', 'action'];
@@ -25,7 +27,8 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     public dialog: MatDialog,
-    public userService: UserService
+    public userService: UserService,
+    private notification: Notification
   ) { }
 
   ngOnInit(): void {
@@ -33,8 +36,8 @@ export class UserListComponent implements OnInit {
   }
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
-      height: '75%',
-      width: '80%',
+      width: '40%',
+      height: '90%',
       data: {
         action: StatusForm.CREATE,
         user: new User(),
@@ -44,14 +47,12 @@ export class UserListComponent implements OnInit {
 
     createDialog.afterClosed().subscribe(
       result => {
-        this.userService.getUserById(result.data).subscribe(
-          createdUser => {
-            if (createdUser !== null) {
-              this.users.push(createdUser);
-              this.dataSource.data = this.users;
-            }
+        if (Object.keys(result).length !== 0) {
+          if (Object.keys(result.data).length !== 0) {
+            this.users.push(result.data);
+            this.dataSource.data = this.users;
           }
-        );
+        }
       }
     );
   }
@@ -82,7 +83,7 @@ export class UserListComponent implements OnInit {
 
   editUser(user: User) {
     const editDialog = this.dialog.open(CRUDUserComponent, {
-      width: '80%',
+      width: '40%',
       data: {
         action: StatusForm.EDIT,
         user,
@@ -128,8 +129,17 @@ export class UserListComponent implements OnInit {
                 this.users.splice(userIndex, 1);
                 this.dataSource.data = this.users;
               }
+            }, (error) => {
+              if (error.error.message === 'An error occurred while updating the entries. See the inner exception for details.') {
+                this.notification.showNotification('danger', 'top', 'center', `UserName: ${user.userName} và Mã User: ${user.id} đã được sử dụng cho một trường dữ liệu khác !
+                Xin hãy xóa dữ liệu đã được sử dụng trước.
+                `)
+              } else if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+                this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
+              }
+
             }
-          );
+          )
         }
       }
     );
@@ -137,8 +147,8 @@ export class UserListComponent implements OnInit {
 
   viewDetail(user: User) {
     const viewDialog = this.dialog.open(CRUDUserComponent, {
-      height: '75%',
-      width: '80%',
+      width: '40%',
+      height: '80%',
       data: {
         action: StatusForm.VIEW,
         user,

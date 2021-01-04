@@ -10,14 +10,4 @@ export class User {
     createdByUserName: string;
     updatedDate: Date;
     updatedByUserName: string;
-
-    constructor() {
-        this.id = 0;
-        this.userName = '';
-        this.email = '';
-        this.phoneNumber = '';
-        this.avatarURL = '';
-        this.role = '';
-        this.status = true;
-    }
 }
