@@ -1,8 +1,19 @@
-<div class="container-fluid">
-  <div class="form-setting">
-    <div class="create-user">
-      <button mat-raised-button color="primary" (click)="createUser()"><i class="material-icons">person_add</i> Thêm tài
-        khoản</button>
+
+<div class="containter">
+    <div class="row">
+        <div class="col-md-">
+            <div class="user-filter">
+                <mat-form-field appearance="outline" style="padding: 0 !important;">
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Lọc">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-md-">
+            <div class="user-button">
+                <button mat-raised-button color="primary" (click)="createUser()">Thêm tài khoản</button>
+            </div>
+        </div>
     </div>
     <div class="user-filter">
       <mat-form-field class="example-form-field">

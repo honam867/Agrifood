@@ -130,19 +130,23 @@ export interface ChildrenItems {
 
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
-    path: '/dashboard',
-    title: 'Thống kê',
-    type: 'link',
-    icontype: 'insert_chart_outlined'
-},
-{
-    path: '/user',
-    title: 'Quản Lý Tài Khoản',
-    type: 'link',
-    icontype: 'people_alt'
-}
-
-
+        path: '/dashboard',
+        title: 'Thống kê',
+        type: 'link',
+        icontype: 'insert_chart_outlined'
+    },
+    {
+      path: '/user',
+      title: 'Quản lý người dùng',
+      type: 'link',
+      icontype: 'people_alt'
+    },
+    {
+      path: '/farmer',
+      title: 'Quản lý hộ nông dân',
+      type: 'link',
+      icontype: 'agriculture'
+    }
 ];
 @Component({
     selector: 'app-sidebar',

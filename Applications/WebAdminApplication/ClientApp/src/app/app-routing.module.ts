@@ -17,6 +17,11 @@ const routes: Routes = [
     component: ContentComponent,
     children: [
       {
+        path: 'farmer',
+        loadChildren: () =>
+          import('./modules/farmer/farmer.module').then(mod => mod.FarmerModule)
+      },
+      {
         path: 'user',
         loadChildren: () =>
           import('./modules/user/user.module').then(mod => mod.UserModule)

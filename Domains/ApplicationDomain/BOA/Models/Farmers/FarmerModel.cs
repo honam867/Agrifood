@@ -7,6 +7,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
 {
     public class FarmerModel
     {
+        public int Id { set; get; }
         public string Name { set; get; }
         public string Code { set; get; }
         public string FullName { get; set; }
