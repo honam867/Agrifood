@@ -140,6 +140,12 @@ export const ROUTES: RouteInfo[] = [{
       title: 'Quản lý người dùng',
       type: 'link',
       icontype: 'people_alt'
+    },
+    {
+      path: '/farmer',
+      title: 'Quản lý hộ nông dân',
+      type: 'link',
+      icontype: 'agriculture'
     }
 
 
