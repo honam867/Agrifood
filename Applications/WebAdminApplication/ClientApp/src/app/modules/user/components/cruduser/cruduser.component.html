@@ -76,6 +76,16 @@
                         </mat-form-field>
                     </div>
                 </div>
+                <div *ngIf="sourceView.role === 'Farmer' && isCreate" class="row">
+                    <div class="col">
+                        <mat-radio-group [(ngModel)]="sourceView.selectedFarmer" [ngModelOptions]="{ standalone: true }"
+                            name="isBlock" [disabled]="isView">
+                            <mat-radio-button checked="true" [value]="true">Tạo tài khoản đồng thời tạo nông dân
+                            </mat-radio-button>
+                            <mat-radio-button [value]="false">Chỉ tạo tài khoản</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
                 <div style="margin:0 auto;text-align: center;">
                     <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
                         <mat-icon>add</mat-icon> Thêm
@@ -93,8 +103,7 @@
         </mat-card>
     </mat-tab>
     <mat-tab label="Quyền hạn" *ngIf="!isCreate">
-        <button mat-icon-button color="warn" matTooltip="Thêm mới" *ngIf="isView || isCreate"
-            (click)="popUpCrudAddRoles()">
+        <button mat-icon-button color="warn" matTooltip="Thêm mới" *ngIf="!isCreate" (click)="popUpCrudAddRoles()">
             <mat-icon>add</mat-icon>
         </button>
         <div class="mat-elevation-z8">

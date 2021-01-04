@@ -1,3 +1,6 @@
+import { ValueObject } from './../../../../shared/models/value-object';
+import { District } from './../../../../models/district';
+import { Province } from './../../../../models/province';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { StatusForm } from './../../../../shared/enum/status-form';
 import { FarmerService } from './../../farmer.service';
@@ -20,6 +23,7 @@ export class CrudFarmerComponent implements OnInit {
   farmer: Farmer = new Farmer();
   isView = true;
   isCreate = true;
+  districts: District[] = [];
   // roles: Role[] = [];
   // roleOfUsers: RoleOfUser[] = [];
   rolesOfUser: any[];
@@ -27,6 +31,9 @@ export class CrudFarmerComponent implements OnInit {
     userId: 0,
     roleName: '',
   };
+  provinces: Province[] = [];
+  valueObject: ValueObject = new ValueObject();
+
   // dataSource: MatTableDataSource<Role>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Farmer = new Farmer();
@@ -47,6 +54,38 @@ export class CrudFarmerComponent implements OnInit {
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.farmer);
+    this.fetchProvince();
+    if (this.isView) {
+      this.fetchDistrict(this.sourceView.provinceId);
+    } else {
+      this.fetchNewcode();
+    }
+  }
+
+  fetchNewcode() {
+    this.farmerService.newCode().subscribe(result => {
+      this.valueObject = result;
+      this.sourceView.code = this.valueObject.value;
+    });
+  }
+
+  getDistrict(provinceId: number) {
+    this.farmerService.getDistrictByProvinceId(provinceId).subscribe(result => {
+      this.districts = result;
+    });
+  }
+
+
+  fetchProvince() {
+    this.farmerService.getProvince().subscribe(result => {
+      this.provinces = result;
+    });
+  }
+
+  fetchDistrict(proviceId: number) {
+    this.farmerService.getDistrictByProvinceId(proviceId).subscribe(result => {
+      this.districts = result;
+    });
   }
 
   edit() {

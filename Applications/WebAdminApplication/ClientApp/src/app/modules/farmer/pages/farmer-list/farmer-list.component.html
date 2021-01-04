@@ -22,6 +22,17 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên</th>
             <td mat-cell *matCellDef="let farmer">{{farmer.fullName}}</td>
         </ng-container>
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tài khoản được liên kết</th>
+            <td mat-cell *matCellDef="let farmer">
+                <div *ngIf="farmer.userUserName" class="text-success font-weight-bold">
+                    {{farmer.userUserName}}
+                </div>
+                <div class="text-danger" *ngIf="!farmer.userUserName">
+                    Nông dân chưa có tài khoản
+                </div>
+            </td>
+        </ng-container>
 
         <ng-container matColumnDef="address">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Địa chỉ</th>
@@ -50,17 +61,17 @@
             <th mat-header-cell *matHeaderCellDef width="3%"></th>
             <td mat-cell *matCellDef="let farmer" (click)="$event.stopPropagation()">
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
+                    <mat-icon>more_vert</mat-icon>
+                </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="editFarmer(farmer)">
-          <mat-icon>edit</mat-icon>
-          <span>Chỉnh sửa</span>
-        </button>
+                        <mat-icon>edit</mat-icon>
+                        <span>Chỉnh sửa</span>
+                    </button>
                     <button mat-menu-item (click)="deleteFarmer(farmer)">
-          <mat-icon>delete</mat-icon>
-          <span>Xóa</span>
-        </button>
+                        <mat-icon>delete</mat-icon>
+                        <span>Xóa</span>
+                    </button>
                 </mat-menu>
             </td>
         </ng-container>

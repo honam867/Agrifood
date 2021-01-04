@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
@@ -128,24 +129,19 @@ namespace ApplicationDomain.Identity.Services
                 //string password = AutoGenerate.AutoGeneratePassword(8, true, true);
                 string password = "Agrifoodsystem1";
                 var identityResult = await _userManagement.CreateAsync(user, password);
-
-                if (model.Role == ROLE_CONSTANT.EMPLOYEE)
-                {
-                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
-                    employeeModelRq2.UserId = user.Id;
-                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
-                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.EMPLOYEE);
-                }
-                else if (model.Role == ROLE_CONSTANT.FARMER)
+                if (model.SelectedFarmer && model.Role == ROLE_CONSTANT.FARMER)
                 {
                     FarmerModelRq farmerModelRq = new FarmerModelRq();
                     farmerModelRq.UserId = user.Id;
                     var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
-                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.FARMER);
-                } else
+                } 
+                if (model.SelectedEmployee && model.Role == ROLE_CONSTANT.EMPLOYEE)
                 {
-                    await _userManagement.AddToRoleAsync(user, model.Role);
+                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
+                    employeeModelRq2.UserId = user.Id;
+                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
                 }
+                await _userManagement.AddToRoleAsync(user, model.Role);
                 if (!identityResult.Succeeded)
                 {
                     throw CreateException(identityResult.Errors);

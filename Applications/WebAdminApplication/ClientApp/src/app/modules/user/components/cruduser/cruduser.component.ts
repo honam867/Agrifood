@@ -48,6 +48,7 @@ export class CRUDUserComponent implements OnInit {
   sourceView: User = new User();
   loading: boolean;
   userNameExist: boolean;
+  selectedFarmer: boolean;
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CRUDUserComponent>,
