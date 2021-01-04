@@ -18,7 +18,7 @@ export class FarmerListComponent implements OnInit {
 
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'createDate', 'isBlock', 'action'];
+  displayedColumns: string[] = ['userName', 'name', 'address', 'phoneNumber', 'createDate', 'isBlock', 'action'];
   dataSource: MatTableDataSource<Farmer>;
   farmers: Farmer[] = [];
 

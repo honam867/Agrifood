@@ -10,4 +10,8 @@ export class User {
     createdByUserName: string;
     updatedDate: Date;
     updatedByUserName: string;
+    selectedFarmer: boolean;
+    constructor() {
+        this.selectedFarmer = true;
+    }
 }

@@ -14,5 +14,6 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetFarmers();
         IQueryable GetFarmerById(int id);
         Task<string> GetCodeByIdAsync(int id);
+        IQueryable GetFarmerByUser(int id);
     }
 }

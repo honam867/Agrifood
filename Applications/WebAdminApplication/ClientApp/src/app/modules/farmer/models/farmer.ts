@@ -13,22 +13,23 @@ export class Farmer {
   isBlock: boolean;
   contractCreatetionDate: Date;
   userId: number;
+  userUserName: string;
   milkCollectionId: number;
   avatarURL: string;
 
   constructor() {
-      this.id = 0;
-      this.code = '';
-      this.name = '';
-      this.fullName = '';
-      // this.avatarURL = '';
-      // this.qrCode = '';
-      this.phoneNumber = '';
-      this.address = '';
-      // this.districtId = 0;
-      // this.provinceId = 0;
-      this.isBlock = false;
-      // this.userId = 0;
-      // this.milkCollectionId = 0;
+    this.id = 0;
+    this.code = '';
+    this.name = '';
+    this.fullName = '';
+    // this.avatarURL = '';
+    // this.qrCode = '';
+    this.phoneNumber = '';
+    this.address = '';
+    // this.districtId = 0;
+    // this.provinceId = 0;
+    this.isBlock = false;
+    // this.userId = 0;
+    // this.milkCollectionId = 0;
   }
 }
