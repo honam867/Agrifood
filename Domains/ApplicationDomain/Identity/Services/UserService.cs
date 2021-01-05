@@ -23,6 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
@@ -128,21 +129,19 @@ namespace ApplicationDomain.Identity.Services
                 //string password = AutoGenerate.AutoGeneratePassword(8, true, true);
                 string password = "Agrifoodsystem1";
                 var identityResult = await _userManagement.CreateAsync(user, password);
-
-                if (model.Role == "Employee")
-                {
-                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
-                    employeeModelRq2.UserId = user.Id;
-                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
-                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.EMPLOYEE);
-                }
-                else if (model.Role == "Farmer")
+                if (model.SelectedFarmer && model.Role == ROLE_CONSTANT.FARMER)
                 {
                     FarmerModelRq farmerModelRq = new FarmerModelRq();
                     farmerModelRq.UserId = user.Id;
                     var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
-                    await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.FARMER);
+                } 
+                if (model.SelectedEmployee && model.Role == ROLE_CONSTANT.EMPLOYEE)
+                {
+                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
+                    employeeModelRq2.UserId = user.Id;
+                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
                 }
+                await _userManagement.AddToRoleAsync(user, model.Role);
                 if (!identityResult.Succeeded)
                 {
                     throw CreateException(identityResult.Errors);
@@ -245,17 +244,25 @@ namespace ApplicationDomain.Identity.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _userManagement.FindByIdAsync(id.ToString());
-
-            if (user == null)
+            try
             {
-                return false;
+                var user = await _userManagement.FindByIdAsync(id.ToString());
+
+                if (user == null)
+                {
+                    return false;
+                }
+                _userRepository.Delete(user);
+
+                await _uow.SaveChangesAsync();
+
+                return true;
             }
-            _userRepository.Delete(user);
+            catch (Exception ex)
+            {
 
-            await _uow.SaveChangesAsync();
-
-            return true;
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> AddRoleToUserAsync(UpdateUserRoleModelRq model)
@@ -318,6 +325,19 @@ namespace ApplicationDomain.Identity.Services
             try
             {
                 var user = await _userManagement.FindByEmailAsync(email);
+                return user != null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<bool> CheckUserNameAsync(string username)
+        {
+            try
+            {
+                var user = await _userManagement.FindByNameAsync(username);
                 return user != null;
             }
             catch (Exception e)

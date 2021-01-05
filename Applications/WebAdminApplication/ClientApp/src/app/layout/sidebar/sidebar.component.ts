@@ -147,8 +147,6 @@ export const ROUTES: RouteInfo[] = [{
       type: 'link',
       icontype: 'agriculture'
     }
-
-
 ];
 @Component({
     selector: 'app-sidebar',
@@ -157,6 +155,7 @@ export const ROUTES: RouteInfo[] = [{
 
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
+    userInfo: any;
     ps: any;
     isMobileMenu() {
         if ($(window).width() > 991) {
@@ -171,8 +170,10 @@ export class SidebarComponent implements OnInit {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
         }
+        this.userInfo = JSON.parse(localStorage.getItem('userinfo'));
+        console.log("🚀 ~ file: sidebar.component.ts ~ line 170 ~ SidebarComponent ~ ngOnInit ~   this.userInfo", this.userInfo)
     }
-    updatePS(): void  {
+    updatePS(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }

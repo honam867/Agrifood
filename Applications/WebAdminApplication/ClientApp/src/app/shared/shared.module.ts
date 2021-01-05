@@ -1,3 +1,4 @@
+import { BlockCopyPasteDirective } from './directives/block-coppy-paste.directive';
 import { SafePipe } from './pipes/safe';
 import { CurrencyMaskDirective } from './directives/currency-mask.directive';
 import { NgModule, ModuleWithProviders, APP_INITIALIZER } from '@angular/core';
@@ -40,6 +41,7 @@ export function setupTranslateFactory(service: TranslateService) {
         UppercaseInputDirective,
         LowercaseInputDirective,
         PhoneMaskDirective,
+        BlockCopyPasteDirective,
         CurrencyMaskDirective
     ],
     providers: [
@@ -63,6 +65,7 @@ export function setupTranslateFactory(service: TranslateService) {
         UppercaseInputDirective,
         LowercaseInputDirective,
         PhoneMaskDirective,
+        BlockCopyPasteDirective,
         CurrencyMaskDirective
     ],
     entryComponents: [

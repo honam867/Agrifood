@@ -1,6 +1,11 @@
-<mat-card-title class="card-header text-center" *ngIf="fromFarmerList">
+<h3 class="text-center" *ngIf="fromFarmerList">
     Gán tài khoản
-</mat-card-title>
+</h3>
+<mat-dialog-actions *ngIf="fromFarmerList">
+    <button mat-button mat-dialog-close>
+  <mat-icon>cancel</mat-icon>
+</button>
+</mat-dialog-actions>
 <div class="containter">
     <div class="row">
         <div class="col-md-">
@@ -12,14 +17,15 @@
             </div>
         </div>
         <div class="col-md-">
-            <div class="user-button" *ngIf="!fromFarmerList">
-                <button mat-raised-button color="primary" (click)="createUser()">Thêm tài khoản</button>
+            <div class="user-button">
+                <button mat-raised-button color="primary" (click)="createUser()" *ngIf="!fromFarmerList">Thêm tài khoản</button>
             </div>
         </div>
     </div>
 </div>
 <div class="user-list">
-    <mat-paginator [pageSizeOptions]="[10,20,50]"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10,20,50]">
+    </mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="userName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên đăng nhập</th>

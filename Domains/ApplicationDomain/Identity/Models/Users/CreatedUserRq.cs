@@ -14,6 +14,8 @@ namespace ApplicationDomain.Identity.Models
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public bool Status { get; set; }
+        public bool SelectedFarmer { get; set; }
+        public bool SelectedEmployee { get; set; }
     }
 
     public class CreatedUserRqMapper : Profile

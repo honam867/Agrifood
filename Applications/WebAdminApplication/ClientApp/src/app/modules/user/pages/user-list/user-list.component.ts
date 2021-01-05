@@ -1,8 +1,10 @@
+import { AlertComponent } from './../../../../shared/components/alert/alert.component';
+import { Notification } from './../../../../shared/components/notification/notification';
 import { Farmer } from './../../../farmer/models/farmer';
 import { FarmerService } from './../../../farmer/farmer.service';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { CRUDUserComponent } from '../../components/cruduser/cruduser.component';
@@ -29,7 +31,7 @@ export class UserListComponent implements OnInit {
   farmers: Farmer[] = [];
   filterUsedUserId = [];
   isUserList = true;
-  isAddUser = false;
+  // isAddUser = false;
   list: any;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -37,11 +39,11 @@ export class UserListComponent implements OnInit {
     public dialog: MatDialog,
     public userService: UserService,
     public farmerService: FarmerService,
+    private notification: Notification
   ) { }
 
   ngOnInit(): void {
 
-    // this.isAddUser = this.data.action === StatusForm.EDIT; //2
     if (this.fromFarmerList) {
       this.fetchUsers();
       this.fetchUsedUserId();
@@ -49,17 +51,10 @@ export class UserListComponent implements OnInit {
       this.fetchUsers();
     }
   }
-
-  edit() {
-    this.isAddUser = true; //3
-  }
-
-  // NOTE comment 3 dong 123 la user list chay lại bình thường
-
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
-      height: '75%',
-      width: '80%',
+      width: '40%',
+      height: '90%',
       data: {
         action: StatusForm.CREATE,
         user: new User(),
@@ -69,14 +64,12 @@ export class UserListComponent implements OnInit {
 
     createDialog.afterClosed().subscribe(
       result => {
-        this.userService.getUserById(result.data).subscribe(
-          createdUser => {
-            if (createdUser !== null) {
-              this.users.push(createdUser);
-              this.dataSource.data = this.users;
-            }
+        if (Object.keys(result).length !== 0) {
+          if (Object.keys(result.data).length !== 0) {
+            this.users.push(result.data);
+            this.dataSource.data = this.users;
           }
-        );
+        }
       }
     );
   }
@@ -103,7 +96,6 @@ export class UserListComponent implements OnInit {
             this.filterUsedUserId.push(this.farmers[index].userId);
           }
         }
-        // console.log(this.filterUsedUserId);
         const result = this.filterUsedUserId.map((item, index) => (
 
           {
@@ -111,25 +103,19 @@ export class UserListComponent implements OnInit {
           }
         )
         )
-        //     console.log(result);
+        console.log(result);
         // for (var i = this.users.length - 1; i >= 0; i--) {
         //   for (var j = 0; j < result.length; j++) {
         //     if (this.users[i].id === result[j].id) {
         //       this.users.splice(i, 1);
-        //       }
         //     }
         //   }
-        this.users.map((user, indexUser) => result.map((result1, indexResult) => {
-              if (this.users[indexUser].id === result[indexResult].id) {
-                this.users.splice(indexUser, 1)
-                this.dataSource = new MatTableDataSource(this.users);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
-              }
-            }
-          )
-        )
-        console.log(this.users);
+        // }
+        // NOTE best
+        this.users = this.users.filter((user) => result.every((result) => result.id !== user.id));
+        this.dataSource = new MatTableDataSource(this.users);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
   }
   applyFilter(filterValue: string) {
@@ -142,7 +128,7 @@ export class UserListComponent implements OnInit {
 
   editUser(user: User) {
     const editDialog = this.dialog.open(CRUDUserComponent, {
-      width: '80%',
+      width: '40%',
       data: {
         action: StatusForm.EDIT,
         user,
@@ -188,8 +174,17 @@ export class UserListComponent implements OnInit {
                 this.users.splice(userIndex, 1);
                 this.dataSource.data = this.users;
               }
+            }, (error) => {
+              if (error.error.message === 'An error occurred while updating the entries. See the inner exception for details.') {
+                this.notification.showNotification('danger', 'top', 'center', `UserName: ${user.userName} và Mã User: ${user.id} đã được sử dụng cho một trường dữ liệu khác !
+                Xin hãy xóa dữ liệu đã được sử dụng trước.
+                `)
+              } else if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
+                this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
+              }
+
             }
-          );
+          )
         }
       }
     );
@@ -212,7 +207,7 @@ export class UserListComponent implements OnInit {
           this.afterClose(result);
         }
       );
-    } else{
+    } else {
       const confirmEditDialog = this.dialog.open(ConfirmationComponent, {
         data: {
           message: 'Bạn có muốn gán hộ nông dân cho tài khoản này ?',
@@ -225,15 +220,20 @@ export class UserListComponent implements OnInit {
           if (result.confirmed) {
             this.farmer.userId = user.id
             this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
-              result =>{
+              result => {
                 console.log(result);
               }
             );
+            this.dialog.open(AlertComponent,{
+              data:{
+                message:"Gán tài khoản thành công"
+              }
+            })
           }
         }
       );
     }
-    }
+  }
 
 
 

@@ -1,3 +1,6 @@
+import { ValueObject } from './../../shared/models/value-object';
+import { District } from './../../models/district';
+import { Province } from './../../models/province';
 import { Farmer } from './models/farmer';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,6 +33,15 @@ export class FarmerService {
 
   createFarmer(farmer: Farmer) {
     return this.http.post(`farmer`, farmer);
+  }
+  getProvince(): Observable<Province[]> {
+    return this.http.get(`province`)
+  }
+  getDistrictByProvinceId(provinceId: number): Observable<District[]> {
+    return this.http.get(`district/provinceId/${provinceId}`);
+  }
+  newCode(): Observable<ValueObject> {
+    return this.http.get(`farmer/newcode`);
   }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);
