@@ -12,7 +12,7 @@ import { User } from '../../models/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { map } from 'jquery';
+import { error, map } from 'jquery';
 import { reduce } from 'rxjs/operators';
 @Component({
   selector: 'app-user-list',
@@ -103,7 +103,6 @@ export class UserListComponent implements OnInit {
           }
         )
         )
-        console.log(result);
         // for (var i = this.users.length - 1; i >= 0; i--) {
         //   for (var j = 0; j < result.length; j++) {
         //     if (this.users[i].id === result[j].id) {
@@ -218,17 +217,34 @@ export class UserListComponent implements OnInit {
       confirmEditDialog.afterClosed().subscribe(
         result => {
           if (result.confirmed) {
-            this.farmer.userId = user.id
-            this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
-              result => {
-                console.log(result);
-              }
-            );
-            this.dialog.open(AlertComponent,{
-              data:{
-                message:"Gán tài khoản thành công"
-              }
-            })
+            if(!this.farmer.userId){
+              this.farmer.userId = user.id
+              this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
+                result => {
+                  if(result){
+                    this.dialog.open(AlertComponent,{
+                      data:{
+                        message:"Gán tài khoản thành công"
+                      }
+                    });
+                    const userIndex = this.users.indexOf(user);
+                      if (userIndex !== -1) {
+                        this.users.splice(userIndex, 1);
+                        this.dataSource = new MatTableDataSource(this.users);
+                        this.dataSource.paginator = this.paginator;
+                        this.dataSource.sort = this.sort;
+                      }
+                  }
+                }
+              );
+            } else {
+              this.dialog.open(AlertComponent,{
+                data:{
+                  message:"Nông dân này đã có tài khoản"
+                }
+              });
+            }
+
           }
         }
       );

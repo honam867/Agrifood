@@ -1,3 +1,4 @@
+import { AlertComponent } from './../../../../shared/components/alert/alert.component';
 import { AddFarmerToUserComponent } from './../../../user/components/add-farmer-to-user/add-farmer-to-user.component';
 import { User } from './../../../user/models/user';
 import { UserListComponent } from './../../../user/pages/user-list/user-list.component';
@@ -84,20 +85,28 @@ export class FarmerListComponent implements OnInit {
   }
 
   addUser(farmer: Farmer) {
-    const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
-      width: '80%',
-      data: {
-        fromFarmerList: true,
-        farmer
-      },
-      disableClose: true,
-    });
+    if(!farmer.userId){
+      const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
+        width: '80%',
+        data: {
+          fromFarmerList: true,
+          farmer
+        },
+        disableClose: true,
+      });
+      addUserDialog.afterClosed().subscribe(
+        result => {
+          this.afterClose(result);
+        }
+      );
+    } else {
+      this.dialog.open(AlertComponent,{
+        data:{
+          message:"Nông dân này đã có tài khoản"
+        }
+      });
+    }
 
-    addUserDialog.afterClosed().subscribe(
-      result => {
-        this.afterClose(result);
-      }
-    );
   }
 
   editFarmer(farmer: Farmer) {
