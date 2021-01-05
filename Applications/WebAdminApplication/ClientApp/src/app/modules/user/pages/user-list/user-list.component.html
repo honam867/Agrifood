@@ -1,3 +1,6 @@
+<mat-card-title class="card-header text-center" *ngIf="fromFarmerList">
+    Gán tài khoản
+</mat-card-title>
 <div class="containter">
     <div class="row">
         <div class="col-md-">
@@ -9,7 +12,7 @@
             </div>
         </div>
         <div class="col-md-">
-            <div class="user-button">
+            <div class="user-button" *ngIf="!fromFarmerList">
                 <button mat-raised-button color="primary" (click)="createUser()">Thêm tài khoản</button>
             </div>
         </div>

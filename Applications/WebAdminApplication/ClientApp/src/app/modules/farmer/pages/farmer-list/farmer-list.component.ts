@@ -1,3 +1,6 @@
+import { AddFarmerToUserComponent } from './../../../user/components/add-farmer-to-user/add-farmer-to-user.component';
+import { User } from './../../../user/models/user';
+import { UserListComponent } from './../../../user/pages/user-list/user-list.component';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { StatusForm } from './../../../../shared/enum/status-form';
 import { CrudFarmerComponent } from './../../components/crud-farmer/crud-farmer.component';
@@ -21,7 +24,6 @@ export class FarmerListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'createDate', 'isBlock', 'action'];
   dataSource: MatTableDataSource<Farmer>;
   farmers: Farmer[] = [];
-
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
@@ -79,6 +81,23 @@ export class FarmerListComponent implements OnInit {
         this.dataSource.data = this.farmers;
       }
     }
+  }
+
+  addUser(farmer: Farmer) {
+    const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
+      width: '80%',
+      data: {
+        fromFarmerList: true,
+        farmer
+      },
+      disableClose: true,
+    });
+
+    addUserDialog.afterClosed().subscribe(
+      result => {
+        this.afterClose(result);
+      }
+    );
   }
 
   editFarmer(farmer: Farmer) {
@@ -150,5 +169,19 @@ export class FarmerListComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
   }
+
+  // fetchUsedUserId() {
+  //   this.farmerService.getFarmers().subscribe(
+  //     res => {
+  //       this.farmers = res;
+  //       let filterUsedUserId =[];
+  //       for (let index = 0; index < this.farmers.length; index++) {
+  //         if (this.farmers[index].hasOwnProperty('userId')) {
+  //           filterUsedUserId.push(this.farmers[index].userId);
+  //         }
+  //       }
+  //       console.log(filterUsedUserId);
+  //     });
+  // }
 
 }
