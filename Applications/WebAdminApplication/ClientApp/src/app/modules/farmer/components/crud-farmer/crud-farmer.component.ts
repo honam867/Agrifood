@@ -1,3 +1,5 @@
+import { AlertComponent } from './../../../../shared/components/alert/alert.component';
+import { AddFarmerToUserComponent } from './../../../user/components/add-farmer-to-user/add-farmer-to-user.component';
 import { ValueObject } from './../../../../shared/models/value-object';
 import { District } from './../../../../models/district';
 import { Province } from './../../../../models/province';
@@ -86,6 +88,31 @@ export class CrudFarmerComponent implements OnInit {
     this.farmerService.getDistrictByProvinceId(proviceId).subscribe(result => {
       this.districts = result;
     });
+  }
+
+  addFarmerAccount(farmer: Farmer) {
+    if(!farmer.userId){
+      const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
+        width: '80%',
+        data: {
+          fromFarmerList: true,
+          farmer
+        },
+        disableClose: true,
+      });
+      addUserDialog.afterClosed().subscribe(
+        result => {
+
+        }
+      );
+    } else {
+      this.dialog.open(AlertComponent,{
+        data:{
+          message:"Nông dân này đã có tài khoản"
+        }
+      });
+    }
+
   }
 
   edit() {

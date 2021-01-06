@@ -15,6 +15,7 @@
         </div>
     </div>
 </div>
+
 <div class="farmer-list">
     <mat-paginator [pageSizeOptions]="[10,20,50]"></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
@@ -29,7 +30,7 @@
                     {{farmer.userUserName}}
                 </div>
                 <div class="text-danger" *ngIf="!farmer.userUserName">
-                    Nông dân chưa có tài khoản
+                    N/A
                 </div>
             </td>
         </ng-container>
@@ -65,9 +66,14 @@
                 </button>
                 <mat-menu #menu="matMenu">
                     <button mat-menu-item (click)="editFarmer(farmer)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Chỉnh sửa</span>
-                    </button>
+          <mat-icon>edit</mat-icon>
+          <span>Chỉnh sửa</span>
+        </button>
+                    <button mat-menu-item (click)="addUser(farmer)">
+          <mat-icon>add_circle</mat-icon>
+          <span>Gán tài khoản</span>
+        </button>
+
                     <button mat-menu-item (click)="deleteFarmer(farmer)">
                         <mat-icon>delete</mat-icon>
                         <span>Xóa</span>
