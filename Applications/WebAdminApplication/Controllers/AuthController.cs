@@ -57,12 +57,13 @@ namespace WebAdminApplication.Controllers
 
             if (result.Succeeded)
             {
-                GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
+                //GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
                 GrantedFarmerPermission grantedFarmerPermission = await _permissionService.GetGrantedFarmerPermission(result.UserIdentity.Id, result.Roles.ToList());
                 List<Claim> additionClaims = new List<Claim>();
                 additionClaims.Add(new Claim("farmerPermission", JsonConvert.SerializeObject(grantedFarmerPermission)));
                 //additionClaims.Add(new Claim("permission", JsonConvert.SerializeObject(grantedPermission)));
                 UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("roles", JsonConvert.SerializeObject(result.Roles.ToList())));
                 additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
                 var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);
                 return Ok(token);
