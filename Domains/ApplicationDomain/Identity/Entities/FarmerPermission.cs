@@ -14,7 +14,7 @@ namespace ApplicationDomain.Identity.Entities
         public bool CanEdit { set; get; }
         public bool CanDelete { set; get; }
         public bool CanAccess { get; set; }
-        public int? PermissionGroupId { set; get; }
+        public int PermissionGroupId { set; get; }
         public PermissionGroup PermissionGroup { set; get; }
     }
     public class FarmerPermissionMapper : Profile
