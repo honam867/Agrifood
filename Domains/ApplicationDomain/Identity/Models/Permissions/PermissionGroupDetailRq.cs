@@ -12,7 +12,7 @@ namespace ApplicationDomain.Identity.Models.Permissions
         public string Name { set; get; }
         public string Description { set; get; }
         public List<int> Users { set; get; }
-        public MenuPermissionModel MenuPms { set; get; }
-       
+        //public MenuPermissionModel MenuPms { set; get; }
+       public FarmerPermissionModel farmerPermission { get; set; }
     }
 }
