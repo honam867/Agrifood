@@ -6,12 +6,15 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { CRUDUserComponent } from './components/cruduser/cruduser.component';
+import { AddFarmerToUserComponent } from './components/add-farmer-to-user/add-farmer-to-user.component';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     UserListComponent,
     CRUDUserComponent,
+    AddFarmerToUserComponent,
     CrudRolesUserComponent
   ],
   imports: [
