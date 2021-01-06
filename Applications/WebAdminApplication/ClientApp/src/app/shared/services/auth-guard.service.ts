@@ -1,11 +1,11 @@
 import { AuthService } from 'src/app/modules/auth/auth.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router } from '@angular/router';
+import { CanActivate, CanActivateChild, CanLoad, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router
@@ -22,8 +22,28 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivate() {
     const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
+    const roles = Object.values(getPermissionFarmerFromDecodeToken);
+    const listRoles = { roles: roles[2] }
+    if (listRoles.roles[0] === "SysAdmin" || listRoles.roles[1] === "Admin") {
+      console.log('Access to Permisson Pages')
+      return true
+    } else {
+      return this.router.navigate(['error-page'])
+    }
+    // if (JSON.parse(accessFarmer.CanAccessFarmer)) {
+    //   console.log('Access to farmer page')
+    //   return true
+    // } else {
+    //   return this.router.navigate(['error-page']);
+    // }
+  }
+
+  canLoad() {
+    const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
     const accessFarmer = JSON.parse(getPermissionFarmerFromDecodeToken.farmerPermission);
+    console.log('checking child route access');
     if (JSON.parse(accessFarmer.CanAccessFarmer)) {
+      console.log('Access to farmer page')
       return true
     } else {
       return this.router.navigate(['error-page']);
@@ -31,7 +51,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivateChild() {
-    console.log('checking child route access');
     return true;
   }
 
