@@ -22,28 +22,18 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   canActivate() {
     const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
-    const roles = Object.values(getPermissionFarmerFromDecodeToken);
-    const listRoles = { roles: roles[2] }
-    if (listRoles.roles[0] === "SysAdmin" || listRoles.roles[1] === "Admin") {
-      console.log('Access to Permisson Pages')
-      return true
+    const test = getPermissionFarmerFromDecodeToken.roles;
+    if (test.includes("Admin" || "SysAdmin")) {
+      return true;
     } else {
-      return this.router.navigate(['error-page'])
+      return this.router.navigate(['error-page']);
     }
-    // if (JSON.parse(accessFarmer.CanAccessFarmer)) {
-    //   console.log('Access to farmer page')
-    //   return true
-    // } else {
-    //   return this.router.navigate(['error-page']);
-    // }
   }
 
   canLoad() {
     const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
     const accessFarmer = JSON.parse(getPermissionFarmerFromDecodeToken.farmerPermission);
-    console.log('checking child route access');
     if (JSON.parse(accessFarmer.CanAccessFarmer)) {
-      console.log('Access to farmer page')
       return true
     } else {
       return this.router.navigate(['error-page']);
