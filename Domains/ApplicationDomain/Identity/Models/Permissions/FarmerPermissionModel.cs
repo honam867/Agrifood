@@ -12,6 +12,7 @@ namespace ApplicationDomain.Identity.Models.Permissions
         public bool CanCreate { set; get; }
         public bool CanEdit { set; get; }
         public bool CanDelete { set; get; }
+        public bool CanAccess { get; set; }
     }
     public class FarmerPermissionModelMapper : Profile
     {

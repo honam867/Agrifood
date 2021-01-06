@@ -60,11 +60,11 @@ export const ROUTES: RouteInfo[] = [{
     collapse: 'system',
     children: [
         {
-            path: 'permission',
+            path: 'permissionlist',
             title: 'Phân quyền',
             type: 'link',
-            ab: null
-        }
+            ab: null,
+        },
     ],
     icontype: 'settings_applications'
 },

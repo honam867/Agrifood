@@ -3,10 +3,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SystemRoutingModule } from './system-routing.module';
 import { PermissionPagesComponent } from './pages/permission-pages/permission-pages.component';
+import { CrudPermissionComponent } from './components/crud-permission/crud-permission.component';
 
 
 @NgModule({
-  declarations: [PermissionPagesComponent],
+  declarations: [PermissionPagesComponent, CrudPermissionComponent],
   imports: [
     CommonModule,
     SystemRoutingModule,
