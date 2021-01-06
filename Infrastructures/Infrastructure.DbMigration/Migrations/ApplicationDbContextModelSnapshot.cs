@@ -469,6 +469,8 @@ namespace Infrastructure.DbMigration.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("CanAccess");
+
                     b.Property<bool>("CanCreate");
 
                     b.Property<bool>("CanDelete");
@@ -483,7 +485,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 170, DateTimeKind.Unspecified).AddTicks(5399), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 181, DateTimeKind.Unspecified).AddTicks(6199), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -495,7 +497,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 175, DateTimeKind.Unspecified).AddTicks(7585), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 185, DateTimeKind.Unspecified).AddTicks(9777), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -530,7 +532,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 187, DateTimeKind.Unspecified).AddTicks(5012), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 195, DateTimeKind.Unspecified).AddTicks(6231), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<bool>("CustomerLibraryMenu");
 
@@ -578,7 +580,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 187, DateTimeKind.Unspecified).AddTicks(5487), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 195, DateTimeKind.Unspecified).AddTicks(6649), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<bool>("UserMenu");
 
@@ -601,7 +603,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 188, DateTimeKind.Unspecified).AddTicks(3243), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 196, DateTimeKind.Unspecified).AddTicks(3715), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<string>("Description");
 
@@ -615,7 +617,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 188, DateTimeKind.Unspecified).AddTicks(3660), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 196, DateTimeKind.Unspecified).AddTicks(4149), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -634,7 +636,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 192, DateTimeKind.Unspecified).AddTicks(7985), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 200, DateTimeKind.Unspecified).AddTicks(828), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -646,7 +648,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 14, 23, 44, 192, DateTimeKind.Unspecified).AddTicks(8499), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 6, 20, 18, 19, 200, DateTimeKind.Unspecified).AddTicks(1293), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("UserId");
 

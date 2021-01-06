@@ -1,3 +1,5 @@
+import { ErrorPagesComponent } from './layout/error-pages/error-pages.component';
+import { AuthGuard } from './shared/services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContentComponent } from './layout/content/content.component';
@@ -5,6 +7,11 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'homepage',
+    pathMatch: 'full'
+  },
+  {
+    path: 'error-page',
+    component: ErrorPagesComponent,
     pathMatch: 'full'
   },
   {
@@ -24,7 +31,8 @@ const routes: Routes = [
       {
         path: 'farmer',
         loadChildren: () =>
-          import('./modules/farmer/farmer.module').then(mod => mod.FarmerModule)
+          import('./modules/farmer/farmer.module').then(mod => mod.FarmerModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'user',
@@ -41,8 +49,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/report/report.module').then(mod => mod.ReportModule)
       },
+      { path: 'system', loadChildren: () => import('./modules/system/system.module').then(m => m.SystemModule) }
     ]
-  }
+  },
+
 ];
 
 @NgModule({

@@ -2,8 +2,9 @@ export class Employee {
   id: number;
   userId: number;
   name: string;
+  code:string;
   fullName: string;
-  userUserName: string;
+  // userUserName: string;
   email: string;
   phoneNumber: string;
   address: string;

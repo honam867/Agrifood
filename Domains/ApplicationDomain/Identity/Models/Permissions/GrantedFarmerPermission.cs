@@ -11,6 +11,7 @@ namespace ApplicationDomain.Identity.Models.Permissions
         public bool CanCreateFarmer { get; set; }
         public bool CanEditFarmer { get; set; }
         public bool CanDeleteFarmer { get; set; }
+        public bool CanAccessFarmer { get; set; }
         //public bool CanPrintFarmer { get; set; }
         //public bool CanRecallFarmer { get; set; }
         //public bool CanApproveFarmer { get; set; }
@@ -18,6 +19,6 @@ namespace ApplicationDomain.Identity.Models.Permissions
         //public bool CanSendFarmer { get; set; }
         //public bool CanSubmitFarmer { get; set; }
         //public bool CanCancelFarmer { get; set; }
-   
+
     }
 }

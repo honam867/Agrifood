@@ -133,6 +133,8 @@ namespace ApplicationDomain.Identity.Services
                 {
                     FarmerModelRq farmerModelRq = new FarmerModelRq();
                     farmerModelRq.UserId = user.Id;
+                    DateTime localDate = DateTime.Now;
+                    farmerModelRq.ContractCreatetionDate = localDate;
                     var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
                 } 
                 if (model.SelectedEmployee && model.Role == ROLE_CONSTANT.EMPLOYEE)
