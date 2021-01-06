@@ -1,4 +1,5 @@
 import 'package:AgrifoodApp/authentication/login/page/onboarding.dart';
+import 'package:AgrifoodApp/home/component/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +44,8 @@ void main() async {
   runApp(
     BlocProvider<AuthenticationBloc>(
       create: (context) {
-        return AuthenticationBloc(authenticationRepository)..add(AppStarted(loginModel: null));
+        return AuthenticationBloc(authenticationRepository)
+          ..add(AppStarted(loginModel: null));
       },
       child: App(authenticationRepository: authenticationRepository),
     ),
@@ -63,14 +65,16 @@ class App extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.white,
       ),
-       routes: {'/home': (_) => InitPage()},
+      routes: {'/home': (_) => InitPage()},
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
             return HomePage();
           }
           if (state is AuthenticationLoginPage) {
-            return InitPage(authenticationRepository: authenticationRepository,);
+            return InitPage(
+              authenticationRepository: authenticationRepository,
+            );
           }
           if (state is AuthenticationUnauthenticated) {
             return OnBoardingPage();
@@ -81,21 +85,6 @@ class App extends StatelessWidget {
           return SplashPage();
         },
       ),
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  @override
-  _HomaPageState createState() => _HomaPageState();
-}
-
-class _HomaPageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
     );
   }
 }
