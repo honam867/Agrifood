@@ -146,6 +146,12 @@ export const ROUTES: RouteInfo[] = [{
       title: 'Quản lý hộ nông dân',
       type: 'link',
       icontype: 'agriculture'
+    },
+    {
+      path: '/employee',
+      title: 'Quản lý nhân viên',
+      type: 'link',
+      icontype: 'work'
     }
 ];
 @Component({
