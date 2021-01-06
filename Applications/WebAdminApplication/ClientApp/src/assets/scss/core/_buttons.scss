@@ -211,7 +211,6 @@
   &.btn-group-raised {
     @include box-shadow($bmd-shadow-2dp);
   }
-
   .mat-raised-button.btn + .mat-raised-button.btn,
   .mat-raised-button.btn,
   .mat-raised-button.btn:active,
