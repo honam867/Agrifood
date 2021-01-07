@@ -21,13 +21,13 @@
               <tbody>
                 <tr>
                   <th scope="row">
-                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canAccess" name="ordersMenu"
+                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canAccess" name="canAccess"
                       class="permission-item">
                       Cho phép truy cập
                     </mat-checkbox>
                   </th>
                   <td>
-                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canView" name="orderReportMenu"
+                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canView" name="canView"
                       class="permission-item">
                       Xem danh sách nông dân
                     </mat-checkbox>
@@ -35,13 +35,13 @@
                 </tr>
                 <tr>
                   <th scope="row">
-                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canCreate" name="ordersMenu"
+                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canCreate" name="canCreate"
                       class="permission-item">
                       Tạo nông dân
                     </mat-checkbox>
                   </th>
                   <td>
-                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canEdit" name="createOrderMenu"
+                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canEdit" name="canEdit"
                       class="permission-item">
                       Chỉnh sửa nông dân
                     </mat-checkbox>
@@ -49,7 +49,7 @@
                 </tr>
                 <tr>
                   <th scope="row">
-                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canDelete" name="billMenu"
+                    <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canDelete" name="canDelete"
                       class="permission-item">
                       Xóa nông dân
                     </mat-checkbox>
