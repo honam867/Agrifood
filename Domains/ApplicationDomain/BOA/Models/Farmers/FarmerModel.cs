@@ -25,7 +25,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public int? UserId { get; set; }
         public string UserUserName { get; set; }
         public User User { get; set; }
-        public string AvatarURL { set; get; }
+        public string AvatarURL { set; get; }   
         public int? MilkCollectionStationId { get; set; }
     }
 
