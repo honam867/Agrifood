@@ -42,7 +42,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateBranchAsync([FromBody]BranchModelRq model)
+        public async Task<IActionResult> CreateBranchAsync([FromBody]ByreModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateBranchAsync(int id, [FromBody]BranchModelRq model)
+        public async Task<IActionResult> UpdateBranchAsync(int id, [FromBody]ByreModelRq model)
         {
             if (!ModelState.IsValid)
             {
