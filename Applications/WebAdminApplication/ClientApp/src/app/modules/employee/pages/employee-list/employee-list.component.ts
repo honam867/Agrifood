@@ -16,7 +16,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
-
+  value='';
   page = 1;
   showLoad = false;
   displayedColumns: string[] = ['userName', 'name', 'phoneNumber', 'email', 'bank', 'accountNumber', 'action'];

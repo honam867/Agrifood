@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="offset-11 col-1 d-flex flex-row-reverse">
-        <button class="" mat-icon-button (click)="close()">
-          <mat-icon>cancel</mat-icon>
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()">
+          <mat-icon style="line-height: 23px;">cancel</mat-icon>
       </button>
     </div>
 </div>
@@ -19,12 +19,12 @@
     Chỉnh sửa thông tin nhân viên
 </mat-card-title>
 <mat-card>
-    <form name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
         <div class="row">
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Tên</mat-label>
-                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="!isCreate">
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="!isView">
                     <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
                     </mat-error>
                 </mat-form-field>

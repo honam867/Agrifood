@@ -17,8 +17,8 @@
       <a data-toggle="collapse" href="#collapseExample" class="collapsed">
         <span style="font: weight 300; color: #4CAF50">
           {{userInfo.UserName.toUpperCase()}}
+          <b class="caret"></b>
         </span>
-        <b class="caret"></b>
       </a>
       <div class="collapse" id="collapseExample">
         <ul class="nav">
@@ -47,13 +47,13 @@
   <div *ngIf="isMobileMenu()">
     <form class="navbar-form">
       <span class="bmd-form-group">
-        <div class="input-group no-border">
+        <!-- <div class="input-group no-border">
           <input type="text" value="" class="form-control" placeholder="Search...">
           <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon">
             <i class="material-icons">search</i>
             <div class="ripple-container"></div>
           </button>
-        </div>
+        </div> -->
       </span>
     </form>
     <ul class="nav navbar-nav nav-mobile-menu">

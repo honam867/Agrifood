@@ -19,10 +19,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./farmer-list.component.scss']
 })
 export class FarmerListComponent implements OnInit {
-
+  value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['userName', 'name', 'address', 'phoneNumber', 'createDate', 'isBlock', 'action'];
+  displayedColumns: string[] = ['userName', 'name', 'phoneNumber', 'isBlock', 'action'];
   dataSource: MatTableDataSource<Farmer>;
   farmers: Farmer[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -85,7 +85,7 @@ export class FarmerListComponent implements OnInit {
   }
 
   addUser(farmer: Farmer) {
-    if(!farmer.userId){
+    if (!farmer.userId) {
       const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
         width: '80%',
         data: {
@@ -100,9 +100,9 @@ export class FarmerListComponent implements OnInit {
         }
       );
     } else {
-      this.dialog.open(AlertComponent,{
-        data:{
-          message:"Nông dân này đã có tài khoản"
+      this.dialog.open(AlertComponent, {
+        data: {
+          message: "Nông dân này đã có tài khoản"
         }
       });
     }

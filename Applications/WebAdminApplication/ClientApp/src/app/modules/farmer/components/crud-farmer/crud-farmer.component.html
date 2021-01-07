@@ -1,25 +1,24 @@
 <div class="row">
-    <div class="offset-11 col-1 d-flex flex-row-reverse">
-        <button class="" mat-icon-button (click)="close()">
-            <mat-icon>cancel</mat-icon>
+    <div class="offset-11 col-1 d-flex flex-row-reverse " style="top: -15px">
+        <button class="fix-button" mat-icon-button (click)="close()">
+            <mat-icon style="line-height: 23px;">cancel</mat-icon>
         </button>
     </div>
 </div>
 
-<mat-card-title class="card-header text-center" *ngIf="isView">
+<mat-card-title class="card-header text-center fix-title"  *ngIf="isView">
     Thông tin hộ nông dân
     <button mat-icon-button *ngIf="isView" (click)="edit()" matTooltip="Chỉnh sửa">
         <mat-icon>edit</mat-icon>
     </button>
 </mat-card-title>
-<mat-card-title class="card-header text-center" *ngIf="isCreate">
+<mat-card-title class="card-header text-center fix-title" style="margin-top: -24px;" *ngIf="isCreate">
     Thêm nông dân
 </mat-card-title>
-<mat-card-title class="card-header text-center" *ngIf="!isView && !isCreate">
+<mat-card-title class="card-header text-center fix-title" *ngIf="!isView && !isCreate">
     Chỉnh sửa thông tin hộ nông dân
 </mat-card-title>
-<mat-card>
-    <form name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+    <form class="fix-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
         <div class="row">
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
@@ -128,4 +127,3 @@
         <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()"><i class="fas fa-save"></i> Lưu thay đổi</button>
         <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="!isView && !isCreate" (click)="addFarmerAccount(farmer)"><i class="fas fa-window-close"></i> Gán tài khoản</button>
     </div>
-</mat-card>
