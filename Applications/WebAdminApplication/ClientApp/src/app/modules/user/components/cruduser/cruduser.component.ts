@@ -48,7 +48,6 @@ export class CRUDUserComponent implements OnInit {
   sourceView: User = new User();
   loading: boolean;
   userNameExist: boolean;
-  selectedFarmer: boolean;
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CRUDUserComponent>,
@@ -79,6 +78,7 @@ export class CRUDUserComponent implements OnInit {
   fetchRoles() {
     this.roleService.getRoles().subscribe(result => {
       this.roles = result;
+       this.roles = this.roles.filter(item => item.name !== "SysAdmin")
     }, (error) => {
       if (error.error.message === 'You need the role of Admin or SysAdmin to perform this action.') {
         this.notification.showNotification('danger', 'top', 'center', "Bạn phải có vai trò là Admin hoặc Sysadmin để thực hiện.")
@@ -189,7 +189,7 @@ export class CRUDUserComponent implements OnInit {
     });
     createDialog.afterClosed().subscribe(
       result => {
-        if (result.data) { // result => data:true 
+        if (result.data) { // result => data:true
           this.fetchRoleinUser();
         }
       }

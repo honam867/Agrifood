@@ -1,3 +1,4 @@
+import { CRUDUserComponent } from './../../../user/components/cruduser/cruduser.component';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { CrudEmployeeComponent } from './../../components/crud-employee/crud-employee.component';
 import { StatusForm } from './../../../../shared/enum/status-form';
@@ -130,7 +131,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   createEmployee() {
-    const createDialog = this.dialog.open(CrudEmployeeComponent, {
+    const createDialog = this.dialog.open(CRUDUserComponent, {
       height: '90%',
       width: '90%',
       data: {

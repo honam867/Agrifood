@@ -11,6 +11,7 @@ export class User {
     updatedDate: Date;
     updatedByUserName: string;
     selectedFarmer: boolean;
+    selectedEmployee: boolean;
     constructor() {
         this.selectedFarmer = true;
     }

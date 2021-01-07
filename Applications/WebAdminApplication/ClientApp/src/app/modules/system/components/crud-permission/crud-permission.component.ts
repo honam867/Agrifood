@@ -53,6 +53,7 @@ export class CrudPermissionComponent implements OnInit {
             result => {
               this.source = result;
               this.sourceView = Object.assign({}, this.source);
+              console.log(this.sourceView);
               this.fetchUsers();
             }
           );
@@ -102,6 +103,7 @@ export class CrudPermissionComponent implements OnInit {
   save() {
     this.showLoading = true;
     this.addToUserList(this.selection.selected);
+    console.log(this.sourceView);
     this.service.put(this.sourceView).subscribe(
       result => {
         if (result) {
