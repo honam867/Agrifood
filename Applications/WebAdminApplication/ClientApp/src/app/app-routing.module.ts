@@ -3,6 +3,7 @@ import { AuthGuard } from './shared/services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContentComponent } from './layout/content/content.component';
+// NOTE canActive for route need special role, canLoad need permission
 const routes: Routes = [
   {
     path: '',
@@ -30,14 +31,15 @@ const routes: Routes = [
       },
       {
         path: 'farmer',
+        canLoad: [AuthGuard],
         loadChildren: () =>
           import('./modules/farmer/farmer.module').then(mod => mod.FarmerModule),
-        canActivate: [AuthGuard]
       },
       {
         path: 'user',
         loadChildren: () =>
-          import('./modules/user/user.module').then(mod => mod.UserModule)
+          import('./modules/user/user.module').then(mod => mod.UserModule),
+        canActivate: [AuthGuard]
       },
       {
         path: 'reports',
@@ -49,7 +51,12 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/report/report.module').then(mod => mod.ReportModule)
       },
-      { path: 'system', loadChildren: () => import('./modules/system/system.module').then(m => m.SystemModule) }
+      {
+        path: 'system',
+        canActivate: [AuthGuard]
+        ,
+        loadChildren: () => import('./modules/system/system.module').then(m => m.SystemModule)
+      }
     ]
   },
 

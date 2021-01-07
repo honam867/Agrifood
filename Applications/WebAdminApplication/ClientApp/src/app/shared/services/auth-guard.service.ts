@@ -1,11 +1,11 @@
 import { AuthService } from 'src/app/modules/auth/auth.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router } from '@angular/router';
+import { CanActivate, CanActivateChild, CanLoad, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild {
+export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     private authService: AuthService,
     private router: Router
@@ -22,6 +22,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivate() {
     const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
+    const test = getPermissionFarmerFromDecodeToken.roles;
+    if (test.includes("Admin" || "SysAdmin")) {
+      return true;
+    } else {
+      return this.router.navigate(['error-page']);
+    }
+  }
+
+  canLoad() {
+    const getPermissionFarmerFromDecodeToken = this.authService.storagePermission();
     const accessFarmer = JSON.parse(getPermissionFarmerFromDecodeToken.farmerPermission);
     if (JSON.parse(accessFarmer.CanAccessFarmer)) {
       return true
@@ -31,7 +41,6 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   canActivateChild() {
-    console.log('checking child route access');
     return true;
   }
 
