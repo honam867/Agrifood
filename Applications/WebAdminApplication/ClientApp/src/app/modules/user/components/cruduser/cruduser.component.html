@@ -58,6 +58,10 @@
                             <mat-label>Phone number</mat-label>
                             <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput
                                 placeholder="Phone number" [disabled]="isView">
+                                <mat-error *ngIf="f.submitted && email.invalid && email.errors.required">Email không
+                                  được
+                                  bỏ trống
+                              </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

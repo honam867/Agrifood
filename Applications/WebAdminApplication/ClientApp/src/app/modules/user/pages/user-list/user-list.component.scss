@@ -7,6 +7,10 @@
     padding-left: 10px ;
     padding-right: 10px ;
     justify-content: flex-end;
+    .example-form-field {
+      width: 200px;
+    }
+
   }
   .create-user{
     padding-left: 10px ;
@@ -30,6 +34,5 @@
     .user-button {
         position: absolute;
         right: 10px;
-        padding-top: 12px;
     }
 }

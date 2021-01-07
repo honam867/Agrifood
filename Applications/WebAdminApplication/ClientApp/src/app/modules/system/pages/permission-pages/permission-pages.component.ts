@@ -14,6 +14,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./permission-pages.component.scss']
 })
 export class PermissionPagesComponent implements OnInit {
+  value = '';
   showLoading: boolean;
   dataSource: MatTableDataSource<PermissionGroup>;
   permissionGroups: PermissionGroup[] = [];

@@ -31,7 +31,7 @@ export const ROUTES: RouteInfo[] = [{
     children: [
         {
             path: 'userlist',
-            title: 'Danh sách tài khoản',
+            title: 'DANH SÁCH TÀI KHOẢN',
             type: 'link',
             ab: null
         }
@@ -46,7 +46,7 @@ export const ROUTES: RouteInfo[] = [{
     children: [
         {
             path: 'farmerlist',
-            title: 'Danh sách nông dân',
+            title: 'DANH SÁCH NÔNG DÂN',
             type: 'link',
             ab: null
         }

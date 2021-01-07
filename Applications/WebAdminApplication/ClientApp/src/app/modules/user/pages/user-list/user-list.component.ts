@@ -19,9 +19,11 @@ import { reduce } from 'rxjs/operators';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
+
 export class UserListComponent implements OnInit {
   @Input() fromFarmerList: boolean;
   @Input() farmer: Farmer;
+  value = '';
   page = 1;
   showLoad = false;
   displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'role', 'status', 'action'];
@@ -217,30 +219,30 @@ export class UserListComponent implements OnInit {
       confirmEditDialog.afterClosed().subscribe(
         result => {
           if (result.confirmed) {
-            if(!this.farmer.userId){
+            if (!this.farmer.userId) {
               this.farmer.userId = user.id
               this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
                 result => {
-                  if(result){
-                    this.dialog.open(AlertComponent,{
-                      data:{
-                        message:"Gán tài khoản thành công"
+                  if (result) {
+                    this.dialog.open(AlertComponent, {
+                      data: {
+                        message: "Gán tài khoản thành công"
                       }
                     });
                     const userIndex = this.users.indexOf(user);
-                      if (userIndex !== -1) {
-                        this.users.splice(userIndex, 1);
-                        this.dataSource = new MatTableDataSource(this.users);
-                        this.dataSource.paginator = this.paginator;
-                        this.dataSource.sort = this.sort;
-                      }
+                    if (userIndex !== -1) {
+                      this.users.splice(userIndex, 1);
+                      this.dataSource = new MatTableDataSource(this.users);
+                      this.dataSource.paginator = this.paginator;
+                      this.dataSource.sort = this.sort;
+                    }
                   }
                 }
               );
             } else {
-              this.dialog.open(AlertComponent,{
-                data:{
-                  message:"Nông dân này đã có tài khoản"
+              this.dialog.open(AlertComponent, {
+                data: {
+                  message: "Nông dân này đã có tài khoản"
                 }
               });
             }

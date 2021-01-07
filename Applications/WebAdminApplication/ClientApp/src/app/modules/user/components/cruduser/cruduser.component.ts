@@ -189,7 +189,7 @@ export class CRUDUserComponent implements OnInit {
     });
     createDialog.afterClosed().subscribe(
       result => {
-        if (result.data) { // result => data:true 
+        if (result.data) { // result => data:true
           this.fetchRoleinUser();
         }
       }
