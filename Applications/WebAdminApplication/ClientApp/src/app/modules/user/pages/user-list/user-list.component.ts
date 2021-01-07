@@ -4,7 +4,7 @@ import { Farmer } from './../../../farmer/models/farmer';
 import { FarmerService } from './../../../farmer/farmer.service';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { CRUDUserComponent } from '../../components/cruduser/cruduser.component';
@@ -12,8 +12,6 @@ import { User } from '../../models/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { error, map } from 'jquery';
-import { reduce } from 'rxjs/operators';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -103,15 +101,9 @@ export class UserListComponent implements OnInit {
           }
         )
         )
-        // for (var i = this.users.length - 1; i >= 0; i--) {
-        //   for (var j = 0; j < result.length; j++) {
-        //     if (this.users[i].id === result[j].id) {
-        //       this.users.splice(i, 1);
-        //     }
-        //   }
-        // }
         // NOTE best
         this.users = this.users.filter((user) => result.every((result) => result.id !== user.id));
+        console.log(this.users);
         this.dataSource = new MatTableDataSource(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -217,30 +209,30 @@ export class UserListComponent implements OnInit {
       confirmEditDialog.afterClosed().subscribe(
         result => {
           if (result.confirmed) {
-            if(!this.farmer.userId){
+            if (!this.farmer.userId) {
               this.farmer.userId = user.id
               this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
                 result => {
-                  if(result){
-                    this.dialog.open(AlertComponent,{
-                      data:{
-                        message:"Gán tài khoản thành công"
+                  if (result) {
+                    this.dialog.open(AlertComponent, {
+                      data: {
+                        message: "Gán tài khoản thành công"
                       }
                     });
                     const userIndex = this.users.indexOf(user);
-                      if (userIndex !== -1) {
-                        this.users.splice(userIndex, 1);
-                        this.dataSource = new MatTableDataSource(this.users);
-                        this.dataSource.paginator = this.paginator;
-                        this.dataSource.sort = this.sort;
-                      }
+                    if (userIndex !== -1) {
+                      this.users.splice(userIndex, 1);
+                      this.dataSource = new MatTableDataSource(this.users);
+                      this.dataSource.paginator = this.paginator;
+                      this.dataSource.sort = this.sort;
+                    }
                   }
                 }
               );
             } else {
-              this.dialog.open(AlertComponent,{
-                data:{
-                  message:"Nông dân này đã có tài khoản"
+              this.dialog.open(AlertComponent, {
+                data: {
+                  message: "Nông dân này đã có tài khoản"
                 }
               });
             }

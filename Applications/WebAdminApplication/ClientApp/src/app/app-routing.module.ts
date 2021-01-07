@@ -25,6 +25,11 @@ const routes: Routes = [
     component: ContentComponent,
     children: [
       {
+        path: 'employee',
+        loadChildren: () =>
+          import('./modules/employee/employee.module').then(mod => mod.EmployeeModule)
+      },
+      {
         path: 'farmer',
         canLoad: [AuthGuard],
         loadChildren: () =>

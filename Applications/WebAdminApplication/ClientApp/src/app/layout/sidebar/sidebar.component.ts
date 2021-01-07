@@ -68,6 +68,21 @@ export const ROUTES: RouteInfo[] = [{
     ],
     icontype: 'settings_applications'
 },
+{
+    path: '/employee',
+    type: 'sub',
+    title: 'Nhân sự',
+    collapse: 'employee',
+    children: [
+        {
+            path: 'employeelist',
+            title: 'Danh sách nhân viên',
+            type: 'link',
+            ab: null
+        }
+    ],
+    icontype: 'work'
+},
 ];
 @Component({
     selector: 'app-sidebar',

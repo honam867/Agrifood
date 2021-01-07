@@ -26,12 +26,8 @@
                     <div class="col">
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Username</mat-label>
-                            <input appBlockCopyPaste (keydown.space)="$event.preventDefault();"
-                                (keyup)="checkUserName(sourceView.userName)" required id="userName"
-                                [(ngModel)]="sourceView.userName" name="userName" #name="ngModel" matInput
-                                placeholder="Username" [disabled]="!isCreate">
-                            <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Username không được
-                                bỏ trống
+                            <input appBlockCopyPaste (keydown.space)="$event.preventDefault();" (keyup)="checkUserName(sourceView.userName)" required id="userName" [(ngModel)]="sourceView.userName" name="userName" #name="ngModel" matInput placeholder="Username" [disabled]="!isCreate">
+                            <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Username không được bỏ trống
                             </mat-error>
                         </mat-form-field>
                         <mat-error *ngIf="userNameExist">UserName đã tồn tại</mat-error>
@@ -41,12 +37,8 @@
                     <div class="col">
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Email</mat-label>
-                            <input required id="email" #email="ngModel" (keyup)="checkEmail(sourceView.email)"
-                                [(ngModel)]="sourceView.email" name="email" matInput placeholder="Email"
-                                [disabled]="isView">
-                            <mat-error *ngIf="f.submitted && email.invalid && email.errors.required">Email không
-                                được
-                                bỏ trống
+                            <input required id="email" #email="ngModel" (keyup)="checkEmail(sourceView.email)" [(ngModel)]="sourceView.email" name="email" matInput placeholder="Email" [disabled]="isView">
+                            <mat-error *ngIf="f.submitted && email.invalid && email.errors.required">Email không được bỏ trống
                             </mat-error>
                         </mat-form-field>
                         <mat-error *ngIf="emailExist">Email đã tồn tại</mat-error>
@@ -56,8 +48,7 @@
                     <div class="col">
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Phone number</mat-label>
-                            <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput
-                                placeholder="Phone number" [disabled]="isView">
+                            <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput placeholder="Phone number" [disabled]="isView">
                         </mat-form-field>
                     </div>
                 </div>
@@ -65,21 +56,26 @@
                     <div class="col">
                         <mat-form-field class="input-fluid" appearance="outline" *ngIf="isCreate">
                             <mat-label>Vai trò</mat-label>
-                            <mat-select required value="{{sourceView.role}}" #roleName="ngModel"
-                                [(ngModel)]="sourceView.role" name="selectionRole">
+                            <mat-select required value="{{sourceView.role}}" #roleName="ngModel" [(ngModel)]="sourceView.role" name="selectionRole">
                                 <mat-option *ngFor="let role of roles" value="{{role.name}}">{{role.name}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="f.submitted && roleName.invalid && roleName.errors.required">Role không
-                                được
-                                bỏ trống
+                            <mat-error *ngIf="f.submitted && roleName.invalid && roleName.errors.required">Role không được bỏ trống
                             </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <div *ngIf="sourceView.role === 'Farmer' && isCreate" class="row">
                     <div class="col">
-                        <mat-radio-group [(ngModel)]="sourceView.selectedFarmer" [ngModelOptions]="{ standalone: true }"
-                            name="isBlock" [disabled]="isView">
+                        <mat-radio-group [(ngModel)]="sourceView.selectedFarmer" [ngModelOptions]="{ standalone: true }" name="isBlock" [disabled]="isView">
+                            <mat-radio-button checked="true" [value]="true">Tạo tài khoản đồng thời tạo nông dân
+                            </mat-radio-button>
+                            <mat-radio-button [value]="false">Chỉ tạo tài khoản</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+                <div *ngIf="sourceView.role === 'Employee' && isCreate" class="row">
+                    <div class="col">
+                        <mat-radio-group [(ngModel)]="sourceView.selectedEmployee" [ngModelOptions]="{ standalone: true }" name="isBlock" [disabled]="isView">
                             <mat-radio-button checked="true" [value]="true">Tạo tài khoản đồng thời tạo nông dân
                             </mat-radio-button>
                             <mat-radio-button [value]="false">Chỉ tạo tài khoản</mat-radio-button>
@@ -93,12 +89,9 @@
                 </div>
             </form>
             <div style="margin:0 auto;text-align: center;">
-                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView"
-                    (click)="delete()"><i class="fas fa-trash-alt"></i> Xóa</button>
-                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate"
-                    (click)="discard()"><i class="fas fa-window-close"></i> Bỏ thay đổi</button>
-                <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate"
-                    (click)="save()"><i class="fas fa-save"></i> Lưu thay đổi</button>
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i class="fas fa-trash-alt"></i> Xóa</button>
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()"><i class="fas fa-window-close"></i> Bỏ thay đổi</button>
+                <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()"><i class="fas fa-save"></i> Lưu thay đổi</button>
             </div>
         </mat-card>
     </mat-tab>

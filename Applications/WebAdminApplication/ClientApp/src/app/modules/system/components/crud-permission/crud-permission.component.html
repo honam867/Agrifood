@@ -7,13 +7,11 @@
                     <h5 class="text-center">Thông tin chung</h5>
                     <mat-label>Tên nhóm quyền</mat-label>
                     <mat-form-field class="input-fluid" appearance="outline">
-                        <input placeholder="Nhập tên nhóm quyền" id="permissionName" [(ngModel)]="sourceView.name"
-                            name="permissionName" #permissionName="ngModel" matInput required>
+                        <input placeholder="Nhập tên nhóm quyền" id="permissionName" [(ngModel)]="sourceView.name" name="permissionName" #permissionName="ngModel" matInput required>
                     </mat-form-field>
                     <mat-label>Miêu tả nhóm quyền</mat-label>
                     <mat-form-field class="input-fluid" appearance="outline">
-                        <textarea style="min-height: 100px;" [(ngModel)]="sourceView.description" name="description"
-                            #description="ngModel" matInput placeholder="Nhập miêu tả nhóm quyền"></textarea>
+                        <textarea style="min-height: 100px;" [(ngModel)]="sourceView.description" name="description" #description="ngModel" matInput placeholder="Nhập miêu tả nhóm quyền"></textarea>
                     </mat-form-field>
                     <div class="container">
                         <h5 class="text-center">Quyền quản lý nông dân</h5>
@@ -21,36 +19,31 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canAccess"
-                                            name="ordersMenu" class="permission-item">
+                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canAccess" name="canAccess" class="permission-item">
                                             Cho phép truy cập
                                         </mat-checkbox>
                                     </th>
                                     <td>
-                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canView"
-                                            name="orderReportMenu" class="permission-item">
+                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canView" name="canView" class="permission-item">
                                             Xem danh sách nông dân
                                         </mat-checkbox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canCreate"
-                                            name="ordersMenu" class="permission-item">
+                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canCreate" name="canCreate" class="permission-item">
                                             Tạo nông dân
                                         </mat-checkbox>
                                     </th>
                                     <td>
-                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canEdit"
-                                            name="createOrderMenu" class="permission-item">
+                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canEdit" name="canEdit" class="permission-item">
                                             Chỉnh sửa nông dân
                                         </mat-checkbox>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th scope="row">
-                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canDelete"
-                                            name="billMenu" class="permission-item">
+                                        <mat-checkbox [(ngModel)]="sourceView.farmerPermission.canDelete" name="canDelete" class="permission-item">
                                             Xóa nông dân
                                         </mat-checkbox>
                                     </th>
@@ -65,16 +58,11 @@
                         <!-- Checkbox Column -->
                         <ng-container matColumnDef="select">
                             <th mat-header-cell *matHeaderCellDef>
-                                <mat-checkbox (change)="$event ? masterToggle() : null"
-                                    [checked]="selection.hasValue() && isAllSelected()"
-                                    [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                    [aria-label]="checkboxLabel()">
+                                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                                 </mat-checkbox>
                             </th>
                             <td mat-cell *matCellDef="let row">
-                                <mat-checkbox (click)="$event.stopPropagation()"
-                                    (change)="$event ? selection.toggle(row) : null"
-                                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                                 </mat-checkbox>
                             </td>
                         </ng-container>
@@ -104,8 +92,7 @@
         </mat-card>
     </form>
     <div style="margin:0 auto;text-align: center;">
-        <button mat-raised-button class="btn btn-outline-danger" (click)="delete(sourceView.id)" type="submit"
-            *ngIf="!isCreate">
+        <button mat-raised-button class="btn btn-outline-danger" (click)="delete(sourceView.id)" type="submit" *ngIf="!isCreate">
             <mat-icon>delete</mat-icon> Xóa
         </button>
         <button mat-raised-button class="btn btn-outline-success" (click)="save()" type="submit" *ngIf="!isCreate">

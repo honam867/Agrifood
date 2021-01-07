@@ -141,6 +141,8 @@ namespace ApplicationDomain.Identity.Services
                 {
                     EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
                     employeeModelRq2.UserId = user.Id;
+                    DateTime localDate = DateTime.Now;
+                    employeeModelRq2.ContractCreatetionDate = localDate;
                     var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
                 }
                 await _userManagement.AddToRoleAsync(user, model.Role);
