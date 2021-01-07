@@ -10,11 +10,11 @@ namespace ApplicationDomain.BOA.IServices
 {
     public interface IBranchService
     {
-        Task<IEnumerable<ByreModel>> GetBranchsAsync();
-        Task<ByreModel> GetBranchByIdAsync(int id);
-        Task<int> CreateBranchAsync(ByreModelRq model, UserIdentity<int> issuer);
+        Task<IEnumerable<BranchModel>> GetBranchsAsync();
+        Task<BranchModel> GetBranchByIdAsync(int id);
+        Task<int> CreateBranchAsync(BranchModelRq model, UserIdentity<int> issuer);
         Task<bool> DeleteBranchAsync(int id);
-        Task<bool> UpdateBranchAsync(int id, ByreModelRq model, UserIdentity<int> issuer);
+        Task<bool> UpdateBranchAsync(int id, BranchModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
     }
 }

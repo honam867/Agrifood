@@ -4,45 +4,45 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.Branchs;
+using ApplicationDomain.BOA.Models.Breeds;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class BranchController : BaseController
+    public class BreedController : BaseController
     {
-        private readonly IBranchService _branchService;
-        public BranchController(IBranchService branchService)
+        private readonly IBreedService _breedService;
+        public BreedController(IBreedService breedService)
         {
-            _branchService = branchService;
+            _breedService = breedService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetBranchsAsync()
+        public async Task<IActionResult> GetBreedsAsync()
         {
-            return Ok(await _branchService.GetBranchsAsync());
+            return Ok(await _breedService.GetBreedsAsync());
         }
 
         [Route("checkingcode/{code}")]
         [HttpGet]
         public async Task<IActionResult> CheckCodeExistsAsync(string code)
         {
-            return Ok(await _branchService.CheckCodeExistsAsync(code));
+            return Ok(await _breedService.CheckCodeExistsAsync(code));
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetBranchById(int id)
+        public async Task<IActionResult> GetBreedById(int id)
         {
-            return Ok(await _branchService.GetBranchByIdAsync(id));
+            return Ok(await _breedService.GetBreedByIdAsync(id));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateBranchAsync([FromBody]BranchModelRq model)
+        public async Task<IActionResult> CreateBreedAsync([FromBody]BreedModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -55,11 +55,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _branchService.CheckCodeExistsAsync(model.Code))
+                if (await _breedService.CheckCodeExistsAsync(model.Code))
                 {
                     return BadRequest("Code Exists");
                 }
-                return Ok(await _branchService.CreateBranchAsync(model, issuer));
+                return Ok(await _breedService.CreateBreedAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -70,11 +70,11 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteBranchAsync(int id)
+        public async Task<IActionResult> DeleteBreedAsync(int id)
         {
             try
             {
-                await _branchService.DeleteBranchAsync(id);
+                await _breedService.DeleteBreedAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -85,7 +85,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateBranchAsync(int id, [FromBody]BranchModelRq model)
+        public async Task<IActionResult> UpdateBreedAsync(int id, [FromBody]BreedModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _branchService.UpdateBranchAsync(id, model, issuer));
+                return Ok(await _breedService.UpdateBreedAsync(id, model, issuer));
             }
             catch (Exception e)
             {

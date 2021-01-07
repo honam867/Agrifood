@@ -2,7 +2,7 @@
 using AutoMapper;
 
 
-namespace ApplicationDomain.BOA.Models.Branchs
+namespace ApplicationDomain.BOA.Models.Breeds
 {
     public class BreedModel
     {
