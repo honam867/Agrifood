@@ -8,7 +8,7 @@ namespace ApplicationDomain.BOA.Entities
 {
     public class Employee : EntityBase<int>
     {
-        public int UserId { set; get; }
+        public int? UserId { set; get; }
         public User User { get; set; }
         public string Code { get; set; }
         public string Name { set; get; }

@@ -31,7 +31,7 @@ namespace ApplicationDomain.BOA.Services
             _companyRepository = companyRepository;
         }
 
-        public async Task<int> CreateBranchAsync(BranchModelRq model, UserIdentity<int> issuer)
+        public async Task<int> CreateBranchAsync(ByreModelRq model, UserIdentity<int> issuer)
         {
             try
             {
@@ -72,18 +72,18 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<IEnumerable<BranchModel>> GetBranchsAsync()
+        public async Task<IEnumerable<ByreModel>> GetBranchsAsync()
         {
-            return await _branchRepository.GetBranchs().MapQueryTo<BranchModel>(_mapper).ToListAsync();
+            return await _branchRepository.GetBranchs().MapQueryTo<ByreModel>(_mapper).ToListAsync();
            
         }
 
-        public async Task<BranchModel> GetBranchByIdAsync(int id)
+        public async Task<ByreModel> GetBranchByIdAsync(int id)
         {
-            return await _branchRepository.GetBranchById(id).MapQueryTo<BranchModel>(_mapper).FirstOrDefaultAsync();
+            return await _branchRepository.GetBranchById(id).MapQueryTo<ByreModel>(_mapper).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> UpdateBranchAsync(int id, BranchModelRq model, UserIdentity<int> issuer)
+        public async Task<bool> UpdateBranchAsync(int id, ByreModelRq model, UserIdentity<int> issuer)
         {
             try
             {

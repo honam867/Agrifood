@@ -4,14 +4,16 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.DbMigration.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210107105031_UpdateUserIdEmployeeEntity")]
+    partial class UpdateUserIdEmployeeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -72,76 +74,6 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasIndex("DistrictId");
 
                     b.ToTable("Branch");
-                });
-
-            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Breed", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code");
-
-                    b.Property<int>("CreatedByUserId");
-
-                    b.Property<string>("CreatedByUserName");
-
-                    b.Property<DateTimeOffset>("CreatedDate");
-
-                    b.Property<string>("Name");
-
-                    b.Property<byte[]>("RowVersion");
-
-                    b.Property<int>("UpdatedByUserId");
-
-                    b.Property<string>("UpdatedByUserName");
-
-                    b.Property<DateTimeOffset>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Breed");
-                });
-
-            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Byre", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("BreedId");
-
-                    b.Property<string>("Code");
-
-                    b.Property<int>("CreatedByUserId");
-
-                    b.Property<string>("CreatedByUserName");
-
-                    b.Property<DateTimeOffset>("CreatedDate");
-
-                    b.Property<int>("FarmerId");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("QuantityCow");
-
-                    b.Property<string>("Ration");
-
-                    b.Property<byte[]>("RowVersion");
-
-                    b.Property<int>("UpdatedByUserId");
-
-                    b.Property<string>("UpdatedByUserName");
-
-                    b.Property<DateTimeOffset>("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BreedId");
-
-                    b.HasIndex("FarmerId");
-
-                    b.ToTable("Byre");
                 });
 
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.Company", b =>
@@ -555,7 +487,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 694, DateTimeKind.Unspecified).AddTicks(3463), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 629, DateTimeKind.Unspecified).AddTicks(6068), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -567,7 +499,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 698, DateTimeKind.Unspecified).AddTicks(8132), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 636, DateTimeKind.Unspecified).AddTicks(5705), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -602,7 +534,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 709, DateTimeKind.Unspecified).AddTicks(7245), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 653, DateTimeKind.Unspecified).AddTicks(4340), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<bool>("CustomerLibraryMenu");
 
@@ -650,7 +582,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 709, DateTimeKind.Unspecified).AddTicks(7818), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 653, DateTimeKind.Unspecified).AddTicks(5177), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<bool>("UserMenu");
 
@@ -673,7 +605,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 710, DateTimeKind.Unspecified).AddTicks(7068), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 654, DateTimeKind.Unspecified).AddTicks(9434), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<string>("Description");
 
@@ -687,7 +619,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 710, DateTimeKind.Unspecified).AddTicks(7532), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 655, DateTimeKind.Unspecified).AddTicks(267), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -706,7 +638,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 714, DateTimeKind.Unspecified).AddTicks(9955), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 662, DateTimeKind.Unspecified).AddTicks(3455), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -718,7 +650,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 3, 28, 50, 715, DateTimeKind.Unspecified).AddTicks(446), new TimeSpan(0, -8, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 7, 2, 50, 30, 662, DateTimeKind.Unspecified).AddTicks(4285), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<int>("UserId");
 
@@ -943,19 +875,6 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasOne("ApplicationDomain.BOA.Entities.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Byre", b =>
-                {
-                    b.HasOne("ApplicationDomain.BOA.Entities.Breed", "Breed")
-                        .WithMany()
-                        .HasForeignKey("BreedId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ApplicationDomain.BOA.Entities.Farmer", "Farmer")
-                        .WithMany()
-                        .HasForeignKey("FarmerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
