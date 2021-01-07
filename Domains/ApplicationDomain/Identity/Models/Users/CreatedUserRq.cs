@@ -1,4 +1,5 @@
-﻿using ApplicationDomain.Identity.Entities;
+﻿using ApplicationDomain.BOA.Entities;
+using ApplicationDomain.Identity.Entities;
 using AutoMapper;
 using FluentValidation;
 
@@ -13,6 +14,8 @@ namespace ApplicationDomain.Identity.Models
         public string PhoneNumber { get; set; }
         public string Role { get; set; }
         public bool Status { get; set; }
+        public bool SelectedFarmer { get; set; }
+        public bool SelectedEmployee { get; set; }
     }
 
     public class CreatedUserRqMapper : Profile
@@ -30,6 +33,7 @@ namespace ApplicationDomain.Identity.Models
             RuleFor(p => p.UserName).NotEmpty();
             RuleFor(p => p.UserName).MinimumLength(3);
             RuleFor(p => p.Email).NotEmpty().EmailAddress();
+            RuleFor(p => p.Role).NotEmpty();
         }
     }
 }

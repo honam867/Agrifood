@@ -4,6 +4,7 @@ using ApplicationDomain.Identity.Models;
 using AspNetCore.Common.Identity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
 namespace ApplicationDomain.Identity.IServices
 {
@@ -21,6 +22,7 @@ namespace ApplicationDomain.Identity.IServices
         Task<int> CreateUserRegistrationAsync(CreatedUserRq model);
         //Task<IEnumerable<User>> GetManagerUsersAsync();
         //Task<IEnumerable<User>> GetDirectorUsersAsync(); 
+        Task<bool> CheckUserNameAsync(string username);
         Task<IEnumerable<User>> GetEmployeeUsersAsync();
         Task<IList<string>> GetRoleByUser(User user);
         Task<bool> CheckEmailAsync(string email);

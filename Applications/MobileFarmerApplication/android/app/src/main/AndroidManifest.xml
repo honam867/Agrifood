@@ -43,5 +43,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <meta-data android:name="safetynet_api_key"
+            android:value="AIzaSyAr-b97s5B_CFiFYt_xfUCDQ72VHIf6zfg"/>    
     </application>
 </manifest>

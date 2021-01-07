@@ -8,10 +8,10 @@ abstract class LoginEvent extends Equatable {
 
 class LoginButtonPress extends LoginEvent {
   final LoginModel loginModel;
-  final bool accessFinger;
+
 
   const LoginButtonPress({
-    @required this.loginModel, this.accessFinger
+    @required this.loginModel
   });
 
   @override

@@ -1,16 +1,15 @@
 <div class="wrapper">
-  <div class="sidebar" data-color="green" data-background-color="green" data-image="./assets/img/sidebar-2.jpg">
-    <app-sidebar></app-sidebar>
-    <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
-  </div>
-  <div class="main-panel">
-    <app-nav></app-nav>
-    <router-outlet></router-outlet>
-    <h1>test</h1>
-    <div *ngIf="isMaps('maps')">
+    <div class="sidebar" data-color="green" data-background-color="green" data-image="./assets/img/sidebar-2.jpg">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-5.jpg)"></div>
     </div>
-  </div>
-  <!-- <div class="fixed-plugin">
+    <div class="main-panel">
+        <app-nav></app-nav>
+        <router-outlet></router-outlet>
+        <div *ngIf="isMaps('maps')">
+        </div>
+    </div>
+    <!-- <div class="fixed-plugin">
     <div class="dropdown show-dropdown open show">
       <a href="#" data-toggle="dropdown" aria-expanded="true">
         <i class="fa fa-cog fa-2x"> </i>

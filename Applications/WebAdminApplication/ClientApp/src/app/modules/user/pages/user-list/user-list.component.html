@@ -1,0 +1,79 @@
+<h3 class="text-center" *ngIf="fromFarmerList">
+  Gán tài khoản
+</h3>
+<mat-dialog-actions *ngIf="fromFarmerList">
+  <button mat-button mat-dialog-close>
+    <mat-icon>cancel</mat-icon>
+  </button>
+</mat-dialog-actions>
+<div class="containter">
+  <div class="form-setting">
+    <div class="user-filter">
+      <mat-form-field class="example-form-field">
+        <mat-label>Tìm kiếm</mat-label>
+        <input matInput (keyup)="applyFilter($event.target.value)" type="text" [(ngModel)]="value">
+        <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="user-button">
+      <button mat-raised-button color="primary" (click)="createUser()" *ngIf="!fromFarmerList">Thêm tài khoản</button>
+    </div>
+  </div>
+  <div class="user-list">
+    <mat-paginator [pageSizeOptions]="[10,20,50]">
+    </mat-paginator>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên đăng nhập</th>
+        <td mat-cell *matCellDef="let user">{{user.userName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let user">{{user.email}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Số điện thoại</th>
+        <td mat-cell *matCellDef="let user">{{user.phoneNumber}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Vai trò</th>
+        <td mat-cell *matCellDef="let user">{{user.role}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tình trạng</th>
+        <td mat-cell *matCellDef="let user">
+          <span *ngIf="user.status">Đã kích hoạt</span>
+          <span *ngIf="!user.status">Chưa kích hoạt</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef width="3%"></th>
+        <td mat-cell *matCellDef="let user" (click)="$event.stopPropagation()">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editUser(user)">
+              <mat-icon>edit</mat-icon>
+              <span>Chỉnh sửa</span>
+            </button>
+            <button mat-menu-item (click)="deleteUser(user)">
+              <mat-icon>delete</mat-icon>
+              <span>Xóa</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
+      <tr mat-row class="table-row" *matRowDef="let user; columns: displayedColumns;" (click)="viewDetail(user)">
+      </tr>
+    </table>
+  </div>

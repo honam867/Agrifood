@@ -114,8 +114,8 @@
   a:hover,
   a:focus,
   a:active {
-    @include shadow-small-color($brand-primary);
-    background-color: $brand-primary;
+    @include shadow-small-color(#4caf50);
+    background-color: #4caf50;
     color: #FFFFFF;
   }
 }

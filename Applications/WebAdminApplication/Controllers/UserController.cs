@@ -73,7 +73,8 @@ namespace WebAdminApplication.Controllers
                             modelErrors.Add(error);
                     return BadRequest(modelErrors);
                 }
-                return Ok(await _userService.CreateUserAsync(model));
+                var issuer = GetCurrentUserIdentity<int>();
+                return Ok(await _userService.CreateUserAsync(model, issuer));
             }
             catch (Exception exception)
             {
@@ -127,11 +128,19 @@ namespace WebAdminApplication.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                var issuer = GetCurrentUserIdentity<int>();
+                if (issuer.Roles.Contains("Admin") || issuer.Roles.Contains("SysAdmin"))
+                {
+                    return Ok(await _userService.DeleteUserAsync(id));
+                }
+                return BadRequest("You need the role of Admin or SysAdmin to perform this action.");
             }
-            return Ok(await _userService.DeleteUserAsync(id));
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [Route("role")]
@@ -181,6 +190,14 @@ namespace WebAdminApplication.Controllers
         public async Task<IActionResult> CheckEmailAsync(string email)
         {
             return OkValueObject(await _userService.CheckEmailAsync(email));
+
+        }
+
+        [Route("usernamechecking/{username}")]
+        [HttpGet]
+        public async Task<IActionResult> CheckUserNameAsync(string username)
+        {
+            return OkValueObject(await _userService.CheckUserNameAsync(username));
         }
 
         [Route("phonechecking/{phone}")]
