@@ -8,41 +8,41 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   Items item1 = new Items(
-      title: "Calendar",
+      title: "Danh sách bò",
       subtitle: "March, Wednesday",
       event: "3 Events",
       img: "assets/layout/calendar.png");
 
   Items item2 = new Items(
-    title: "Groceries",
+    title: "Thức ăn bò",
     subtitle: "Bocali, Apple",
     event: "4 Items",
     img: "assets/layout/food.png",
   );
 
   Items item3 = new Items(
-    title: "Locations",
+    title: "Vị trí bò",
     subtitle: "Lucy Mao going to Office",
     event: "",
     img: "assets/layout/map.png",
   );
 
   Items item4 = new Items(
-    title: "Activity",
+    title: "Thông tại chuồng",
     subtitle: "Rose favirited your Post",
     event: "",
     img: "assets/layout/festival.png",
   );
 
   Items item5 = new Items(
-    title: "To do",
+    title: "Thống kê",
     subtitle: "Homework, Design",
     event: "4 Items",
     img: "assets/layout/todo.png",
   );
 
   Items item6 = new Items(
-    title: "Settings",
+    title: "Cài đặt",
     subtitle: "",
     event: "2 Items",
     img: "assets/layout/setting.png",
@@ -51,7 +51,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
-    var color = 0xff453658;
+    var color = 0xff689738;
     return Flexible(
       child: GridView.count(
           childAspectRatio: 1.0,

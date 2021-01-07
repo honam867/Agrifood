@@ -11,7 +11,7 @@ class AuthenticationBloc
 
   AuthenticationBloc(this.authenticationRepository)
       : assert(authenticationRepository != null), super(null);
-  @override
+ 
   AuthenticationState get initialState => AuthenticationUnauthenticated();
 
   
