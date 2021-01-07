@@ -4,7 +4,7 @@ import { Farmer } from './../../../farmer/models/farmer';
 import { FarmerService } from './../../../farmer/farmer.service';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { CRUDUserComponent } from '../../components/cruduser/cruduser.component';
@@ -12,8 +12,6 @@ import { User } from '../../models/user';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { error, map } from 'jquery';
-import { reduce } from 'rxjs/operators';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
