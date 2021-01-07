@@ -103,15 +103,9 @@ export class UserListComponent implements OnInit {
           }
         )
         )
-        // for (var i = this.users.length - 1; i >= 0; i--) {
-        //   for (var j = 0; j < result.length; j++) {
-        //     if (this.users[i].id === result[j].id) {
-        //       this.users.splice(i, 1);
-        //     }
-        //   }
-        // }
         // NOTE best
         this.users = this.users.filter((user) => result.every((result) => result.id !== user.id));
+        console.log(this.users);
         this.dataSource = new MatTableDataSource(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

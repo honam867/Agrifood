@@ -24,7 +24,7 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Tên</mat-label>
-                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="!isCreate">
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="!isView">
                     <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
                     </mat-error>
                 </mat-form-field>

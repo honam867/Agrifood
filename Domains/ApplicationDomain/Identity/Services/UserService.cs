@@ -137,10 +137,13 @@ namespace ApplicationDomain.Identity.Services
                     farmerModelRq.ContractCreatetionDate = localDate;
                     var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
                 } 
-                if (model.SelectedEmployee && model.Role == ROLE_CONSTANT.EMPLOYEE)
+                if (model.Role== ROLE_CONSTANT.EMPLOYEE)
                 {
                     EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
                     employeeModelRq2.UserId = user.Id;
+                    DateTime localDate = DateTime.Now;
+                    employeeModelRq2.Birthday = localDate;
+                    employeeModelRq2.IssuedOn = localDate;
                     var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
                 }
                 await _userManagement.AddToRoleAsync(user, model.Role);
