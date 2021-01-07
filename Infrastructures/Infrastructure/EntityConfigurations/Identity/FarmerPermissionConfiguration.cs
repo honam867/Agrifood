@@ -13,7 +13,7 @@ namespace Infrastructure.EntityConfigurations.Identity
         {
             builder.Property(p => p.CreatedDate).HasDefaultValue(DateTimeOffset.Now);
             builder.Property(p => p.UpdatedDate).HasDefaultValue(DateTimeOffset.Now);
-            builder.HasOne(p => p.PermissionGroup).WithMany().OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.PermissionGroup).WithMany().OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
         }
 
     }
