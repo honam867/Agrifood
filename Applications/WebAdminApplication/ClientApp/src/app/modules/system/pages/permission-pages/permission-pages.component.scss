@@ -19,20 +19,21 @@
   }
 }
 .permission-list {
-    padding-left: 10px;
+    padding-left: 35px;
     max-height: fit-content;
-    padding-right: 10px;
+    padding-right: 35px;
 }
 
 .containter {
     padding-left: 25px;
     padding-top: 25px;
+    padding-right: 25px;
     .user-filter {
         width: 300px;
         height: 40px;
     }
     .user-button {
         position: absolute;
-        right: 10px;
+        right: 35px;
     }
 }

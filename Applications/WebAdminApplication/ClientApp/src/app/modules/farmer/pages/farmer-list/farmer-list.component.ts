@@ -22,7 +22,7 @@ export class FarmerListComponent implements OnInit {
   value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['userName', 'name', 'address', 'phoneNumber', 'createDate', 'isBlock', 'action'];
+  displayedColumns: string[] = ['userName', 'name', 'phoneNumber', 'isBlock', 'action'];
   dataSource: MatTableDataSource<Farmer>;
   farmers: Farmer[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
