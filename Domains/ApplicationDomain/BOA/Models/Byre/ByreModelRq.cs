@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ApplicationDomain.BOA.Models.Branchs
+namespace ApplicationDomain.BOA.Models.Byres
 {
     public class ByreModelRq
     {
