@@ -25,6 +25,7 @@ namespace ApplicationDomain.Identity.Entities
         public string NetResetCode { set; get; }
         public string ResetCode { set; get; }
 
+
         public User()
         {
             var now = DateTimeOffset.UtcNow;
