@@ -68,8 +68,9 @@ namespace ApplicationDomain.Identity.Services
         public IEnumerable<UserModel> GetListUsers()
         {
             try
-            {
-                return _userRepository.GetUsers().Cast<UserModel>();
+            { 
+                var result = _userRepository.GetUsers().Cast<UserModel>();
+                return result;
             }
             catch (Exception ex)
             {
