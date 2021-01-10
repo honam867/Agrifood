@@ -74,6 +74,76 @@ namespace Infrastructure.DbMigration.Migrations
                     b.ToTable("Branch");
                 });
 
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Breed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("CreatedByUserId");
+
+                    b.Property<string>("CreatedByUserName");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<string>("Name");
+
+                    b.Property<byte[]>("RowVersion");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("UpdatedByUserName");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Breed");
+                });
+
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Byre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BreedId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("CreatedByUserId");
+
+                    b.Property<string>("CreatedByUserName");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<int>("FarmerId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("QuantityCow");
+
+                    b.Property<string>("Ration");
+
+                    b.Property<byte[]>("RowVersion");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("UpdatedByUserName");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BreedId");
+
+                    b.HasIndex("FarmerId");
+
+                    b.ToTable("Byre");
+                });
+
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -127,6 +197,57 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Company");
+                });
+
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Cow", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AgeNumber");
+
+                    b.Property<DateTime>("Birthday");
+
+                    b.Property<int>("ByreId");
+
+                    b.Property<string>("Code");
+
+                    b.Property<int>("CreatedByUserId");
+
+                    b.Property<string>("CreatedByUserName");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<int>("FatherId");
+
+                    b.Property<int>("FoodSuggestionId");
+
+                    b.Property<string>("Gender");
+
+                    b.Property<int>("MotherId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("QRCode");
+
+                    b.Property<byte[]>("RowVersion");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("UpdatedByUserName");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.Property<DateTime>("WeaningDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ByreId");
+
+                    b.HasIndex("FoodSuggestionId");
+
+                    b.ToTable("Cow");
                 });
 
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.Department", b =>
@@ -253,7 +374,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate");
 
-                    b.Property<int>("UserId");
+                    b.Property<int?>("UserId");
 
                     b.Property<string>("UserName");
 
@@ -325,6 +446,37 @@ namespace Infrastructure.DbMigration.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Farmer");
+                });
+
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.FoodSuggestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content");
+
+                    b.Property<int>("CowId");
+
+                    b.Property<int>("CreatedByUserId");
+
+                    b.Property<string>("CreatedByUserName");
+
+                    b.Property<DateTimeOffset>("CreatedDate");
+
+                    b.Property<byte[]>("RowVersion");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("UpdatedByUserName");
+
+                    b.Property<DateTimeOffset>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CowId");
+
+                    b.ToTable("FoodSuggestion");
                 });
 
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.MilkCollectionStation", b =>
@@ -463,6 +615,49 @@ namespace Infrastructure.DbMigration.Migrations
                     b.ToTable("EmailTemplate");
                 });
 
+            modelBuilder.Entity("ApplicationDomain.Identity.Entities.FarmerPermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CanAccess");
+
+                    b.Property<bool>("CanCreate");
+
+                    b.Property<bool>("CanDelete");
+
+                    b.Property<bool>("CanEdit");
+
+                    b.Property<bool>("CanView");
+
+                    b.Property<int>("CreatedByUserId");
+
+                    b.Property<string>("CreatedByUserName");
+
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 455, DateTimeKind.Unspecified).AddTicks(4848), new TimeSpan(0, -8, 0, 0, 0)));
+
+                    b.Property<int>("PermissionGroupId");
+
+                    b.Property<byte[]>("RowVersion");
+
+                    b.Property<int>("UpdatedByUserId");
+
+                    b.Property<string>("UpdatedByUserName");
+
+                    b.Property<DateTimeOffset>("UpdatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 460, DateTimeKind.Unspecified).AddTicks(1812), new TimeSpan(0, -8, 0, 0, 0)));
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionGroupId");
+
+                    b.ToTable("FarmerPermission");
+                });
+
             modelBuilder.Entity("ApplicationDomain.Identity.Entities.MenuPermission", b =>
                 {
                     b.Property<int>("Id")
@@ -489,7 +684,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 64, DateTimeKind.Unspecified).AddTicks(2253), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 471, DateTimeKind.Unspecified).AddTicks(7623), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<bool>("CustomerLibraryMenu");
 
@@ -537,7 +732,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 68, DateTimeKind.Unspecified).AddTicks(8403), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 471, DateTimeKind.Unspecified).AddTicks(8156), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<bool>("UserMenu");
 
@@ -560,7 +755,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 72, DateTimeKind.Unspecified).AddTicks(3743), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 472, DateTimeKind.Unspecified).AddTicks(7243), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<string>("Description");
 
@@ -574,7 +769,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 72, DateTimeKind.Unspecified).AddTicks(4118), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 472, DateTimeKind.Unspecified).AddTicks(7723), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -593,7 +788,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 75, DateTimeKind.Unspecified).AddTicks(7727), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 477, DateTimeKind.Unspecified).AddTicks(966), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -605,7 +800,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2020, 12, 31, 15, 31, 10, 75, DateTimeKind.Unspecified).AddTicks(8084), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 1, 8, 2, 40, 36, 477, DateTimeKind.Unspecified).AddTicks(1532), new TimeSpan(0, -8, 0, 0, 0)));
 
                     b.Property<int>("UserId");
 
@@ -833,6 +1028,32 @@ namespace Infrastructure.DbMigration.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Byre", b =>
+                {
+                    b.HasOne("ApplicationDomain.BOA.Entities.Breed", "Breed")
+                        .WithMany()
+                        .HasForeignKey("BreedId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ApplicationDomain.BOA.Entities.Farmer", "Farmer")
+                        .WithMany()
+                        .HasForeignKey("FarmerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.Cow", b =>
+                {
+                    b.HasOne("ApplicationDomain.BOA.Entities.Byre", "Byre")
+                        .WithMany()
+                        .HasForeignKey("ByreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ApplicationDomain.BOA.Entities.FoodSuggestion", "FoodSuggestion")
+                        .WithMany()
+                        .HasForeignKey("FoodSuggestionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.Department", b =>
                 {
                     b.HasOne("ApplicationDomain.BOA.Entities.Branch", "Branch")
@@ -873,6 +1094,14 @@ namespace Infrastructure.DbMigration.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.FoodSuggestion", b =>
+                {
+                    b.HasOne("ApplicationDomain.BOA.Entities.Cow", "Cow")
+                        .WithMany()
+                        .HasForeignKey("CowId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.MilkCollectionStation", b =>
                 {
                     b.HasOne("ApplicationDomain.BOA.Entities.Ward", "Ward")
@@ -889,6 +1118,14 @@ namespace Infrastructure.DbMigration.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("ApplicationDomain.Identity.Entities.FarmerPermission", b =>
+                {
+                    b.HasOne("ApplicationDomain.Identity.Entities.PermissionGroup", "PermissionGroup")
+                        .WithMany()
+                        .HasForeignKey("PermissionGroupId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("ApplicationDomain.Identity.Entities.MenuPermission", b =>
                 {
                     b.HasOne("ApplicationDomain.Identity.Entities.PermissionGroup", "PermissionGroup")
@@ -902,7 +1139,7 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasOne("ApplicationDomain.Identity.Entities.PermissionGroup", "PermissionGroup")
                         .WithMany()
                         .HasForeignKey("PermissionGroupId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("ApplicationDomain.Identity.Entities.User", "User")
                         .WithMany()

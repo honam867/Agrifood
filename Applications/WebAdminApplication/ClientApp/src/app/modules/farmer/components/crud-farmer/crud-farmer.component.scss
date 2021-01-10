@@ -1,3 +1,17 @@
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
 }
+.fix-button{
+  position: fixed;
+  z-index: 10;
+}
+.fix-title{
+  z-index: 9;
+  position: fixed;
+  width: auto;
+  padding: 1rem;
+  margin-top: -24px;
+}
+.fix-form{
+  padding-top: 50px;
+}

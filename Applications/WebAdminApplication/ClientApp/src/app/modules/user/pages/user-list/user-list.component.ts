@@ -1,8 +1,11 @@
+import { AlertComponent } from './../../../../shared/components/alert/alert.component';
 import { Notification } from './../../../../shared/components/notification/notification';
+import { Farmer } from './../../../farmer/models/farmer';
+import { FarmerService } from './../../../farmer/farmer.service';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { UserService } from './../../user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, Input } from '@angular/core';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { CRUDUserComponent } from '../../components/cruduser/cruduser.component';
 import { User } from '../../models/user';
@@ -16,23 +19,37 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class UserListComponent implements OnInit {
+  @Input() fromFarmerList: boolean;
+  @Input() farmer: Farmer;
   value = '';
   page = 1;
   showLoad = false;
   displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'role', 'status', 'action'];
   dataSource: MatTableDataSource<User>;
   users: User[] = [];
-
+  user2s: User[] = [];
+  farmers: Farmer[] = [];
+  filterUsedUserId = [];
+  isUserList = true;
+  // isAddUser = false;
+  list: any;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(
     public dialog: MatDialog,
     public userService: UserService,
+    public farmerService: FarmerService,
     private notification: Notification
   ) { }
 
   ngOnInit(): void {
-    this.fetchUsers();
+
+    if (this.fromFarmerList) {
+      this.fetchUsers();
+      this.fetchUsedUserId();
+    } else {
+      this.fetchUsers();
+    }
   }
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
@@ -57,22 +74,43 @@ export class UserListComponent implements OnInit {
     );
   }
 
-  // fetchUsers() {
-  //     this.userService.getUsers().subscribe(result => {
-  //       console.log(result);
-  //     })
-  // }
-
   fetchUsers() {
     this.userService.getUsers().subscribe(
       res => {
         this.users = res;
+        if (!this.fromFarmerList) {
+          this.dataSource = new MatTableDataSource(this.users);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }
+      });
+  }
+
+  fetchUsedUserId() {
+    this.farmerService.getFarmers().subscribe(
+      res => {
+        this.farmers = res;
+
+        for (let index = 0; index < this.farmers.length; index++) {
+          if (this.farmers[index].hasOwnProperty('userId')) {
+            this.filterUsedUserId.push(this.farmers[index].userId);
+          }
+        }
+        const result = this.filterUsedUserId.map((item, index) => (
+
+          {
+            id: this.filterUsedUserId[index],
+          }
+        )
+        )
+        // NOTE best
+        this.users = this.users.filter((user) => result.every((result) => result.id !== user.id));
+        console.log(this.users);
         this.dataSource = new MatTableDataSource(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
   }
-
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -146,22 +184,67 @@ export class UserListComponent implements OnInit {
   }
 
   viewDetail(user: User) {
-    const viewDialog = this.dialog.open(CRUDUserComponent, {
-      width: '40%',
-      height: '80%',
-      data: {
-        action: StatusForm.VIEW,
-        user,
-      },
-      disableClose: true,
-    });
+    if (!this.fromFarmerList) {
+      const viewDialog = this.dialog.open(CRUDUserComponent, {
+        height: '75%',
+        width: '80%',
+        data: {
+          action: StatusForm.VIEW,
+          user,
+        },
+        disableClose: true,
+      });
 
-    viewDialog.afterClosed().subscribe(
-      result => {
-        this.afterClose(result);
-      }
-    );
+      viewDialog.afterClosed().subscribe(
+        result => {
+          this.afterClose(result);
+        }
+      );
+    } else {
+      const confirmEditDialog = this.dialog.open(ConfirmationComponent, {
+        data: {
+          message: 'Bạn có muốn gán hộ nông dân cho tài khoản này ?',
+        },
+        disableClose: true,
+      });
+
+      confirmEditDialog.afterClosed().subscribe(
+        result => {
+          if (result.confirmed) {
+            if (!this.farmer.userId) {
+              this.farmer.userId = user.id
+              this.farmerService.updateFarmer(this.farmer.id, this.farmer).subscribe(
+                result => {
+                  if (result) {
+                    this.dialog.open(AlertComponent, {
+                      data: {
+                        message: "Gán tài khoản thành công"
+                      }
+                    });
+                    const userIndex = this.users.indexOf(user);
+                    if (userIndex !== -1) {
+                      this.users.splice(userIndex, 1);
+                      this.dataSource = new MatTableDataSource(this.users);
+                      this.dataSource.paginator = this.paginator;
+                      this.dataSource.sort = this.sort;
+                    }
+                  }
+                }
+              );
+            } else {
+              this.dialog.open(AlertComponent, {
+                data: {
+                  message: "Nông dân này đã có tài khoản"
+                }
+              });
+            }
+
+          }
+        }
+      );
+    }
   }
+
 
 
 }

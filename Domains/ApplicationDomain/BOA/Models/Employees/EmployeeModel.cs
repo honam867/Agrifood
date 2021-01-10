@@ -8,7 +8,8 @@ namespace ApplicationDomain.BOA.Models.Farmers
     public class EmployeeModel
     {
         public int Id { get; set; }
-        public int UserId { set; get; }
+        public int? UserId { set; get; }
+        public string Code { get; set; }
         public User User { get; set; }
         public string Name { set; get; }
         public string FullName { set; get; }

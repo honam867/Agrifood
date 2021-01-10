@@ -62,6 +62,7 @@ export class CrudRolesUserComponent implements OnInit {
     this.userService.getRoleNotExist(this.sourceView.userId).subscribe(
       res => {
         this.roles = res;
+        this.roles = this.roles.filter(item => item.name !== "SysAdmin");
         this.dataSource = new MatTableDataSource<Role>(this.roles);
         this.dataSource.paginator = this.paginator;
         this.loaded = true;

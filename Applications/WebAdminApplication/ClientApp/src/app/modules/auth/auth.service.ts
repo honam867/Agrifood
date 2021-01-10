@@ -59,8 +59,6 @@ export class AuthService {
     const tokenPayload = decode(token);
     localStorage.setItem(USERINFO, tokenPayload.userInfo);
   }
-
-
   // storageRoles() {
   //   const token = localStorage.getItem(environment.tokenKey);
   //   const tokenPayload = decode(token);
@@ -68,11 +66,12 @@ export class AuthService {
   //   const listRoles = { roles: roles[1] }
   //   localStorage.setItem(ROLES, JSON.stringify(listRoles.roles));
   // }
-  // storagePermission() {
-  //   const token = localStorage.getItem(environment.tokenKey);
-  //   const tokenPayload = decode(token);
-  //   localStorage.setItem(PERMISSION, tokenPayload.permission);
-  // }
+  storagePermission() {
+    const token = localStorage.getItem(environment.tokenKey);
+    const tokenPayload = decode(token);
+    return tokenPayload;
+    // localStorage.setItem(PERMISSION, tokenPayload.permission);
+  }
 
   changePassword(formData: any): Observable<any> {
     return this.http.put(`auth/changepassword`, formData);

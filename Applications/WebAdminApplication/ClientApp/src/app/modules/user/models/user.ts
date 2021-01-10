@@ -1,5 +1,5 @@
 export class User {
-    id: number;
+    id: any;
     userName: string;
     email: string;
     phoneNumber: string;
@@ -11,6 +11,7 @@ export class User {
     updatedDate: Date;
     updatedByUserName: string;
     selectedFarmer: boolean;
+    selectedEmployee: boolean;
     constructor() {
         this.selectedFarmer = true;
     }
