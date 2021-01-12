@@ -5,6 +5,7 @@ export class User {
     phoneNumber: string;
     avatarURL: string;
     role: string;
+    roles: string;
     status: boolean;
     createdDate: Date;
     createdByUserName: string;
