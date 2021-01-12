@@ -9,19 +9,12 @@ namespace ApplicationDomain.BOA.Models.Byres
 {
     public class ByreModelRq
     {
-        public int Id { get; set; }
-        public string Name { get; set; } //NOT NULL, LENGTH > 5, UPPER CASE
-        public string ForeignName { set; get; }
-        public string ShortName { set; get; }
-        public string Code { set; get; } //NOT NULL, LENGTH = 3, UPPER CASE, UNIQUE
-        public string Address { set; get; }
-        public string Email { set; get; }
-        public string PhoneNumber { set; get; }
-        public string Fax { set; get; }
-        public int CompanyId { get; set; }
-        public string CompanyName { get; set; }
-        public int DistrictId { get; set; }
-        public string DistrictName { get; set; }
+        public string Code { set; get; }
+        public string Name { set; get; }
+        public int BreedId { set; get; }
+        public int? QuantityCow { set; get; }
+        public int FarmerId { set; get; }
+        public string Ration { set; get; }
     }
 
     public class ByreModelRqMapper : Profile
