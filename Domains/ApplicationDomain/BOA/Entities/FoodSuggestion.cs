@@ -4,8 +4,7 @@ namespace ApplicationDomain.BOA.Entities
 {
     public class FoodSuggestion : EntityBase<int>
     {
-        public int CowId { set; get; }
-        public Cow Cow { set; get; }
+        public string Code { get; set; }
         public string Content { set; get; }
     }
 }
