@@ -84,7 +84,7 @@ export class UserListComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }
-        if (this.users.length > 0 || this.fromFarmerList) {
+        if (this.users.length > 0 && this.fromFarmerList === true) {
           this.fetchUsedUserId();
         }
       });
