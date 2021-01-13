@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/core/token.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,11 +11,11 @@ class AuthenticationBloc
   final AuthenticationRepository authenticationRepository;
 
   AuthenticationBloc(this.authenticationRepository)
-      : assert(authenticationRepository != null), super(null);
- 
+      : assert(authenticationRepository != null),
+        super(null);
+
   AuthenticationState get initialState => AuthenticationUnauthenticated();
 
-  
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
@@ -23,46 +24,39 @@ class AuthenticationBloc
       if (isValidToken) {
         //Get CustomerId
         final Map<String, dynamic> customerId =
-            json.decode(await Token.getLoggedCustomerId());
+            json.decode(await Token.getFarmerId());
 
         //Avatar and FullName
-        final Map<String, dynamic> customerEmployee =
-            json.decode(await Token.getLoggedCustomerEmployeeId());
+        // final Map<String, dynamic> customerEmployee =
+        //     json.decode(await Token.getLoggedCustomerEmployeeId());
 
-        yield AuthenticationAuthenticated(
-            // fullname: customerEmployee['Name'],
-            // avatarUrl: customerEmployee['AvatarURL'],
-            // customerId: customerId['Id'],
-            assetFinger: true,
-            loginModel: event.loginModel);
+        yield AuthenticationAuthenticated(userInfo: customerId);
       } else {
         yield AuthenticationUnauthenticated();
       }
+    }
+    if (event is LoginFormButton) {
+      yield LoginFormButtonState();
     }
     if (event is LoggedIn) {
       yield AuthenticationLoading();
       await authenticationRepository.persistToken(event.token);
       //Get CustomerId
       final Map<String, dynamic> customerId =
-          json.decode(await Token.getLoggedCustomerId());
-
+          json.decode(await Token.getFarmerId());
+      print(customerId);
       //Avatar and FullName
-      final Map<String, dynamic> customerEmployee =
-          json.decode(await Token.getLoggedCustomerEmployeeId());
+      // final Map<String, dynamic> customerEmployee =
+      //     json.decode(await Token.getLoggedCustomerEmployeeId());
 
-      yield AuthenticationAuthenticated(
-          // fullname: customerEmployee['Name'],
-          // avatarUrl: customerEmployee['AvatarURL'],
-          // customerId: customerId['Id'],
-          loginModel: event.loginModel,
-          assetFinger: event.fingerId);
+      yield AuthenticationAuthenticated(userInfo: customerId);
     }
     if (event is LoggedOut) {
       yield AuthenticationLoading();
       await authenticationRepository.deleteToken();
       yield AuthenticationUnauthenticated();
     }
-    if (event is RedirectToLoginPage)  {
+    if (event is RedirectToLoginPage) {
       yield AuthenticationLoginPage();
     }
     // if (event is CheckCodePage) {

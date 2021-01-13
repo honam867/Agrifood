@@ -4,6 +4,7 @@ import 'package:AgrifoodApp/authentication/bloc/authentication.dart';
 import 'package:AgrifoodApp/authentication/bloc/authentication_cubit.dart';
 import 'package:AgrifoodApp/authentication/login/component/login_form.dart';
 import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
+import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/authentication/signup/component/verification_phoneNumber_component.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:AgrifoodApp/respository/register_repository.dart';
@@ -97,21 +98,24 @@ class _InitPageState extends State<InitPage> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BlocProvider(
-                                    create: (context) {
-                                      return LoginBloc(
-                                        authenticationBloc:
-                                            BlocProvider.of<AuthenticationBloc>(
-                                                context),
-                                        authenticationRepository:
-                                            authenticationRepository,
-                                      );
-                                    },
-                                    child: LoginComponent()),
-                              ));
+                          BlocProvider.of<AuthenticationBloc>(context)
+                              .add(LoginFormButton());
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //       builder: (context) => BlocProvider(
+                          //           create: (context) {
+                          //             return LoginBloc(
+                          //               authenticationBloc:
+                          //                   BlocProvider.of<AuthenticationBloc>(
+                          //                       context),
+                          //               authenticationRepository:
+                          //                   authenticationRepository,
+                          //             );
+                          //           },
+                          //           child: LoginComponent()),
+                          //     ));
                         },
                         shape: RoundedRectangleBorder(
                             side: BorderSide(color: Colors.black),

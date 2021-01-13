@@ -1,4 +1,7 @@
+import 'package:AgrifoodApp/authentication/login/component/login_form.dart';
+import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
 import 'package:AgrifoodApp/authentication/login/page/onboarding.dart';
+import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -65,11 +68,29 @@ class App extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.white,
       ),
-      routes: {'/home': (_) => InitPage()},
+      routes: {
+        '/home': (_) => HomePage(),
+        '/test': (_) => InitPage(
+              authenticationRepository: authenticationRepository,
+            )
+      },
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            return HomePage();
+            return HomePage(
+              userInfo: state.userInfo,
+            );
+          }
+          if (state is LoginFormButtonState) {
+            return BlocProvider(
+                create: (context) {
+                  return LoginBloc(
+                    authenticationBloc:
+                        BlocProvider.of<AuthenticationBloc>(context),
+                    authenticationRepository: authenticationRepository,
+                  );
+                },
+                child: LoginComponent());
           }
           if (state is AuthenticationLoginPage) {
             return InitPage(

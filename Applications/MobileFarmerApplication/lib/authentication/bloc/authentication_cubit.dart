@@ -1,8 +1,5 @@
-import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:AgrifoodApp/respository/register_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'authentication.dart';
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {

@@ -34,6 +34,12 @@ class LoggedIn extends AuthenticationEvent {
   String toString() => 'LoggedIn';
 }
 
+class LoginFormButton extends AuthenticationEvent {
+  const LoginFormButton();
+
+  @override
+  List<Object> get props => [];
+}
 
 class LoggedOut extends AuthenticationEvent {
   @override

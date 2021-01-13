@@ -30,19 +30,16 @@ class CheckPhoneNumberLoaded extends AuthenticationState {
 }
 
 class AuthenticationAuthenticated extends AuthenticationState {
-  final String fullname;
-  final String avatarUrl;
-  final int customerId;
-  final LoginModel loginModel;
-  final bool assetFinger;
+  final userInfo;
 
   const AuthenticationAuthenticated(
-      {@required this.fullname, @required this.avatarUrl, @required this.customerId, @required this.loginModel, @required this.assetFinger});
+      {@required this.userInfo});
 
   @override
   List<Object> get props => [];
 }
 
 class AuthenticationUnauthenticated extends AuthenticationState {}
+class LoginFormButtonState extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}

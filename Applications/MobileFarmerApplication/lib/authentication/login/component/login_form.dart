@@ -1,8 +1,11 @@
+import 'package:AgrifoodApp/authentication/bloc/authentication_bloc.dart';
+import 'package:AgrifoodApp/authentication/bloc/authentication_event.dart';
 import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
 import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/authentication/login/login_state.dart';
 import 'package:AgrifoodApp/authentication/login/model/login_model.dart';
 import 'package:AgrifoodApp/authentication/signup/page/signup.dart';
+import 'package:AgrifoodApp/home/component/home_page.dart';
 import 'package:AgrifoodApp/ui/animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,14 +17,15 @@ class LoginComponent extends StatefulWidget {
 }
 
 class _LoginComponentState extends State<LoginComponent> {
-   bool _obscureTextPassword = true;
+  bool _obscureTextPassword = true;
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool isValid = false;
 
   void checkValidation() {
     setState(() {
-      isValid = this._userNameController.text.isNotEmpty && this._passwordController.text.isNotEmpty;
+      isValid = this._userNameController.text.isNotEmpty &&
+          this._passwordController.text.isNotEmpty;
     });
   }
 
@@ -45,9 +49,13 @@ class _LoginComponentState extends State<LoginComponent> {
 
     return BlocListener<LoginBloc, LoginState>(listener: (context, state) {
       if (state is LoginFailure) {
-        Toast.show('${state.error}', context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+        Toast.show('${state.error}', context,
+            duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       }
-      
+    //   if (state is LoginInitial) {
+    //     Navigator.of(context)
+    // .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+    //   }
     }, child: BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return Scaffold(
@@ -59,7 +67,7 @@ class _LoginComponentState extends State<LoginComponent> {
             backgroundColor: Colors.white,
             leading: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                 BlocProvider.of<AuthenticationBloc>(context).add(RedirectToLoginPage());
               },
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -84,7 +92,8 @@ class _LoginComponentState extends State<LoginComponent> {
                               1,
                               Text(
                                 "Đăng nhập",
-                                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    fontSize: 30, fontWeight: FontWeight.bold),
                               )),
                           SizedBox(
                             height: 20,
@@ -93,7 +102,8 @@ class _LoginComponentState extends State<LoginComponent> {
                               1.2,
                               Text(
                                 "Đăng nhập tài khoản của bạn",
-                                style: TextStyle(fontSize: 15, color: Colors.grey[700]),
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.grey[700]),
                               )),
                         ],
                       ),
@@ -104,13 +114,19 @@ class _LoginComponentState extends State<LoginComponent> {
                             FadeAnimation(
                                 1.2,
                                 makeInput(
-                                  label: "Số điện thoại",
+                                  label: "Tài khoản",
                                   controller: _userNameController,
                                 )),
-                            FadeAnimation(1.3, makeInput(label: "Mật khẩu", controller: _passwordController, obscureText: true)),
+                            FadeAnimation(
+                                1.3,
+                                makeInput(
+                                    label: "Mật khẩu",
+                                    controller: _passwordController,
+                                    obscureText: true)),
                           ],
                         ),
                       ),
+                      
                       FadeAnimation(
                           1.4,
                           Padding(
@@ -129,36 +145,44 @@ class _LoginComponentState extends State<LoginComponent> {
                                 minWidth: double.infinity,
                                 height: 60,
                                 onPressed: state is! LoginLoading
-                                ? _onLoginButtonPressed
-                                : null,
+                                    ? _onLoginButtonPressed
+                                    : null,
                                 color: Colors.greenAccent,
                                 elevation: 0,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(50)),
                                 child: Text(
                                   "Đăng nhập",
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
                                 ),
                               ),
                             ),
                           )),
-                      FadeAnimation(
-                          1.5,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text("Bạn không có tài khoản? "),
-                              TextButton(
-                                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage())),
-                                child: Text(
-                                  "Đăng kí",
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                                ),
-                              ),
-                              // Text("Đăng kí", style: TextStyle(
-                              //   fontWeight: FontWeight.w600, fontSize: 18
-                              // ),),
-                            ],
-                          ))
+                      // FadeAnimation(
+                      //     1.5,
+                      //     Row(
+                      //       mainAxisAlignment: MainAxisAlignment.center,
+                      //       children: <Widget>[
+                      //         Text("Bạn chưa có tài khoản!?"),
+                      //         TextButton(
+                      //           onPressed: () => Navigator.push(
+                      //               context,
+                      //               MaterialPageRoute(
+                      //                   builder: (context) => SignUpPage())),
+                      //           child: Text(
+                      //             "Liên hệ",
+                      //             style: TextStyle(
+                      //                 fontWeight: FontWeight.w600,
+                      //                 fontSize: 18),
+                      //           ),
+                      //         ),
+                      //         // Text("Đăng kí", style: TextStyle(
+                      //         //   fontWeight: FontWeight.w600, fontSize: 18
+                      //         // ),),
+                      //       ],
+                      //     ))
                     ],
                   ),
                 ),
@@ -166,7 +190,10 @@ class _LoginComponentState extends State<LoginComponent> {
                     1.2,
                     Container(
                       height: MediaQuery.of(context).size.height / 3,
-                      decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/background.png'), fit: BoxFit.cover)),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/background.png'),
+                              fit: BoxFit.cover)),
                     ))
               ],
             ),
@@ -182,25 +209,31 @@ class _LoginComponentState extends State<LoginComponent> {
       children: <Widget>[
         Text(
           label,
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+          style: TextStyle(
+              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
         ),
         SizedBox(
           height: 5,
         ),
         TextField(
-          obscureText: label != "Số điện thoại" ? _obscureTextPassword : false,
+          obscureText: label != "Tài khoản" ? _obscureTextPassword : false,
           controller: controller,
           onChanged: (value) {
             checkValidation();
           },
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[400])),
-            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey[400])),
-            suffixIcon: label != "Số điện thoại" ? IconButton(
-              icon: obscureText ? Icon(Icons.remove_red_eye) : Icon(Icons.visibility_off),
-              onPressed: _showOrHidePassword
-            ) : null,
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[400])),
+            suffixIcon: label != "Tài khoản"
+                ? IconButton(
+                    icon: obscureText
+                        ? Icon(Icons.remove_red_eye)
+                        : Icon(Icons.visibility_off),
+                    onPressed: _showOrHidePassword)
+                : null,
           ),
         ),
         SizedBox(

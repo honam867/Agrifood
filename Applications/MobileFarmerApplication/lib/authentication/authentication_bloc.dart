@@ -24,7 +24,7 @@ class AuthenticationBloc
       if (isValidToken) {
         //Get CustomerId
         final Map<String, dynamic> customerId =
-            json.decode(await Token.getLoggedCustomerId());
+            json.decode(await Token.getFarmerId());
 
         //Avatar and FullName
         final Map<String, dynamic> customerEmployee =
@@ -45,7 +45,7 @@ class AuthenticationBloc
       await authenticationRepository.persistToken(event.token);
       //Get CustomerId
       final Map<String, dynamic> customerId =
-          json.decode(await Token.getLoggedCustomerId());
+          json.decode(await Token.getFarmerId());
 
       //Avatar and FullName
       final Map<String, dynamic> customerEmployee =

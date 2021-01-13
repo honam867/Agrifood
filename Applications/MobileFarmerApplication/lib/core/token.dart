@@ -36,10 +36,10 @@ class Token {
     return payloadMap;
   }
 
-  static Future<Object> getLoggedCustomerId () async {
+  static Future<Object> getFarmerId() async {
     Map<String, dynamic> parseToken = await parseJwt();
     return  parseToken[
-            'customer'].toString();
+            'userInfo'].toString();
       
   }
 
