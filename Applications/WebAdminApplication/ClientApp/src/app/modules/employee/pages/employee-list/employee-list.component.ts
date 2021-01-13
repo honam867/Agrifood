@@ -38,8 +38,8 @@ export class EmployeeListComponent implements OnInit {
     this.employeeService.getEmployees().subscribe(
       res => {
         this.employees = res;
-        console.log(this.employees);
         this.dataSource = new MatTableDataSource(this.employees);
+        console.log(this.dataSource);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
