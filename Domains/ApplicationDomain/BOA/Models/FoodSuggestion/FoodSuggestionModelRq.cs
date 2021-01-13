@@ -9,7 +9,7 @@ namespace ApplicationDomain.BOA.Models.FoodSuggestions
 {
     public class FoodSuggestionModelRq
     {
-        public int CowId { set; get; }
+        public string Code { get; set; }
         public string Content { set; get; }
     }
 
