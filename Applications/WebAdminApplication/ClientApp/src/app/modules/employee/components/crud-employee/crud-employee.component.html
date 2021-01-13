@@ -8,9 +8,6 @@
 
 <mat-card-title class="card-header text-center" *ngIf="isView">
     Thông tin nhân viên
-    <button mat-icon-button *ngIf="isView" (click)="edit()" matTooltip="Chỉnh sửa">
-      <mat-icon>edit</mat-icon>
-  </button>
 </mat-card-title>
 <mat-card-title class="card-header text-center" *ngIf="isCreate">
     Thêm nhân viên
@@ -124,8 +121,9 @@
     <div style="margin:0 auto;text-align: center;">
         <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
               class="fas fa-trash-alt"></i> Xóa</button>
-        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()"><i class="fas fa-window-close"></i> Bỏ thay đổi</button>
-        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()"><i class="fas fa-save"></i> Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh sửa</button>
         <!-- <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="!isView && !isCreate" (click)="addFarmerAccount(farmer)"><i class="fas fa-window-close"></i> Gán tài khoản</button> -->
     </div>
 </mat-card>

@@ -4,7 +4,7 @@ export class Employee {
   name: string;
   code:string;
   fullName: string;
-  // userUserName: string;
+  userUserName: string;
   email: string;
   phoneNumber: string;
   address: string;
@@ -14,6 +14,7 @@ export class Employee {
   issuedBy: string;
   accountNumber: string;
   bank: string;
+  // userName: string;
   bankBranch: string;
   permissionGroup: string;
 

@@ -22,6 +22,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public DateTime IssuedOn { set; get; }
         public string IssuedBy { set; get; }
         public string AccountNumber { set; get; }
+        public string UserUserName { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }
         public string PermissionGroup { get; set; }

@@ -1,27 +1,27 @@
 @import '../../../../shared/css/table.component.scss';
-.form-setting{
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  .user-filter{
-    padding-left: 10px ;
-    padding-right: 10px ;
-    justify-content: flex-end;
-    .example-form-field {
-      width: 200px;
+.form-setting {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    .user-filter {
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: flex-end;
+        .example-form-field {
+            width: 200px;
+        }
     }
-
-  }
-  .create-user{
-    padding-left: 10px ;
-    padding-right: 10px ;
-    justify-content: flex-start;
-  }
+    .create-user {
+        padding-left: 10px;
+        padding-right: 10px;
+        justify-content: flex-start;
+    }
 }
+
 .employee-list {
-  padding-left: 35px;
-  max-height: fit-content;
-  padding-right: 35px;
+    padding-left: 35px;
+    max-height: fit-content;
+    padding-right: 35px;
 }
 
 .containter {
@@ -29,9 +29,9 @@
     padding-top: 25px;
     padding-right: 25px;
     .user-filter {
-      width: 300px;
-      height: 40px;
-  }
+        width: 300px;
+        height: 40px;
+    }
     .user-button {
         position: absolute;
         right: 35px;
