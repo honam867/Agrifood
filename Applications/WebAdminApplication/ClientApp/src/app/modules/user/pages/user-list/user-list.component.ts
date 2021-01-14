@@ -44,12 +44,12 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if (this.fromFarmerList) {
-      this.fetchUsers();
-      this.fetchUsedUserId();
-    } else {
-      this.fetchUsers();
-    }
+    this.fetchUsers();
+    // if (this.fromFarmerList) {
+    //   this.fetchUsers();
+    // } else {
+    //   this.fetchUsers();
+    // }
   }
   createUser() {
     const createDialog = this.dialog.open(CRUDUserComponent, {
@@ -78,10 +78,14 @@ export class UserListComponent implements OnInit {
     this.userService.getUsers().subscribe(
       res => {
         this.users = res;
+        // console.log(this.users);
         if (!this.fromFarmerList) {
           this.dataSource = new MatTableDataSource(this.users);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+        }
+        if (this.users.length > 0 && this.fromFarmerList === true) {
+          this.fetchUsedUserId();
         }
       });
   }
@@ -90,22 +94,19 @@ export class UserListComponent implements OnInit {
     this.farmerService.getFarmers().subscribe(
       res => {
         this.farmers = res;
-
         for (let index = 0; index < this.farmers.length; index++) {
           if (this.farmers[index].hasOwnProperty('userId')) {
             this.filterUsedUserId.push(this.farmers[index].userId);
           }
         }
         const result = this.filterUsedUserId.map((item, index) => (
-
           {
             id: this.filterUsedUserId[index],
           }
         )
         )
         // NOTE best
-        this.users = this.users.filter((user) => result.every((result) => result.id !== user.id));
-        console.log(this.users);
+        this.users = this.users.filter((user) => result.every((result) => result.id !== user.id && user.roles.includes('Farmer')));
         this.dataSource = new MatTableDataSource(this.users);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

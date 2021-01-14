@@ -9,7 +9,7 @@ namespace ApplicationDomain.BOA.Models.Cows
 {
     public class CowModelRq
     {
-        public int CowId { set; get; }
+        public int ByreId { set; get; }
         public int MotherId { set; get; }
         public int FatherId { set; get; }
         public string Name { set; get; }

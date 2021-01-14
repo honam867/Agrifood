@@ -1,42 +1,37 @@
 <div class="container profile profile-view" id="profile">
-  <form>
-    <div class="form-row profile-row">
-      <div class="col-md-3 relative">
-        <div class="avatar-upload">
-          <div class="avatar-preview">
-            <div id="imagePreview">
-              <img src="{{avatarURL}}" class="avatar-preview" />
+    <form>
+        <div class="form-row profile-row">
+            <div class="col-md-3 relative">
+                <div class="avatar-upload">
+                    <div class="avatar-preview">
+                        <div id="imagePreview">
+                            <img src="{{avatarURL}}" class="avatar-preview" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8">
-        <h1>Thông tin cá nhân</h1>
-        <hr>
-        <div class="form-row">
-          <div class="col-sm-12 col-md-6">
-            <div class="form-group"><label>Họ tên </label><input class="form-control" type="text" name="firstname"
-                value="{{profileUser.firstName}}{{profileUser.lastName}}" readonly>
-            </div>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <div class="form-group"><label>Ngày sinh </label><input class="form-control" type="datetime" name="lastname"
-                value="{{profileUser.birthDate | date:'longDate'}}" readonly></div>
-          </div>
-        </div>
-        <div class="form-group"><label>Giới tính </label>
-          <input *ngIf="profileUser.sex" class="form-control" type="email" autocomplete="off" required="" name="sex"
-            value="Nam" readonly>
-          <input *ngIf="!profileUser.sex" class="form-control" type="email" autocomplete="off" required="" name="sex"
-            value="Nữ" readonly>
-        </div>
+            <div class="col-md-8">
+                <h1>Thông tin cá nhân</h1>
+                <hr>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group"><label>Họ tên </label><input class="form-control" type="text" name="firstname" value="{{profileUser.firstName}}{{profileUser.lastName}}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group"><label>Ngày sinh </label><input class="form-control" type="datetime" name="lastname" value="{{profileUser.birthDate | date:'longDate'}}" readonly></div>
+                    </div>
+                </div>
+                <div class="form-group"><label>Giới tính </label>
+                    <input *ngIf="profileUser.sex" class="form-control" type="email" autocomplete="off" required="" name="sex" value="Nam" readonly>
+                    <input *ngIf="!profileUser.sex" class="form-control" type="email" autocomplete="off" required="" name="sex" value="Nữ" readonly>
+                </div>
 
-        <hr>
-        <div class="form-row">
-          <div class="col-md-12 content-right"><button class="btn btn-danger form-btn" type="reset"
-              (click)="close()">Đóng </button></div>
+                <hr>
+                <div class="form-row">
+                    <div class="col-md-12 content-right"><button class="btn btn-danger form-btn" type="reset" (click)="close()">Đóng </button></div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </form>
+    </form>
 </div>
