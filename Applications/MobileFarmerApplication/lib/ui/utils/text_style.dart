@@ -1,8 +1,16 @@
+import 'package:AgrifoodApp/ui/utils/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:AgrifoodApp/ui/utils/palette.dart';
 
 class TextStyles {
+  static final TextStyle titleText = TextStyle (
+    color: Colors.black,
+    fontWeight: FontWeight.w700,
+    fontFamily: "HelveticaNeue",
+    fontStyle: FontStyle.normal,
+    fontSize: 3.5 * SizeConfig.textMultiplier,
+  );
   static const linkStyle = const TextStyle(
     color: Palette.dodgerBlue,
     fontWeight: FontWeight.w600,

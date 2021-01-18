@@ -8,11 +8,13 @@ import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/authentication/signup/component/verification_phoneNumber_component.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:AgrifoodApp/respository/register_repository.dart';
+import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:AgrifoodApp/ui/animation/FadeAnimation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InitPage extends StatefulWidget {
   final AuthenticationRepository authenticationRepository;
@@ -44,7 +46,9 @@ class _InitPageState extends State<InitPage> {
         child: Container(
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+          padding: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(30),
+              vertical: ScreenUtil().setHeight(70)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,27 +57,29 @@ class _InitPageState extends State<InitPage> {
                 children: <Widget>[
                   FadeAnimation(
                       1,
-                      Text(
-                        "Chào mừng",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30),
-                      )),
+                      Text("Chào mừng",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: ScreenUtil().setSp(80)))),
                   SizedBox(
-                    height: 20,
+                    height: ScreenUtil().setHeight(40),
                   ),
                   FadeAnimation(
                       1.2,
                       Text(
                         "Agrifood Bạn của nhà nông, chúng tôi sẽ đem lại chất lượng giống tốt nhất cho bạn",
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                        style: TextStyle(
+                            color: Colors.grey[700],
+                            fontSize: ScreenUtil().setSp(40)),
                       )),
                 ],
               ),
               FadeAnimation(
                   1.4,
                   Container(
-                    height: MediaQuery.of(context).size.height / 3,
+                    height: ScreenUtil().screenHeight / 3,
                     decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         // color: Colors.blue,
@@ -96,7 +102,8 @@ class _InitPageState extends State<InitPage> {
                       1.5,
                       MaterialButton(
                         minWidth: double.infinity,
-                        height: 60,
+                        color: Colors.greenAccent,
+                        height: ScreenUtil().setHeight(160),
                         onPressed: () {
                           BlocProvider.of<AuthenticationBloc>(context)
                               .add(LoginFormButton());
@@ -123,7 +130,8 @@ class _InitPageState extends State<InitPage> {
                         child: Text(
                           "Đăng nhập",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
+                              fontWeight: FontWeight.w600,
+                              fontSize: ScreenUtil().setSp(46)),
                         ),
                       )),
                   // SizedBox(

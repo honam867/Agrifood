@@ -4,11 +4,10 @@ import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
 import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/authentication/login/login_state.dart';
 import 'package:AgrifoodApp/authentication/login/model/login_model.dart';
-import 'package:AgrifoodApp/authentication/signup/page/signup.dart';
-import 'package:AgrifoodApp/home/component/home_page.dart';
 import 'package:AgrifoodApp/ui/animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:toast/toast.dart';
 
 class LoginComponent extends StatefulWidget {
@@ -20,6 +19,7 @@ class _LoginComponentState extends State<LoginComponent> {
   bool _obscureTextPassword = true;
   final _userNameController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool loading = false;
   bool isValid = false;
 
   void checkValidation() {
@@ -35,9 +35,17 @@ class _LoginComponentState extends State<LoginComponent> {
     });
   }
 
+  Future<bool> _willPopCallback() async {
+    Navigator.of(context).pop(false);
+    BlocProvider.of<AuthenticationBloc>(context).add(RedirectToLoginPage());
+    //Navigator.of(context).pop(false);
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
+      loading = true;
       BlocProvider.of<LoginBloc>(context).add(
         LoginButtonPress(
             loginModel: new LoginModel(
@@ -49,156 +57,165 @@ class _LoginComponentState extends State<LoginComponent> {
 
     return BlocListener<LoginBloc, LoginState>(listener: (context, state) {
       if (state is LoginFailure) {
+        loading = false;
         Toast.show('${state.error}', context,
             duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
       }
-    //   if (state is LoginInitial) {
-    //     Navigator.of(context)
-    // .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-    //   }
     }, child: BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            elevation: 0,
-            brightness: Brightness.light,
+            resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
-            leading: IconButton(
-              onPressed: () {
-                 BlocProvider.of<AuthenticationBloc>(context).add(RedirectToLoginPage());
-              },
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 20,
-                color: Colors.black,
+            appBar: AppBar(
+              elevation: 0,
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                onPressed: () {
+                  BlocProvider.of<AuthenticationBloc>(context)
+                      .add(RedirectToLoginPage());
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
+            body: WillPopScope(
+                child: Container(
+                  height: ScreenUtil().screenHeight,
+                  width: ScreenUtil().screenWidth,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          FadeAnimation(
-                              1,
-                              Text(
-                                "Đăng nhập",
-                                style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              )),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          FadeAnimation(
-                              1.2,
-                              Text(
-                                "Đăng nhập tài khoản của bạn",
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.grey[700]),
-                              )),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 40),
+                      Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                FadeAnimation(
+                                    1,
+                                    Text(
+                                      "Đăng nhập",
+                                      style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(100,
+                                              allowFontScalingSelf: false),
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                SizedBox(
+                                  height: ScreenUtil().setHeight(40),
+                                ),
+                                FadeAnimation(
+                                    1.2,
+                                    Text(
+                                      "Đăng nhập tài khoản của bạn",
+                                      style: TextStyle(
+                                          fontSize: ScreenUtil().setSp(32,
+                                              allowFontScalingSelf: false),
+                                          color: Colors.grey[700]),
+                                    )),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(40),
+                                  vertical: ScreenUtil().setHeight(10)),
+                              child: Column(
+                                children: <Widget>[
+                                  FadeAnimation(
+                                      1.2,
+                                      makeInput(
+                                        label: "Tài khoản",
+                                        controller: _userNameController,
+                                      )),
+                                  FadeAnimation(
+                                      1.3,
+                                      makeInput(
+                                          label: "Mật khẩu",
+                                          controller: _passwordController,
+                                          obscureText: true)),
+                                ],
+                              ),
+                            ),
                             FadeAnimation(
-                                1.2,
-                                makeInput(
-                                  label: "Tài khoản",
-                                  controller: _userNameController,
+                                1.4,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: ScreenUtil().setHeight(40),
+                                      vertical: ScreenUtil().setWidth(40)),
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: ScreenUtil().setHeight(2),
+                                        left: ScreenUtil().setWidth(6)),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        border: Border(
+                                          bottom:
+                                              BorderSide(color: Colors.black),
+                                          top: BorderSide(color: Colors.black),
+                                          left: BorderSide(color: Colors.black),
+                                          right:
+                                              BorderSide(color: Colors.black),
+                                        )),
+                                    child: MaterialButton(
+                                      minWidth: double.infinity,
+                                      height: ScreenUtil().setWidth(120),
+                                      onPressed: state is! LoginLoading
+                                          ? _onLoginButtonPressed
+                                          : null,
+                                      color: Colors.greenAccent,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      child: loading == false
+                                          ? Text(
+                                              "Đăng nhập",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize:
+                                                      ScreenUtil().setSp(40)),
+                                            )
+                                          : Row(
+                                              // mainAxisAlignment:
+                                              //     MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(320)),
+                                                  child: Text("Đăng nhập",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(40))),
+                                                ),
+                                                SizedBox(
+                                                    width: ScreenUtil()
+                                                        .setWidth(150)),
+                                                CircularProgressIndicator(),
+                                              ],
+                                            ),
+                                    ),
+                                  ),
                                 )),
-                            FadeAnimation(
-                                1.3,
-                                makeInput(
-                                    label: "Mật khẩu",
-                                    controller: _passwordController,
-                                    obscureText: true)),
                           ],
                         ),
                       ),
-                      
                       FadeAnimation(
-                          1.4,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 40),
-                            child: Container(
-                              padding: EdgeInsets.only(top: 3, left: 3),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border(
-                                    bottom: BorderSide(color: Colors.black),
-                                    top: BorderSide(color: Colors.black),
-                                    left: BorderSide(color: Colors.black),
-                                    right: BorderSide(color: Colors.black),
-                                  )),
-                              child: MaterialButton(
-                                minWidth: double.infinity,
-                                height: 60,
-                                onPressed: state is! LoginLoading
-                                    ? _onLoginButtonPressed
-                                    : null,
-                                color: Colors.greenAccent,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Text(
-                                  "Đăng nhập",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18),
-                                ),
-                              ),
-                            ),
-                          )),
-                      // FadeAnimation(
-                      //     1.5,
-                      //     Row(
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: <Widget>[
-                      //         Text("Bạn chưa có tài khoản!?"),
-                      //         TextButton(
-                      //           onPressed: () => Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => SignUpPage())),
-                      //           child: Text(
-                      //             "Liên hệ",
-                      //             style: TextStyle(
-                      //                 fontWeight: FontWeight.w600,
-                      //                 fontSize: 18),
-                      //           ),
-                      //         ),
-                      //         // Text("Đăng kí", style: TextStyle(
-                      //         //   fontWeight: FontWeight.w600, fontSize: 18
-                      //         // ),),
-                      //       ],
-                      //     ))
+                          1.2,
+                          Container(
+                            height: ScreenUtil().screenHeight / 3,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('assets/background.png'),
+                                    fit: BoxFit.cover)),
+                          ))
                     ],
                   ),
                 ),
-                FadeAnimation(
-                    1.2,
-                    Container(
-                      height: MediaQuery.of(context).size.height / 3,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/background.png'),
-                              fit: BoxFit.cover)),
-                    ))
-              ],
-            ),
-          ),
-        );
+                onWillPop: () async => false));
       },
     ));
   }
@@ -237,7 +254,7 @@ class _LoginComponentState extends State<LoginComponent> {
           ),
         ),
         SizedBox(
-          height: 30,
+          height: ScreenUtil().setHeight(30),
         ),
       ],
     );
