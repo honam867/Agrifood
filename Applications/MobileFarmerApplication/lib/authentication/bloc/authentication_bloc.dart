@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:AgrifoodApp/authentication/login/login_event.dart';
 import 'package:AgrifoodApp/core/token.dart';
+import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authentication_event.dart';
@@ -25,12 +25,13 @@ class AuthenticationBloc
         //Get CustomerId
         final Map<String, dynamic> customerId =
             json.decode(await Token.getFarmerId());
+        UserInfoModel userInfoModel = UserInfoModel.fromJson(customerId);
 
         //Avatar and FullName
         // final Map<String, dynamic> customerEmployee =
         //     json.decode(await Token.getLoggedCustomerEmployeeId());
 
-        yield AuthenticationAuthenticated(userInfo: customerId);
+        yield AuthenticationAuthenticated(userInfo: userInfoModel);
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -44,12 +45,13 @@ class AuthenticationBloc
       //Get CustomerId
       final Map<String, dynamic> customerId =
           json.decode(await Token.getFarmerId());
+      UserInfoModel userInfoModel = UserInfoModel.fromJson(customerId);
       print(customerId);
       //Avatar and FullName
       // final Map<String, dynamic> customerEmployee =
       //     json.decode(await Token.getLoggedCustomerEmployeeId());
 
-      yield AuthenticationAuthenticated(userInfo: customerId);
+      yield AuthenticationAuthenticated(userInfo: userInfoModel);
     }
     if (event is LoggedOut) {
       yield AuthenticationLoading();

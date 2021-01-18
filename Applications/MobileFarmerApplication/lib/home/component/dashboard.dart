@@ -6,11 +6,13 @@ import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 
 class Dashboard extends StatefulWidget {
   final BuildContext contextHome;
+  final UserInfoModel userInfoModel;
 
-  const Dashboard({Key key, this.contextHome}) : super(key: key);
+  const Dashboard({Key key, this.contextHome, this.userInfoModel}) : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -137,7 +139,7 @@ class _DashboardState extends State<Dashboard> {
                           Navigator.push(
                             widget.contextHome,
                             MaterialPageRoute(
-                                builder: (context) => UserInformation()),
+                                builder: (context) => UserInformation(contextHome: widget.contextHome,userInfoModel: widget.userInfoModel,)),
                           );
                         });
                       } else if( data.title == "Quản lí bò" ){

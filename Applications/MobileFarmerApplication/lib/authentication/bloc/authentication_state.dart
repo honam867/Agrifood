@@ -1,5 +1,6 @@
-import 'package:AgrifoodApp/authentication/login/model/login_model.dart';
+import 'package:AgrifoodApp/authentication/change_password.dart/models/changepass_model.dart';
 import 'package:AgrifoodApp/core/model_okvalue.dart';
+import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -12,6 +13,8 @@ abstract class AuthenticationState extends Equatable {
 class AuthenticationUninitialized extends AuthenticationState {}
 
 class AuthenticationLoginPage extends AuthenticationState {}
+
+class ChangePassLoading extends AuthenticationState {}
 
 class CheckPhoneNumberLoaded extends AuthenticationState {
   final OkValueObject okValueObject;
@@ -29,8 +32,44 @@ class CheckPhoneNumberLoaded extends AuthenticationState {
 
 }
 
+class ChangePassLoaded extends AuthenticationState {
+  final String result;
+
+  ChangePassLoaded(this.result);
+  
+
+  @override
+  bool operator == (Object o) {
+    if (identical(this, o)) return true;
+
+    return o is ChangePassLoaded && o.result == result;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
+
+}
+
+class ChangePassFail extends AuthenticationState {
+  final String result;
+
+  ChangePassFail(this.result);
+  
+
+  @override
+  bool operator == (Object o) {
+    if (identical(this, o)) return true;
+
+    return o is ChangePassFail && o.result == result;
+  }
+
+  @override
+  int get hashCode => super.hashCode;
+
+}
+
 class AuthenticationAuthenticated extends AuthenticationState {
-  final userInfo;
+  final UserInfoModel userInfo;
 
   const AuthenticationAuthenticated(
       {@required this.userInfo});

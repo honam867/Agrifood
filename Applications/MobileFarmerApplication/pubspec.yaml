@@ -40,13 +40,13 @@ dependencies:
   flutter_secure_storage: ^3.3.3
   local_auth: ^0.6.2+3
   json_annotation: ^3.0.0
-  flutter_screenutil: ^0.4.2
+  flutter_screenutil: ^4.0.2+5
   equatable: ^1.2.5
   flutter_neumorphic: ^3.0.3
   firebase_auth: ^0.18.4
   firebase_core : ^0.5.0
   google_fonts: ^1.1.1
-  checkbox_formfield: ^0.1.0+3
+  circular_profile_avatar: ^1.0.6
   flutter_slidable: ^0.5.7
 
 dev_dependencies:
@@ -69,6 +69,7 @@ flutter:
     - assets/background.png
     - assets/illustration.png
     - assets/layout/
+    - assets/profile/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
