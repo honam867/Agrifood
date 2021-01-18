@@ -1,3 +1,5 @@
+import 'package:AgrifoodApp/cow/cow_manager/page/list_byre.dart';
+import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
@@ -19,43 +21,43 @@ class _DashboardState extends State<Dashboard> {
   ScrollController controller = new ScrollController();
   Items item1 = new Items(
       title: "Quản lí chuồng",
-      subtitle: "Danh sách các chuồng hiện có",
+      //subtitle: "Danh sách các chuồng hiện có",
       event: "",
-      img: "assets/layout/file.png");
+      img: "assets/layout/list.png");
 
   Items item2 = new Items(
     title: "Quản lí bò",
-    subtitle: "Danh sách bò hiện có",
+    //subtitle: "Danh sách bò hiện có",
     event: "",
     img: "assets/layout/cow.png",
   );
 
   Items item3 = new Items(
-    title: "Thức ăn và Sữa",
-    subtitle: "Tổng hợp lượng thức ăn và sữa",
+    title: "Quản lý Thức ăn",
+    //subtitle: "Tổng hợp lượng thức ăn",
     event: "",
-    img: "assets/layout/food.png",
+    img: "assets/layout/harvest.png",
   );
 
   Items item4 = new Items(
-    title: "Thống kê",
-    subtitle: "Chi tiết lượng sữa và thức ăn",
+    title: "Quản lý sữa",
+    //subtitle: "Tổng hợp lượng sữa",
     event: "",
-    img: "assets/layout/todo.png",
+    img: "assets/layout/cow-milk.png",
   );
 
   Items item5 = new Items(
-    title: "Cá nhân",
-    subtitle: "Thông tin cá nhân",
+    title: "Thống kê",
+    //subtitle: "Chi tiết lượng sữa và thức ăn",
     event: "",
-    img: "assets/layout/user.png",
+    img: "assets/layout/pie-chart.png",
   );
 
   Items item6 = new Items(
     title: "Cài đặt",
-    subtitle: "",
+   // subtitle: "",
     event: "",
-    img: "assets/layout/setting.png",
+    img: "assets/layout/settings.png",
   );
   void submitCityName(BuildContext context, Items item) {
     final homeCubit = widget.contextHome.read<HomeCubit>();
@@ -73,7 +75,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
 
-    var color = 0xff689738;
+    var color = 0xFF26A69A;
     return Flexible(
           child: GridView.count(
               controller: controller,
@@ -87,7 +89,7 @@ class _DashboardState extends State<Dashboard> {
                     child: Container(
                       decoration: BoxDecoration(
                           color: Color(color),
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(50)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -106,28 +108,28 @@ class _DashboardState extends State<Dashboard> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600)),
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            data.subtitle,
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    color: Colors.white38,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                          SizedBox(
-                            height: 14,
-                          ),
-                          Text(
-                            data.event,
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w600)),
-                          ),
+                          // SizedBox(
+                          //   height: 8,
+                          // ),
+                          // Text(
+                          //   data.subtitle,
+                          //   style: GoogleFonts.openSans(
+                          //       textStyle: TextStyle(
+                          //           color: Colors.white38,
+                          //           fontSize: 10,
+                          //           fontWeight: FontWeight.w600)),
+                          // ),
+                          // SizedBox(
+                          //   height: 14,
+                          // ),
+                          // Text(
+                          //   data.event,
+                          //   style: GoogleFonts.openSans(
+                          //       textStyle: TextStyle(
+                          //           color: Colors.white70,
+                          //           fontSize: 11,
+                          //           fontWeight: FontWeight.w600)),
+                          // ),
                         ],
                       ),
                     ),
@@ -138,6 +140,22 @@ class _DashboardState extends State<Dashboard> {
                             widget.contextHome,
                             MaterialPageRoute(
                                 builder: (context) => UserInformation(contextHome: widget.contextHome,userInfoModel: widget.userInfoModel,)),
+                          );
+                        });
+                      } else if( data.title == "Quản lí bò" ){
+                        setState(() {
+                          Navigator.push(
+                            widget.contextHome,
+                            MaterialPageRoute(
+                                builder: (context) => ListCows()),
+                          );
+                        });
+                      } else if( data.title == "Quản lí chuồng" ){
+                        setState(() {
+                          Navigator.push(
+                            widget.contextHome,
+                            MaterialPageRoute(
+                                builder: (context) => ListByres()),
                           );
                         });
                       }

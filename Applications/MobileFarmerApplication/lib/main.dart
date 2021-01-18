@@ -9,7 +9,7 @@ import 'package:AgrifoodApp/ui/utils/size_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/screenutil_init.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'authentication/bloc/authentication.dart';
 import 'respository/authentication_repository.dart';
 import 'ui/splash_page.dart';
