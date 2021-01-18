@@ -1,17 +1,26 @@
 import 'package:AgrifoodApp/authentication/bloc/authentication_bloc.dart';
+import 'package:AgrifoodApp/authentication/bloc/authentication_cubit.dart';
 import 'package:AgrifoodApp/authentication/bloc/authentication_event.dart';
+import 'package:AgrifoodApp/authentication/change_password.dart/page/changepass_page.dart';
 import 'package:AgrifoodApp/home/component/custom_drawer_header.dart';
-import 'package:AgrifoodApp/home/model/menu-item.dart';
+import 'package:AgrifoodApp/home/component/information.dart';
+import 'package:AgrifoodApp/home/model/menu_item.dart';
+import 'package:AgrifoodApp/home/model/userInfo_model.dart';
+import 'package:AgrifoodApp/respository/authentication_repository.dart';
+import 'package:AgrifoodApp/respository/register_repository.dart';
 import 'package:AgrifoodApp/ui/utils/palette.dart';
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDrawer extends StatelessWidget {
-  final String fullname;
-  final String avatar;
+  final UserInfoModel userInfoModel;
+  final BuildContext contextHome;
 
-  const AppDrawer({Key key, this.fullname, this.avatar}) : super(key: key);
+  const AppDrawer({Key key, this.userInfoModel, this.contextHome})
+      : super(key: key);
 
   CustomDrawerHeader buildCustomDrawerHeader() {
     return CustomDrawerHeader(
@@ -25,15 +34,31 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 10),
-            child: CircleAvatar(
-              backgroundColor: Palette.dodgerBlue,
-              backgroundImage:
-                  avatar != null && avatar != '' ? NetworkImage(avatar) : null,
-              child: avatar == null || avatar == '' ? Text('C') : null,
+            child: CircularProfileAvatar(
+              this.userInfoModel.avatarURL ??
+                  "https://www.clipartmax.com/png/middle/479-4798442_about-me-avatar-farmer.png",
+              borderWidth: 4.0,
+              radius: 60.0,
             ),
           ),
-          Text(fullname == null ? '' : fullname.toUpperCase(),
-              textScaleFactor: 1.3)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(this.userInfoModel.userName ?? "",
+                  textScaleFactor: 1.3,
+                  style: TextStyle(fontSize: ScreenUtil().setSp(40))),
+              Text(
+                  this.userInfoModel.status == true
+                      ? "Đang hoạt động"
+                      : "Ngưng hoạt động",
+                  textScaleFactor: 1.3,
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(30),
+                      color: this.userInfoModel.status == true
+                          ? Colors.green
+                          : Colors.red))
+            ],
+          )
         ],
       ),
     );
@@ -73,20 +98,40 @@ class AppDrawer extends StatelessWidget {
       new MenuItem(
         icon: Icon(Icons.supervised_user_circle),
         title: 'Thông tin cá nhân',
-        onPress: () {},
+        onPress: () {
+          Navigator.push(
+            this.contextHome,
+            MaterialPageRoute(
+                builder: (context) => UserInformation(
+                      contextHome: this.contextHome,
+                      userInfoModel: this.userInfoModel,
+                    )),
+          );
+        },
       ),
       new MenuItem(
-        icon: Icon(Icons.supervised_user_circle),
+        icon: Icon(Icons.change_history),
         title: 'Đổi mật khẩu',
-        onPress: () {},
+        onPress: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => AuthenticationCubit(
+                    RegisterReponsitory(), AuthenticationRepository()),
+                child: ChangePassPage(),
+              ),
+            ),
+          );
+        },
       ),
       new MenuItem(
-        icon: Icon(Icons.supervised_user_circle),
+        icon: Icon(Icons.phone),
         title: 'Liên hệ',
         onPress: () {},
       ),
       new MenuItem(
-        icon: Icon(Icons.supervised_user_circle),
+        icon: Icon(Icons.message),
         title: 'Chat',
         onPress: () {},
       ),
@@ -101,10 +146,41 @@ class AppDrawer extends StatelessWidget {
     ];
 
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: buildDrawer(context, drawerItems),
-      ),
-    );
+        child: Stack(
+      children: [
+        ClipPath(
+          child: Container(
+            padding: EdgeInsets.only(top: 50),
+            width: MediaQuery.of(context).size.width,
+            height: 200,
+            color: Colors.green[100],
+          ),
+          clipper: CustomClipPath(),
+        ),
+        ListView(
+          padding: EdgeInsets.zero,
+          children: buildDrawer(context, drawerItems),
+        ),
+      ],
+    ));
   }
+}
+
+class CustomClipPath extends CustomClipper<Path> {
+  var radius = 10.0;
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height);
+    path.quadraticBezierTo(
+        size.width / 4, size.height - 40, size.width / 2, size.height - 20);
+    path.quadraticBezierTo(
+        3 / 4 * size.width, size.height, size.width, size.height - 30);
+    path.lineTo(size.width, 0);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
