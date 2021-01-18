@@ -15,5 +15,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateEmployeeAsync(int id, EmployeeModelRq model, UserIdentity<int> issuer);
         Task<bool> DeleteEmployeeAsync(int id);
         Task<bool> CheckCodeExistsAsync(string code);
+        Task<EmployeeInfoModel> GetInfoByUserIdAsync(int id);
     }
 }

@@ -120,7 +120,6 @@ export class CrudFarmerComponent implements OnInit {
   }
 
   save() {
-    console.log(this.sourceView);
     this.farmerService.updateFarmer(this.farmer.id, this.sourceView).subscribe(
       result => {
         this.isView = true;
