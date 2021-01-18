@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ApplicationDomain.BOA.IServices;
+using ApplicationDomain.BOA.Models.Farmers;
 using ApplicationDomain.Identity.IServices;
 using ApplicationDomain.Identity.Models;
 using ApplicationDomain.Identity.Models.Permissions;
@@ -26,12 +28,12 @@ namespace WebAdminApplication.Controllers
         private readonly IUserService _userService;
         private readonly IOptions<IdentityOptions> _identityOptions;
         private readonly IPermissionService _permissionService;
+        private readonly IEmployeeService _employeeService;
         public AuthController(
             IJwtTokenService jwtTokenService,
             IAuthService authService,
-
+            IEmployeeService employeeService,
             IOptions<IdentityOptions> identityOptions,
-
             IPermissionService permissionService,
             IUserService userService
             )
@@ -41,6 +43,7 @@ namespace WebAdminApplication.Controllers
             _userService = userService;
             _identityOptions = identityOptions;
             _permissionService = permissionService;
+            _employeeService = employeeService;
         }
 
        
@@ -65,6 +68,8 @@ namespace WebAdminApplication.Controllers
                 UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
                 additionClaims.Add(new Claim("roles", JsonConvert.SerializeObject(result.Roles.ToList())));
                 additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
+                EmployeeInfoModel infoEmployee = await _employeeService.GetInfoByUserIdAsync(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("employeeinfo", JsonConvert.SerializeObject(infoEmployee)));
                 var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);
                 return Ok(token);
             }

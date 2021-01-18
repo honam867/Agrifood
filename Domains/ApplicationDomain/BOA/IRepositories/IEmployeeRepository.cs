@@ -13,5 +13,6 @@ namespace ApplicationDomain.BOA.IRepositories
         Task<bool> CheckCodeExistsAsync(string code);
         IQueryable GetEmployees();
         IQueryable GetEmployeeById(int id);
+        IQueryable GetInfoByUserId(int userId);
     }
 }

@@ -1,3 +1,4 @@
+import { Employee } from './../employee/models/employee';
 import { EMPLOYEEINFO, ROLES, USERINFO } from './../../shared/constant';
 import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -59,6 +60,12 @@ export class AuthService {
     const tokenPayload = decode(token);
     localStorage.setItem(USERINFO, tokenPayload.userInfo);
   }
+  storageEmployeeInfo() {
+    const token = localStorage.getItem(environment.tokenKey);
+    const tokenPayload = decode(token);
+    console.log(tokenPayload);
+    localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
+  }
   // storageRoles() {
   //   const token = localStorage.getItem(environment.tokenKey);
   //   const tokenPayload = decode(token);
@@ -88,5 +95,9 @@ export class AuthService {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
     return tokenPayload.avatarURL;
+  }
+
+  updateEmployee(employeeId: number, updatedEmployee: Employee): Observable<boolean> {
+    return this.http.put(`employee/${employeeId}`, updatedEmployee);
   }
 }

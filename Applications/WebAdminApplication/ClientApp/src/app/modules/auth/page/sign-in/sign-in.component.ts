@@ -57,6 +57,7 @@ export class SignInComponent implements OnInit {
           localStorage.setItem(environment.tokenKey, JSON.stringify(result));
           // this.authService.storageRoles();
           this.authService.storageUserInfo();
+          this.authService.storageEmployeeInfo();
           this.router.navigate(['']);
           this.showLoading = false;
         }, error => {

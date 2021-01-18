@@ -1,3 +1,4 @@
+import { PersonalInfoComponent } from './page/personal-info/personal-info.component';
 import { ProfileComponent } from './page/profile/profile.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ const routes: Routes = [
     path: '',
     component: AuthComponent,
     children: [
+      { path: 'personalinfo', component: PersonalInfoComponent },
       { path: 'signin', component: SignInComponent },
       { path: 'forgotpassword', component: ForgotPasswordComponent },
       { path: 'newpassword', component: NewPasswordComponent },

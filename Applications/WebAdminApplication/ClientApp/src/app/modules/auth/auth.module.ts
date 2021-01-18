@@ -11,6 +11,7 @@ import { NewPasswordComponent } from './page/new-password/new-password.component
 import { HttpService } from 'src/app/shared/services/http.service';
 import { ChangePasswordComponent } from './page/change-password/change-password.component';
 import { ProfileComponent } from './page/profile/profile.component';
+import { PersonalInfoComponent } from './page/personal-info/personal-info.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProfileComponent } from './page/profile/profile.component';
     AuthComponent,
     NewPasswordComponent,
     ChangePasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    PersonalInfoComponent
   ],
   imports: [CommonModule, AuthRoutingModule, SharedModule.forRoot()],
   providers: [AuthService, HttpService]

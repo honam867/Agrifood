@@ -32,6 +32,13 @@ namespace Infrastructure.Repositories.CMMS
                 .Where(r => r.Id == id);
             return rs;
         }
+
+        public IQueryable GetInfoByUserId(int userId)
+        {
+            IQueryable rs = this.dbSet
+                .Where(r => r.UserId == userId);
+            return rs;
+        }
         //public async Task<string> GetCodeByIdAsync(int id)
         //{
         //    var model = await this.dbSet.FirstOrDefaultAsync(r => r.Id == id);

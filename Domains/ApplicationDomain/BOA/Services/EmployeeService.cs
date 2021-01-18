@@ -112,6 +112,29 @@ namespace ApplicationDomain.CMMS.Services
             return await _EmployeeRepository.CheckCodeExistsAsync(code);
         }
 
+        public async Task<EmployeeInfoModel> GetInfoByUserIdAsync(int id)
+        {
+            try
+            {
+                var employeeModel = await _EmployeeRepository.GetInfoByUserId(id).MapQueryTo<EmployeeInfoModel>(_mapper).FirstOrDefaultAsync();
+                if (employeeModel == null)
+                {
+                    var nullEntity = new EmployeeInfoModel()
+                    {
+                        id = -1,
+                        name = "",
+                       
+                    };
+                    return nullEntity;
+                }
+                return employeeModel;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         //public async Task<IEnumerable<EmployeeModel>> GetEmployeeByProvinceIdAndDistrictId(int provinceId, int districtId)
         //{
         //    try
