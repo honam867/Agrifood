@@ -15,6 +15,7 @@ export class PersonalInfoComponent implements OnInit {
     'name',
     'action'];
   status: string;
+  roles: any;
   timeout: any;
   employee: Employee = new Employee();
   loading: boolean;
@@ -29,6 +30,10 @@ export class PersonalInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = false;
+    this.roles = JSON.parse(localStorage.getItem('rolelist'));
+    if (!this.roles[0].includes('Employee')) {
+      this.router.navigate(['error-page']);
+    }
     this.employee = JSON.parse(localStorage.getItem('employeeinfo'));
     this.sourceView = Object.assign({}, this.employee);
     console.log(this.sourceView);
