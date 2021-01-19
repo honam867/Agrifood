@@ -65,6 +65,7 @@ export class AuthService {
     const tokenPayload = decode(token);
     console.log(tokenPayload);
     localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
+    localStorage.setItem(ROLES, tokenPayload.roles);
   }
   // storageRoles() {
   //   const token = localStorage.getItem(environment.tokenKey);
