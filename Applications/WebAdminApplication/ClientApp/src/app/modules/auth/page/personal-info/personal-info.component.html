@@ -97,14 +97,12 @@
             <mat-label>Code</mat-label>
             <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code">
         </mat-form-field>
-        <mat-progress-spinner mode="indeterminate" *ngIf="loading"></mat-progress-spinner>
-
     </form>
     <div style="margin:0 auto;text-align: center;">
         <!-- <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
             class="fas fa-trash-alt"></i> Xóa</button> -->
         <!-- <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button> -->
-        <button type="button" mat-raised-button class="btn btn-outline-success" (click)="save()">Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="button btn btn-outline-success" (click)="save()" [disabled]="loading"> <mat-progress-spinner mode="indeterminate" *ngIf="loading" class="spinner" diameter="23"></mat-progress-spinner>Lưu thay đổi</button>
         <!-- <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh sửa</button> -->
         <!-- <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="!isView && !isCreate" (click)="addFarmerAccount(farmer)"><i class="fas fa-window-close"></i> Gán tài khoản</button> -->
     </div>
