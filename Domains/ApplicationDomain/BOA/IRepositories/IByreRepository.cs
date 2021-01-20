@@ -13,5 +13,6 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetByres();
         IQueryable GetByreById(int id);
         Task<bool> CheckCodeExistsAsync(string code);
+        IQueryable GetByreByFarmerId(int id);
     }
 }
