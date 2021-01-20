@@ -123,9 +123,9 @@ namespace ApplicationDomain.CMMS.Services
         //    }
         //}
 
-        public async Task<IEnumerable<FarmerModel>> GetFarmerByUserIdAsync(int id)
+        public async Task<FarmerModel> GetFarmerByUserIdAsync(int id)
         {
-            return await _FarmerRepository.GetFarmerByUser(id).MapQueryTo<FarmerModel>(_mapper).ToListAsync();
+            return await _FarmerRepository.GetFarmerByUser(id).MapQueryTo<FarmerModel>(_mapper).FirstOrDefaultAsync();
         }
     }
 }
