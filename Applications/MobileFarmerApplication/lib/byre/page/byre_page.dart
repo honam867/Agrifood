@@ -37,7 +37,7 @@ class _ListByresState extends State<ListByres> {
   }
 
   void addByreFuction(BuildContext context, ByreItem byreItem) {
-    byreItem.breedId = breedId;
+    //byreItem.breedId = breedId;
     final byreCubit = context.read<ByreCubit>();
     byreCubit.addByre(byreItem: byreItem);
   }
@@ -108,7 +108,7 @@ class _ListByresState extends State<ListByres> {
                 children: <Widget>[
                   Expanded(
                       child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                     child: ListView.builder(
                       itemCount: byreModel.byreItem.length,
                       itemBuilder: (BuildContext context, int index) {
