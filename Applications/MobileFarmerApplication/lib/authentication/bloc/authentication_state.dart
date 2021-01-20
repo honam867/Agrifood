@@ -1,4 +1,3 @@
-import 'package:AgrifoodApp/authentication/change_password.dart/models/changepass_model.dart';
 import 'package:AgrifoodApp/core/model_okvalue.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:equatable/equatable.dart';

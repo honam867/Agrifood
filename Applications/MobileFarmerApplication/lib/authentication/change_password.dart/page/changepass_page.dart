@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../ui/utils/palette.dart';
 import '../models/changepass_model.dart';
 
 class ChangePassPage extends StatefulWidget {

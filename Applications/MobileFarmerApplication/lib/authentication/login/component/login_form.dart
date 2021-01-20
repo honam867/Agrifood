@@ -192,7 +192,7 @@ class _LoginComponentState extends State<LoginComponent> {
                                                               .setSp(40))),
                                                 ),
                                                 SizedBox(
-                                                    width: ScreenUtil()
+                                                     width:     ScreenUtil()
                                                         .setWidth(150)),
                                                 CircularProgressIndicator(),
                                               ],
