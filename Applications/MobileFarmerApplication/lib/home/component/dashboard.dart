@@ -1,7 +1,9 @@
-import 'package:AgrifoodApp/cow/cow_manager/page/list_byre.dart';
+import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
+import 'package:AgrifoodApp/byre/page/byre_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
+import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +14,8 @@ class Dashboard extends StatefulWidget {
   final BuildContext contextHome;
   final UserInfoModel userInfoModel;
 
-  const Dashboard({Key key, this.contextHome, this.userInfoModel}) : super(key: key);
+  const Dashboard({Key key, this.contextHome, this.userInfoModel})
+      : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -55,7 +58,7 @@ class _DashboardState extends State<Dashboard> {
 
   Items item6 = new Items(
     title: "Cài đặt",
-   // subtitle: "",
+    // subtitle: "",
     event: "",
     img: "assets/layout/settings.png",
   );
@@ -75,96 +78,106 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     List<Items> myList = [item1, item2, item3, item4, item5, item6];
 
-    var color = 0xFF26A69A;
+    var color = 0xff689738;
     return Flexible(
-          child: GridView.count(
-              controller: controller,
-              childAspectRatio: 1.0,
-              padding: EdgeInsets.only(left: 16, right: 16),
-              crossAxisCount: 2,
-              crossAxisSpacing: 18,
-              mainAxisSpacing: 18,
-              children: myList.map((data) {
-                return InkWell(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Color(color),
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image.asset(
-                            data.img,
-                            width: 42,
-                          ),
-                          SizedBox(
-                            height: 14,
-                          ),
-                          Text(
-                            data.title,
-                            style: GoogleFonts.openSans(
-                                textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600)),
-                          ),
-                          // SizedBox(
-                          //   height: 8,
-                          // ),
-                          // Text(
-                          //   data.subtitle,
-                          //   style: GoogleFonts.openSans(
-                          //       textStyle: TextStyle(
-                          //           color: Colors.white38,
-                          //           fontSize: 10,
-                          //           fontWeight: FontWeight.w600)),
-                          // ),
-                          // SizedBox(
-                          //   height: 14,
-                          // ),
-                          // Text(
-                          //   data.event,
-                          //   style: GoogleFonts.openSans(
-                          //       textStyle: TextStyle(
-                          //           color: Colors.white70,
-                          //           fontSize: 11,
-                          //           fontWeight: FontWeight.w600)),
-                          // ),
-                        ],
+      child: GridView.count(
+          controller: controller,
+          childAspectRatio: 1.0,
+          padding: EdgeInsets.only(left: 16, right: 16),
+          crossAxisCount: 2,
+          crossAxisSpacing: 18,
+          mainAxisSpacing: 18,
+          children: myList.map((data) {
+            return InkWell(
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color(color),
+                      borderRadius: BorderRadius.circular(50)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        data.img,
+                        width: 42,
                       ),
-                    ),
-                    onTap: () {
-                      if (data.title == "Cá nhân") {
-                        setState(() {
-                          Navigator.push(
-                            widget.contextHome,
-                            MaterialPageRoute(
-                                builder: (context) => UserInformation(contextHome: widget.contextHome,userInfoModel: widget.userInfoModel,)),
-                          );
-                        });
-                      } else if( data.title == "Quản lí bò" ){
-                        setState(() {
-                          Navigator.push(
-                            widget.contextHome,
-                            MaterialPageRoute(
-                                builder: (context) => ListCows()),
-                          );
-                        });
-                      } else if( data.title == "Quản lí chuồng" ){
-                        setState(() {
-                          Navigator.push(
-                            widget.contextHome,
-                            MaterialPageRoute(
-                                builder: (context) => ListByres()),
-                          );
-                        });
-                      }
-                      else {
-                        showToast(string: "Chưa khả dụng", context: widget.contextHome);
-                      }
+                      SizedBox(
+                        height: 14,
+                      ),
+                      Text(
+                        data.title,
+                        style: GoogleFonts.openSans(
+                            textStyle: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600)),
+                      ),
+                      // SizedBox(
+                      //   height: 8,
+                      // ),
+                      // Text(
+                      //   data.subtitle,
+                      //   style: GoogleFonts.openSans(
+                      //       textStyle: TextStyle(
+                      //           color: Colors.white38,
+                      //           fontSize: 10,
+                      //           fontWeight: FontWeight.w600)),
+                      // ),
+                      // SizedBox(
+                      //   height: 14,
+                      // ),
+                      // Text(
+                      //   data.event,
+                      //   style: GoogleFonts.openSans(
+                      //       textStyle: TextStyle(
+                      //           color: Colors.white70,
+                      //           fontSize: 11,
+                      //           fontWeight: FontWeight.w600)),
+                      // ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  if (data.title == "Cá nhân") {
+                    setState(() {
+                      Navigator.push(
+                        widget.contextHome,
+                        MaterialPageRoute(
+                            builder: (context) => UserInformation(
+                                  contextHome: widget.contextHome,
+                                  userInfoModel: widget.userInfoModel,
+                                )),
+                      );
                     });
-              }).toList()),
-        );
+                  } else if (data.title == "Quản lí bò") {
+                    setState(() {
+                      Navigator.push(
+                        widget.contextHome,
+                        MaterialPageRoute(builder: (context) => CowsPage()),
+                      );
+                    });
+                  } else if (data.title == "Quản lí chuồng") {
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => ByreCubit(ByreRepository()),
+                              child: ListByres(),
+                            ),
+                          ));
+                      // Navigator.push(widget.contextHome,
+
+                      //   MaterialPageRoute(
+                      //       builder: (context) => ListByres()),
+                      // );
+                    });
+                  } else {
+                    showToast(
+                        string: "Chưa khả dụng", context: widget.contextHome);
+                  }
+                });
+          }).toList()),
+    );
   }
 }
 

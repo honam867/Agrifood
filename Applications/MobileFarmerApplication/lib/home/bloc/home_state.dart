@@ -12,6 +12,21 @@ class HomeLoading extends HomeState {
   const HomeLoading();
 }
 
+class CheckByreLoaded extends HomeState {
+  final int amonth;
+  const CheckByreLoaded(this.amonth);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is CheckByreLoaded && o.amonth == amonth;
+  }
+
+  @override
+  int get hashCode => amonth.hashCode;
+}
+
 class HomeMenu extends HomeState{
   final Items items;
   const HomeMenu({this.items});

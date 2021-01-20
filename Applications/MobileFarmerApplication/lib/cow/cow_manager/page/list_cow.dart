@@ -1,21 +1,23 @@
+import 'package:AgrifoodApp/cow/cow_manager/component/cow_detail.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
+import 'package:AgrifoodApp/cow/cow_manager/widget/slidable_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-class ListCows extends StatefulWidget {
+class CowsPage extends StatefulWidget {
   final String value;
-  ListCows({this.value});
+  CowsPage({this.value});
 
   @override
-  _ListCowsState createState() => _ListCowsState();
+  _CowsPageState createState() => _CowsPageState();
 }
 
-class _ListCowsState extends State<ListCows> {
+class _CowsPageState extends State<CowsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
           appBar: AppBar(
             backgroundColor: Color(0xFF26A69A),
             title: Text('Quản lí bò'),
@@ -26,45 +28,59 @@ class _ListCowsState extends State<ListCows> {
               },
             ),
             actions: [
-               IconButton(icon: Icon(Icons.add), onPressed: (){
-                 Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=> FormCreateCow()));
-               })
+              IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => FormCreateCow()));
+                  })
             ],
           ),
-          body: Container(
-              child: Container(
-                  child: ListView.separated(
-            itemCount: 1,
-            separatorBuilder: (BuildContext context, int index) => Divider(),
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                  title: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 50),
-                  ),
-                  SizedBox(
-                    width: 40,
-                  ),
-                  InkWell(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text("Tên con bò"),
-                        Text("Cần nặng con bò"),
-                        Text("Chú thích")
-                      ],
-                      
-                    ),
-                    onTap: () =>    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context)=> FormDetailCow())),
-                  )
+          body: SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Color(0xFF26A69A),
+                title: Text('Quản lí bò'),
+                leading: IconButton(
+                  icon: Icon(Icons.navigate_before),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                actions: [
+                  IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        // openPopupAddByre(context,
+                        //     addByreFuction: addByreFuction,
+                        //     listBreedItem: listBreed,
+                        //     changeBreedFuction: changeBreed,
+                        //     breedId: breedId);
+                      })
                 ],
-              ));
-            },
-          )))),
+              ),
+              body: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Padding(
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
+                    child: ListView(
+                      children: [CowCard(), CowCard(), CowCard()],
+                      //itemCount: byreModel.byreItem.length,
+                      // itemBuilder: (BuildContext context, int index) {
+                      //   //final byreItem = byreModel.byreItem[index];
+                      //   return SlidableWidget(
+                      //     child: CowCard(byreItem: byreItem),
+                      //     onDismissed: (action) => dismissSlidableItem(
+                      //         context, index, action, byreItem),
+                      //   );
+                      // },
+                    ),
+                  )),
+                ],
+              ),
+            ),
+          )),
     );
   }
 }
