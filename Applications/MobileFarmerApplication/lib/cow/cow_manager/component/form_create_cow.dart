@@ -227,7 +227,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                 icon: Icon(Icons.navigate_next),
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ListCows()));
+                      MaterialPageRoute(builder: (context) => CowsPage()));
                 }),
           ],
         ),

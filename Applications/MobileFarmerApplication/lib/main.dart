@@ -3,9 +3,8 @@ import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
 import 'package:AgrifoodApp/authentication/login/page/onboarding.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/home_page.dart';
-import 'package:AgrifoodApp/ui/utils/app_them.dart';
+import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/ui/utils/palette.dart';
-import 'package:AgrifoodApp/ui/utils/size_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,7 +73,6 @@ class App extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Palette.white,
         ),
-        //theme: AppTheme.lightTheme,
         routes: {
           '/home': (_) => HomePage(),
           '/test': (_) => InitPage(
@@ -83,10 +81,15 @@ class App extends StatelessWidget {
         },
         home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
+            final ByreRepository byreRepository = new ByreRepository();
             if (state is AuthenticationAuthenticated) {
-              return HomePage(
-                userInfo: state.userInfo,
-              );
+              return BlocProvider(
+                  create: (context) {
+                    return HomeCubit(byreRepository);
+                  },
+                  child: HomePage(
+                    userInfo: state.userInfo,
+                  ));
             }
             if (state is LoginFormButtonState) {
               return BlocProvider(

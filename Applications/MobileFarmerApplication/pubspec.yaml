@@ -48,6 +48,8 @@ dependencies:
   google_fonts: ^1.1.1
   circular_profile_avatar: ^1.0.6
   flutter_slidable: ^0.5.7
+  giffy_dialog: ^1.8.0
+  rflutter_alert: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +72,7 @@ flutter:
     - assets/illustration.png
     - assets/layout/
     - assets/profile/
+    - assets/crud/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
