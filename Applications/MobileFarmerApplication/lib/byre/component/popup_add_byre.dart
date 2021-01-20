@@ -3,6 +3,7 @@ import 'package:AgrifoodApp/byre/model/breed_model.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 typedef AddByreFuction = void Function(BuildContext context, ByreItem byreItem);
@@ -99,7 +100,7 @@ openPopupAddByre(BuildContext context,
               ByreItem byreItemTree = new ByreItem(
                   id: update == false ? null : byreItem.id,
                   name: _nameByreController.text,
-                  breedId: breedId,
+                  breedId: 1,
                   code: _codeController.text,
                   ration: _rationController.text,
                   quantityCow: 0,
@@ -111,7 +112,7 @@ openPopupAddByre(BuildContext context,
           },
           child: Text(
             update == false ? "Tạo" : "Cập nhật",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
           ),
         )
       ]).show();

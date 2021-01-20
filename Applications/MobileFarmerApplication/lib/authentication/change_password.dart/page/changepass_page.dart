@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../models/changepass_model.dart';
 
 class ChangePassPage extends StatefulWidget {
@@ -83,13 +84,13 @@ class _ChangePassPageState extends State<ChangePassPage> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    padding:  EdgeInsets.only(top: ScreenUtil().setHeight(40), bottom: ScreenUtil().setHeight(40)),
                     child: Text('Vui lòng nhập thông tin',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold)),
+                            fontSize: ScreenUtil().setSp(70), fontWeight: FontWeight.bold)),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+                    padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setHeight(40), ScreenUtil().setWidth(40), ScreenUtil().setHeight(20)),
                     child: textForm(
                         controller: _oldPasswordController,
                         showPassword: showPassword,
@@ -98,7 +99,7 @@ class _ChangePassPageState extends State<ChangePassPage> {
                         obscureText: _obscureTextOldPassword),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setHeight(40), ScreenUtil().setWidth(40), ScreenUtil().setHeight(20)),
                     child: textForm(
                         controller: _newpasswordController,
                         showPassword: showPassword,
@@ -107,7 +108,7 @@ class _ChangePassPageState extends State<ChangePassPage> {
                         obscureText: _obscureTextNewPassword),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                    padding: EdgeInsets.fromLTRB(ScreenUtil().setWidth(40), ScreenUtil().setHeight(40), ScreenUtil().setWidth(40), ScreenUtil().setHeight(20)),
                     child: textForm(
                         controller: _confirmpasswordController,
                         showPassword: showPassword,
@@ -118,16 +119,16 @@ class _ChangePassPageState extends State<ChangePassPage> {
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(27),
+                          Radius.circular(ScreenUtil().setSp(50)),
                         ),
                         color: Color(0xff9CCC65)
                         //gradient: Palette.activeLinearGradient,
                         ),
-                    margin: EdgeInsets.only(top: 20.0),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                     child: OutlineButton(
                       color: Colors.transparent,
                       shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(10),
+                        borderRadius: new BorderRadius.circular(ScreenUtil().setSp(50)),
                       ),
                       onPressed: () {
                         setState(() {
@@ -142,10 +143,10 @@ class _ChangePassPageState extends State<ChangePassPage> {
                         });
                       },
                       padding: EdgeInsets.only(
-                        left: 97,
-                        top: 16,
-                        right: 97,
-                        bottom: 16,
+                        left: ScreenUtil().setWidth(200),
+                        top: ScreenUtil().setHeight(40),
+                        right: ScreenUtil().setWidth(200),
+                        bottom: ScreenUtil().setHeight(40),
                       ),
                       child: Text(
                         'Xác nhận thay đổi',
@@ -154,7 +155,7 @@ class _ChangePassPageState extends State<ChangePassPage> {
                           fontWeight: FontWeight.w700,
                           fontFamily: "MyriadPro",
                           fontStyle: FontStyle.normal,
-                          fontSize: 16.0,
+                          fontSize: ScreenUtil().setSp(60),
                         ),
                         textAlign: TextAlign.center,
                       ),
