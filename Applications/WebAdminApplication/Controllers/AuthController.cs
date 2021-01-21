@@ -114,6 +114,8 @@ namespace WebAdminApplication.Controllers
                 additionClaims.Add(new Claim("roles", JsonConvert.SerializeObject(result.Roles.ToList())));
                 FarmerModel farmerInfo = await _farmerService.GetFarmerByUserIdAsync(result.UserIdentity.Id);    
                 additionClaims.Add(new Claim("farmerinfo", JsonConvert.SerializeObject(farmerInfo)));
+                UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
                 var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);
                 return Ok(token);
             }
