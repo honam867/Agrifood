@@ -36,10 +36,10 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<Byre>(model);
-                var breed = (await _breedRepository.GetEntitiesAsync()).FirstOrDefault();
+                /*var breed = (await _breedRepository.GetEntitiesAsync()).FirstOrDefault();
                 if (breed == null)
                     throw new Exception("Please create breed info first!");
-                entity.BreedId = breed.Id;
+                entity.BreedId = breed.Id;*/
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _byreRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
@@ -82,6 +82,12 @@ namespace ApplicationDomain.BOA.Services
         {
             return await _byreRepository.GetByreById(id).MapQueryTo<ByreModel>(_mapper).FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<ByreModel>> GetByreByFarmerId(int id)
+        {
+            return await _byreRepository.GetByreByFarmerId(id).MapQueryTo<ByreModel>(_mapper).ToListAsync();
+        }
+
 
         public async Task<bool> UpdateByreAsync(int id, ByreModelRq model, UserIdentity<int> issuer)
         {

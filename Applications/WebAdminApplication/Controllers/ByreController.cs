@@ -40,6 +40,13 @@ namespace WebAdminApplication.Controllers
             return Ok(await _byreService.GetByreByIdAsync(id));
         }
 
+        [Route("farmer/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetByreByFarmerId(int id)
+        {
+            return Ok(await _byreService.GetByreByFarmerId(id));
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<IActionResult> CreateByreAsync([FromBody]ByreModelRq model)
