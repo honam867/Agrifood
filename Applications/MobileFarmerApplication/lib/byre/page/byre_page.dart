@@ -83,7 +83,7 @@ class _ListByresState extends State<ListByres> {
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Color(0xFF26A69A),
+                backgroundColor: Color(0xff9CCC65),
                 title: Text('Quản lí chuồng'),
                 leading: IconButton(
                   icon: Icon(Icons.navigate_before),
