@@ -131,16 +131,16 @@ openPopupDeleteByre(BuildContext context,
       DialogButton(
         child: Text(
           "Hủy",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
         ),
         onPressed: () => Navigator.pop(context),
         color: Colors.grey,
-        radius: BorderRadius.circular(0.0),
+        radius: BorderRadius.circular(ScreenUtil().setSp(0.0)),
       ),
       DialogButton(
         child: Text(
           "Đồng ý",
-          style: TextStyle(color: Colors.white, fontSize: 20),
+          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
         ),
         onPressed: () {
           deleteByreFuction(context, byreId);
@@ -160,7 +160,7 @@ var alertStyle = AlertStyle(
   descTextAlign: TextAlign.start,
   animationDuration: Duration(milliseconds: 400),
   alertBorder: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(0.0),
+    borderRadius: BorderRadius.circular(ScreenUtil().setSp(60)),
     side: BorderSide(
       color: Colors.grey,
     ),
