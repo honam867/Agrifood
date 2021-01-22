@@ -1,0 +1,109 @@
+<mat-card>
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid" #f="ngForm">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Tên</mat-label>
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên">
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Họ Tên</mat-label>
+                    <input id="fullName" [(ngModel)]="sourceView.fullName" name="fullName" matInput placeholder="Họ Tên">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input id="email" [(ngModel)]="sourceView.email" name="email" matInput placeholder="abc@xyz.com">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Địa chỉ</mat-label>
+                    <input id="address" [(ngModel)]="sourceView.address" name="address" matInput placeholder="Địa chỉ">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Ngày sinh</mat-label>
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="sourceView.birthday" [ngModelOptions]="{ standalone: true }" />
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Issued By</mat-label>
+                    <input id="issuedBy" [(ngModel)]="sourceView.issuedBy" name="issuedBy" matInput placeholder="abcxyz">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>CMND</mat-label>
+                    <input id="identificationNo" [(ngModel)]="sourceView.identificationNo" name="identificationNo" matInput placeholder="025111111">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Issued On</mat-label>
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="sourceView.issuedOn" [ngModelOptions]="{ standalone: true }" />
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Ngân hàng</mat-label>
+                    <input id="bank" [(ngModel)]="sourceView.bank" name="bank" matInput placeholder="ACB, OCB,...">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Chi nhánh</mat-label>
+                    <input id="bankBranch" [(ngModel)]="sourceView.bankBranch" name="bankBranch" matInput placeholder="">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Số tài khoản</mat-label>
+                    <input id="accountNumber" [(ngModel)]="sourceView.accountNumber" name="accountNumber" matInput placeholder="">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Số điện thoại</mat-label>
+                    <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput placeholder="Số điện thoại">
+                </mat-form-field>
+
+            </div>
+
+        </div>
+        <mat-form-field class="input-fluid" appearance="outline">
+            <mat-label>Code</mat-label>
+            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code">
+        </mat-form-field>
+    </form>
+    <div style="margin:0 auto;text-align: center;">
+        <!-- <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
+            class="fas fa-trash-alt"></i> Xóa</button> -->
+        <!-- <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button> -->
+        <button type="button" mat-raised-button class="button btn btn-outline-success" (click)="save()" [disabled]="loading"> <mat-progress-spinner mode="indeterminate" *ngIf="loading" class="spinner" diameter="23"></mat-progress-spinner>Lưu thay đổi</button>
+        <!-- <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh sửa</button> -->
+        <!-- <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="!isView && !isCreate" (click)="addFarmerAccount(farmer)"><i class="fas fa-window-close"></i> Gán tài khoản</button> -->
+    </div>
+</mat-card>

@@ -1,13 +1,10 @@
+import 'package:AgrifoodApp/authentication/bloc/authentication.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-
 import '../../core/storage.dart';
 import '../../respository/authentication_repository.dart';
-import '../authentication_bloc.dart';
-import '../authentication_event.dart';
 import 'login_event.dart';
 import 'login_state.dart';
-
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationRepository authenticationRepository;
@@ -17,7 +14,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       {@required this.authenticationRepository,
       @required this.authenticationBloc})
       : assert(authenticationRepository != null),
-        assert(authenticationBloc != null), super(null);
+        assert(authenticationBloc != null),
+        super(null);
 
   @override
   get initialState => LoginInitial();
@@ -30,15 +28,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         var loginResult = await authenticationRepository.authenticate(
           loginModel: event.loginModel,
         );
-        if (loginResult) {
+        if (event.loginModel.passWord == "" ||
+            event.loginModel.userName == "") {
+          yield LoginFailure(error: 'Nhập đầy đủ tài khoản và mật khẩu');
+        } else if (loginResult) {
           String storageToken = await Storage.getString('token');
           if (storageToken.length > 0) {
-
             await authenticationRepository.authenticate(
-                loginModel: event.loginModel, );
+              loginModel: event.loginModel,
+            );
           }
-          authenticationBloc
-              .add(LoggedIn(token: storageToken, loginModel: event.loginModel, fingerId: event.accessFinger));
+          authenticationBloc.add(LoggedIn(token: storageToken));
           yield LoginInitial();
         } else {
           yield LoginFailure(error: 'Đăng nhập không thành công');
@@ -46,6 +46,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }
+    }
+    if (event is LoginFormEvent) {
+      yield LoginFormState();
     }
   }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ApplicationDomain.BOA.IServices;
+using ApplicationDomain.BOA.Models.Farmers;
 using ApplicationDomain.Identity.IServices;
 using ApplicationDomain.Identity.Models;
 using ApplicationDomain.Identity.Models.Permissions;
@@ -26,14 +28,16 @@ namespace WebAdminApplication.Controllers
         private readonly IUserService _userService;
         private readonly IOptions<IdentityOptions> _identityOptions;
         private readonly IPermissionService _permissionService;
+        private readonly IEmployeeService _employeeService; 
+        private readonly IFarmerService _farmerService;
         public AuthController(
             IJwtTokenService jwtTokenService,
             IAuthService authService,
-
+            IEmployeeService employeeService,
             IOptions<IdentityOptions> identityOptions,
-
             IPermissionService permissionService,
-            IUserService userService
+            IUserService userService,
+            IFarmerService farmerService
             )
         {
             _jwtTokenService = jwtTokenService;
@@ -41,6 +45,8 @@ namespace WebAdminApplication.Controllers
             _userService = userService;
             _identityOptions = identityOptions;
             _permissionService = permissionService;
+            _employeeService = employeeService;
+            _farmerService = farmerService;
         }
 
        
@@ -57,9 +63,57 @@ namespace WebAdminApplication.Controllers
 
             if (result.Succeeded)
             {
-                GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
+                //GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
+                GrantedFarmerPermission grantedFarmerPermission = await _permissionService.GetGrantedFarmerPermission(result.UserIdentity.Id, result.Roles.ToList());
                 List<Claim> additionClaims = new List<Claim>();
+                additionClaims.Add(new Claim("farmerPermission", JsonConvert.SerializeObject(grantedFarmerPermission)));
                 //additionClaims.Add(new Claim("permission", JsonConvert.SerializeObject(grantedPermission)));
+                UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("roles", JsonConvert.SerializeObject(result.Roles.ToList())));
+                additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
+                EmployeeInfoModel infoEmployee = await _employeeService.GetInfoByUserIdAsync(result.UserIdentity.Id);
+                additionClaims.Add(new Claim("employeeinfo", JsonConvert.SerializeObject(infoEmployee)));
+                var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);
+                return Ok(token);
+            }
+
+            if (result.IsLockedOut)
+            {
+                return BadRequest($"User account locked out, max failed access attemps are {_identityOptions.Value.Lockout.MaxFailedAccessAttempts}");
+            }
+            else if (result.IsNotAllowed)
+            {
+                return BadRequest("User account is not allowed, make sure your account have been verified");
+            }
+            else if (result.RequiresTwoFactor)
+            {
+                return BadRequest("Two Factor Login is required");
+            }
+
+            return BadRequest("User Name or Password does not match");
+        }
+
+
+
+        [Route("farmer/signIn")]
+        [HttpPost]
+        public async Task<IActionResult> FarmerSignIn([FromBody] SignInModelRq signInModelRq)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _authService.SignInAsync(signInModelRq.UserName, signInModelRq.Password, true);
+
+            if (result.Succeeded)
+            {
+                //GrantedPermission grantedPermission = await _permissionService.GetGrantedPermission(result.UserIdentity.Id, result.Roles.ToList());
+                GrantedFarmerPermission grantedFarmerPermission = await _permissionService.GetGrantedFarmerPermission(result.UserIdentity.Id, result.Roles.ToList());
+                List<Claim> additionClaims = new List<Claim>();
+                additionClaims.Add(new Claim("farmerPermission", JsonConvert.SerializeObject(grantedFarmerPermission)));
+                additionClaims.Add(new Claim("roles", JsonConvert.SerializeObject(result.Roles.ToList())));
+                FarmerModel farmerInfo = await _farmerService.GetFarmerByUserIdAsync(result.UserIdentity.Id);    
+                additionClaims.Add(new Claim("farmerinfo", JsonConvert.SerializeObject(farmerInfo)));
                 UserModel infoUser = await _userService.GetUserById(result.UserIdentity.Id);
                 additionClaims.Add(new Claim("userInfo", JsonConvert.SerializeObject(infoUser)));
                 var token = _jwtTokenService.GenerateToken(result.UserIdentity, result.Roles, additionClaims);

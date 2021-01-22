@@ -37,5 +37,9 @@ namespace Infrastructure.Repositories.CMMS
             var model = await this.dbSet.FirstOrDefaultAsync(r => r.Id == id);
             return model != null ? model.Code : null;
         }
+        public IQueryable GetFarmerByUser(int id)
+        {
+            return dbSet.Where(d => d.UserId == id);
+        }
     }
 }

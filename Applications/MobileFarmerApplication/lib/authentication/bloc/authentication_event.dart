@@ -1,6 +1,6 @@
+import 'package:AgrifoodApp/authentication/login/model/login_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'login/model/login_model.dart';
 
 abstract class AuthenticationEvent extends Equatable {
   const AuthenticationEvent();
@@ -10,13 +10,11 @@ abstract class AuthenticationEvent extends Equatable {
 }
 
 class AppStarted extends AuthenticationEvent {
-  
   final LoginModel loginModel;
-  final bool fingerId;
 
-   const AppStarted({@required this.loginModel, this.fingerId});
+  const AppStarted({@required this.loginModel});
 
-    @override
+  @override
   List<Object> get props => [loginModel];
 
   @override
@@ -34,6 +32,13 @@ class LoggedIn extends AuthenticationEvent {
 
   @override
   String toString() => 'LoggedIn';
+}
+
+class LoginFormButton extends AuthenticationEvent {
+  const LoginFormButton();
+
+  @override
+  List<Object> get props => [];
 }
 
 class LoggedOut extends AuthenticationEvent {

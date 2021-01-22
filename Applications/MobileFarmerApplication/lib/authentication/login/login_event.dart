@@ -6,12 +6,19 @@ abstract class LoginEvent extends Equatable {
   const LoginEvent();
 }
 
+class LoginFormEvent extends LoginEvent {
+
+  const LoginFormEvent();
+  @override
+  List<Object> get props => [];
+}
+
 class LoginButtonPress extends LoginEvent {
   final LoginModel loginModel;
-  final bool accessFinger;
+
 
   const LoginButtonPress({
-    @required this.loginModel, this.accessFinger
+    @required this.loginModel
   });
 
   @override

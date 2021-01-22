@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\BuildingBlocks\AutoGenerate\AspNetCore.AutoGenerate\AspNetCore.AutoGenerate.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\EntityFramework\AspNetCore.EntityFramework\AspNetCore.EntityFramework.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\SQLProvider\MSSQL\MSSQL.csproj" />

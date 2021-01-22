@@ -51,38 +51,37 @@
 <mat-progress-bar mode="indeterminate" *ngIf="showLoading"></mat-progress-bar>
 <h3 class="login-heading mb-4">Đăng nhập</h3>
 <form novalidate [formGroup]="signInForm" (ngSubmit)="signIn()">
-    <mat-form-field appearance="outline" class="input-fluid">
-        <mat-label>{{'Tài khoản *'|translate | titlecase}}</mat-label>
-        <input id="userName" formControlName="userName" matInput placeholder="{{'Nhập Tài khoản'|translate | titlecase}}">
-        <mat-error *ngIf="userName.hasError('required')">
-            {{'Tài khoản'|translate | titlecase}} {{'không được bỏ trống !!!'|translate | titlecase}}
-        </mat-error>
-    </mat-form-field>
+  <mat-form-field appearance="outline" class="input-fluid">
+    <mat-label>{{'Tài khoản'|translate | titlecase}}</mat-label>
+    <input id="userName" formControlName="userName" matInput placeholder="{{'Nhập Tài khoản'|translate | titlecase}}">
+    <mat-error *ngIf="userName.hasError('required')">
+      <strong>{{'Thông tin này bắt buộc nhập !!!'|translate}}</strong>
+    </mat-error>
+  </mat-form-field>
 
-    <mat-form-field appearance="outline" class="input-fluid">
-        <mat-label>{{'Mật khẩu' | translate | titlecase}}</mat-label>
-        <input required id="password" formControlName="password" matInput
-            placeholder="{{'Nhập Mật khẩu' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
-        <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
-        </a>
-        <mat-error *ngIf="password.hasError('required')">
-            {{'Mật khẩu' | translate | titlecase}} {{'không được bỏ trống !!!' | translate | titlecase}}
-        </mat-error>
-    </mat-form-field>
-    <div class="row">
-        <div class="col">
-            <mat-error *ngIf="loginFail">
-                {{'LOGIN_FAILED'|translate}}
-            </mat-error>
-        </div>
+  <mat-form-field appearance="outline" class="input-fluid">
+    <mat-label>{{'Mật khẩu' | translate | titlecase}}</mat-label>
+    <input required id="password" formControlName="password" matInput
+      placeholder="{{'Nhập Mật khẩu' | translate | titlecase}}" [type]="hide ? 'text' : 'password'">
+    <a mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+    </a>
+    <mat-error *ngIf="password.hasError('required')">
+      <strong>{{'Thông tin này bắt buộc nhập !!!' | translate}}</strong>
+    </mat-error>
+  </mat-form-field>
+  <div class="row">
+    <div class="col">
+      <mat-error *ngIf="loginFail">
+        {{'LOGIN_FAILED'|translate}}
+      </mat-error>
+    </div>
 
-    </div>
-    <div class="d-flex justify-content-between mt-4">
-        <a class="text-success" routerLink="../forgotpassword">{{ 'Quên' | translate | titlecase}}
-            {{'Mật Khẩu' | translate| titlecase}} ?</a>
-        <button type="submit" class="btn btn-success"> <i class="material-icons">login</i>
-            {{'Đăng nhập' | translate | titlecase}}</button>
-    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-4">
+    <a class="text-success" routerLink="../forgotpassword">{{ 'Quên' | translate | titlecase}}
+      {{'Mật Khẩu' | translate| titlecase}} ?</a>
+    <button type="submit" class="btn btn-success"> <i class="material-icons">login</i>
+      {{'Đăng nhập' | translate | titlecase}}</button>
+  </div>
 </form>

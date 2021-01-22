@@ -1,4 +1,5 @@
-import { EMPLOYEEINFO } from './../../shared/constant';
+import { Employee } from './../employee/models/employee';
+import { EMPLOYEEINFO, ROLES, USERINFO } from './../../shared/constant';
 import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -58,15 +59,30 @@ export class AuthService {
     return false;
   }
 
+  storageUserInfo() {
+    const token = localStorage.getItem(environment.tokenKey);
+    const tokenPayload = decode(token);
+    localStorage.setItem(USERINFO, tokenPayload.userInfo);
+  }
   storageEmployeeInfo() {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
+    console.log(tokenPayload);
     localStorage.setItem(EMPLOYEEINFO, tokenPayload.employeeinfo);
+    localStorage.setItem(ROLES, tokenPayload.roles);
   }
+  // storageRoles() {
+  //   const token = localStorage.getItem(environment.tokenKey);
+  //   const tokenPayload = decode(token);
+  //   const roles = Object.values(tokenPayload);
+  //   const listRoles = { roles: roles[1] }
+  //   localStorage.setItem(ROLES, JSON.stringify(listRoles.roles));
+  // }
   storagePermission() {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
-    localStorage.setItem(PERMISSION, tokenPayload.permission);
+    return tokenPayload;
+    // localStorage.setItem(PERMISSION, tokenPayload.permission);
   }
 
   changePassword(formData: any): Observable<any> {
@@ -84,5 +100,9 @@ export class AuthService {
     const token = localStorage.getItem(environment.tokenKey);
     const tokenPayload = decode(token);
     return tokenPayload.avatarURL;
+  }
+
+  updateEmployee(employeeId: number, updatedEmployee: Employee): Observable<boolean> {
+    return this.http.put(`employee/${employeeId}`, updatedEmployee);
   }
 }

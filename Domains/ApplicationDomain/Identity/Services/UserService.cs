@@ -1,4 +1,8 @@
 ﻿
+using ApplicationDomain.BOA.IRepositories;
+using ApplicationDomain.BOA.IServices;
+using ApplicationDomain.BOA.Models.Employees;
+using ApplicationDomain.BOA.Models.Farmers;
 using ApplicationDomain.Core.Entities;
 using ApplicationDomain.Core.IRepositories;
 using ApplicationDomain.Helper;
@@ -19,6 +23,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using UserModel = ApplicationDomain.Identity.Models.UserModel;
 
@@ -30,10 +35,16 @@ namespace ApplicationDomain.Identity.Services
         private readonly IRoleRepository _roleRepository;
         private readonly IEmailSender _emailSender;
         private readonly IEmailRepository _emailTemplateRepository;
+        private readonly IEmployeeService _EmployeeService;
+        private readonly IFarmerService _FarmerService;
+        private readonly IEmployeeRepository _EmployeeRepository;
         private readonly UserManager<User> _userManagement;
         private readonly RoleManager<Role> _roleManager;
         public UserService(
             IMapper mapper,
+            IEmployeeRepository EmployeeRepository,
+            IEmployeeService EmployeeService,
+            IFarmerService FarmerService,
             IUnitOfWork uow,
             IUserRepository userRepository,
             IRoleRepository roleRepository,
@@ -45,7 +56,10 @@ namespace ApplicationDomain.Identity.Services
         {
             _userRepository = userRepository;
             _userManagement = userManagement;
+            _EmployeeRepository = EmployeeRepository;
+            _EmployeeService = EmployeeService;
             _emailSender = emailSender;
+            _FarmerService = FarmerService;
             _roleManager = roleManager;
             _roleRepository = roleRepository;
             _emailTemplateRepository = emailTemplateRepository;
@@ -54,8 +68,9 @@ namespace ApplicationDomain.Identity.Services
         public IEnumerable<UserModel> GetListUsers()
         {
             try
-            {
-                return _userRepository.GetUsers().Cast<UserModel>();
+            { 
+                var result = _userRepository.GetUsers().Cast<UserModel>();
+                return result;
             }
             catch (Exception ex)
             {
@@ -99,12 +114,15 @@ namespace ApplicationDomain.Identity.Services
             return result;
         }
 
-        public async Task<int> CreateUserAsync(CreatedUserRq model, UserIdentity<int> issuer = null)
+        public async Task<int> CreateUserAsync(CreatedUserRq model, UserIdentity<int> issuer)
         {
             try
             {
                 model.Status = true;
+                
                 var user = _mapper.Map<User>(model);
+                
+               
                 if (issuer != null)
                 {
                     user.CreateBy(issuer).UpdateBy(issuer);
@@ -112,13 +130,28 @@ namespace ApplicationDomain.Identity.Services
                 //string password = AutoGenerate.AutoGeneratePassword(8, true, true);
                 string password = "Agrifoodsystem1";
                 var identityResult = await _userManagement.CreateAsync(user, password);
-
+                if (model.SelectedFarmer && model.Role == ROLE_CONSTANT.FARMER)
+                {
+                    FarmerModelRq farmerModelRq = new FarmerModelRq();
+                    farmerModelRq.UserId = user.Id;
+                    DateTime localDate = DateTime.Now;
+                    farmerModelRq.ContractCreatetionDate = localDate;
+                    var farmer = await _FarmerService.CreateFarmerAsync(farmerModelRq, issuer);
+                } 
+                if (model.Role== ROLE_CONSTANT.EMPLOYEE)
+                {
+                    EmployeeModelRq employeeModelRq2 = new EmployeeModelRq();
+                    employeeModelRq2.UserId = user.Id;
+                    DateTime localDate = DateTime.Now;
+                    employeeModelRq2.Birthday = localDate;
+                    employeeModelRq2.IssuedOn = localDate;
+                    var employee = await _EmployeeService.CreateEmployeeAsync(employeeModelRq2, issuer);
+                }
+                await _userManagement.AddToRoleAsync(user, model.Role);
                 if (!identityResult.Succeeded)
                 {
                     throw CreateException(identityResult.Errors);
                 }
-
-                await _userManagement.AddToRoleAsync(user, ROLE_CONSTANT.EMPLOYEE);
                 EmailTemplate emailTemplate = await _emailTemplateRepository.GetEmailTemplateByNameAsync("NewUserEmail");
                 emailTemplate.EmailContent = emailTemplate.EmailContent.Replace("#email", model.Email);
                 emailTemplate.EmailContent = emailTemplate.EmailContent.Replace("#username", model.UserName);
@@ -217,17 +250,25 @@ namespace ApplicationDomain.Identity.Services
 
         public async Task<bool> DeleteUserAsync(int id)
         {
-            var user = await _userManagement.FindByIdAsync(id.ToString());
-
-            if (user == null)
+            try
             {
-                return false;
+                var user = await _userManagement.FindByIdAsync(id.ToString());
+
+                if (user == null)
+                {
+                    return false;
+                }
+                _userRepository.Delete(user);
+
+                await _uow.SaveChangesAsync();
+
+                return true;
             }
-            _userRepository.Delete(user);
+            catch (Exception ex)
+            {
 
-            await _uow.SaveChangesAsync();
-
-            return true;
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<bool> AddRoleToUserAsync(UpdateUserRoleModelRq model)
@@ -290,6 +331,19 @@ namespace ApplicationDomain.Identity.Services
             try
             {
                 var user = await _userManagement.FindByEmailAsync(email);
+                return user != null;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<bool> CheckUserNameAsync(string username)
+        {
+            try
+            {
+                var user = await _userManagement.FindByNameAsync(username);
                 return user != null;
             }
             catch (Exception e)
