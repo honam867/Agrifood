@@ -7,8 +7,8 @@ namespace ApplicationDomain.BOA.Models.Cows
     public class CowModel
     {
         public int Id { get; set; }
-        public int CowId { set; get; }
-        public Cow Cow { set; get; }
+        public int ByreId { set; get; }
+        public string ByreName { set; get; }
         public int MotherId { set; get; }
         public int FatherId { set; get; }
         public string Name { set; get; }
