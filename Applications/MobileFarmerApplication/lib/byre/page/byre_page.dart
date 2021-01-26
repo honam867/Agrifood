@@ -122,7 +122,7 @@ class _ListByresState extends State<ListByres> {
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Color(0xFF26A69A),
+                backgroundColor: Color(0xff9CCC65),
                 title: Text('Quản lí chuồng'),
                 leading: IconButton(
                   icon: Icon(Icons.navigate_before),
@@ -151,7 +151,7 @@ class _ListByresState extends State<ListByres> {
                 children: <Widget>[
                   Expanded(
                       child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                     child: ListView.builder(
                       itemCount: byreModel.byreItem.length,
                       itemBuilder: (BuildContext context, int index) {

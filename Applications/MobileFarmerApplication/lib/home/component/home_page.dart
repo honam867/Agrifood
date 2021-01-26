@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                       height: ScreenUtil().setHeight(300),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
+                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40), right: ScreenUtil().setWidth(40)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(50),
+                                        fontSize: ScreenUtil().setSp(60),
                                         fontWeight: FontWeight.bold)),
                               ),
                               SizedBox(
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: Colors.black,
-                                        fontSize: ScreenUtil().setSp(35),
+                                        fontSize: ScreenUtil().setSp(50),
                                         fontWeight: FontWeight.w600)),
                               ),
                             ],
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.topCenter,
                                 icon: Icon(
                                   Icons.add,
-                                  size: 24,
+                                  size: ScreenUtil().setSp(100),
                                   color: Colors.white,
                                 ),
                                 onPressed: () {},
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                                 alignment: Alignment.topCenter,
                                 icon: Image.asset(
                                   "assets/layout/notification.png",
-                                  width: 24,
+                                  width: ScreenUtil().setWidth(80),
                                 ),
                                 onPressed: () {},
                               ),

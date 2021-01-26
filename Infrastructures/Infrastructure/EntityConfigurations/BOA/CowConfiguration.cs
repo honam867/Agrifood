@@ -11,6 +11,7 @@ namespace Infrastructure.EntityConfigurations.BOA
         public override void OnConfigure(EntityTypeBuilder<Cow> builder)
         {
             builder.HasOne(p => p.FoodSuggestion).WithMany().HasForeignKey(p => p.FoodSuggestionId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.Byre).WithMany().HasForeignKey(p => p.ByreId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
         }
     }
 }

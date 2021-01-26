@@ -1,6 +1,7 @@
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'top_bar.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
@@ -13,14 +14,14 @@ class StackContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.0,
+      height: ScreenUtil().setHeight(750),
       child: Stack(
         children: <Widget>[
           Container(),
           ClipPath(
             clipper: MyCustomClipper(),
             child: Container(
-              height: 300.0,
+              height: ScreenUtil().setHeight(750),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage("https://image.freepik.com/free-vector/colorful-green-abstract-background_23-2148453700.jpg"),
@@ -36,21 +37,21 @@ class StackContainer extends StatelessWidget {
               children: <Widget>[
                 CircularProfileAvatar(
                   "https://www.clipartmax.com/png/middle/479-4798442_about-me-avatar-farmer.png",
-                  borderWidth: 4.0,
-                  radius: 60.0,
+                  borderWidth: ScreenUtil().setWidth(10),
+                  radius: ScreenUtil().setSp(200),
                 ),
-                SizedBox(height: 4.0),
+                SizedBox(height: ScreenUtil().setHeight(20)),
                 Text(
                   this.farmerInfoModel.name,
                   style: TextStyle(
-                    fontSize: 21.0,
+                    fontSize: ScreenUtil().setSp(60),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   this.farmerInfoModel.status == true ? "Đang hoạt động" : "Ngưng hoạt động",
                   style: TextStyle(
-                    fontSize: 12.0,
+                    fontSize: ScreenUtil().setSp(35),
                     color: Colors.grey[700],
                   ),
                 ),

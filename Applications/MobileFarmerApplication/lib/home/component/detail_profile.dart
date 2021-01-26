@@ -2,6 +2,7 @@ import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardItem extends StatelessWidget {
   final BuildContext contextHome;
@@ -34,21 +35,21 @@ class CardItem extends StatelessWidget {
 
 Widget item({String title, String detail, String urlImage}) {
   return Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16.0),
+    padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(40)),
     child: Card(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16.0,
-          vertical: 21.0,
+        padding:  EdgeInsets.symmetric(
+          horizontal: ScreenUtil().setWidth(40),
+          vertical: ScreenUtil().setHeight(60),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Image(
               image: AssetImage(urlImage),
-              height: 40,
+              height: ScreenUtil().setHeight(120),
             ),
-            SizedBox(width: 24.0),
+            SizedBox(width: ScreenUtil().setWidth(55)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -56,15 +57,15 @@ Widget item({String title, String detail, String urlImage}) {
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: ScreenUtil().setSp(50),
                   ),
                 ),
-                SizedBox(height: 4.0),
+                SizedBox(height: ScreenUtil().setHeight(20)),
                 Text(
                   detail,
                   style: TextStyle(
                     color: Colors.grey[700],
-                    fontSize: 12.0,
+                    fontSize: ScreenUtil().setSp(40),
                   ),
                 ),
               ],

@@ -131,7 +131,7 @@ class _InitPageState extends State<InitPage> {
                           "Đăng nhập",
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: ScreenUtil().setSp(46)),
+                              fontSize: ScreenUtil().setSp(60)),
                         ),
                       )),
                   // SizedBox(

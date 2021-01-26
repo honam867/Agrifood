@@ -8,6 +8,7 @@ import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 
@@ -84,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
       child: GridView.count(
           controller: controller,
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: 16, right: 16),
+          padding: EdgeInsets.only(left: ScreenUtil().setWidth(40), right: ScreenUtil().setWidth(40)),
           crossAxisCount: 2,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
@@ -93,23 +94,23 @@ class _DashboardState extends State<Dashboard> {
                 child: Container(
                   decoration: BoxDecoration(
                       color: Color(color),
-                      borderRadius: BorderRadius.circular(50)),
+                      borderRadius: BorderRadius.circular(ScreenUtil().setSp(80))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Image.asset(
                         data.img,
-                        width: 42,
+                        width: ScreenUtil().setWidth(120),
                       ),
                       SizedBox(
-                        height: 14,
+                        height: ScreenUtil().setHeight(40),
                       ),
                       Text(
                         data.title,
                         style: GoogleFonts.openSans(
                             textStyle: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: ScreenUtil().setSp(50),
                                 fontWeight: FontWeight.w600)),
                       ),
                       // SizedBox(

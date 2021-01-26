@@ -71,11 +71,11 @@ class ChapterCard extends StatelessWidget {
                           text:
                               "Có ${this.byreItem.quantityCow} ${this.byreItem.breedId}",
                           style: TextStyle(
-                            fontSize: ScreenUtil().setSp(30),
+                            fontSize: ScreenUtil().setSp(50),
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -86,7 +86,7 @@ class ChapterCard extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
-                size: 18,
+                size: ScreenUtil().setSp(60),
               ),
               onPressed: () {
                 Navigator.push(

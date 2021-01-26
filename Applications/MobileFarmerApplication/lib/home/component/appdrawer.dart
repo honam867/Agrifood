@@ -28,21 +28,21 @@ class AppDrawer extends StatelessWidget {
 
   CustomDrawerHeader buildCustomDrawerHeader() {
     return CustomDrawerHeader(
-      margin: EdgeInsets.all(0),
+      margin: EdgeInsets.all(ScreenUtil().setHeight(0)),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Palette.dark60, width: 0.5),
+          bottom: BorderSide(color: Palette.dark60, width: ScreenUtil().setWidth(0.5)),
         ),
       ),
       child: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 10),
+            padding: EdgeInsets.only(right: ScreenUtil().setWidth(40)),
             child: CircularProfileAvatar(
               this.farmerInfoModel.avatarURL ??
                   "https://www.clipartmax.com/png/middle/479-4798442_about-me-avatar-farmer.png",
-              borderWidth: 4.0,
-              radius: 60.0,
+              borderWidth: ScreenUtil().setWidth(4.0),
+              radius: ScreenUtil().setSp(200),
             ),
           ),
           Column(
@@ -75,16 +75,16 @@ class AppDrawer extends StatelessWidget {
       items.add(
         InkWell(
           child: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(ScreenUtil().setSp(30)),
             child: Row(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(right: 10.0),
+                  padding: EdgeInsets.only(right: ScreenUtil().setHeight(30)),
                   child: drawerItems[i].icon,
                 ),
                 Text(
                   drawerItems[i].title,
-                  style: TextStyle(fontSize: 15.0),
+                  style: TextStyle(fontSize: ScreenUtil().setSp(60)),
                 ),
               ],
             ),
@@ -154,9 +154,9 @@ class AppDrawer extends StatelessWidget {
       children: [
         ClipPath(
           child: Container(
-            padding: EdgeInsets.only(top: 50),
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
             width: MediaQuery.of(context).size.width,
-            height: 200,
+            height: ScreenUtil().setHeight(550),
             color: Colors.green[100],
           ),
           clipper: CustomClipPath(),

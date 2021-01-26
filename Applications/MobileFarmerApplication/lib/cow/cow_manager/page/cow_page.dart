@@ -55,7 +55,7 @@ class _CowPageState extends State<CowPage> {
           return SafeArea(
               child: Scaffold(
             appBar: AppBar(
-              backgroundColor: Color(0xFF26A69A),
+              backgroundColor: Color(0xff9CCC65),
               title: Text('Quản lí bò'),
               leading: IconButton(
                 icon: Icon(Icons.navigate_before),
