@@ -1,13 +1,12 @@
 import 'package:AgrifoodApp/cow/cow_manager/component/cow_detail.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
-import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
-import 'package:AgrifoodApp/cow/cow_manager/widget/slidable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CowsPage extends StatefulWidget {
   final String value;
-  CowsPage({this.value});
+  final int byreId;
+  CowsPage({this.value, this.byreId});
 
   @override
   _CowsPageState createState() => _CowsPageState();

@@ -1,8 +1,25 @@
+import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/build_birthday.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/build_gender_cow.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/build_text_form.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/dropdown_mother_father_cow.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
+import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
+import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
+import 'package:AgrifoodApp/ui/splash_page.dart';
+import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormCreateCow extends StatefulWidget {
+  final CowModel cowModel;
+  final int byreId;
+  final BuildContext contextCowPage;
+
+  FormCreateCow({Key key, this.cowModel, this.byreId, this.contextCowPage})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return FormCreateCowState();
@@ -10,282 +27,189 @@ class FormCreateCow extends StatefulWidget {
 }
 
 class FormCreateCowState extends State<FormCreateCow> {
-  String _namecow;
-  String _idfather;
-  String _idmother;
-  String _birthday;
-  //bool _genderMale = false;
-  //bool _genderFemale = false;
-  String _breed;
-  int selectedRadio;
+  String _namecow, gender = "Đực";
+  DateTime _birthday;
+  int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId;
+  FoodSuggestionModel foodSuggestionModelName;
+  CowModel cowModelName;
+  FoodSuggestionModel foodSuggestionModel = new FoodSuggestionModel();
 
-  @override
-  void initState(){
-    super.initState();
-    selectedRadio = 0;
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _codeController = new TextEditingController();
+
+  void changeValue({title, value}) {
+    setState(() {
+      if (title == "Thức ăn") {
+        foodSuggestionId = value;
+      } else {
+        if (title == "Bò cha") {
+          cowFatherId = value;
+        } else {
+          cowMotherId = value;
+        }
+      }
+    });
   }
 
-  setSelectedRadio(int val){
+   changDateTime({DateTime dateTime}) {
+    setState(() {
+      _birthday = dateTime;
+    });
+  }
+
+  setSelectedRadio({int val, String title}) {
     setState(() {
       selectedRadio = val;
+      gender = val == 1 ? "Đực" : "Cái";
+    });
+  }
+
+  setTextValue({String value, String title}) {
+    setState(() {
+      if (title == "Mã bò") {
+        _codeController.text = value;
+      } else {
+        _nameController.text = value;
+      }
     });
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
-  Widget _buildName() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            hintText: "Tên bò"),
-        maxLength: 10,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Tên bò là bắt buộc';
-          }
-        },
-        onSaved: (String value) {
-          _namecow = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildIdFather() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              //borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            hintText: "ID bò cha"),
-        maxLength: 10,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'ID bò cha là bắt buộc';
-          }
-        },
-        onSaved: (String value) {
-          _idfather = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildIdMother() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              //borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            hintText: "ID bò mẹ"),
-        maxLength: 10,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'ID bò mẹ là bắt buộc';
-          }
-        },
-        onSaved: (String value) {
-          _idmother = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildBirthday() {
-     return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(20.0),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              //borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            hintText: "Năm sinh"),
-        keyboardType: TextInputType.datetime,
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Năm sinh là bắt buộc';
-          }
-          return null;
-        },
-        onSaved: (String value) {
-          _birthday = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildGender(){
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          ButtonBar(
-            alignment: MainAxisAlignment.spaceAround,
-            children: [
-              Radio(
-                value: 1, 
-                groupValue: selectedRadio,
-                activeColor: Color(0xFF26A69A), 
-                onChanged: (val){
-                  setSelectedRadio(val);
-                  print("Radio $val");
-                },
-              ),
-              Radio(
-                value: 2, 
-                groupValue: selectedRadio,
-                activeColor: Color(0xFF26A69A),  
-                onChanged: (val){
-                  setSelectedRadio(val);
-                  print("Radio $val");
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBreed() {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 20.0,
-      ),
-      child: TextFormField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              // borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xFF26A69A)),
-              //borderRadius: BorderRadius.all(Radius.circular(30)),
-            ),
-            hintText: "Giống"),
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Giống là bắt buộc';
-          }
-        },
-        onSaved: (String value) {
-          _breed = value;
-        },
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF26A69A),
-          title: Text('Tạo bò'),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.navigate_next),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CowsPage()));
-                }),
-          ],
-        ),
-        body: Container(
-          margin: EdgeInsets.all(24),
-          child: SingleChildScrollView(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  _buildName(),
-                  _buildIdFather(),
-                  _buildIdMother(),
-                  _buildBreed(),
-                  _buildBirthday(),
-                  _buildGender(),
-                  SizedBox(height: 10.0),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 20.0,
-                    ),
-                    child: RaisedButton(
-                      padding: const EdgeInsets.all(0.0),
-                      child: Container(
-                        decoration: const BoxDecoration(
-                         color: Color(0xFF26A69A),
-                        ),
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
-                        child: const Text(
-                          "Tạo bò",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
+    double width = MediaQuery.of(context).size.width;
+    return BlocConsumer<CowBloc, CowState>(
+      listener: (context, state) {
+        if (state is CowLoaded) {
+          showToast(context: context, string: "Tạo thành công ");
+          reloadCow(context: context, byreId: widget.byreId);
+        }
+      },
+      builder: (context, state) {
+        if (state is CowLoadInprocess) {
+          BlocProvider.of<CowBloc>(context).add(FoodSuggestionSuccess());
+        }
+        if (state is FoodSuggestionLoaded) {
+          foodSuggestionModel = state.foodSuggestionModel;
+          return SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                backgroundColor: Color(0xFF26A69A),
+                title: Text('Tạo bò'),
+                actions: <Widget>[
+                  IconButton(
+                      icon: Icon(Icons.navigate_next),
                       onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                         _formKey.currentState.save();
-                        }
-                          
-                        
-                        // setState(() {
-                        //   Navigator.of(context).push(MaterialPageRoute(
-                        //     builder: (context) => ListCows(value: _namecow),
-                        //   ));
-                        // });
-                        print(_namecow);
-                        print(_idfather);
-                        print(_idmother);
-                        //print(_genderMale);
-                        print(_breed);
-                        print(_birthday);
-                      },
-                    ),
-                  )
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CowsPage()));
+                      }),
                 ],
               ),
+              body: Container(
+                margin: EdgeInsets.all(24),
+                child: SingleChildScrollView(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      buildTextForm(
+                          validatorText: "Vui lòng không bỏ trống",
+                          hint: "Tên bò",
+                          nameController: _nameController,
+                          width: width,
+                          setTextFuction: setTextValue),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildTextForm(
+                              validatorText: "Vui lòng không bỏ trống",
+                              hint: "Mã bò",
+                              codeController: _codeController,
+                              width: width,
+                              setTextFuction: setTextValue),
+                          buildIdFather(
+                              title: "Thức ăn",
+                              foodSuggestionModel: this.foodSuggestionModel,
+                              foodSuggestionId: foodSuggestionId,
+                              changeValueFuction: changeValue),
+                        ],
+                      ),
+                      widget.cowModel.cowItem.length > 0
+                          ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                buildIdFather(
+                                    title: "Bò cha",
+                                    cowFatherId: cowFatherId,
+                                    cowModel: widget.cowModel,
+                                    changeValueFuction: changeValue),
+                                buildIdFather(
+                                    title: "Bò mẹ",
+                                    cowModel: widget.cowModel,
+                                    changeValueFuction: changeValue,
+                                    cowMotherId: cowMotherId)
+                              ],
+                            )
+                          : Container(),
+                      BuildBirth(selectDateFunction: changDateTime,),
+                      buildGender(
+                          selectedRadio: selectedRadio,
+                          selectRadioFunction: setSelectedRadio),
+                      SizedBox(height: 10.0),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 20.0,
+                        ),
+                        child: RaisedButton(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF26A69A),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 30.0, vertical: 10.0),
+                            child: const Text(
+                              "Tạo bò",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                          ),
+                          onPressed: () {
+                            CowItem cowItem = new CowItem(
+                                gender: gender,
+                                byreId: widget.byreId,
+                                code: _codeController.text,
+                                birthday:
+                                    DateTime.parse(_birthday.toIso8601String()),
+                                weaningDate:
+                                    DateTime.parse(_birthday.toIso8601String()),
+                                name: _nameController.text,
+                                fatherId: cowFatherId,
+                                ageNumber: 1,
+                                motherId: cowMotherId,
+                                foodSuggestionId: foodSuggestionId);
+                            setState(() {
+                              BlocProvider.of<CowBloc>(context)
+                                  .add(CowAddProcess(cowItem));
+                            });
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
-        ),
-      ),
+          );
+        }
+        return SplashPage();
+      },
     );
   }
 }

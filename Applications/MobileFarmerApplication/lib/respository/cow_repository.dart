@@ -14,16 +14,6 @@ class CowRepository {
     }
   }
 
-  // Future<BreedModel> getListBreeds() async {
-  //   try {
-  //     List<dynamic> jsonRs = await APIClient.getList("api/breed");
-  //     BreedModel breedModel = BreedModel.fromJson(jsonRs);
-  //     return breedModel;
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-
   Future<bool> deleteCow({int cowId}) async {
     var rs = await APIClient.delete('api/cow/$cowId');
     if (rs != null) {

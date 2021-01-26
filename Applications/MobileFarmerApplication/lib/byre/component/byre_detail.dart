@@ -1,7 +1,9 @@
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
+import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_cubit.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,7 @@ class ChapterCard extends StatelessWidget {
         child: Row(
           children: <Widget>[
             InkWell(
-              onTap: (){
+              onTap: () {
                 showToast(context: context, string: "Tap");
               },
               child: Column(
@@ -91,8 +93,13 @@ class ChapterCard extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BlocProvider(
-                        create: (context) => CowCubit(CowRepository()),
-                        child: CowPage(),
+                        create: (context) => CowBloc(
+                            cowRepository: CowRepository(),
+                            foodSuggestionRepository:
+                                FoodSuggestionRepository()),
+                        child: CowPage(
+                          byreId: this.byreItem.id,
+                        ),
                       ),
                     ));
               },

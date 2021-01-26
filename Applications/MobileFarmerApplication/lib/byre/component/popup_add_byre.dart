@@ -1,5 +1,4 @@
 import 'package:AgrifoodApp/byre/model/breed_item.dart';
-import 'package:AgrifoodApp/byre/model/breed_model.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -32,8 +31,7 @@ openPopupAddByre(BuildContext context,
   }
 
   Alert(
-      closeFunction: () =>
-          Navigator.pop(context, changeBreedFuction(context, null)),
+      closeFunction: () => Navigator.pop(context),
       context: context,
       onWillPopActive: false,
       title: update == false ? "Thêm chuồng" : "Chỉnh sửa chuồng",
@@ -102,7 +100,7 @@ openPopupAddByre(BuildContext context,
                   code: _codeController.text,
                   ration: _rationController.text,
                   quantityCow: 0,
-                  farmerId: 0);
+                  farmerId: 20);
               update == false
                   ? addByreFuction(context, byreItemTree)
                   : updateByreFuction(context, byreItem.id, byreItemTree);
