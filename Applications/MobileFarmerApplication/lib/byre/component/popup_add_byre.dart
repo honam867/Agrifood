@@ -30,7 +30,6 @@ openPopupAddByre(BuildContext context,
     _rationController.text = byreItem.ration;
     _codeController.text = byreItem.code;
   }
-  String breedName = "Loại bò";
 
   Alert(
       closeFunction: () =>
@@ -103,7 +102,7 @@ openPopupAddByre(BuildContext context,
                   code: _codeController.text,
                   ration: _rationController.text,
                   quantityCow: 0,
-                  farmerId: 20);
+                  farmerId: 0);
               update == false
                   ? addByreFuction(context, byreItemTree)
                   : updateByreFuction(context, byreItem.id, byreItemTree);

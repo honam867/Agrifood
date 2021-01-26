@@ -4,6 +4,7 @@ import 'package:AgrifoodApp/authentication/bloc/authentication_event.dart';
 import 'package:AgrifoodApp/authentication/change_password.dart/page/changepass_page.dart';
 import 'package:AgrifoodApp/home/component/custom_drawer_header.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/menu_item.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
@@ -17,10 +18,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppDrawer extends StatelessWidget {
   final UserInfoModel userInfoModel;
+  final FarmerInfoModel farmerInfoModel;
   final BuildContext contextHome;
 
-  const AppDrawer({Key key, this.userInfoModel, this.contextHome})
+  const AppDrawer({Key key, this.userInfoModel, this.contextHome, this.farmerInfoModel})
       : super(key: key);
+
+
 
   CustomDrawerHeader buildCustomDrawerHeader() {
     return CustomDrawerHeader(
@@ -35,7 +39,7 @@ class AppDrawer extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(right: 10),
             child: CircularProfileAvatar(
-              this.userInfoModel.avatarURL ??
+              this.farmerInfoModel.avatarURL ??
                   "https://www.clipartmax.com/png/middle/479-4798442_about-me-avatar-farmer.png",
               borderWidth: 4.0,
               radius: 60.0,
@@ -44,17 +48,17 @@ class AppDrawer extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(this.userInfoModel.userName ?? "",
+              Text(this.farmerInfoModel.name ?? "",
                   textScaleFactor: 1.3,
                   style: TextStyle(fontSize: ScreenUtil().setSp(40))),
               Text(
-                  this.userInfoModel.status == true
-                      ? "Đang hoạt động"
-                      : "Ngưng hoạt động",
+                  this.farmerInfoModel.gender == true
+                      ? "Name"
+                      : "Nữ",
                   textScaleFactor: 1.3,
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(30),
-                      color: this.userInfoModel.status == true
+                      color:  this.farmerInfoModel.gender == true
                           ? Colors.green
                           : Colors.red))
             ],
@@ -104,7 +108,7 @@ class AppDrawer extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => UserInformation(
                       contextHome: this.contextHome,
-                      userInfoModel: this.userInfoModel,
+                      farmerInfoModel: this.farmerInfoModel,
                     )),
           );
         },

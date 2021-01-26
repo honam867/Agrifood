@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
 
 class ListByres extends StatefulWidget {
+  final int farmerId;
+
+  const ListByres({Key key, this.farmerId}) : super(key: key);
   @override
   _ListByresState createState() => _ListByresState();
 }
@@ -37,7 +40,8 @@ class _ListByresState extends State<ListByres> {
   }
 
   void addByreFuction(BuildContext context, ByreItem byreItem) {
-    byreItem.breedId = breedId;
+    byreItem.breedId = 1;
+    byreItem.farmerId = widget.farmerId;
     final byreCubit = context.read<ByreCubit>();
     byreCubit.addByre(byreItem: byreItem);
   }
@@ -54,7 +58,7 @@ class _ListByresState extends State<ListByres> {
 
   void getListByre(BuildContext context) {
     final byreCubit = context.watch<ByreCubit>();
-    byreCubit.getListByre();
+    byreCubit.getListByreByFarmerId(farmerId: widget.farmerId);
   }
 
   @override

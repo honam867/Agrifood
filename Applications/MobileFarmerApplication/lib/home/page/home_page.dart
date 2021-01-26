@@ -1,13 +1,10 @@
-import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/appdrawer.dart';
 import 'package:AgrifoodApp/home/component/custom_clippath.dart';
 import 'package:AgrifoodApp/home/component/dashboard.dart';
 import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
-import 'package:AgrifoodApp/home/model/userInfo_model.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
-import 'package:AgrifoodApp/ui/utils/show_toast.dart';
-import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,9 +12,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
-  final UserInfoModel userInfo;
+  final FarmerInfoModel farmerInfoModel;
 
-  const HomePage({Key key, this.userInfo}) : super(key: key);
+  const HomePage({Key key, this.farmerInfoModel}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 
@@ -36,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   void checkAmountByreFirst(BuildContext context) {
     final byreCubit = context.watch<HomeCubit>();
-    byreCubit.checkAmountByre();
+    byreCubit.checkAmountByre(widget.farmerInfoModel);
   }
 
   @override
@@ -57,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             key: scaffoldKey,
             backgroundColor: Colors.grey[200],
             drawer: AppDrawer(
-              userInfoModel: widget.userInfo,
+              farmerInfoModel: widget.farmerInfoModel ?? FarmerInfoModel(name: "", avatarURL: "", gender:  false,status: false),
               contextHome: context,
             ),
             body: Stack(
@@ -70,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   clipper: CustomClipPathByHomePage(),
                 ),
-                Column(
+                widget.farmerInfoModel != null ? Column(
                   children: <Widget>[
                     SizedBox(
                       height: ScreenUtil().setHeight(300),
@@ -84,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Xin chào ${widget.userInfo.userName}!",
+                                "Xin chào !",
                                 style: GoogleFonts.openSans(
                                     textStyle: TextStyle(
                                         color: Colors.white,
@@ -135,11 +132,11 @@ class _HomePageState extends State<HomePage> {
                       create: (context) => HomeCubit(byreRepository),
                       child: Dashboard(
                         contextHome: context,
-                        userInfoModel: widget.userInfo,
+                        farmerInfoModel: widget.farmerInfoModel,
                       ),
                     ),
                   ],
-                ),
+                ) : Center(child: Text("Bạn không phải nông dân"),),
                 Positioned(
                   left: 10,
                   top: 20,

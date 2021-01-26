@@ -1,4 +1,5 @@
 import 'package:AgrifoodApp/core/model_okvalue.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -69,9 +70,10 @@ class ChangePassFail extends AuthenticationState {
 
 class AuthenticationAuthenticated extends AuthenticationState {
   final UserInfoModel userInfo;
+  final FarmerInfoModel farmerInfoModel;
 
   const AuthenticationAuthenticated(
-      {@required this.userInfo});
+      {@required this.userInfo,@required this.farmerInfoModel});
 
   @override
   List<Object> get props => [];

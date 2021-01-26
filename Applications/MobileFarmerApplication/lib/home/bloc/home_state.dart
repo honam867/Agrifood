@@ -27,6 +27,21 @@ class CheckByreLoaded extends HomeState {
   int get hashCode => amonth.hashCode;
 }
 
+class CheckFarmer extends HomeState {
+  final String message;
+  const CheckFarmer(this.message);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is CheckFarmer && o.message == message;
+  }
+
+  @override
+  int get hashCode => message.hashCode;
+}
+
 class HomeMenu extends HomeState{
   final Items items;
   const HomeMenu({this.items});

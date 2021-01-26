@@ -3,6 +3,7 @@ import 'package:AgrifoodApp/byre/page/byre_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,9 @@ import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 
 class Dashboard extends StatefulWidget {
   final BuildContext contextHome;
-  final UserInfoModel userInfoModel;
+  final FarmerInfoModel farmerInfoModel;
 
-  const Dashboard({Key key, this.contextHome, this.userInfoModel})
+  const Dashboard({Key key, this.contextHome, this.farmerInfoModel})
       : super(key: key);
   @override
   _DashboardState createState() => _DashboardState();
@@ -144,7 +145,7 @@ class _DashboardState extends State<Dashboard> {
                         MaterialPageRoute(
                             builder: (context) => UserInformation(
                                   contextHome: widget.contextHome,
-                                  userInfoModel: widget.userInfoModel,
+                                  farmerInfoModel: widget.farmerInfoModel,
                                 )),
                       );
                     });
@@ -162,7 +163,7 @@ class _DashboardState extends State<Dashboard> {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (context) => ByreCubit(ByreRepository()),
-                              child: ListByres(),
+                              child: ListByres(farmerId:widget.farmerInfoModel.id,),
                             ),
                           ));
                       // Navigator.push(widget.contextHome,
