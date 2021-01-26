@@ -12,7 +12,7 @@ import '../core/storage.dart';
 class AuthenticationRepository {
   Future<bool> authenticate({@required LoginModel loginModel}) async {
     Map rqData = loginModel.toJson();
-    var rs = await APIClient.post('api/auth/signIn', rqData);
+    var rs = await APIClient.post('api/auth/farmer/signIn', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       Storage.saveString('token', data['access_token']);

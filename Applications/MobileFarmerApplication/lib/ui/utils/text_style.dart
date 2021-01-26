@@ -45,10 +45,10 @@ class TextStyles {
 
   static const labelTextStyle = TextStyle(
     color: Palette.dark,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.bold,
     fontFamily: "HelveticaNeue",
     fontStyle: FontStyle.normal,
-    fontSize: 12.0,
+    fontSize: 15.0,
   );
 
   static const valueTextStyle = TextStyle(
@@ -56,7 +56,7 @@ class TextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: "HelveticaNeue",
     fontStyle: FontStyle.normal,
-    fontSize: 14.0,
+    fontSize: 20.0,
   );
 
   static const headerTextStyle = TextStyle(
@@ -77,9 +77,9 @@ class TextStyles {
 
   static const labelTextStylePayslip = TextStyle(
     color: Palette.dark,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.bold,
     fontFamily: "HelveticaNeue",
     fontStyle: FontStyle.normal,
-    fontSize: 14.0,
+    fontSize: 17.0,
   );
 }

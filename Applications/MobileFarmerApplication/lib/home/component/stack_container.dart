@@ -1,3 +1,4 @@
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,9 +6,9 @@ import 'top_bar.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
 class StackContainer extends StatelessWidget {
-  final UserInfoModel userInfoModel;
+  final FarmerInfoModel farmerInfoModel;
   const StackContainer({
-    Key key, this.userInfoModel
+    Key key, this.farmerInfoModel
   }) : super(key: key);
 
   @override
@@ -41,14 +42,14 @@ class StackContainer extends StatelessWidget {
                 ),
                 SizedBox(height: ScreenUtil().setHeight(20)),
                 Text(
-                  this.userInfoModel.userName,
+                  this.farmerInfoModel.name,
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(60),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  this.userInfoModel.status == true ? "Đang hoạt động" : "Ngưng hoạt động",
+                  this.farmerInfoModel.status == true ? "Đang hoạt động" : "Ngưng hoạt động",
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
                     color: Colors.grey[700],

@@ -19,10 +19,10 @@ class ByreCubit extends Cubit<ByreState> {
     }
   }
 
-  Future<void> getListByre() async {
+  Future<void> getListByreByFarmerId({int farmerId}) async {
     try {
       //emit(WeatherLoading());
-      final ByreModel byre = await _byreRepository.getAllByre();
+      final ByreModel byre = await _byreRepository.getCowByFarmerId(farmerId: farmerId);
       emit(GetListByre(byre));
     } catch (Exception) {
       emit(Exception("Kiểm tra lại kết nối của bạn"));

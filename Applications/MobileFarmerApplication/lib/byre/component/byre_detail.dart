@@ -1,8 +1,10 @@
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
+import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_cubit.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
-import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
+import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +25,11 @@ class ChapterCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(40), horizontal: ScreenUtil().setWidth(60)),
-        margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(40)),
-        width: ScreenUtil().setWidth(20),
+        padding: EdgeInsets.symmetric(
+            vertical: ScreenUtil().setHeight(40),
+            horizontal: ScreenUtil().setWidth(60)),
+        margin: EdgeInsets.only(bottom: 16),
+        width: size.width - 48,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(38.5),
@@ -39,39 +43,44 @@ class ChapterCard extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            Column(
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            "Mã ${this.byreItem.code} - ${this.byreItem.name} \n",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(60),
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+            InkWell(
+              onTap: () {
+                showToast(context: context, string: "Tap");
+              },
+              child: Column(
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "Mã ${this.byreItem.code} - ${this.byreItem.name} \n",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            "Có ${this.byreItem.quantityCow} ${this.byreItem.breedId}",
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(50),
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text:
+                              "Có ${this.byreItem.quantityCow} ${this.byreItem.breedId}",
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(50),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Spacer(),
             IconButton(
@@ -84,8 +93,13 @@ class ChapterCard extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => BlocProvider(
-                        create: (context) => CowCubit(CowRepository()),
-                        child: CowPage(),
+                        create: (context) => CowBloc(
+                            cowRepository: CowRepository(),
+                            foodSuggestionRepository:
+                                FoodSuggestionRepository()),
+                        child: CowPage(
+                          byreId: this.byreItem.id,
+                        ),
                       ),
                     ));
               },

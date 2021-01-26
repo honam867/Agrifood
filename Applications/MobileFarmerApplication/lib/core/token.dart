@@ -36,11 +36,16 @@ class Token {
     return payloadMap;
   }
 
-  static Future<Object> getFarmerId() async {
+  static Future<Object> getUserInfo() async {
     Map<String, dynamic> parseToken = await parseJwt();
     return  parseToken[
             'userInfo'].toString();
-      
+  }
+
+  static Future<Object> getFarmerInfo() async {
+    Map<String, dynamic> parseToken = await parseJwt();
+    return  parseToken[
+            'farmerinfo'].toString();
   }
 
   static Future<Object> getLoggedCustomerEmployeeId() async {

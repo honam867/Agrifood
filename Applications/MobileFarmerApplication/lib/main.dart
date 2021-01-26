@@ -88,7 +88,7 @@ class App extends StatelessWidget {
                     return HomeCubit(byreRepository);
                   },
                   child: HomePage(
-                    userInfo: state.userInfo,
+                    farmerInfoModel: state.farmerInfoModel,
                   ));
             }
             if (state is LoginFormButtonState) {
