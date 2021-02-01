@@ -1,74 +1,95 @@
-part of 'cow_cubit.dart';
+//part of 'cow_cubit.dart';
+part of 'cow_bloc.dart';
 
 
-abstract class CowState {
+abstract class CowState extends Equatable {
   const CowState();
+
+   @override
+  List<Object> get props => [];
 }
 
-class CowInitial extends CowState {
-  const CowInitial();
-}
+class CowError extends CowState {}
 
-class Result extends CowState {
-  final String message;
-  const Result(this.message);
+class CowLoadInprocess extends CowState {}
+
+class FoodSuggestionLoadInprocess extends CowState {}
+
+class FoodSuggestionLoaded extends CowState {
+  final FoodSuggestionModel foodSuggestionModel;
+
+  const FoodSuggestionLoaded([this.foodSuggestionModel ]);
 
   @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is CowError && o.message == message;
-  }
+  List<Object> get props => [foodSuggestionModel];
 
   @override
-  int get hashCode => message.hashCode;
+  String toString() => 'TodosLoadSuccess { todos: $foodSuggestionModel }';
 }
+
+class CowLoaded extends CowState {
+  final CowModel cowModel;
+
+  const CowLoaded([this.cowModel ]);
+
+  @override
+  List<Object> get props => [cowModel];
+
+  @override
+  String toString() => 'TodosLoadSuccess { todos: $cowModel }';
+}
+
+class CowDeleted extends CowState {
+  final String result;
+
+  const CowDeleted([this.result ]);
+
+  @override
+  List<Object> get props => [result];
+
+  @override
+  String toString() => 'Xóa thành công { todos: $result }';
+}
+
 
 class CowLoading extends CowState {
   const CowLoading();
 }
 
-class GetListCow extends CowState {
+class AddCowDoneLoaded extends CowState {
+  const AddCowDoneLoaded();
+}
+
+
+// class CowDeleted extends CowEvent {
+//   final String result;
+
+//   const CowDeleted(this.result);
+
+//   @override
+//   List<Object> get props => [result];
+
+//   @override
+//   String toString() => 'TodoDeleted { todo: $result }';
+// }
+
+
+
+
+class GetListCowLoaded extends CowState {
   final CowModel cowModel;
-  const GetListCow(this.cowModel);
+  const GetListCowLoaded(this.cowModel);
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is GetListCow && o.cowModel == cowModel;
+    return o is GetListCowLoaded && o.cowModel == cowModel;
   }
 
   @override
   int get hashCode => cowModel.hashCode;
 }
 
-class CowLoaded extends CowState {
-  final CowModel cowModel;
-  const CowLoaded(this.cowModel);
 
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
 
-    return o is CowLoaded && o.cowModel == cowModel;
-  }
-
-  @override
-  int get hashCode => cowModel.hashCode;
-}
-
-class CowError extends CowState {
-  final String message;
-  const CowError(this.message);
-
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
-
-    return o is CowError && o.message == message;
-  }
-
-  @override
-  int get hashCode => message.hashCode;
-}

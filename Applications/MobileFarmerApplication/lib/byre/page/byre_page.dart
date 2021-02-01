@@ -14,6 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
 
 class ListByres extends StatefulWidget {
+  final int farmerId;
+
+  const ListByres({Key key, this.farmerId}) : super(key: key);
   @override
   _ListByresState createState() => _ListByresState();
 }
@@ -37,7 +40,8 @@ class _ListByresState extends State<ListByres> {
   }
 
   void addByreFuction(BuildContext context, ByreItem byreItem) {
-    //byreItem.breedId = breedId;
+    byreItem.breedId= breedId;
+    byreItem.farmerId = widget.farmerId;
     final byreCubit = context.read<ByreCubit>();
     byreCubit.addByre(byreItem: byreItem);
   }
@@ -54,7 +58,42 @@ class _ListByresState extends State<ListByres> {
 
   void getListByre(BuildContext context) {
     final byreCubit = context.watch<ByreCubit>();
-    byreCubit.getListByre();
+    byreCubit.getListByreByFarmerId(farmerId: widget.farmerId);
+  }
+
+  _typeTrue(BuildContext contextHome) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Loại bò"),
+        content: StatefulBuilder(
+          builder: (BuildContext context, state) {
+            return DropdownButton(
+              hint: new Text("Chọn loại"),
+              items: listBreed.map((item) {
+                return DropdownMenuItem(
+                  value: item.id,
+                  child: new Text(item.name),
+                );
+              }).toList(),
+              value: breedId,
+              onChanged: (val) {
+                setState(() {
+                  changeBreed(contextHome, val);
+                  openPopupAddByre(
+                    contextHome,
+                    addByreFuction: addByreFuction,
+                    //listBreedItem: listBreed,
+                    //changeBreedFuction: changeBreed,
+                    // dropDown: builDropButton(),
+                  );
+                });
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -95,13 +134,17 @@ class _ListByresState extends State<ListByres> {
                   IconButton(
                       icon: Icon(Icons.add),
                       onPressed: () {
-                        openPopupAddByre(context,
-                            addByreFuction: addByreFuction,
-                            listBreedItem: listBreed,
-                            changeBreedFuction: changeBreed,
-                            // dropDown: builDropButton(),
-                            breedId: breedId);
-                      })
+                        _typeTrue(context);
+                      }
+                      // {
+                      //   openPopupAddByre(context,
+                      //       addByreFuction: addByreFuction,
+                      //       listBreedItem: listBreed,
+                      //       changeBreedFuction: changeBreed,
+                      //       // dropDown: builDropButton(),
+                      //       breedId: breedId);
+                      // }
+                      )
                 ],
               ),
               body: Column(
@@ -147,7 +190,6 @@ class _ListByresState extends State<ListByres> {
         break;
     }
   }
-
 
   void getListBreed() async {
     BreedModel breedModel = await byreRepository.getListBreeds();

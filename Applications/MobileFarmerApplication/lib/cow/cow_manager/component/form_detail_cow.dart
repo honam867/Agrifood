@@ -1,6 +1,12 @@
+import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/ui/utils/format.dart';
+import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
 
 class FormDetailCow extends StatefulWidget {
+  final CowItem cowItem;
+
+  const FormDetailCow({Key key, this.cowItem}) : super(key: key);
   @override
   _FormDetailCowState createState() => _FormDetailCowState();
 }
@@ -9,13 +15,13 @@ class _FormDetailCowState extends State<FormDetailCow> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF26A69A),
           title: Text('Chi tiết bò'),
           leading: IconButton(
             icon: Icon(Icons.navigate_before),
-            onPressed: (){
+            onPressed: () {
               Navigator.pop(context);
             },
           ),
@@ -31,51 +37,18 @@ class _FormDetailCowState extends State<FormDetailCow> {
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Text(
-                        //   'Tên bò:',
-                        //   style: TextStyle(
-                        //     fontSize: 20,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'Tên bò:',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              'BEN',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              'ID bò cha:',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              'BEN12345',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              ),
-                          ],
-                        ),
+                        builItem(
+                            title: "Tên bò: ", string: widget.cowItem.name),
+                        builItem(
+                            title: "Id bò cha: ",
+                            string: widget.cowItem.fatherId.toString()),
+                        builItem(
+                            title: "Chuồng: ", string: widget.cowItem.byreName ?? ""),
+                        builItem(title: "Mã bò: ", string: widget.cowItem.code),
+                        builItem(
+                            title: "Ngày cai sữa: ",
+                            string: Formator.convertDatatimeToString(
+                                widget.cowItem.weaningDate ?? DateTime.now())),
                       ],
                     ),
                   ),
@@ -94,6 +67,15 @@ class _FormDetailCowState extends State<FormDetailCow> {
         ),
       ),
     );
-      
   }
+}
+
+Widget builItem({title, string}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Text(title, style: TextStyles.labelTextStyle),
+      Text(string, style: TextStyles.valueTextStyle),
+    ],
+  );
 }

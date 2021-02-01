@@ -1,5 +1,4 @@
 import 'package:AgrifoodApp/byre/model/breed_item.dart';
-import 'package:AgrifoodApp/byre/model/breed_model.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -31,11 +30,9 @@ openPopupAddByre(BuildContext context,
     _rationController.text = byreItem.ration;
     _codeController.text = byreItem.code;
   }
-  String breedName = "Loại bò";
 
   Alert(
-      closeFunction: () =>
-          Navigator.pop(context, changeBreedFuction(context, null)),
+      closeFunction: () => Navigator.pop(context),
       context: context,
       onWillPopActive: false,
       title: update == false ? "Thêm chuồng" : "Chỉnh sửa chuồng",

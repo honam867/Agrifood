@@ -50,6 +50,7 @@ dependencies:
   flutter_slidable: ^0.5.7
   giffy_dialog: ^1.8.0
   rflutter_alert: ^1.1.0
+  flutter_datetime_picker: ^1.4.0
 
 dev_dependencies:
   flutter_test:

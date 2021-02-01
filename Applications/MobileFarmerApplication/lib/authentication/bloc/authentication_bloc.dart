@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:AgrifoodApp/core/token.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,15 +24,21 @@ class AuthenticationBloc
       final bool isValidToken = await Token.isValidToken();
       if (isValidToken) {
         //Get CustomerId
-        final Map<String, dynamic> customerId =
-            json.decode(await Token.getFarmerId());
-        UserInfoModel userInfoModel = UserInfoModel.fromJson(customerId);
-
-        //Avatar and FullName
-        // final Map<String, dynamic> customerEmployee =
-        //     json.decode(await Token.getLoggedCustomerEmployeeId());
-
-        yield AuthenticationAuthenticated(userInfo: userInfoModel);
+        // final Map<String, dynamic> userInfo =
+        //     json.decode(await Token.getUserInfo());
+        // UserInfoModel userInfoModel = UserInfoModel.fromJson(userInfo);
+        //Get FarmerInfo
+        final Map<String, dynamic> farmerInfo =
+            json.decode(await Token.getFarmerInfo());
+        if (farmerInfo != null) {
+          FarmerInfoModel farmerInfoModel =
+              FarmerInfoModel.fromJson(farmerInfo);
+          yield AuthenticationAuthenticated(
+              userInfo: null, farmerInfoModel: farmerInfoModel);
+        } else {
+          yield AuthenticationAuthenticated(
+              userInfo: null, farmerInfoModel: null);
+        }
       } else {
         yield AuthenticationUnauthenticated();
       }
@@ -43,15 +50,21 @@ class AuthenticationBloc
       yield AuthenticationLoading();
       await authenticationRepository.persistToken(event.token);
       //Get CustomerId
-      final Map<String, dynamic> customerId =
-          json.decode(await Token.getFarmerId());
-      UserInfoModel userInfoModel = UserInfoModel.fromJson(customerId);
-      print(customerId);
-      //Avatar and FullName
-      // final Map<String, dynamic> customerEmployee =
-      //     json.decode(await Token.getLoggedCustomerEmployeeId());
-
-      yield AuthenticationAuthenticated(userInfo: userInfoModel);
+      // final Map<String, dynamic> userInfo =
+      //     json.decode(await Token.getUserInfo());
+      // UserInfoModel userInfoModel = UserInfoModel.fromJson(userInfo);
+      //print(userInfo);
+      final Map<String, dynamic> farmerInfo =
+          json.decode(await Token.getFarmerInfo());
+      print(farmerInfo);
+      if (farmerInfo != null) {
+        FarmerInfoModel farmerInfoModel = FarmerInfoModel.fromJson(farmerInfo);
+        yield AuthenticationAuthenticated(
+            userInfo: null, farmerInfoModel: farmerInfoModel);
+      } else {
+        yield AuthenticationAuthenticated(
+            userInfo: null, farmerInfoModel: null);
+      }
     }
     if (event is LoggedOut) {
       yield AuthenticationLoading();
