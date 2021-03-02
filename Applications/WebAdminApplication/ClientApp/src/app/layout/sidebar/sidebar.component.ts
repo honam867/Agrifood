@@ -83,6 +83,21 @@ export const ROUTES: RouteInfo[] = [{
     ],
     icontype: 'work'
 },
+{
+  path: '/province',
+  type: 'sub',
+  title: 'Địa điểm',
+  collapse: 'province',
+  children: [
+      {
+          path: 'provincelist',
+          title: 'DANH SÁCH TỈNH THÀNH',
+          type: 'link',
+          ab: null
+      }
+  ],
+  icontype: 'satellite'
+},
 ];
 @Component({
     selector: 'app-sidebar',
