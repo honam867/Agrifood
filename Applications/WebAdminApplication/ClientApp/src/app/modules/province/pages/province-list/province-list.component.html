@@ -1,0 +1,59 @@
+<div class="containter">
+    <div class="form-setting">
+        <div class="user-filter">
+            <mat-form-field class="example-form-field">
+                <mat-label>Tìm kiếm</mat-label>
+                <input matInput (keyup)="applyFilter($event.target.value)" type="text" [(ngModel)]="value">
+                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+        <mat-icon>close</mat-icon>
+      </button>
+            </mat-form-field>
+        </div>
+        <div class="user-button">
+            <button mat-raised-button color="primary" (click)="createProvince()">Thêm tỉnh/thành</button>
+        </div>
+    </div>
+    <div class="user-list">
+        <mat-paginator [pageSizeOptions]="[10,20,50]">
+        </mat-paginator>
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên</th>
+                <td mat-cell *matCellDef="let province">{{province.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="code">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Code</th>
+                <td mat-cell *matCellDef="let province">{{province.code}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại</th>
+                <td mat-cell *matCellDef="let province">{{province.type}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef width="7%"></th>
+                <td mat-cell *matCellDef="let user" (click)="$event.stopPropagation()">
+                    <button mat-button><mat-icon>delete</mat-icon></button>
+                    <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="editUser(user)">
+            <mat-icon>edit</mat-icon>
+            <span>Chỉnh sửa</span>
+          </button>
+          <button mat-menu-item (click)="deleteUser(user)">
+            <mat-icon>delete</mat-icon>
+            <span>Xóa</span>
+          </button>
+        </mat-menu> -->
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
+            <tr mat-row class="table-row" *matRowDef="let province columns: displayedColumns;" (click)="viewDetail(province)">
+            </tr>
+        </table>
+    </div>
