@@ -35,6 +35,11 @@ const routes: Routes = [
           import('./modules/province/province.module').then(mod => mod.ProvinceModule)
       },
       {
+        path: 'food',
+        loadChildren: () =>
+          import('./modules/food/food.module').then(mod => mod.FoodModule)
+      },
+      {
         path: 'farmer',
         canLoad: [AuthGuard],
         loadChildren: () =>

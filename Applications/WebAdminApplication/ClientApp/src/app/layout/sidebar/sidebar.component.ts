@@ -98,6 +98,21 @@ export const ROUTES: RouteInfo[] = [{
   ],
   icontype: 'satellite'
 },
+{
+    path: '/food',
+    type: 'sub',
+    title: 'Thức ăn',
+    collapse: 'food',
+    children: [
+        {
+            path: 'foodlist',
+            title: 'DANH SÁCH THỨC ĂN',
+            type: 'link',
+            ab: null
+        }
+    ],
+    icontype: 'local_pizza'
+  },
 ];
 @Component({
     selector: 'app-sidebar',
