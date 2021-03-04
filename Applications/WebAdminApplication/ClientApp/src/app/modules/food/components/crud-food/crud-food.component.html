@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()" >
+        <mat-icon style="line-height: 23px;">cancel</mat-icon>
+    </button>
+    </div>
+</div>
+
+<mat-card-title class="card-header text-center" *ngIf="isView">
+    Thông tin thức ăn
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="isCreate">
+    Thêm thức ăn
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="!isView && !isCreate">
+    Chỉnh sửa thức ăn
+</mat-card-title>
+
+<mat-card>
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid " #f="ngForm">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Tên</mat-label>
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="isView">
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Loại</mat-label>
+                    <input id="type" [(ngModel)]="sourceView.type" name="type" matInput placeholder="Thức ăn" [disabled]="isView">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Code</mat-label>
+                    <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView">
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>FoodId</mat-label>
+                    <input id="foodId" [(ngModel)]="sourceView.foodId" name="foodId" matInput placeholder="FoodId" [disabled]="isView">
+                </mat-form-field>
+            </div>
+        </div>
+      
+        <div style="margin:0 auto;text-align: center;">
+            <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+            <i class="fas fa-save"></i> Thêm
+        </button>
+        </div>
+    </form>
+    <div style="margin:0 auto;text-align: center;">
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()" ><i
+            class="fas fa-trash-alt"></i> Xóa</button>
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" >Bỏ thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" >Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" >Chỉnh sửa</button>
+        <!-- <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="!isView && !isCreate" (click)="addFarmerAccount(farmer)"><i class="fas fa-window-close"></i> Gán tài khoản</button> -->
+    </div>
+</mat-card>
