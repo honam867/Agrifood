@@ -22,7 +22,7 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Tên</mat-label>
-                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="isView">
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="isView" required>
                     <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
                     </mat-error>
                 </mat-form-field>
@@ -30,18 +30,23 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Loại</mat-label>
-                    <input id="type" [(ngModel)]="sourceView.type" name="type" matInput placeholder="Tỉnh/Thành" [disabled]="isView">
+                    <div>
+                        <select matNativeControl [(ngModel)]="sourceView.type" name="type" [disabled]="isView" required>
+                    <option value="Thành Phố">Thành Phố</option>
+                    <option value="Tỉnh">Tỉnh</option>
+                  </select>
+                    </div>
                 </mat-form-field>
             </div>
         </div>
         <mat-form-field class="input-fluid" appearance="outline">
             <mat-label>Code</mat-label>
-            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView">
+            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView" required>
         </mat-form-field>
         <div style="margin:0 auto;text-align: center;">
             <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
-            <i class="fas fa-save"></i> Thêm
-        </button>
+            <mat-icon>add</mat-icon> Thêm
+          </button>
         </div>
     </form>
     <div style="margin:0 auto;text-align: center;">
