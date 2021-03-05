@@ -5,6 +5,8 @@ import { ConfirmationComponent } from 'src/app/shared/components/confirmation/co
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { FoodService } from './../../food.service';
 import { Food } from '../../models/food';
+import { Province } from 'src/app/modules/province/models/province';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-crud-food',
@@ -18,21 +20,24 @@ export class CrudFoodComponent implements OnInit {
     'action'];
   status: string;
   food: Food = new Food();
+  provinces: Province[] = [];
   isView = true;
   isCreate = true;
   loading: boolean;
+  provinceControl = new FormControl('', Validators.required);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Food = new Food();
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CrudFoodComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public FoodService: FoodService
+    public foodService: FoodService
     
   ) { }
 
 
   ngOnInit(): void {
+    this.fetchProvinces();
     this.food = this.data.food;
     if (this.data.action === StatusForm.DETELE) {
       this.delete();
@@ -49,30 +54,68 @@ export class CrudFoodComponent implements OnInit {
       disableClose: true,
     });
 
-    // deleteDialog.afterClosed().subscribe(
-    //   result => {
-    //     if (result.confirmed) {
-    //       this.ProvinceService.deleteProvince(this.province.id).subscribe(
-    //         success => {
-    //           this.dialogRef.close({
-    //             action: StatusForm.DETELE,
-    //             data: this.province,
-    //           });
-    //         }
-    //       );
-    //     }
-    //   }
-    // );
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.foodService.deleteFood(this.food.id).subscribe(
+            success => {
+              this.dialogRef.close({
+                action: StatusForm.DETELE,
+                data: this.food,
+              });
+            }
+          );
+        }
+      }
+    );
   }
   
-  edit() {
-    this.isView = false;
+  
+  create() {
+    this.foodService.createFood(this.sourceView).subscribe(
+      result => {
+        this.dialogRef.close({
+          data: result,
+        });
+      }
+    );
   }
   close() {
     this.dialogRef.close({
       action: StatusForm.VIEW,
       data: this.food,
     });
+  }
+
+  edit() {
+    this.isView = false;
+  }
+
+  discard() {
+    this.isView = true;
+    this.sourceView = this.food;
+  }
+
+  save() {
+    this.loading = true;
+    this.foodService.updateFood(this.food.id, this.sourceView).subscribe(
+      result => {
+        this.isView = true;
+        this.loading = false;
+        this.food = this.sourceView;
+      }
+    );
+  }
+
+  fetchProvinces() {
+    this.foodService.getProvinces().subscribe(
+      res => {
+        this.provinces = res;
+        console.log(this.provinces);
+        // this.dataSource = new MatTableDataSource(this.foods);
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
+      });
   }
 
 
