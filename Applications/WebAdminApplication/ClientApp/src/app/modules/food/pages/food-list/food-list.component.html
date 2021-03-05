@@ -18,7 +18,7 @@
         </mat-paginator>
         <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên thức ăn</th>
                 <td mat-cell *matCellDef="let food">{{food.name}}</td>
             </ng-container>
 
@@ -28,19 +28,25 @@
             </ng-container>
 
             <ng-container matColumnDef="type">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại thức ăn</th>
                 <td mat-cell *matCellDef="let food">{{food.type}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="province">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Thành phố</th>
+                <td mat-cell *matCellDef="let food">{{food.provinceName}}</td>
             </ng-container>
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef width="7%"></th>
-                <td mat-cell *matCellDef="let food" (click)="$event.stopPropagation()">
+                <td mat-cell *matCellDef="let user" (click)="$event.stopPropagation()">
                     <button mat-button><mat-icon>delete</mat-icon></button>
+                  
                 </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
-            <tr mat-row class="table-row" *matRowDef="let food columns: displayedColumns;">
+            <tr mat-row class="table-row" *matRowDef="let food columns: displayedColumns;" (click)="viewDetail(food)">
             </tr>
         </table>
     </div>

@@ -3,14 +3,14 @@ export class Food {
     name: string;
     code: string;
     type: string;
-    foodId:number;
+    provinceId:number;
 
     constructor() {
      this.id =0;
      this.name="";
      this.code="";
      this.type="";
-     this.foodId=0;
+     this.provinceId=0;
     }
   }
   
