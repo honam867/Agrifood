@@ -1,6 +1,8 @@
+import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
+import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -11,8 +13,9 @@ part 'cow_state.dart';
 class CowBloc extends Bloc<CowEvent, CowState> {
   final CowRepository cowRepository;
   final FoodSuggestionRepository foodSuggestionRepository;
+  final ByreRepository byreRepository;
 
-  CowBloc({this.cowRepository, this.foodSuggestionRepository})
+  CowBloc({this.cowRepository, this.foodSuggestionRepository, this.byreRepository})
       : super(CowLoadInprocess());
 
   @override
@@ -70,7 +73,11 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     try {
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
-      yield FoodSuggestionLoaded(foodSuggestionModel);
+      final byreModel =
+          await this.foodSuggestionRepository.getAllByre();
+          final cowModel =
+          await this.cowRepository.getAllCow();
+      yield FoodSuggestionLoaded(foodSuggestionModel, byreModel, cowModel);
     } catch (_) {
       yield CowError();
     }

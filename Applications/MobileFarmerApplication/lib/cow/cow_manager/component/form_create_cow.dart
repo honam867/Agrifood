@@ -1,3 +1,4 @@
+import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/build_birthday.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/build_gender_cow.dart';
@@ -9,16 +10,16 @@ import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
+import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormCreateCow extends StatefulWidget {
-  final CowModel cowModel;
-  final int byreId;
   final BuildContext contextCowPage;
+  final String routeName;
 
-  FormCreateCow({Key key, this.cowModel, this.byreId, this.contextCowPage})
+  FormCreateCow({Key key, this.contextCowPage, this.routeName})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -29,10 +30,12 @@ class FormCreateCow extends StatefulWidget {
 class FormCreateCowState extends State<FormCreateCow> {
   String _namecow, gender = "Đực";
   DateTime _birthday;
-  int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId;
+  int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId, byreId;
   FoodSuggestionModel foodSuggestionModelName;
   CowModel cowModelName;
+  CowModel cowModel = new CowModel();
   FoodSuggestionModel foodSuggestionModel = new FoodSuggestionModel();
+  ByreModel byreModel = new ByreModel();
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
@@ -41,6 +44,8 @@ class FormCreateCowState extends State<FormCreateCow> {
     setState(() {
       if (title == "Thức ăn") {
         foodSuggestionId = value;
+      } else if (title == "Chuồng") {
+        byreId = value;
       } else {
         if (title == "Bò cha") {
           cowFatherId = value;
@@ -51,7 +56,7 @@ class FormCreateCowState extends State<FormCreateCow> {
     });
   }
 
-   changDateTime({DateTime dateTime}) {
+  changDateTime({DateTime dateTime}) {
     setState(() {
       _birthday = dateTime;
     });
@@ -83,7 +88,8 @@ class FormCreateCowState extends State<FormCreateCow> {
       listener: (context, state) {
         if (state is CowLoaded) {
           showToast(context: context, string: "Tạo thành công ");
-          reloadCow(context: context, byreId: widget.byreId);
+          reloadCow(
+              context: context, byreId: byreId, routeName: widget.routeName);
         }
       },
       builder: (context, state) {
@@ -92,21 +98,14 @@ class FormCreateCowState extends State<FormCreateCow> {
         }
         if (state is FoodSuggestionLoaded) {
           foodSuggestionModel = state.foodSuggestionModel;
+          byreModel = state.byreModel;
+          cowModel = state.cowModel;
+
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: Color(0xFF26A69A),
+                backgroundColor: colorApp,
                 title: Text('Tạo bò'),
-                actions: <Widget>[
-                  IconButton(
-                      icon: Icon(Icons.navigate_next),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CowsPage()));
-                      }),
-                ],
               ),
               body: Container(
                 margin: EdgeInsets.all(24),
@@ -137,9 +136,14 @@ class FormCreateCowState extends State<FormCreateCow> {
                               foodSuggestionModel: this.foodSuggestionModel,
                               foodSuggestionId: foodSuggestionId,
                               changeValueFuction: changeValue),
+                          buildIdFather(
+                              title: "Chuồng",
+                              byreModel: this.byreModel,
+                              byreId: byreId,
+                              changeValueFuction: changeValue),
                         ],
                       ),
-                      widget.cowModel.cowItem.length > 0
+                      cowModel.cowItem.length > 0
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -147,17 +151,19 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 buildIdFather(
                                     title: "Bò cha",
                                     cowFatherId: cowFatherId,
-                                    cowModel: widget.cowModel,
+                                    cowModel: cowModel,
                                     changeValueFuction: changeValue),
                                 buildIdFather(
                                     title: "Bò mẹ",
-                                    cowModel: widget.cowModel,
+                                    cowModel: cowModel,
                                     changeValueFuction: changeValue,
                                     cowMotherId: cowMotherId)
                               ],
                             )
                           : Container(),
-                      BuildBirth(selectDateFunction: changDateTime,),
+                      BuildBirth(
+                        selectDateFunction: changDateTime,
+                      ),
                       buildGender(
                           selectedRadio: selectedRadio,
                           selectRadioFunction: setSelectedRadio),
@@ -183,7 +189,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                           onPressed: () {
                             CowItem cowItem = new CowItem(
                                 gender: gender,
-                                byreId: widget.byreId,
+                                byreId: byreId,
                                 code: _codeController.text,
                                 birthday:
                                     DateTime.parse(_birthday.toIso8601String()),

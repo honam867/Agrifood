@@ -1,7 +1,11 @@
+import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CowCard extends StatelessWidget {
@@ -89,9 +93,18 @@ class CowCard extends StatelessWidget {
               ),
               onPressed: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => FormDetailCow(cowItem: this.cowItem,)),
-                );
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider(
+                        create: (context) => CowBloc(
+                            cowRepository: CowRepository(),
+                            foodSuggestionRepository:
+                                FoodSuggestionRepository()),
+                        child: FormDetailCow(
+                          cowItem: this.cowItem,
+                        ),
+                      ),
+                    ));
               },
             )
           ],

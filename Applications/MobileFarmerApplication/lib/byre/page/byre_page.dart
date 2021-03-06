@@ -61,7 +61,7 @@ class _ListByresState extends State<ListByres> {
     byreCubit.getListByreByFarmerId(farmerId: widget.farmerId);
   }
 
-  _typeTrue(BuildContext contextHome) {
+  typeTrue(BuildContext contextHome) {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -134,7 +134,7 @@ class _ListByresState extends State<ListByres> {
                   IconButton(
                       icon: Icon(Icons.add),
                       onPressed: () {
-                        _typeTrue(context);
+                        typeTrue(context);
                       }
                       // {
                       //   openPopupAddByre(context,

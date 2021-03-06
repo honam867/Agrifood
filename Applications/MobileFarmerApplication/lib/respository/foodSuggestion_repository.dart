@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import '../core/api_client.dart';
@@ -10,6 +11,16 @@ class FoodSuggestionRepository {
       FoodSuggestionModel foodSuggestionModel =
           FoodSuggestionModel.fromJson(jsonRs);
       return foodSuggestionModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<ByreModel> getAllByre() async {
+    try {
+      List<dynamic> jsonRs = await APIClient.getList("api/byre");
+      ByreModel byreModel = ByreModel.fromJson(jsonRs);
+      return byreModel;
     } catch (error) {
       throw error;
     }

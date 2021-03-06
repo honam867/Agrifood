@@ -1,16 +1,19 @@
 import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
 import 'package:AgrifoodApp/byre/page/byre_page.dart';
+import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
+import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
+import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 
 class Dashboard extends StatefulWidget {
   final BuildContext contextHome;
@@ -85,7 +88,9 @@ class _DashboardState extends State<Dashboard> {
       child: GridView.count(
           controller: controller,
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: ScreenUtil().setWidth(40), right: ScreenUtil().setWidth(40)),
+          padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(40),
+              right: ScreenUtil().setWidth(40)),
           crossAxisCount: 2,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
@@ -94,7 +99,8 @@ class _DashboardState extends State<Dashboard> {
                 child: Container(
                   decoration: BoxDecoration(
                       color: Color(color),
-                      borderRadius: BorderRadius.circular(ScreenUtil().setSp(80))),
+                      borderRadius:
+                          BorderRadius.circular(ScreenUtil().setSp(80))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -153,9 +159,16 @@ class _DashboardState extends State<Dashboard> {
                   } else if (data.title == "Quản lí bò") {
                     setState(() {
                       Navigator.push(
-                        widget.contextHome,
-                        MaterialPageRoute(builder: (context) => CowsPage()),
-                      );
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => CowBloc(
+                                  cowRepository: CowRepository(),
+                                  foodSuggestionRepository:
+                                      FoodSuggestionRepository()),
+                              child: CowPage(),
+                            ),
+                          ));
                     });
                   } else if (data.title == "Quản lí chuồng") {
                     setState(() {
@@ -164,14 +177,11 @@ class _DashboardState extends State<Dashboard> {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (context) => ByreCubit(ByreRepository()),
-                              child: ListByres(farmerId:widget.farmerInfoModel.id,),
+                              child: ListByres(
+                                farmerId: widget.farmerInfoModel.id,
+                              ),
                             ),
                           ));
-                      // Navigator.push(widget.contextHome,
-
-                      //   MaterialPageRoute(
-                      //       builder: (context) => ListByres()),
-                      // );
                     });
                   } else {
                     showToast(
