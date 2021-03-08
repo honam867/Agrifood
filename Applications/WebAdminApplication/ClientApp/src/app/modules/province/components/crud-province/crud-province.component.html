@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()">
+        <mat-icon style="line-height: 23px;">cancel</mat-icon>
+    </button>
+    </div>
+</div>
+
+<mat-card-title class="card-header text-center" *ngIf="isView">
+    Thông tin tỉnh thành
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="isCreate">
+    Thêm tỉnh thành
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="!isView && !isCreate">
+    Chỉnh sửa thông tin tỉnh thành
+</mat-card-title>
+
+<mat-card>
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Tên</mat-label>
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="isView" required>
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Loại</mat-label>
+                    <div>
+                        <select matNativeControl [(ngModel)]="sourceView.type" name="type" [disabled]="isView" required>
+                    <option value="Thành Phố">Thành Phố</option>
+                    <option value="Tỉnh">Tỉnh</option>
+                  </select>
+                    </div>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field class="input-fluid" appearance="outline">
+            <mat-label>Code</mat-label>
+            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView" required>
+        </mat-form-field>
+        <div style="margin:0 auto;text-align: center;">
+            <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+            <mat-icon>add</mat-icon> Thêm
+          </button>
+        </div>
+    </form>
+    <div style="margin:0 auto;text-align: center;">
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
+            class="fas fa-trash-alt"></i> Xóa</button>
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh sửa</button>
+    </div>
+</mat-card>
