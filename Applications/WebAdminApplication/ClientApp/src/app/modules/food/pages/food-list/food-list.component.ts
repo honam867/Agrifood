@@ -55,7 +55,6 @@ export class FoodListComponent implements OnInit {
       },
       disableClose: true,
     });
-
     viewDialog.afterClosed().subscribe(
       result => {
         this.afterClose(result);
