@@ -22,8 +22,7 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Tên</mat-label>
-                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput
-                        placeholder="Tên" [disabled]="isView">
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="isView">
                     <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
                     </mat-error>
                 </mat-form-field>
@@ -31,14 +30,13 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Loại</mat-label>
-                    <input id="type" [(ngModel)]="sourceView.type" name="type" matInput placeholder="Tỉnh/Thành"
-                        [disabled]="isView">
+                    <input id="type" [(ngModel)]="sourceView.type" name="type" matInput placeholder="Tỉnh/Thành" [disabled]="isView">
                 </mat-form-field>
             </div>
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-select [ngModelOptions]="{ standalone: true }" name="provinceId"
-                        [(ngModel)]="sourceView.provinceId" [disabled]="isView">
+                    <h6 style="color: grey;">Tỉnh</h6>
+                    <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="sourceView.provinceId" [placeholder]="sourceView.provinceName" id="provinceId" name="provinceId" [disabled]="isView">
                         <mat-option *ngFor="let province of provinces" [value]="province.id">{{province.name}}
                         </mat-option>
                     </mat-select>
@@ -47,8 +45,7 @@
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Code</mat-label>
-                    <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder=""
-                        [disabled]="isView">
+                    <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="" [disabled]="isView">
                 </mat-form-field>
             </div>
         </div>
@@ -65,10 +62,8 @@
     <div style="margin:0 auto;text-align: center;">
         <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
                 class="fas fa-trash-alt"></i> Xóa</button>
-        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate"
-            (click)="discard()">Bỏ thay đổi</button>
-        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate"
-            (click)="save()">Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
         <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh
             sửa</button>
     </div>
