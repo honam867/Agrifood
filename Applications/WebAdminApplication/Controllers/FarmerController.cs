@@ -92,5 +92,20 @@ namespace WebAdminApplication.Controllers
             }
         }
 
+        [Route("userId/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFarmerByUserIdAsync(int id)
+        {
+            try
+            {
+                return Ok(await _FarmerService.GetFarmerByUserIdAsync(id));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+        }
+
     }
 }

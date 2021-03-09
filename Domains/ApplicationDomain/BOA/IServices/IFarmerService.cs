@@ -14,5 +14,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateFarmerAsync(int id, FarmerModelRq model, UserIdentity<int> issuer);
         Task<bool> DeleteFarmerAsync(int id);
         Task<bool> CheckCodeExistsAsync(string code);
+        Task<FarmerModel> GetFarmerByUserIdAsync(int id);
     }
 }

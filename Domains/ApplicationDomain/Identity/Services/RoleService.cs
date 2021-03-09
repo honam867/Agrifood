@@ -172,6 +172,6 @@ namespace ApplicationDomain.Identity.Services
             return await _roleRepository.GetRoleQuotationCommerceAsync();
         }
 
-      
+        
     }
 }

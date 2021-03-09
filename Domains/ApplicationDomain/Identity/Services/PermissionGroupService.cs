@@ -19,7 +19,7 @@ namespace ApplicationDomain.Identity.Services
         private IPermissionGroupRepository _permissionGroupRepository;
         private IPermissionMembershipRepository _permissionMembershipRepository;
         private IMenuPermissionRepository _menuPermissionRepository;
-
+        private IFarmerPermissionRepository _farmerPermissionRepository;
 
         public PermissionGroupService(
 
@@ -27,15 +27,15 @@ namespace ApplicationDomain.Identity.Services
             IUnitOfWork uow,
             IPermissionGroupRepository permissionGroupRepository,
             IPermissionMembershipRepository permissionMembershipRepository,
-            IMenuPermissionRepository menuPermissionRepository
-
+            IMenuPermissionRepository menuPermissionRepository,
+            IFarmerPermissionRepository farmerPermissionRepository
             ) : base(mapper, uow)
         {
 
             _permissionGroupRepository = permissionGroupRepository;
             _permissionMembershipRepository = permissionMembershipRepository;
             _menuPermissionRepository = menuPermissionRepository;
-       
+            _farmerPermissionRepository = farmerPermissionRepository;
         }
 
         public async Task<int> CreatePermissionGroup(PermissionGroupDetailRq permissionGroupDetailRq)
@@ -43,12 +43,20 @@ namespace ApplicationDomain.Identity.Services
             int createdPermissionGroupId = await CreatePermissionGroupDetailAsync(new PermissionGroup(permissionGroupDetailRq.Name, permissionGroupDetailRq.Description));
 
             await AddMemberToPermissionGroupAsync(createdPermissionGroupId, permissionGroupDetailRq.Users);
+            GrantFarmerPermissionToGroup(createdPermissionGroupId, permissionGroupDetailRq.farmerPermission);
+            //GrantMenuPermissionToGroup(createdPermissionGroupId, permissionGroupDetailRq.MenuPms);
 
-            GrantMenuPermissionToGroup(createdPermissionGroupId, permissionGroupDetailRq.MenuPms);
-     
             await _uow.SaveChangesAsync();
 
             return createdPermissionGroupId;
+        }
+
+        private void GrantFarmerPermissionToGroup(int permissionGroupId, FarmerPermissionModel farmerPermissionModelRq)
+        {
+            FarmerPermission farmerPermission = new FarmerPermission();
+            _mapper.Map(farmerPermissionModelRq, farmerPermission);
+            farmerPermission.PermissionGroupId = permissionGroupId;
+            _farmerPermissionRepository.Create(farmerPermission);
         }
 
         public async Task<IEnumerable<PermissionGroup>> GetPermissionGroups()
@@ -76,13 +84,13 @@ namespace ApplicationDomain.Identity.Services
             );
             await _permissionMembershipRepository.CreateRangeAsync(permissionMemberships);
         }
-        private void GrantMenuPermissionToGroup(int permissionGroupId, MenuPermissionModel menuPermissionRq)
-        {
-            MenuPermission menuPermission = new MenuPermission();
-            _mapper.Map(menuPermissionRq, menuPermission);
-            menuPermission.PermissionGroupId = permissionGroupId;
-            _menuPermissionRepository.Create(menuPermission);
-        }
+        //private void GrantMenuPermissionToGroup(int permissionGroupId, MenuPermissionModel menuPermissionRq)
+        //{
+        //    MenuPermission menuPermission = new MenuPermission();
+        //    _mapper.Map(menuPermissionRq, menuPermission);
+        //    menuPermission.PermissionGroupId = permissionGroupId;
+        //    _menuPermissionRepository.Create(menuPermission);
+        //}
      
 
         public async Task<PermissionGroupDetailModel> GetPermissionGroupById(int id)
@@ -95,7 +103,7 @@ namespace ApplicationDomain.Identity.Services
                 result.Name = permissionGroup.Name;
                 result.Description = permissionGroup.Description;
                 result.Users = await _permissionMembershipRepository.GetAllMemberByPermissionGroupId(id).Cast<PermissionMembership>().Select(p => p.UserId).ToListAsync();
-                result.MenuPms = await _menuPermissionRepository.GetMenuPermissionByPermissionGroupId(id).MapQueryTo<MenuPermissionModel>(_mapper).FirstOrDefaultAsync();
+                result.FarmerPermission = await _farmerPermissionRepository.GetFarmerPmsByPermissionGroupId(id).MapQueryTo<FarmerPermissionModel>(_mapper).FirstOrDefaultAsync();
                 return result;
             }
             catch (Exception ex)
@@ -111,9 +119,9 @@ namespace ApplicationDomain.Identity.Services
             {
                 var permissionGroup = await _permissionGroupRepository.GetEntityByIdAsync(id);
                 var permissionMembership = await _permissionMembershipRepository.GetAllMemberByPermissionGroupId(permissionGroup.Id).Cast<PermissionMembership>().ToListAsync();
-                var menuPms = _menuPermissionRepository.GetMenuPermissionByPermissionGroupId(permissionGroup.Id).Cast<MenuPermission>().FirstOrDefault();
-                if (menuPms != null) _menuPermissionRepository.Delete(menuPms);
-
+                //var menuPms = _menuPermissionRepository.GetMenuPermissionByPermissionGroupId(permissionGroup.Id).Cast<MenuPermission>().FirstOrDefault();
+                var farmerPermission = await _farmerPermissionRepository.GetFarmerPmsByPermissionGroupId(id).Cast<FarmerPermission>().FirstOrDefaultAsync();
+                if (farmerPermission != null) _farmerPermissionRepository.Delete(farmerPermission);
                 if (_uow.SaveChangesAsync().Result > 0)
                 {
                     await _permissionGroupRepository.DeleteAsync(permissionGroup.Id);
@@ -136,11 +144,13 @@ namespace ApplicationDomain.Identity.Services
 
                 var permissionGroup = await _permissionGroupRepository.GetEntityByIdAsync(id);
                 var permissionMembership = await _permissionMembershipRepository.GetAllMemberByPermissionGroupId(permissionGroup.Id).Cast<PermissionMembership>().ToListAsync();
-                var menuPms = _menuPermissionRepository.GetMenuPermissionByPermissionGroupId(permissionGroup.Id).Cast<MenuPermission>().FirstOrDefault();
-           
-                _mapper.Map(permissionGroupDetailRq.MenuPms, menuPms);
-                _menuPermissionRepository.Update(menuPms);
+                var farmerPermission = await _farmerPermissionRepository.GetFarmerPmsByPermissionGroupId(id).Cast<FarmerPermission>().FirstOrDefaultAsync();
+                _mapper.Map(permissionGroupDetailRq.farmerPermission, farmerPermission);
+                //var menuPms = _menuPermissionRepository.GetMenuPermissionByPermissionGroupId(permissionGroup.Id).Cast<MenuPermission>().FirstOrDefault();
 
+                //_mapper.Map(permissionGroupDetailRq.MenuPms, menuPms);
+                //_menuPermissionRepository.Update(menuPms);
+                _farmerPermissionRepository.Update(farmerPermission);
                 permissionMembership.ForEach(pm =>
                 {
                     if (!permissionGroupDetailRq.Users.Contains(pm.UserId))

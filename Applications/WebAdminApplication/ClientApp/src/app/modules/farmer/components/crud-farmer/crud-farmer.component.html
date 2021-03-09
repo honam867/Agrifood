@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse " style="top: -15px">
+        <button class="fix-button" mat-icon-button (click)="close()">
+            <mat-icon style="line-height: 23px;">cancel</mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-card-title class="card-header text-center fix-title" *ngIf="isView">
+    Thông tin hộ nông dân
+    <!-- <button mat-icon-button *ngIf="isView" (click)="edit()" matTooltip="Chỉnh sửa">
+        <mat-icon>edit</mat-icon>
+    </button> -->
+</mat-card-title>
+<mat-card-title class="card-header text-center fix-title" style="margin-top: -24px;" *ngIf="isCreate">
+    Thêm nông dân
+</mat-card-title>
+<mat-card-title class="card-header text-center fix-title" *ngIf="!isView && !isCreate">
+    Chỉnh sửa thông tin hộ nông dân
+</mat-card-title>
+<form class="fix-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+    <div class="row">
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Tên</mat-label>
+                <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tên" [disabled]="!isCreate">
+                <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tên không được bỏ trống
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Họ Tên</mat-label>
+                <input id="fullName" [(ngModel)]="sourceView.fullName" name="fullName" matInput placeholder="Họ Tên" [disabled]="isView">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Code</mat-label>
+                <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView">
+            </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Địa chỉ</mat-label>
+                <input id="address" [(ngModel)]="sourceView.address" name="address" matInput placeholder="Địa chỉ" [disabled]="isView">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Ngày sinh</mat-label>
+                <input matInput [matDatepicker]="picker2" [(ngModel)]="sourceView.birthday" [disabled]="isView" [ngModelOptions]="{ standalone: true }" />
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Ngày ký hợp đồng</mat-label>
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="sourceView.contractCreatetionDate" [disabled]="isView" [ngModelOptions]="{ standalone: true }" />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Tỉnh/Thành phố</mat-label>
+                <mat-select [(ngModel)]="sourceView.provinceId" name="provinceId" [disabled]="isView" #provinceId="ngModel" (selectionChange)="getDistrict(sourceView.provinceId)">
+                    <mat-option>---</mat-option>
+                    <mat-option *ngFor="let province of provinces" [value]="province.id">{{ province.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Quận/huyện</mat-label>
+                <mat-select [(ngModel)]="sourceView.districtId" name="districtId" [disabled]="isView" #districtId="ngModel">
+                    <mat-option>---</mat-option>
+                    <mat-option *ngFor="let districName of districts" [value]="districName.id">{{ districName.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <mat-label>Giới tính</mat-label>
+            <div>
+                <mat-radio-group [ngModelOptions]="{ standalone: true }" name="gender" [(ngModel)]="sourceView.gender" [disabled]="isView">
+                    <mat-radio-button [value]="true">Nam</mat-radio-button>
+                    <mat-radio-button [value]="false">Nữ</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <mat-label>Trạng thái</mat-label>
+            <div>
+                <mat-radio-group [ngModelOptions]="{ standalone: true }" name="isBlock" [(ngModel)]="sourceView.isBlock" [disabled]="isView">
+                    <mat-radio-button [value]="true">Khóa</mat-radio-button>
+                    <mat-radio-button [value]="false">Chưa khóa</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <mat-form-field class="input-fluid" appearance="outline">
+                <mat-label>Số điện thoại</mat-label>
+                <input id="phoneNumber" [(ngModel)]="sourceView.phoneNumber" name="phoneNumber" matInput placeholder="Số điện thoại" [disabled]="isView">
+            </mat-form-field>
+        </div>
+    </div>
+    <div style="margin:0 auto;text-align: center;">
+        <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+        <mat-icon>add</mat-icon> Thêm
+      </button>
+    </div>
+</form>
+<div style="margin:0 auto;text-align: center;">
+    <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()">Xóa</button>
+    <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="isView" (click)="edit()">Chỉnh sửa</button>
+    <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="addFarmerAccount(farmer)">Gán tài khoản</button>
+    <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+    <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
+</div>

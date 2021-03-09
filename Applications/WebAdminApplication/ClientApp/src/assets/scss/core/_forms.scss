@@ -403,11 +403,11 @@ fieldset[disabled] .form-group .form-control{
     }
   }
 }
-.ng-invalid{
-  &.mat-focused .mat-form-field-label{
-    color: #f44336;
-  }
-}
+// .ng-invalid{
+//   &.mat-focused .mat-form-field-label{
+//     color: #f44336;
+//   }
+// }
 form .ng-valid{
   &.mat-focused .mat-form-field-label,
   .mat-focused .mat-form-field-label,

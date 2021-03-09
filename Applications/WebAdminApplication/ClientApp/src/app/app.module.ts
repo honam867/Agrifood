@@ -21,6 +21,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HttpService } from './shared/services/http.service';
 import { CurrencyPipe } from '@angular/common';
 import { KeyboardShortcutsModule } from 'ng-keyboard-shortcuts';
+import { ErrorPagesComponent } from './layout/error-pages/error-pages.component';
 
 export function setupTranslateFactory(service: TranslateService) {
   return () => {
@@ -57,6 +58,7 @@ const INTERNAL_SERVICE = [
     SidebarComponent,
     ContentComponent,
     FooterComponent,
+    ErrorPagesComponent,
   ],
   imports: [
     MAIN_MODULE,

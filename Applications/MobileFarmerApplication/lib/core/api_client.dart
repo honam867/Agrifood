@@ -7,7 +7,10 @@ import 'storage.dart';
 
 class APIClient {
   //http://192.168.1.199:5000/
-  static const baseUrl = 'http://192.168.1.199:5000/';
+  //static const baseUrl = 'http://192.168.1.199:5000/';
+  //static const baseUrl = 'http://localhost:63646/';
+
+  static const baseUrl = 'http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/';
 
   static Future<Map<String, String>> addHeader() async {
     Map<String, String> header = {

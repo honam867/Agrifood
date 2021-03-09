@@ -122,5 +122,10 @@ namespace ApplicationDomain.CMMS.Services
         //        throw e;
         //    }
         //}
+
+        public async Task<FarmerModel> GetFarmerByUserIdAsync(int id)
+        {
+            return await _FarmerRepository.GetFarmerByUser(id).MapQueryTo<FarmerModel>(_mapper).FirstOrDefaultAsync();
+        }
     }
 }

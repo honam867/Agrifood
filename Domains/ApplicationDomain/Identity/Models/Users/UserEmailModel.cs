@@ -17,8 +17,11 @@ namespace ApplicationDomain.Identity.Models
         public DateTimeOffset CreatedDate { get; set; }
         public string CreatedByUserName { set; get; }
         public DateTimeOffset UpdatedDate { get; set; }
-        public string UpdatedByUserName { set; get; }       
+        public string UpdatedByUserName { set; get; }
+        public List<string> Roles { get; set; }
+
     }
+
 
     public class UserModelMapper : Profile
     {

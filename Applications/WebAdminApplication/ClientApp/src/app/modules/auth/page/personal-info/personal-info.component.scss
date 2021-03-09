@@ -1,0 +1,14 @@
+.spinner {
+    position: absolute;
+    top: 1;
+    bottom: 1;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    display: inline-block;
+    position: relative;
+}
