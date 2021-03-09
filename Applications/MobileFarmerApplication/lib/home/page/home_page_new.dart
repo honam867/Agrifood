@@ -17,7 +17,7 @@ import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin<MyHomePage> {
   // @override
   // bool get wantKeepAlive => true;
- 
+
   ScrollController controller = ScrollController();
   TabController _tabController;
   int _selectedIndex = 0;
@@ -44,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage>
   List<BreedItem> listBreed = List<BreedItem>();
   int breedId;
   String breedName;
-  
 
   bool closeTopContainer = false;
   double topContainer = 0;
@@ -55,26 +54,27 @@ class _MyHomePageState extends State<MyHomePage>
     BreedModel breedModel = await byreRepository.getListBreeds();
     listBreed = breedModel.breedItem;
   }
+
   List<Widget> list = [
     Tab(
       child: Text(
-              "Danh mục",
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenUtil().setSp(60),
-                      fontWeight: FontWeight.w600)),
-            ),
+        "Danh mục",
+        style: GoogleFonts.openSans(
+            textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: ScreenUtil().setSp(60),
+                fontWeight: FontWeight.w600)),
+      ),
     ),
     Tab(
-      child:Text(
-              "Chuòng",
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenUtil().setSp(60),
-                      fontWeight: FontWeight.w600)),
-            ),
+      child: Text(
+        "Chuòng",
+        style: GoogleFonts.openSans(
+            textStyle: TextStyle(
+                color: Colors.black,
+                fontSize: ScreenUtil().setSp(60),
+                fontWeight: FontWeight.w600)),
+      ),
     ),
   ];
 
@@ -150,9 +150,7 @@ class _MyHomePageState extends State<MyHomePage>
         topContainer = value;
         closeTopContainer = controller.offset > 50;
       });
-      
     });
-    
   }
 
   void checkAmountByreFirst(BuildContext context) {

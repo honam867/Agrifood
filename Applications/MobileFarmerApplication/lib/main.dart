@@ -70,7 +70,7 @@ class App extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(1080, 2340),
       allowFontScaling: false,
-      child: MaterialApp(
+      builder: () => MaterialApp(
         title: 'Agrifood App',
         theme: ThemeData(
           scaffoldBackgroundColor: Palette.white,

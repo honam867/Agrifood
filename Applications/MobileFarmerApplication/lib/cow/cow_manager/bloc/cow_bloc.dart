@@ -15,7 +15,8 @@ class CowBloc extends Bloc<CowEvent, CowState> {
   final FoodSuggestionRepository foodSuggestionRepository;
   final ByreRepository byreRepository;
 
-  CowBloc({this.cowRepository, this.foodSuggestionRepository, this.byreRepository})
+  CowBloc(
+      {this.cowRepository, this.foodSuggestionRepository, this.byreRepository})
       : super(CowLoadInprocess());
 
   @override
@@ -73,10 +74,8 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     try {
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
-      final byreModel =
-          await this.foodSuggestionRepository.getAllByre();
-          final cowModel =
-          await this.cowRepository.getAllCow();
+      final byreModel = await this.foodSuggestionRepository.getAllByre();
+      final cowModel = await this.cowRepository.getAllCow();
       yield FoodSuggestionLoaded(foodSuggestionModel, byreModel, cowModel);
     } catch (_) {
       yield CowError();
@@ -84,13 +83,14 @@ class CowBloc extends Bloc<CowEvent, CowState> {
   }
 
   Stream<CowState> _mapTodoUpdatedToState(CowUpdated event) async* {
-    // if (state is CowLoaded) {
-    //   // final CowModel updatedTodos = (state as TodosLoadSuccess).todos.map((todo) {
-    //     return todo.id == event.updatedTodo.id ? event.updatedTodo : todo;
-    //   }).toList();
-    //   yield TodosLoadSuccess(updatedTodos);
-    //   _saveTodos(updatedTodos);
-    // }
+    final result = await this
+        .cowRepository
+        .updateCow(event.cowItem.id, cowItem: event.cowItem);
+    if (result == true) {
+      yield CowUpdateResult("Cập nhật thành công");
+    } else {
+      yield CowUpdateResult("Cập nhật thất bại");
+    }
   }
 
   Future _saveCow(CowModel cow) {

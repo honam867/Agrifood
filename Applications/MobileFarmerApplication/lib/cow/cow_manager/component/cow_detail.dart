@@ -53,6 +53,7 @@ class CowCard extends StatelessWidget {
                     fit: BoxFit.fill),
               ),
             ),
+            Container(height: 80, child: VerticalDivider(color: Colors.black)),
             Column(
               children: [
                 RichText(
@@ -69,6 +70,9 @@ class CowCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                Container(
+                    width: MediaQuery.of(context).size.width / 3,
+                    child: Divider(color: Colors.transparent)),
                 RichText(
                   text: TextSpan(
                     children: [

@@ -7,19 +7,20 @@ import 'package:AgrifoodApp/cow/cow_manager/component/dropdown_mother_father_cow
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
-import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
+import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FormCreateCow extends StatefulWidget {
   final BuildContext contextCowPage;
+  final CowItem cowItem;
   final String routeName;
 
-  FormCreateCow({Key key, this.contextCowPage, this.routeName})
+  FormCreateCow({Key key, this.contextCowPage, this.routeName, this.cowItem})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -28,7 +29,7 @@ class FormCreateCow extends StatefulWidget {
 }
 
 class FormCreateCowState extends State<FormCreateCow> {
-  String _namecow, gender = "Đực";
+  String _namecow, gender = "Đực", birthdayString;
   DateTime _birthday;
   int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId, byreId;
   FoodSuggestionModel foodSuggestionModelName;
@@ -39,6 +40,21 @@ class FormCreateCowState extends State<FormCreateCow> {
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
+
+  void initState() {
+    super.initState();
+    if (widget.routeName == "EditCow") {
+      foodSuggestionId = widget.cowItem.foodSuggestionId;
+      cowFatherId = widget.cowItem.fatherId;
+      cowMotherId = widget.cowItem.motherId;
+      byreId = widget.cowItem.byreId;
+      _birthday = widget.cowItem.birthday;
+      _nameController.text = widget.cowItem.name;
+      _codeController.text = widget.cowItem.code;
+      birthdayString =
+          Formator.convertDatatimeToString(widget.cowItem.birthday);
+    }
+  }
 
   void changeValue({title, value}) {
     setState(() {
@@ -88,6 +104,10 @@ class FormCreateCowState extends State<FormCreateCow> {
       listener: (context, state) {
         if (state is CowLoaded) {
           showToast(context: context, string: "Tạo thành công ");
+          reloadCow(
+              context: context, byreId: byreId, routeName: widget.routeName);
+        } else if (state is CowUpdateResult) {
+          showToast(context: context, string: state.result);
           reloadCow(
               context: context, byreId: byreId, routeName: widget.routeName);
         }
@@ -151,11 +171,11 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 buildIdFather(
                                     title: "Bò cha",
                                     cowFatherId: cowFatherId,
-                                    cowModel: cowModel,
+                                    cowModel: this.cowModel,
                                     changeValueFuction: changeValue),
                                 buildIdFather(
                                     title: "Bò mẹ",
-                                    cowModel: cowModel,
+                                    cowModel: this.cowModel,
                                     changeValueFuction: changeValue,
                                     cowMotherId: cowMotherId)
                               ],
@@ -163,6 +183,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                           : Container(),
                       BuildBirth(
                         selectDateFunction: changDateTime,
+                        birthdayString: birthdayString,
                       ),
                       buildGender(
                           selectedRadio: selectedRadio,
@@ -188,6 +209,9 @@ class FormCreateCowState extends State<FormCreateCow> {
                           ),
                           onPressed: () {
                             CowItem cowItem = new CowItem(
+                                id: widget.routeName == "EditCow"
+                                    ? widget.cowItem.id
+                                    : null,
                                 gender: gender,
                                 byreId: byreId,
                                 code: _codeController.text,
@@ -201,8 +225,13 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 motherId: cowMotherId,
                                 foodSuggestionId: foodSuggestionId);
                             setState(() {
-                              BlocProvider.of<CowBloc>(context)
-                                  .add(CowAddProcess(cowItem));
+                              if (widget.routeName == "EditCow") {
+                                BlocProvider.of<CowBloc>(context)
+                                    .add(CowUpdated(cowItem));
+                              } else {
+                                BlocProvider.of<CowBloc>(context)
+                                    .add(CowAddProcess(cowItem));
+                              }
                             });
                           },
                         ),

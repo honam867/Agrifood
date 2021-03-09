@@ -1,7 +1,10 @@
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/popup_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
@@ -32,8 +35,25 @@ class _FormDetailCowState extends State<FormDetailCow> {
               selectedItemColor: Colors.redAccent,
               onTap: (int index) {
                 setState(() {
-                  openPopupDeleteCow(context,
-                      cowId: widget.cowItem.id, deleteCowFuction: deleteCow);
+                  if (index == 0) {
+                    openPopupDeleteCow(context,
+                        cowId: widget.cowItem.id, deleteCowFuction: deleteCow);
+                  } else {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) => CowBloc(
+                                cowRepository: CowRepository(),
+                                foodSuggestionRepository:
+                                    FoodSuggestionRepository()),
+                            child: FormCreateCow(
+                                contextCowPage: context,
+                                routeName: "EditCow",
+                                cowItem: widget.cowItem),
+                          ),
+                        ));
+                  }
                 });
               },
               currentIndex: index, // this will be set when a new tab is tapped

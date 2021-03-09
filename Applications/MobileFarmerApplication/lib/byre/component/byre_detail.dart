@@ -52,8 +52,7 @@ class ChapterCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text:
-                              "Mã ${this.byreItem.code}",
+                          text: "Mã ${this.byreItem.code}",
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -63,12 +62,14 @@ class ChapterCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Divider(color: Colors.transparent)),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text:
-                              "Tên ${this.byreItem.name}",
+                          text: "Tên ${this.byreItem.name}",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
                             color: Colors.grey,
