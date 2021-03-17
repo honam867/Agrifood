@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material/table';
 import { AlertComponent } from './../../../../shared/components/alert/alert.component';
 import { AddFarmerToUserComponent } from './../../../user/components/add-farmer-to-user/add-farmer-to-user.component';
 import { ValueObject } from './../../../../shared/models/value-object';
@@ -10,6 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Farmer } from './../../models/farmer';
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Byre } from '../../models/byre';
 
 @Component({
   selector: 'app-crud-farmer',
@@ -34,7 +36,12 @@ export class CrudFarmerComponent implements OnInit {
     roleName: '',
   };
   provinces: Province[] = [];
+  byreSource: MatTableDataSource<Byre>;
+  byres: Byre[] = [];
+  farmerByres: Byre[] = [];
   valueObject: ValueObject = new ValueObject();
+
+  displayedColumnsByre: string[] = ['name', 'code'];
 
   // dataSource: MatTableDataSource<Role>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -59,6 +66,7 @@ export class CrudFarmerComponent implements OnInit {
     this.fetchProvince();
     if (this.isView) {
       this.fetchDistrict(this.sourceView.provinceId);
+      this.fetchByre();
     } else {
       this.fetchNewcode();
     }
@@ -81,6 +89,14 @@ export class CrudFarmerComponent implements OnInit {
   fetchProvince() {
     this.farmerService.getProvince().subscribe(result => {
       this.provinces = result;
+    });
+  }
+
+  fetchByre() {
+    this.farmerService.getByres().subscribe(result => {
+      this.byres = result;
+      this.farmerByres = this.byres.filter(byre => byre.farmerId == this.sourceView.id);
+      this.byreSource = new MatTableDataSource(this.farmerByres);
     });
   }
 
