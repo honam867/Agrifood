@@ -1,6 +1,7 @@
 import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
+import 'package:AgrifoodApp/home/component/popup_report.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,9 @@ SpeedDial buildSpeedDial({context}) {
         backgroundColor: Colors.red,
         label: 'Tạo báo cáo',
         labelStyle: TextStyle(fontSize: 18.0),
-        onTap: () => print('FIRST CHILD'),
+        onTap: () {
+          showDialog(context: context, child: PopupReport());
+        },
         onLongPress: () => print('FIRST CHILD LONG PRESS'),
       ),
       SpeedDialChild(
