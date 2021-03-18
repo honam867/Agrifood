@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
+import { Byre } from './models/byre';
 // import {RoleOfUser} from './models/roleofUser';
 // import {Role} from '../system/models/role';
 // import { RqListRole } from 'src/app/shared/models/RqListRoles';
@@ -42,6 +43,9 @@ export class FarmerService {
   }
   newCode(): Observable<ValueObject> {
     return this.http.get(`farmer/newcode`);
+  }
+  getByres(): Observable<Byre[]> {
+    return this.http.get(`byre`);
   }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);

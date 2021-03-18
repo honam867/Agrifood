@@ -110,7 +110,6 @@ export class CrudFoodComponent implements OnInit {
     this.foodService.getProvinces().subscribe(
       res => {
         this.provinces = res;
-        console.log(this.sourceView);
         // this.dataSource = new MatTableDataSource(this.foods);
         // this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.sort;
