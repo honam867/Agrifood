@@ -1,6 +1,7 @@
 import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
+import 'package:AgrifoodApp/milkingslip/page/milkingslip_page.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +53,7 @@ SpeedDial buildSpeedDial({context}) {
         backgroundColor: Colors.red,
         label: 'Tạo báo cáo',
         labelStyle: TextStyle(fontSize: 18.0),
-        onTap: () => print('FIRST CHILD'),
-        onLongPress: () => print('FIRST CHILD LONG PRESS'),
+        onTap: () => milkingSlipDialog
       ),
       SpeedDialChild(
         child: Icon(Icons.add_circle_sharp),
@@ -75,18 +75,7 @@ SpeedDial buildSpeedDial({context}) {
                 ),
               ))
         },
-        onLongPress: () => print('SECOND CHILD LONG PRESS'),
       ),
-      // SpeedDialChild(
-      //   child: Icon(Icons.add_circle_outline_outlined),
-      //   backgroundColor: Colors.green,
-      //   label: 'Tạo chuồng',
-      //   labelStyle: TextStyle(fontSize: 18.0),
-      //   onTap: () => {
-      //    // typeTrue(context)
-      //   },
-      //   onLongPress: () => print('THIRD CHILD LONG PRESS'),
-      // ),
     ],
   );
 }

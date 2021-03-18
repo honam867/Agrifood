@@ -7,7 +7,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 typedef AddByreFuction = void Function(BuildContext context, ByreItem byreItem);
 typedef DeleteByreFuction = void Function(BuildContext context, int id);
-
 typedef UpdateByreFuction = void Function(
     BuildContext context, int id, ByreItem byreItem);
 typedef ChangeBreedFuction = void Function(BuildContext context, int value);

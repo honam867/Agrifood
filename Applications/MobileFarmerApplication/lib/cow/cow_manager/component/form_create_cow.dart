@@ -45,8 +45,8 @@ class FormCreateCowState extends State<FormCreateCow> {
     super.initState();
     if (widget.routeName == "EditCow") {
       foodSuggestionId = widget.cowItem.foodSuggestionId;
-      cowFatherId = widget.cowItem.fatherId;
-      cowMotherId = widget.cowItem.motherId;
+      cowFatherId = widget.cowItem.fatherId ?? 0;
+      cowMotherId = widget.cowItem.motherId ?? 0;
       byreId = widget.cowItem.byreId;
       _birthday = widget.cowItem.birthday;
       _nameController.text = widget.cowItem.name;
@@ -163,7 +163,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                               changeValueFuction: changeValue),
                         ],
                       ),
-                      cowModel.cowItem.length > 0
+                      state.cowModel.cowItem.length > 0
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
