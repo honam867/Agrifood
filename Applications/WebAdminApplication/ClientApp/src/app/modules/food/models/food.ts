@@ -4,6 +4,7 @@ export class Food {
     code: string;
     type: string;
     provinceId:number;
+    provinceName: string;
 
     constructor() {
      this.id =0;
@@ -11,6 +12,6 @@ export class Food {
      this.code="";
      this.type="";
      this.provinceId=0;
+     this.provinceName="";
     }
   }
-  

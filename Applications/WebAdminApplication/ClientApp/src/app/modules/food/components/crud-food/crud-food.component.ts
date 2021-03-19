@@ -24,7 +24,6 @@ export class CrudFoodComponent implements OnInit {
   isView = true;
   isCreate = true;
   loading: boolean;
-  provinceControl = new FormControl('', Validators.required);
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Food = new Food();
   constructor(
@@ -32,7 +31,7 @@ export class CrudFoodComponent implements OnInit {
     public dialogRef: MatDialogRef<CrudFoodComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public foodService: FoodService
-    
+
   ) { }
 
 
@@ -69,8 +68,8 @@ export class CrudFoodComponent implements OnInit {
       }
     );
   }
-  
-  
+
+
   create() {
     this.foodService.createFood(this.sourceView).subscribe(
       result => {
@@ -111,7 +110,6 @@ export class CrudFoodComponent implements OnInit {
     this.foodService.getProvinces().subscribe(
       res => {
         this.provinces = res;
-        console.log(this.provinces);
         // this.dataSource = new MatTableDataSource(this.foods);
         // this.dataSource.paginator = this.paginator;
         // this.dataSource.sort = this.sort;

@@ -20,6 +20,6 @@ describe('CrudFarmerComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component.farmerByres.length).toBeGreaterThan(2);
   });
 });
