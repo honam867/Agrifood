@@ -1,7 +1,6 @@
 //part of 'cow_cubit.dart';
 part of 'milkingslip_bloc.dart';
 
-
 abstract class MilkingSlipState extends Equatable {
   const MilkingSlipState();
 
@@ -13,10 +12,39 @@ class MilkingSlipError extends MilkingSlipState {}
 
 class MilkingSlipLoadInprocess extends MilkingSlipState {}
 
+class MilkingSlipLoading extends MilkingSlipState {
+  @override
+  List<Object> get props => [];
+}
+
 class MilkingSlipLoaded extends MilkingSlipState {
   final MilkingSlipModel cowModel;
 
   const MilkingSlipLoaded([this.cowModel]);
+
+  @override
+  List<Object> get props => [cowModel];
+
+  @override
+  String toString() => 'TodosLoadSuccess { todos: $cowModel }';
+}
+
+class MilkingSlipDetailLoadedState extends MilkingSlipState {
+  final CowModel cowModel;
+
+  const MilkingSlipDetailLoadedState([this.cowModel]);
+
+  @override
+  List<Object> get props => [cowModel];
+
+  @override
+  String toString() => 'TodosLoadSuccess { todos: $cowModel }';
+}
+
+class OnPressAddItemMilkingSlipState extends MilkingSlipState {
+  final CowModel cowModel;
+
+  const OnPressAddItemMilkingSlipState([this.cowModel]);
 
   @override
   List<Object> get props => [cowModel];
@@ -49,12 +77,13 @@ class MilkingSlipUpdateResult extends MilkingSlipState {
   String toString() => 'Cập nhật thành công { todos: $result }';
 }
 
-class MilkingSlipLoading extends MilkingSlipState {
-  const MilkingSlipLoading();
+class AddMilkingSlipDoneLoaded extends MilkingSlipState {
+  final int milkingSlipId;
+  const AddMilkingSlipDoneLoaded({this.milkingSlipId});
 }
 
-class AddMilkingSlipDoneLoaded extends MilkingSlipState {
-  const AddMilkingSlipDoneLoaded();
+class CreateMilkingSlipDetailDone extends MilkingSlipState {
+  const CreateMilkingSlipDetailDone();
 }
 
 // class MilkingSlipDeleted extends MilkingSlipEvent {

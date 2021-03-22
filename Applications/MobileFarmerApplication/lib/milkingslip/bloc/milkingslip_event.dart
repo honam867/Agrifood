@@ -9,6 +9,12 @@ abstract class MilkingSlipEvent extends Equatable {
 
 class MilkingSlipLoadedSucces extends MilkingSlipEvent {}
 
+class MilkingSlipDetailoading extends MilkingSlipEvent {}
+
+class OnPressAddItemMilkingSlipEvent extends MilkingSlipEvent {}
+
+class MilkingSlipDetailLoaded extends MilkingSlipEvent {}
+
 class FoodSuggestionSuccess extends MilkingSlipEvent {}
 
 class MilkingSlipAddProcess extends MilkingSlipEvent {
@@ -23,11 +29,22 @@ class MilkingSlipAddProcess extends MilkingSlipEvent {
   String toString() => 'TodoAdded { todo: $milkingSlipItem }';
 }
 
-class MilkingSlipDeleteProcess extends MilkingSlipEvent {
+class CreateMilkingSlipDetail extends MilkingSlipEvent {
+  final MilkingSlipDetailItem milkingSlipDetailItem;
 
+  const CreateMilkingSlipDetail(this.milkingSlipDetailItem);
+
+  @override
+  List<Object> get props => [milkingSlipDetailItem];
+
+  @override
+  String toString() => 'TodoAdded { todo: $milkingSlipDetailItem }';
+}
+
+class MilkingSlipDeleteProcess extends MilkingSlipEvent {
   final int id;
 
-  const MilkingSlipDeleteProcess( this.id);
+  const MilkingSlipDeleteProcess(this.id);
 
   @override
   List<Object> get props => [id];
@@ -59,7 +76,6 @@ class MilkingSlipUpdated extends MilkingSlipEvent {
   @override
   String toString() => 'TodoUpdated { todo: $milkingSlipItem }';
 }
-
 
 class ClearCompleted extends MilkingSlipEvent {}
 

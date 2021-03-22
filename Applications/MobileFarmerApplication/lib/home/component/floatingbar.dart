@@ -2,13 +2,16 @@ import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/home/component/popup_report.dart';
+import 'package:AgrifoodApp/milkingslip/bloc/milkingslip_bloc.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
+import 'package:AgrifoodApp/respository/milkingslip_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-SpeedDial buildSpeedDial({context}) {
+SpeedDial buildSpeedDial({context, farmerId}) {
+  MilkingSlipRepository milkingSlipRepository = new MilkingSlipRepository();
   return SpeedDial(
     /// both default to 16
     marginEnd: 18,
@@ -51,7 +54,15 @@ SpeedDial buildSpeedDial({context}) {
         label: 'Tạo báo cáo',
         labelStyle: TextStyle(fontSize: 18.0),
         onTap: () {
-          showDialog(context: context, child: PopupReport());
+          showDialog(
+            context: context,
+            child: BlocProvider<MilkingSlipBloc>(
+              create: (_) => MilkingSlipBloc()..add(MilkingSlipLoadedSucces()),
+              child: PopupReport(
+                farmerId: farmerId,
+              ),
+            ),
+          );
         },
         onLongPress: () => print('FIRST CHILD LONG PRESS'),
       ),

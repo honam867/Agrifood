@@ -4,7 +4,6 @@ import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/appdrawer.dart';
-import 'package:AgrifoodApp/home/component/categorie.dart';
 import 'package:AgrifoodApp/home/component/custom_clippath.dart';
 import 'package:AgrifoodApp/home/component/dashboard.dart';
 import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
@@ -181,7 +180,8 @@ class _MyHomePageState extends State<MyHomePage>
       return SafeArea(
         child: Scaffold(
           backgroundColor: Colors.white,
-          floatingActionButton: buildSpeedDial(context: context),
+          floatingActionButton: buildSpeedDial(
+              context: context, farmerId: widget.farmerInfoModel.id),
           drawer: AppDrawer(
             farmerInfoModel: widget.farmerInfoModel ??
                 FarmerInfoModel(

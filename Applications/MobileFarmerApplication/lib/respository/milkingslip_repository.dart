@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
 
@@ -25,9 +26,10 @@ class MilkingSlipRepository {
     return false;
   }
 
-  Future<bool> addMilkingSlip({MilkingSlipItem milkingSlipItem}) async {
-    Map rqData = milkingSlipItem.toJson();
-    var rs = await APIClient.post('api/milkingSlip', rqData);
+  Future<bool> addMilkingSlipDetail(
+      {MilkingSlipDetailItem milkingSlipDetailItem}) async {
+    Map rqData = milkingSlipDetailItem.toJson();
+    var rs = await APIClient.post('api/milkingSlipDetail', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       print(data);
@@ -36,7 +38,19 @@ class MilkingSlipRepository {
     return false;
   }
 
-  Future<bool> updateMilkingSlip(int id,{MilkingSlipItem milkingSlipItem}) async {
+  Future<String> addMilkingSlip({MilkingSlipItem milkingSlipItem}) async {
+    Map rqData = milkingSlipItem.toJson();
+    var rs = await APIClient.post('api/milkingSlip', rqData);
+    if (rs != null) {
+      var data = json.decode(rs);
+      print(data);
+      return rs;
+    }
+    return "0";
+  }
+
+  Future<bool> updateMilkingSlip(int id,
+      {MilkingSlipItem milkingSlipItem}) async {
     Map rqData = milkingSlipItem.toJson();
     var rs = await APIClient.put('api/milkingSlip/$id', rqData);
     if (rs != null) {
@@ -46,5 +60,4 @@ class MilkingSlipRepository {
     }
     return false;
   }
-
 }
