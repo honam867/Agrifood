@@ -96,7 +96,7 @@ class PopupReport extends StatelessWidget {
               FlatButton(
                 onPressed: () {
                   MilkingSlipItem item = new MilkingSlipItem(
-                    code: "NHU",
+                    code: codeController.text,
                     session: "Chiều",
                     farmerId: farmerId,
                   );
