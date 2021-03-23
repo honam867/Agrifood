@@ -16,5 +16,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteMilkingSlipAsync(int id);
         Task<bool> UpdateMilkingSlipAsync(int id, MilkingSlipModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
+        Task<string> AutoGenerateCodeAsync(string code = "");
     }
 }
