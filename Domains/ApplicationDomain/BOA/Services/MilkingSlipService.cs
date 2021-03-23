@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.MilkingSlips;
+using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
 using AspNetCore.UnitOfWork;
@@ -107,6 +108,15 @@ namespace ApplicationDomain.BOA.Services
         public async Task<bool> CheckCodeExistsAsync(string code)
         {
             return await _milkingSlipRepository.CheckCodeExistsAsync(code);
+        }
+
+        public async Task<string> AutoGenerateCodeAsync(string code = "")
+        {
+            if (code.Equals(""))
+                code = AutoGenerate.AutoGenerateMilkingSlipCode(3);
+            if (!await CheckCodeExistsAsync(code))
+                return code;
+            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateMilkingSlipCode(3));
         }
     }
 }
