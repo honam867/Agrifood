@@ -106,5 +106,13 @@ namespace AspNetCore.AutoGenerate
             string result = "BCVS" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + GetRandomString(length, alphanumericCharacters, false, false).ToUpper() + number;
             return result;
         }
+
+        public static string AutoGenerateMilkCouponCode(int length)
+        {
+            int number = new Random().Next(1000, 9999);
+            const string alphanumericCharacters = "abcdefghijklmnopqrstuvwxyz";
+            string result = "BCMS" + DateTime.Now.Day + DateTime.Now.Month + DateTime.Now.Year + GetRandomString(length, alphanumericCharacters, false, false).ToUpper() + number;
+            return result;
+        }
     }
 }
