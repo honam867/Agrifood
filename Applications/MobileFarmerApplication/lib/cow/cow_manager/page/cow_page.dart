@@ -16,7 +16,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CowPage extends StatefulWidget {
   final String value;
   final int byreId;
-  CowPage({this.value, this.byreId});
+  final String route;
+  CowPage({this.value, this.byreId, this.route});
 
   @override
   _CowPageState createState() => _CowPageState();
@@ -76,9 +77,8 @@ class _CowPageState extends State<CowPage> {
                                   foodSuggestionRepository:
                                       FoodSuggestionRepository()),
                               child: FormCreateCow(
-                                cowModel: cowModel,
-                                byreId: widget.byreId,
                                 contextCowPage: context,
+                                routeName: "CowPage",
                               ),
                             ),
                           ));

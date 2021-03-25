@@ -1,11 +1,10 @@
 //part of 'cow_cubit.dart';
 part of 'cow_bloc.dart';
 
-
 abstract class CowState extends Equatable {
   const CowState();
 
-   @override
+  @override
   List<Object> get props => [];
 }
 
@@ -17,11 +16,14 @@ class FoodSuggestionLoadInprocess extends CowState {}
 
 class FoodSuggestionLoaded extends CowState {
   final FoodSuggestionModel foodSuggestionModel;
+  final ByreModel byreModel;
+  final CowModel cowModel;
 
-  const FoodSuggestionLoaded([this.foodSuggestionModel ]);
+  const FoodSuggestionLoaded(
+      [this.foodSuggestionModel, this.byreModel, this.cowModel]);
 
   @override
-  List<Object> get props => [foodSuggestionModel];
+  List<Object> get props => [foodSuggestionModel, byreModel, cowModel];
 
   @override
   String toString() => 'TodosLoadSuccess { todos: $foodSuggestionModel }';
@@ -30,7 +32,7 @@ class FoodSuggestionLoaded extends CowState {
 class CowLoaded extends CowState {
   final CowModel cowModel;
 
-  const CowLoaded([this.cowModel ]);
+  const CowLoaded([this.cowModel]);
 
   @override
   List<Object> get props => [cowModel];
@@ -42,7 +44,7 @@ class CowLoaded extends CowState {
 class CowDeleted extends CowState {
   final String result;
 
-  const CowDeleted([this.result ]);
+  const CowDeleted([this.result]);
 
   @override
   List<Object> get props => [result];
@@ -51,6 +53,17 @@ class CowDeleted extends CowState {
   String toString() => 'Xóa thành công { todos: $result }';
 }
 
+class CowUpdateResult extends CowState {
+  final String result;
+
+  const CowUpdateResult([this.result]);
+
+  @override
+  List<Object> get props => [result];
+
+  @override
+  String toString() => 'Cập nhật thành công { todos: $result }';
+}
 
 class CowLoading extends CowState {
   const CowLoading();
@@ -59,7 +72,6 @@ class CowLoading extends CowState {
 class AddCowDoneLoaded extends CowState {
   const AddCowDoneLoaded();
 }
-
 
 // class CowDeleted extends CowEvent {
 //   final String result;
@@ -72,9 +84,6 @@ class AddCowDoneLoaded extends CowState {
 //   @override
 //   String toString() => 'TodoDeleted { todo: $result }';
 // }
-
-
-
 
 class GetListCowLoaded extends CowState {
   final CowModel cowModel;
@@ -90,6 +99,3 @@ class GetListCowLoaded extends CowState {
   @override
   int get hashCode => cowModel.hashCode;
 }
-
-
-

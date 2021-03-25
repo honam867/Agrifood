@@ -5,6 +5,7 @@ import 'package:AgrifoodApp/home/component/dashboard.dart';
 import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
+import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   ByreRepository byreRepository = new ByreRepository();
+  CowRepository cowRepository = new CowRepository();
+  
 
   @override
   void initState() {
@@ -54,7 +57,9 @@ class _HomePageState extends State<HomePage> {
             key: scaffoldKey,
             backgroundColor: Colors.grey[200],
             drawer: AppDrawer(
-              farmerInfoModel: widget.farmerInfoModel ?? FarmerInfoModel(name: "", avatarURL: "", gender:  false,status: false),
+              farmerInfoModel: widget.farmerInfoModel ??
+                  FarmerInfoModel(
+                      name: "", avatarURL: "", gender: false, status: false),
               contextHome: context,
             ),
             body: Stack(
@@ -67,76 +72,83 @@ class _HomePageState extends State<HomePage> {
                   ),
                   clipper: CustomClipPathByHomePage(),
                 ),
-                widget.farmerInfoModel != null ? Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: ScreenUtil().setHeight(300),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: ScreenUtil().setWidth(40), right: ScreenUtil().setWidth(40)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                widget.farmerInfoModel != null
+                    ? Column(
                         children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Xin chào !",
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: ScreenUtil().setSp(60),
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              SizedBox(
-                                height: 4,
-                              ),
-                              Text(
-                                "Trang chủ",
-                                style: GoogleFonts.openSans(
-                                    textStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: ScreenUtil().setSp(50),
-                                        fontWeight: FontWeight.w600)),
-                              ),
-                            ],
+                          SizedBox(
+                            height: ScreenUtil().setHeight(300),
                           ),
-                          Row(
-                            children: [
-                              IconButton(
-                                alignment: Alignment.topCenter,
-                                icon: Icon(
-                                  Icons.add,
-                                  size: ScreenUtil().setSp(100),
-                                  color: Colors.white,
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: ScreenUtil().setWidth(40),
+                                right: ScreenUtil().setWidth(40)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      "Xin chào !",
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: ScreenUtil().setSp(60),
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      "Trang chủ",
+                                      style: GoogleFonts.openSans(
+                                          textStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: ScreenUtil().setSp(50),
+                                              fontWeight: FontWeight.w600)),
+                                    ),
+                                  ],
                                 ),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                alignment: Alignment.topCenter,
-                                icon: Image.asset(
-                                  "assets/layout/notification.png",
-                                  width: ScreenUtil().setWidth(80),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          )
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      alignment: Alignment.topCenter,
+                                      icon: Icon(
+                                        Icons.add,
+                                        size: ScreenUtil().setSp(100),
+                                        color: Colors.white,
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                    IconButton(
+                                      alignment: Alignment.topCenter,
+                                      icon: Image.asset(
+                                        "assets/layout/notification.png",
+                                        width: ScreenUtil().setWidth(80),
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(60),
+                          ),
+                          BlocProvider(
+                            create: (context) =>
+                                HomeCubit(byreRepository, cowRepository),
+                            child: Dashboard(
+                              contextHome: context,
+                              farmerInfoModel: widget.farmerInfoModel,
+                            ),
+                          ),
                         ],
+                      )
+                    : Center(
+                        child: Text("Bạn không phải nông dân"),
                       ),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(60),
-                    ),
-                    BlocProvider(
-                      create: (context) => HomeCubit(byreRepository),
-                      child: Dashboard(
-                        contextHome: context,
-                        farmerInfoModel: widget.farmerInfoModel,
-                      ),
-                    ),
-                  ],
-                ) : Center(child: Text("Bạn không phải nông dân"),),
                 Positioned(
                   left: 10,
                   top: 20,

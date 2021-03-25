@@ -22,12 +22,12 @@ namespace ApplicationDomain.BOA.Models.MilkingSlips
             var mapers = CreateMap<MilkingSlip, MilkingSlipModelRq>();
         }
     }
-    public class MilkingSlipModelRqValidator : AbstractValidator<MilkingSlipModelRq>
+    /*public class MilkingSlipModelRqValidator : AbstractValidator<MilkingSlipModelRq>
     {
         public MilkingSlipModelRqValidator()
         {
             RuleFor(p => p.Code).NotEmpty();
             RuleFor(p => p.Code).Length(3);
         }
-    }
+    }*/
 }

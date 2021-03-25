@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:AgrifoodApp/ui/utils/palette.dart';
 
 class TextStyles {
-  static final TextStyle titleText = TextStyle (
+  static final TextStyle titleText = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w700,
     fontFamily: "HelveticaNeue",
@@ -13,6 +13,13 @@ class TextStyles {
   );
   static const linkStyle = const TextStyle(
     color: Palette.dodgerBlue,
+    fontWeight: FontWeight.w600,
+    fontFamily: "MyriadPro",
+    fontStyle: FontStyle.normal,
+    fontSize: 16.0,
+  );
+  static const detailStyle = const TextStyle(
+    color: Palette.coolGrey,
     fontWeight: FontWeight.w600,
     fontFamily: "MyriadPro",
     fontStyle: FontStyle.normal,

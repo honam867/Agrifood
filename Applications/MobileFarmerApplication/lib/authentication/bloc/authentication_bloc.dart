@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/core/token.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/home/model/userInfo_model.dart';
@@ -33,6 +34,9 @@ class AuthenticationBloc
         if (farmerInfo != null) {
           FarmerInfoModel farmerInfoModel =
               FarmerInfoModel.fromJson(farmerInfo);
+          var farmerId = farmerInfoModel.id;
+          Storage.saveString("farmerId", farmerId.toString());
+
           yield AuthenticationAuthenticated(
               userInfo: null, farmerInfoModel: farmerInfoModel);
         } else {

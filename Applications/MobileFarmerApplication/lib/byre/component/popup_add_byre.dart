@@ -7,7 +7,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 
 typedef AddByreFuction = void Function(BuildContext context, ByreItem byreItem);
 typedef DeleteByreFuction = void Function(BuildContext context, int id);
-
 typedef UpdateByreFuction = void Function(
     BuildContext context, int id, ByreItem byreItem);
 typedef ChangeBreedFuction = void Function(BuildContext context, int value);
@@ -49,26 +48,6 @@ openPopupAddByre(BuildContext context,
                 labelText: 'Tên chuồng',
               ),
             ),
-            // StatefulBuilder(
-            //     builder: (BuildContext context, StateSetter setState) {
-            //   return Center(
-            //     child: new DropdownButton(
-            //       hint: Text(breedName),
-            //       items: listBreedItem.map((item) {
-            //         return new DropdownMenuItem(
-            //           child: new Text(item.name),
-            //           value: item,
-            //         );
-            //       }).toList(),
-            //       onChanged: (newVal) {
-            //         print(newVal.id);
-            //         changeBreedFuction(context, newVal.id);
-            //         // breedName = newVal;
-            //       },
-            //       value: breedId,
-            //     ),
-            //   );
-            // }),
             TextFormField(
               controller: _codeController,
               validator: (value) =>

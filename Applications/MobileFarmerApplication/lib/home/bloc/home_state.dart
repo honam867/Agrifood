@@ -27,6 +27,21 @@ class CheckByreLoaded extends HomeState {
   int get hashCode => amonth.hashCode;
 }
 
+class GetListCowLoaded extends HomeState {
+  final CowModel cowModel;
+  const GetListCowLoaded(this.cowModel);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is GetListCowLoaded && o.cowModel == cowModel;
+  }
+
+  @override
+  int get hashCode => cowModel.hashCode;
+}
+
 class CheckFarmer extends HomeState {
   final String message;
   const CheckFarmer(this.message);
