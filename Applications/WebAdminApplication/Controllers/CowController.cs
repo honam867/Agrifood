@@ -33,6 +33,13 @@ namespace WebAdminApplication.Controllers
             return Ok(await _cowService.GetCowByByreId(byreId));
         }
 
+        [Route("user/{userId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetCowsByUserIdAsync(int userId)
+        {            
+            return Ok(await _cowService.GetCowByUserIdAsync(userId));
+        }
+
         [Route("checkingcode/{code}")]
         [HttpGet]
         public async Task<IActionResult> CheckCodeExistsAsync(string code)
