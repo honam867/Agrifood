@@ -38,5 +38,11 @@ namespace Infrastructure.Repositories.BOA
             return list;
 
         }
+
+        public IQueryable GetCowsByFarmerId(int farmerId)
+        {
+            var list = this.dbSet.Include(o => o.Byre).Where(q => q.Byre.FarmerId == farmerId);
+            return list;
+        }
     }
 }
