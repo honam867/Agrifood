@@ -108,5 +108,10 @@ namespace ApplicationDomain.BOA.Services
         {
             return await _cowRepository.CheckCodeExistsAsync(code);
         }
+
+        public async Task<IEnumerable<CowModel>> GetCowByByreId(int byreId)
+        {
+            return  await _cowRepository.GetCowByByreId(byreId).MapQueryTo<CowModel>(_mapper).ToListAsync();
+        }
     }
 }

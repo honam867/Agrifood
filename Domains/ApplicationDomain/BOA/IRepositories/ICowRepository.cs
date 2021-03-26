@@ -12,6 +12,7 @@ namespace ApplicationDomain.BOA.IRepositories
     {
         IQueryable GetCows();
         IQueryable GetCowById(int id);
+        IQueryable GetCowByByreId(int byreId);
         Task<bool> CheckCodeExistsAsync(string code);
     }
 }
