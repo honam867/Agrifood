@@ -1,6 +1,8 @@
+import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
+import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -11,8 +13,10 @@ part 'cow_state.dart';
 class CowBloc extends Bloc<CowEvent, CowState> {
   final CowRepository cowRepository;
   final FoodSuggestionRepository foodSuggestionRepository;
+  final ByreRepository byreRepository;
 
-  CowBloc({this.cowRepository, this.foodSuggestionRepository})
+  CowBloc(
+      {this.cowRepository, this.foodSuggestionRepository, this.byreRepository})
       : super(CowLoadInprocess());
 
   @override
@@ -70,20 +74,23 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     try {
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
-      yield FoodSuggestionLoaded(foodSuggestionModel);
+      final byreModel = await this.foodSuggestionRepository.getAllByre();
+      final cowModel = await this.cowRepository.getAllCow();
+      yield FoodSuggestionLoaded(foodSuggestionModel, byreModel, cowModel);
     } catch (_) {
       yield CowError();
     }
   }
 
   Stream<CowState> _mapTodoUpdatedToState(CowUpdated event) async* {
-    // if (state is CowLoaded) {
-    //   // final CowModel updatedTodos = (state as TodosLoadSuccess).todos.map((todo) {
-    //     return todo.id == event.updatedTodo.id ? event.updatedTodo : todo;
-    //   }).toList();
-    //   yield TodosLoadSuccess(updatedTodos);
-    //   _saveTodos(updatedTodos);
-    // }
+    final result = await this
+        .cowRepository
+        .updateCow(event.cowItem.id, cowItem: event.cowItem);
+    if (result == true) {
+      yield CowUpdateResult("Cập nhật thành công");
+    } else {
+      yield CowUpdateResult("Cập nhật thất bại");
+    }
   }
 
   Future _saveCow(CowModel cow) {

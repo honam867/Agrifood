@@ -6,3 +6,4 @@ Color genreTextColor = Color(0xFF828796);
 Color iconColor = Color(0xFF95861);
 Color popularityColor = Color(0xFF72C07F);
 Color votecountColor = Colors.blue;
+Color colorApp = Color(0xff9CCC65);

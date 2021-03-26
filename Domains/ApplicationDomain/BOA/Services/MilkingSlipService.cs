@@ -36,6 +36,8 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
+                var code = await AutoGenerateCodeAsync();
+                model.Code = code;
                 var entity = _mapper.Map<MilkingSlip>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkingSlipRepository.Create(entity);

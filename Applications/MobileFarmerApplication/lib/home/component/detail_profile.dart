@@ -1,6 +1,4 @@
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
-import 'package:AgrifoodApp/home/model/userInfo_model.dart';
-import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,14 +12,14 @@ class CardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        item(title: "Tên tài khoản", detail: this.farmerInfoModel.name, urlImage: "assets/profile/name.png"),
+        item(title: "Tên tài khoản", detail: this.farmerInfoModel.name ?? "", urlImage: "assets/profile/name.png"),
         item(
             title: "Trạng thái",
-            detail: this.farmerInfoModel.status == true
+            detail: this.farmerInfoModel.status ?? false == true
                 ? "Đang hoạt động"
                 : "Ngưng hoạt động", urlImage: "assets/profile/status.png"),
-        item(title: "Số điện thoại", detail: this.farmerInfoModel.phoneNumber, urlImage: "assets/profile/phone.png"),
-        item(title: "Email", detail: this.farmerInfoModel.email, urlImage: "assets/profile/email.png"),
+        item(title: "Số điện thoại", detail: this.farmerInfoModel.phoneNumber ?? "", urlImage: "assets/profile/phone.png"),
+        item(title: "Email", detail: this.farmerInfoModel.email ?? "", urlImage: "assets/profile/email.png"),
         item(
             title: "Đại chỉ",
             detail: this.farmerInfoModel.address ?? "", urlImage: "assets/profile/calendar.png"),

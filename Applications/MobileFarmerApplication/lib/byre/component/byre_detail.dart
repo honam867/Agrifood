@@ -1,6 +1,5 @@
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
-import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_cubit.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
@@ -53,8 +52,7 @@ class ChapterCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text:
-                              "Mã ${this.byreItem.code} - ${this.byreItem.name} \n",
+                          text: "Mã ${this.byreItem.code}",
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
@@ -64,15 +62,17 @@ class ChapterCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Container(
+                      width: MediaQuery.of(context).size.width / 3,
+                      child: Divider(color: Colors.transparent)),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text:
-                              "Có ${this.byreItem.quantityCow} ${this.byreItem.breedId}",
+                          text: "Tên ${this.byreItem.name}",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
                         )
