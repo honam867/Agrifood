@@ -30,5 +30,13 @@ namespace Infrastructure.Repositories.BOA
         {
             return dbSet.Where(r => r.Id == id);
         }
+
+        public IQueryable GetCowByByreId(int byreId)
+        {
+
+            var list = this.dbSet.Include(r => r.Byre).Where(t => t.ByreId == byreId);
+            return list;
+
+        }
     }
 }
