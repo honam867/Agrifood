@@ -151,7 +151,7 @@ class _ListByresState extends State<ListByres> {
                 children: <Widget>[
                   Expanded(
                       child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
                     child: ListView.builder(
                       itemCount: byreModel.byreItem.length,
                       itemBuilder: (BuildContext context, int index) {

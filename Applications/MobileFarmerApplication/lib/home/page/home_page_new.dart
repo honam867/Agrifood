@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage>
     ),
     Tab(
       child: Text(
-        "Chuòng",
+        "Chuồng",
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
                   ],
                 ),
                 Image.asset(
-                  "assets/layout/cow.png}",
+                  "assets/layout/cowmale.png}",
                   height: double.infinity,
                 )
               ],

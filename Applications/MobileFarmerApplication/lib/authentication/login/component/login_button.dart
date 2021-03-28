@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 import '../../../ui/utils/palette.dart';
 import 'fadeanimation.dart';
 
@@ -22,12 +23,12 @@ class _LoginButtonState extends State<LoginButton> {
         1.9,
         Center(
             child: Container(
-                height: 50.0,
-                width: 250.0,
+                height: ScreenUtil().setHeight(50),
+                width: ScreenUtil().setWidth(50),
                 child: RaisedButton(
                     onPressed: !widget.isDisable ? widget.onPress : null,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
+                        borderRadius: BorderRadius.circular(ScreenUtil().setSp(50))),
                     padding: EdgeInsets.all(0.0),
                     child: Ink(
                         decoration: BoxDecoration(
