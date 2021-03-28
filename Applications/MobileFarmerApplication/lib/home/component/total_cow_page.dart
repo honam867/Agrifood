@@ -75,7 +75,7 @@ class _TotalCowPageState extends State<TotalCowPage> {
                 ],
               ),
               Image.asset(
-                "assets/layout/cow.png",
+                "assets/layout/cowmale.png",
                 height: double.infinity,
               )
             ],
