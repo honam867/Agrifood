@@ -14,6 +14,8 @@ import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FormCreateCow extends StatefulWidget {
   final BuildContext contextCowPage;
@@ -151,11 +153,11 @@ class FormCreateCowState extends State<FormCreateCow> {
                               codeController: _codeController,
                               width: width,
                               setTextFuction: setTextValue),
-                          buildIdFather(
-                              title: "Thức ăn",
-                              foodSuggestionModel: this.foodSuggestionModel,
-                              foodSuggestionId: foodSuggestionId,
-                              changeValueFuction: changeValue),
+                          // buildIdFather(
+                          //     title: "Thức ăn",
+                          //     foodSuggestionModel: this.foodSuggestionModel,
+                          //     foodSuggestionId: foodSuggestionId,
+                          //     changeValueFuction: changeValue),
                           buildIdFather(
                               title: "Chuồng",
                               byreModel: this.byreModel,
@@ -166,7 +168,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                       state.cowModel.cowItem.length > 0
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 buildIdFather(
                                     title: "Bò cha",
@@ -188,23 +190,28 @@ class FormCreateCowState extends State<FormCreateCow> {
                       buildGender(
                           selectedRadio: selectedRadio,
                           selectRadioFunction: setSelectedRadio),
-                      SizedBox(height: 10.0),
+                      SizedBox(height: ScreenUtil().setHeight(60.0)),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: 20.0,
+                          top: ScreenUtil().setHeight(20),
                         ),
                         child: RaisedButton(
-                          padding: const EdgeInsets.all(0.0),
+                          padding: EdgeInsets.all(0.0),
                           child: Container(
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF26A69A),
+                            decoration:  BoxDecoration(
+                              color: Color(0xff9CCC65),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(ScreenUtil().setSp(60)),
+                              ),
                             ),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 30.0, vertical: 10.0),
-                            child: const Text(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setHeight(50),
+                                vertical: ScreenUtil().setWidth(40)),
+                            child: Text(
                               "Tạo bò",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(80),
+                                  color: Colors.white),
                             ),
                           ),
                           onPressed: () {
