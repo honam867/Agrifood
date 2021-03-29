@@ -11,6 +11,7 @@ import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 
 class FormDetailCow extends StatefulWidget {
   final CowItem cowItem;
@@ -93,14 +94,42 @@ class _FormDetailCowState extends State<FormDetailCow> {
                           children: <Widget>[
                             builItem(
                                 title: "Tên bò: ", string: widget.cowItem.name),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                             builItem(
                                 title: "Id bò cha: ",
                                 string: widget.cowItem.fatherId.toString()),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                            builItem(
+                                title: "Id bò mẹ: ",
+                                string: widget.cowItem.motherId.toString()),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                             builItem(
                                 title: "Chuồng: ",
                                 string: widget.cowItem.byreName ?? ""),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                             builItem(
                                 title: "Mã bò: ", string: widget.cowItem.code),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                             builItem(
                                 title: "Ngày cai sữa: ",
                                 string: Formator.convertDatatimeToString(
@@ -137,10 +166,17 @@ class _FormDetailCowState extends State<FormDetailCow> {
 
 Widget builItem({title, string}) {
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: <Widget>[
-      Text(title, style: TextStyles.labelTextStyle),
-      Text(string, style: TextStyles.valueTextStyle),
+    children: [
+      Padding(
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+        child: Text(title, style: TextStyles.labelTextStyle),
+      ),
+      Padding(
+        padding: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
+        child: Text(string, style: TextStyles.detailTextCow),
+      ),
     ],
   );
 }

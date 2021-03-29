@@ -56,7 +56,7 @@ class ChapterCard extends StatelessWidget {
                     fit: BoxFit.fill),
               ),
             ),
-            Container(height: 40, child: VerticalDivider(color: Colors.black)),
+            Container(height: ScreenUtil().setHeight(150), child: VerticalDivider(color: Colors.black)),
             InkWell(
               child: Column(
                 children: [
