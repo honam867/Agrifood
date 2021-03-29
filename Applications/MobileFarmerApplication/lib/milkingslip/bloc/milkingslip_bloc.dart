@@ -31,6 +31,8 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
       yield* _mapMilkingSlipDetailLoadedToState();
     } else if (event is OnPressAddItemMilkingSlipEvent) {
       yield* _mapOnPressAddItemMilkingSlipEvent();
+    } else if (event is MilkingSlipDetailUpdated) {
+      yield* _mapTodoUpdatedToState(event);
     }
   }
 
@@ -87,8 +89,8 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
     try {
       var result = await milkingSlipRepository.addMilkingSlipDetail(
           milkingSlipDetailItem: event.milkingSlipDetailItem);
-      if (result == true) {
-        yield CreateMilkingSlipDetailDone();
+      if (result != 0) {
+        yield CreateMilkingSlipDetailDone(milkingdetailId: result);
       }
     } catch (_) {
       yield MilkingSlipError();
@@ -107,6 +109,22 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
             await milkingSlipRepository.getAllMilkingSlip();
         yield MilkingSlipLoaded(milkingSlipModel);
         yield MilkingSlipDeleted("Xóa thành công!");
+      }
+    } catch (_) {
+      yield MilkingSlipError();
+    }
+  }
+
+  Stream<MilkingSlipState> _mapTodoUpdatedToState(
+      MilkingSlipDetailUpdated event) async* {
+    try {
+      final MilkingSlipRepository milkingSlipRepository =
+          new MilkingSlipRepository();
+      final result = await milkingSlipRepository.updateMilkingSlipDetail(
+          event.milkingSlipDetailItem.id,
+          milkingSlipDetailItem: event.milkingSlipDetailItem);
+      if (result == true) {
+       yield UpdateMilkingSlipDetailDone(result: result);
       }
     } catch (_) {
       yield MilkingSlipError();

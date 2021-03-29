@@ -26,16 +26,16 @@ class MilkingSlipRepository {
     return false;
   }
 
-  Future<bool> addMilkingSlipDetail(
+  Future<int> addMilkingSlipDetail(
       {MilkingSlipDetailItem milkingSlipDetailItem}) async {
     Map rqData = milkingSlipDetailItem.toJson();
     var rs = await APIClient.post('api/milkingSlipDetail', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       print(data);
-      return true;
+      return int.parse(rs);
     }
-    return false;
+    return 0;
   }
 
   Future<String> addMilkingSlip({MilkingSlipItem milkingSlipItem}) async {
@@ -53,6 +53,18 @@ class MilkingSlipRepository {
       {MilkingSlipItem milkingSlipItem}) async {
     Map rqData = milkingSlipItem.toJson();
     var rs = await APIClient.put('api/milkingSlip/$id', rqData);
+    if (rs != null) {
+      var data = json.decode(rs);
+      print(data);
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> updateMilkingSlipDetail(int id,
+      {MilkingSlipDetailItem milkingSlipDetailItem}) async {
+    Map rqData = milkingSlipDetailItem.toJson();
+    var rs = await APIClient.put('api/milkingSlipDetail/$id', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       print(data);

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:AgrifoodApp/core/model_okvalue.dart';
-import 'package:flutter/cupertino.dart';
 import '../authentication/signup/models/signup_farmer_model.dart';
 import '../core/api_client.dart';
 

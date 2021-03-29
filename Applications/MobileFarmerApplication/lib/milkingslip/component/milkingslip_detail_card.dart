@@ -27,9 +27,14 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
   TextEditingController noteController = TextEditingController();
   TextEditingController quantiTyController = TextEditingController();
   int cowId;
-  bool sended = false, minimze = false, _validate = false, isClosed = false;
+  bool sended = false,
+      minimze = false,
+      _validate = false,
+      isClosed = false,
+      isEdited = false;
   String status = "Đang tải", cowName = "";
   CowItem optionItemSelected = CowItem(id: null, name: "Chọn bò");
+  int milkingSlipDetailId;
 
   void closed() {
     setState(() {
@@ -208,10 +213,12 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                                 quantiTyController.text.isEmpty
                                                     ? _validate = true
                                                     : _validate = false;
-                                                if (_validate == false) {
+                                                if (isEdited == true) {
                                                   MilkingSlipDetailItem
                                                       milkingSlipDetailItem =
                                                       new MilkingSlipDetailItem(
+                                                          id:
+                                                              milkingSlipDetailId,
                                                           cowId: cowId,
                                                           milkingSlipId: widget
                                                               .milkingSlipId,
@@ -220,15 +227,40 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                                           quantity: int.parse(
                                                               quantiTyController
                                                                   .text));
-                                                  print(milkingSlipDetailItem);
                                                   BlocProvider.of<
                                                       MilkingSlipBloc>(context)
-                                                    ..add(CreateMilkingSlipDetail(
-                                                        milkingSlipDetailItem));
+                                                    ..add((MilkingSlipDetailUpdated(
+                                                        milkingSlipDetailItem)));
+                                                } else {
+                                                  if (_validate == false) {
+                                                    MilkingSlipDetailItem
+                                                        milkingSlipDetailItem =
+                                                        new MilkingSlipDetailItem(
+                                                            cowId: cowId,
+                                                            milkingSlipId: widget
+                                                                .milkingSlipId,
+                                                            note: noteController
+                                                                .text,
+                                                            quantity: int.parse(
+                                                                quantiTyController
+                                                                    .text));
+                                                    print(
+                                                        milkingSlipDetailItem);
+                                                    BlocProvider.of<
+                                                            MilkingSlipBloc>(
+                                                        context)
+                                                      ..add(CreateMilkingSlipDetail(
+                                                          milkingSlipDetailItem));
+                                                  }
                                                 }
                                               });
                                             }
-                                          : null,
+                                          : () {
+                                              setState(() {
+                                                isEdited = true;
+                                                sended = false;
+                                              });
+                                            },
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -236,13 +268,13 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            Icons.send,
+                                            isEdited == true ? Icons.edit : Icons.send,
                                             color: sended == false
                                                 ? Colors.yellowAccent
                                                 : Colors.grey,
                                           ),
                                           Text(
-                                            "Gửi",
+                                            isEdited == true ? "Chỉnh sửa" : "Gửi",
                                             style: TextStyle(
                                                 color: sended == false
                                                     ? Colors.yellowAccent
@@ -346,8 +378,17 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
             if (state is CreateMilkingSlipDetailDone) {
               status = "Đã gửi";
               sended = true;
+              isEdited = true;
               minimze = !minimze;
+              milkingSlipDetailId = state.milkingdetailId;
               showToast(context: context, string: status);
+              BlocProvider.of<MilkingSlipBloc>(context)
+                ..add(OnPressAddItemMilkingSlipEvent());
+            } else if (state is UpdateMilkingSlipDetailDone) {
+              status = "Đã sửa";
+              sended = true;
+              isEdited = false;
+              minimze = !minimze;
               BlocProvider.of<MilkingSlipBloc>(context)
                 ..add(OnPressAddItemMilkingSlipEvent());
             }

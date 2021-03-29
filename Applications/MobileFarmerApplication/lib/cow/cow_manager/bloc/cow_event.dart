@@ -9,6 +9,18 @@ abstract class CowEvent extends Equatable {
 
 class CowLoadedSucces extends CowEvent {}
 
+class GetCowByByreId extends CowEvent {
+  final int id;
+  const GetCowByByreId(this.id);
+  @override
+  List<Object> get props => [];
+}
+
+class GetCowByFarmerId extends CowEvent {
+  @override
+  List<Object> get props => [];
+}
+
 class FoodSuggestionSuccess extends CowEvent {}
 
 class CowAddProcess extends CowEvent {
@@ -24,10 +36,9 @@ class CowAddProcess extends CowEvent {
 }
 
 class CowDeleteProcess extends CowEvent {
-
   final int id;
 
-  const CowDeleteProcess( this.id);
+  const CowDeleteProcess(this.id);
 
   @override
   List<Object> get props => [id];
@@ -59,7 +70,6 @@ class CowUpdated extends CowEvent {
   @override
   String toString() => 'TodoUpdated { todo: $cowItem }';
 }
-
 
 class ClearCompleted extends CowEvent {}
 

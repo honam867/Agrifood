@@ -15,6 +15,16 @@ class ByreRepository {
     }
   }
 
+  Future<ByreModel> getByreByFarmerId({int farmerId}) async {
+    try {
+      List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer/$farmerId");
+      ByreModel byreModel = ByreModel.fromJson(jsonRs);
+      return byreModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<ByreModel> getCowByFarmerId({int farmerId}) async {
     try {
       List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer/$farmerId");

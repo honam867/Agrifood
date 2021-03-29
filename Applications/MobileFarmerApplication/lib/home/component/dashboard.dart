@@ -166,7 +166,7 @@ class _DashboardState extends State<Dashboard> {
                                   cowRepository: CowRepository(),
                                   foodSuggestionRepository:
                                       FoodSuggestionRepository()),
-                              child: CowPage(),
+                              child: CowPage(route: "DashBoard",),
                             ),
                           ));
                     });

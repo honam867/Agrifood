@@ -77,6 +77,18 @@ class MilkingSlipUpdated extends MilkingSlipEvent {
   String toString() => 'TodoUpdated { todo: $milkingSlipItem }';
 }
 
+class MilkingSlipDetailUpdated extends MilkingSlipEvent {
+  final MilkingSlipDetailItem milkingSlipDetailItem;
+  
+  const MilkingSlipDetailUpdated(this.milkingSlipDetailItem);
+
+  @override
+  List<Object> get props => [milkingSlipDetailItem];
+
+  @override
+  String toString() => 'TodoUpdated { todo: $milkingSlipDetailItem }';
+}
+
 class ClearCompleted extends MilkingSlipEvent {}
 
 class MilkingSlipNope extends MilkingSlipEvent {}
