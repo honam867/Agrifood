@@ -99,6 +99,7 @@ class ChapterCard extends StatelessWidget {
                                 FoodSuggestionRepository()),
                         child: CowPage(
                           byreId: this.byreItem.id,
+                          route: "ByrePage",
                         ),
                       ),
                     ));
