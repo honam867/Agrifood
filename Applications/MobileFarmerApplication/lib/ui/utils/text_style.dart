@@ -12,7 +12,7 @@ class TextStyles {
     fontSize: 3.5 * SizeConfig.textMultiplier,
   );
   static const linkStyle = const TextStyle(
-    color: Palette.dodgerBlue,
+    color: Palette.birthColor,
     fontWeight: FontWeight.w600,
     fontFamily: "MyriadPro",
     fontStyle: FontStyle.normal,
