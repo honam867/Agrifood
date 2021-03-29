@@ -23,7 +23,9 @@ class CowCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: EdgeInsets.symmetric(
+            vertical: ScreenUtil().setHeight(40),
+            horizontal: ScreenUtil().setWidth(60)),
         margin: EdgeInsets.only(bottom: 16),
         width: size.width - 48,
         decoration: BoxDecoration(
@@ -47,47 +49,49 @@ class CowCard extends StatelessWidget {
                   topLeft: Radius.circular(8.0),
                   topRight: Radius.circular(8.0),
                 ),
-                child: Image.asset('assets/layout/cow.png',
+                child: Image.asset('assets/layout/cowmale.png',
                     width: ScreenUtil().setWidth(100),
                     height: ScreenUtil().setHeight(100),
                     fit: BoxFit.fill),
               ),
             ),
-            Container(height: 80, child: VerticalDivider(color: Colors.black)),
-            Column(
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: this.cowItem.name,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+            Container(height: ScreenUtil().setHeight(150), child: VerticalDivider(color: Colors.black)),
+            InkWell(
+              child: Column(
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: this.cowItem.name,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(60),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width / 3,
-                    child: Divider(color: Colors.transparent)),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: cowItem.code,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+                  Container(
+                      width: MediaQuery.of(context).size.width / ScreenUtil().setWidth(8),
+                      child: Divider(color: Colors.transparent)),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: cowItem.code,
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(50),
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Spacer(),
             IconButton(

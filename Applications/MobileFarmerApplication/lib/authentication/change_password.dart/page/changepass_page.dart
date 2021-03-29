@@ -117,9 +117,11 @@ class _ChangePassPageState extends State<ChangePassPage> {
                         obscureText: _obscureTextConfirmPassword),
                   ),
                   Container(
+                    height: ScreenUtil().setHeight(150),
+                    width: ScreenUtil().setWidth(700),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(ScreenUtil().setSp(50)),
+                          Radius.circular(ScreenUtil().setSp(60)),
                         ),
                         color: Color(0xff9CCC65)
                         //gradient: Palette.activeLinearGradient,
@@ -128,7 +130,7 @@ class _ChangePassPageState extends State<ChangePassPage> {
                     child: OutlineButton(
                       color: Colors.transparent,
                       shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(ScreenUtil().setSp(50)),
+                        borderRadius: new BorderRadius.circular(ScreenUtil().setSp(60)),
                       ),
                       onPressed: () {
                         setState(() {
@@ -143,9 +145,9 @@ class _ChangePassPageState extends State<ChangePassPage> {
                         });
                       },
                       padding: EdgeInsets.only(
-                        left: ScreenUtil().setWidth(200),
+                        left: ScreenUtil().setWidth(100),
                         top: ScreenUtil().setHeight(40),
-                        right: ScreenUtil().setWidth(200),
+                        right: ScreenUtil().setWidth(100),
                         bottom: ScreenUtil().setHeight(40),
                       ),
                       child: Text(

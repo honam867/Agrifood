@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage>
     ),
     Tab(
       child: Text(
-        "Chuòng",
+        "Chuồng",
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,
@@ -119,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage>
                   ],
                 ),
                 Image.asset(
-                  "assets/layout/cow.png}",
+                  "assets/layout/cowmale.png}",
                   height: double.infinity,
                 )
               ],
@@ -197,14 +197,14 @@ class _MyHomePageState extends State<MyHomePage>
               controller: _tabController,
               tabs: list,
             ),
-            title: Text(
-              "Trang chủ",
-              style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenUtil().setSp(60),
-                      fontWeight: FontWeight.w600)),
-            ),
+            // title: Text(
+            //   "Trang chủ",
+            //   style: GoogleFonts.openSans(
+            //       textStyle: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: ScreenUtil().setSp(100),
+            //           fontWeight: FontWeight.w600)),
+            // ),
             elevation: 0,
             backgroundColor: Color(0xff9CCC65),
             // leading: Icon(

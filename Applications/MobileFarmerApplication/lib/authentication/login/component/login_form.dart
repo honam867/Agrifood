@@ -107,38 +107,42 @@ class _LoginComponentState extends State<LoginComponent> {
                                 SizedBox(
                                   height: ScreenUtil().setHeight(40),
                                 ),
-                                FadeAnimation(
-                                    1.2,
-                                    Text(
-                                      "Đăng nhập tài khoản của bạn",
-                                      style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(32,
-                                              allowFontScalingSelf: false),
-                                          color: Colors.grey[700]),
-                                    )),
+                                // FadeAnimation(
+                                //     1.2,
+                                //     Text(
+                                //       "Đăng nhập tài khoản của bạn",
+                                //       style: TextStyle(
+                                //           fontSize: ScreenUtil().setSp(32,
+                                //               allowFontScalingSelf: false),
+                                //           color: Colors.grey[700]),
+                                //     )),
                               ],
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: ScreenUtil().setWidth(40),
-                                  vertical: ScreenUtil().setHeight(10)),
-                              child: Column(
-                                children: <Widget>[
-                                  FadeAnimation(
-                                      1.2,
-                                      makeInput(
-                                        label: "Tài khoản",
-                                        controller: _userNameController,
-                                      )),
-                                  FadeAnimation(
-                                      1.3,
-                                      makeInput(
-                                          label: "Mật khẩu",
-                                          controller: _passwordController,
-                                          obscureText: true)),
-                                ],
-                              ),
+                             padding: 
+                              EdgeInsets.fromLTRB(
+                              ScreenUtil().setWidth(40), 
+                              ScreenUtil().setHeight(40), 
+                              ScreenUtil().setWidth(40), 
+                              ScreenUtil().setHeight(20)),
+                            child: Column(
+                              children: [
+                                FadeAnimation(
+                                    1.2,
+                                    makeInput(
+                                      label: "Tài khoản",
+                                      controller: _userNameController,
+                                    )),
+                                FadeAnimation(
+                                    1.3,
+                                    makeInput(
+                                        label: "Mật khẩu",
+                                        controller: _passwordController,
+                                        obscureText: true)),
+                                
+                              ],
                             ),
+                          ),
                             FadeAnimation(
                                 1.4,
                                 Padding(
@@ -148,9 +152,9 @@ class _LoginComponentState extends State<LoginComponent> {
                                   child: Container(
                                     padding: EdgeInsets.only(
                                         top: ScreenUtil().setHeight(2),
-                                        left: ScreenUtil().setWidth(6)),
+                                        left: ScreenUtil().setWidth(1)),
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
+                                        borderRadius: BorderRadius.circular(500),
                                         border: Border(
                                           bottom:
                                               BorderSide(color: Colors.black),
@@ -161,7 +165,7 @@ class _LoginComponentState extends State<LoginComponent> {
                                         )),
                                     child: MaterialButton(
                                       minWidth: double.infinity,
-                                      height: ScreenUtil().setWidth(120),
+                                      height: ScreenUtil().setWidth(150),
                                       onPressed: state is! LoginLoading
                                           ? _onLoginButtonPressed
                                           : null,
@@ -176,20 +180,20 @@ class _LoginComponentState extends State<LoginComponent> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w600,
                                                   fontSize:
-                                                      ScreenUtil().setSp(40)),
+                                                      ScreenUtil().setSp(60)),
                                             )
                                           : Row(
                                               // mainAxisAlignment:
                                               //     MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(320)),
+                                                  padding: EdgeInsets.only(left: ScreenUtil().setWidth(350)),
                                                   child: Text("Đăng nhập",
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w600,
                                                           fontSize: ScreenUtil()
-                                                              .setSp(40))),
+                                                              .setSp(50))),
                                                 ),
                                                 SizedBox(
                                                      width:     ScreenUtil()

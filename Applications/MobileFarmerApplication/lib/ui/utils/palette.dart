@@ -10,6 +10,7 @@ class Palette {
   static const emerald = const Color(0xff009c41);
   static const red = const Color(0xffdd0000);
   static const coolGrey = const Color(0xff9294a0);
+  static const birthColor = const Color(0xff9CCC65);
 
   static const defaultColor = const Color.fromRGBO(255, 255, 255, 1);
   static const yellow = const Color.fromRGBO(255, 255, 0, 1);
