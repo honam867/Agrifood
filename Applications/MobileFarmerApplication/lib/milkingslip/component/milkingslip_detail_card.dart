@@ -65,10 +65,10 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                               sended == false
                                   ? Padding(
                                       padding: EdgeInsets.only(
-                                          top: 10,
-                                          bottom: 5,
-                                          left: 10,
-                                          right: 10),
+                                          top: ScreenUtil().setHeight(20.0),
+                                          bottom: ScreenUtil().setHeight(10.0),
+                                          left: ScreenUtil().setHeight(20.0),
+                                          right: ScreenUtil().setHeight(20.0)),
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width,
@@ -88,7 +88,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                       ),
                                     )
                                   : Padding(
-                                      padding: EdgeInsets.all(5),
+                                      padding: EdgeInsets.all(ScreenUtil().setHeight(10.0)),
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -98,7 +98,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                             style: TextStyles.labelTextStyle,
                                           ),
                                           SizedBox(
-                                            width: 10,
+                                            width: ScreenUtil().setWidth(20.0)
                                           ),
                                           RichText(
                                               text: TextSpan(
@@ -109,7 +109,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                         ],
                                       )),
                               Padding(
-                                  padding: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -119,13 +119,13 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                         style: TextStyles.labelTextStyle,
                                       ),
                                       SizedBox(
-                                        width: 10,
+                                        width: ScreenUtil().setWidth(10.0),
                                       ),
                                       Container(
-                                        height: 50,
+                                        height: ScreenUtil().setWidth(120.0),
                                         width:
                                             MediaQuery.of(context).size.width -
-                                                200,
+                                                ScreenUtil().setWidth(600.0),
                                         child: TextField(
                                           decoration: InputDecoration(
                                             errorText: _validate == true
@@ -148,7 +148,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -158,13 +158,13 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                         style: TextStyles.labelTextStyle,
                                       ),
                                       SizedBox(
-                                        width: 10,
+                                        width: ScreenUtil().setWidth(10.0),
                                       ),
                                       Container(
-                                        height: 50,
+                                        height: ScreenUtil().setWidth(140.0),
                                         width:
                                             MediaQuery.of(context).size.width -
-                                                150,
+                                                ScreenUtil().setWidth(480.0),
                                         child: TextField(
                                           controller: noteController,
                                           enabled:
@@ -277,8 +277,10 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 10, top: 5, bottom: 5),
+                                padding: EdgeInsets.only(
+                                    left: ScreenUtil().setWidth(30.0), 
+                                    top: ScreenUtil().setWidth(15.0), 
+                                    bottom: ScreenUtil().setWidth(15.0)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -295,7 +297,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                               ),
                               new Spacer(),
                               Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: ScreenUtil().setWidth(30.0)),
                                 child: RaisedButton(
                                   color: Colors.green[100],
                                   shape: RoundedRectangleBorder(
@@ -312,7 +314,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                               )
                             ],
                           ),
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.all(ScreenUtil().setWidth(30.0)),
                         )),
                   minimze == false
                       ? Positioned(
