@@ -79,6 +79,11 @@ namespace ApplicationDomain.BOA.Services
             return await _milkingSlipDetailRepository.GetMilkingSlipDetailById(id).MapQueryTo<MilkingSlipDetailModel>(_mapper).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<MilkingSlipDetailModel>> GetMilkingSlipDetailByMilkingSlipIdAsync(int id)
+        {
+            return await _milkingSlipDetailRepository.GetMilkingSlipDetailByMilkingSlipId(id).MapQueryTo<MilkingSlipDetailModel>(_mapper).ToListAsync();
+        }
+
         public async Task<bool> UpdateMilkingSlipDetailAsync(int id, MilkingSlipDetailModelRq model, UserIdentity<int> issuer)
         {
             try
