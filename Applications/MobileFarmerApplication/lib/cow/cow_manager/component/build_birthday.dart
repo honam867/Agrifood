@@ -33,7 +33,7 @@ class _BuildBirthState extends State<BuildBirth> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Ngày sinh của bò",
+            "Ngày sinh",
             style: TextStyles.labelTextStyle,
           ),
           FlatButton(
@@ -52,7 +52,8 @@ class _BuildBirthState extends State<BuildBirth> {
               },
               child: Text(
                 birthdayString,
-                style: TextStyles.linkStyle,
+                style: TextStyles.linkStyle, 
+                
               ))
         ]);
   }

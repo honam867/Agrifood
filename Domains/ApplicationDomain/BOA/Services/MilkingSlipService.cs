@@ -120,5 +120,11 @@ namespace ApplicationDomain.BOA.Services
                 return code;
             return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateMilkingSlipCode(3));
         }
+
+        public async Task<MilkingSlipModel> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
+        {
+           var data = await _milkingSlipRepository.GetMilkingSlipByDate(date,month,year,session).MapQueryTo<MilkingSlipModel>(_mapper).FirstOrDefaultAsync();
+            return data;
+        }
     }
 }

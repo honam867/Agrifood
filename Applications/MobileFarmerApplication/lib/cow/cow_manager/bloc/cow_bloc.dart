@@ -1,4 +1,5 @@
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
+import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
@@ -33,12 +34,37 @@ class CowBloc extends Bloc<CowEvent, CowState> {
       yield* _mapFoodSuggestionLoadInprocessToState();
     } else if (event is ClearCompleted) {
       //yield* _mapClearCompletedToState();
+    } else if (event is GetCowByByreId) {
+      yield* _mapGetCowByByreIdState(event);
+    } else if (event is GetCowByFarmerId){
+      yield* _mapGetCowByFarmerIdState(event);
     }
   }
 
   Stream<CowState> _mapCowLoadedToState() async* {
     try {
       final cowModel = await this.cowRepository.getAllCow();
+      yield CowLoaded(cowModel);
+    } catch (_) {
+      yield CowError();
+    }
+  }
+
+  Stream<CowState> _mapGetCowByByreIdState(GetCowByByreId event) async* {
+    try {
+      final cowModel =
+          await this.cowRepository.getCowByByreId(byreId: event.id);
+      yield CowLoaded(cowModel);
+    } catch (_) {
+      yield CowError();
+    }
+  }
+
+  Stream<CowState> _mapGetCowByFarmerIdState(GetCowByFarmerId event) async* {
+    try {
+      var farmerId = await Storage.getString("farmerId");
+      final cowModel =
+          await this.cowRepository.getCowByFatmerId(farmerId: int.parse(farmerId));
       yield CowLoaded(cowModel);
     } catch (_) {
       yield CowError();

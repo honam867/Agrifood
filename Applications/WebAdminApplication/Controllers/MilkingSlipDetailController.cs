@@ -107,5 +107,12 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Route("detail/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetMilkingSlipDetailByMilkingSlipIdAsync(int id)
+        {
+            return Ok(await _milkingSlipDetailService.GetMilkingSlipDetailByMilkingSlipIdAsync(id));
+        }
     }
 }

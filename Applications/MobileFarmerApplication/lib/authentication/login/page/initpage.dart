@@ -68,7 +68,7 @@ class _InitPageState extends State<InitPage> {
                   FadeAnimation(
                       1.2,
                       Text(
-                        "Agrifood Bạn của nhà nông, chúng tôi sẽ đem lại chất lượng giống tốt nhất cho bạn",
+                        "Agrifood bạn của nhà nông, chúng tôi sẽ đem lại chất lượng giống tốt nhất cho bạn",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey[700],

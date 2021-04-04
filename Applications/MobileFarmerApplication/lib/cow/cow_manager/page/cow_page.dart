@@ -16,8 +16,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CowPage extends StatefulWidget {
   final String value;
   final int byreId;
+  final int farmerId;
   final String route;
-  CowPage({this.value, this.byreId, this.route});
+  CowPage({this.value, this.byreId, this.route, this.farmerId});
 
   @override
   _CowPageState createState() => _CowPageState();
@@ -49,7 +50,13 @@ class _CowPageState extends State<CowPage> {
       },
       builder: (context, state) {
         if (state is CowLoadInprocess) {
-          BlocProvider.of<CowBloc>(context).add(CowLoadedSucces());
+          if(widget.route == "ByrePage"){
+            BlocProvider.of<CowBloc>(context).add(GetCowByByreId(widget.byreId));
+          } else if (widget.route == "DashBoard") {
+            BlocProvider.of<CowBloc>(context).add(GetCowByFarmerId());
+          } else {
+            BlocProvider.of<CowBloc>(context).add(CowLoadedSucces());
+          }
         }
         if (state is CowLoaded) {
           cowModel = state.cowModel;
@@ -89,7 +96,7 @@ class _CowPageState extends State<CowPage> {
               children: <Widget>[
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
+                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                   child: ListView.builder(
                     // children: [CowCard(), CowCard(), CowCard()],
                     itemCount: cowModel.cowItem.length,

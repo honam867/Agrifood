@@ -83,7 +83,13 @@ class AddMilkingSlipDoneLoaded extends MilkingSlipState {
 }
 
 class CreateMilkingSlipDetailDone extends MilkingSlipState {
-  const CreateMilkingSlipDetailDone();
+  final int milkingdetailId;
+  const CreateMilkingSlipDetailDone({this.milkingdetailId});
+}
+
+class UpdateMilkingSlipDetailDone extends MilkingSlipState {
+  final bool result;
+  const UpdateMilkingSlipDetailDone({this.result});
 }
 
 // class MilkingSlipDeleted extends MilkingSlipEvent {

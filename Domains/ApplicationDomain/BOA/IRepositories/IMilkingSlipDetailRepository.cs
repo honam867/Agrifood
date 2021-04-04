@@ -12,6 +12,7 @@ namespace ApplicationDomain.BOA.IRepositories
     {
         IQueryable GetMilkingSlipDetails();
         IQueryable GetMilkingSlipDetailById(int id);
+        IQueryable GetMilkingSlipDetailByMilkingSlipId(int id);
         //Task<bool> CheckCodeExistsAsync(string code);
     }
 }

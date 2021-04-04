@@ -114,5 +114,12 @@ namespace WebAdminApplication.Controllers
         {
             return OkValueObject(await _milkingSlipService.AutoGenerateCodeAsync());
         }
+
+        [Route("{date}/{month}/{year}/{session}")]
+        [HttpGet]
+        public async Task<IActionResult> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
+        {
+            return Ok(await _milkingSlipService.GetMilkingSlipByDateAsync(date,month,year,session));
+        }
     }
 }

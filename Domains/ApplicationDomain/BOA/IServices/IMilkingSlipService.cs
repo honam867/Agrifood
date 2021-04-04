@@ -17,5 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateMilkingSlipAsync(int id, MilkingSlipModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
         Task<string> AutoGenerateCodeAsync(string code = "");
+        Task<MilkingSlipModel> GetMilkingSlipByDateAsync(int date, int month, int year, int session);
     }
 }

@@ -42,10 +42,22 @@ class ChapterCard extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                  top: ScreenUtil().setSp(5), right: ScreenUtil().setWidth(25)),
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
+                child: Image.asset('assets/layout/stable.png',
+                    width: ScreenUtil().setWidth(100),
+                    height: ScreenUtil().setHeight(100),
+                    fit: BoxFit.fill),
+              ),
+            ),
+            Container(height: ScreenUtil().setHeight(150), child: VerticalDivider(color: Colors.black)),
             InkWell(
-              onTap: () {
-                showToast(context: context, string: "Tap");
-              },
               child: Column(
                 children: [
                   RichText(
@@ -54,7 +66,7 @@ class ChapterCard extends StatelessWidget {
                         TextSpan(
                           text: "Mã ${this.byreItem.code}",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: ScreenUtil().setSp(60),
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -63,16 +75,16 @@ class ChapterCard extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      width: MediaQuery.of(context).size.width / 3,
+                      width: MediaQuery.of(context).size.width / ScreenUtil().setWidth(8),
                       child: Divider(color: Colors.transparent)),
                   RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: "Tên ${this.byreItem.name}",
+                          text: "${this.byreItem.name}",
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(50),
-                            color: Colors.grey,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
                         )
@@ -99,6 +111,7 @@ class ChapterCard extends StatelessWidget {
                                 FoodSuggestionRepository()),
                         child: CowPage(
                           byreId: this.byreItem.id,
+                          route: "ByrePage",
                         ),
                       ),
                     ));

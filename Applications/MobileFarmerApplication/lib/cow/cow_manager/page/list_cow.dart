@@ -62,7 +62,7 @@ class _CowsPageState extends State<CowsPage> {
                 children: <Widget>[
                   Expanded(
                       child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(35)),
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
                     child: ListView(
                       children: [CowCard(), CowCard(), CowCard()],
                       //itemCount: byreModel.byreItem.length,

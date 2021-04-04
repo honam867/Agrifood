@@ -10,6 +10,7 @@ import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TotalCowPage extends StatefulWidget {
   final size;
@@ -37,16 +38,24 @@ class _TotalCowPageState extends State<TotalCowPage> {
   List<CowItem> responseList = new List<CowItem>();
   Widget item(CowItem cowItem) {
     return Container(
-        height: 150,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        height: ScreenUtil().setHeight(500.0),
+        margin: EdgeInsets.symmetric(
+          horizontal: ScreenUtil().setWidth(40.0),
+          vertical: ScreenUtil().setHeight(40.0),
+        ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            borderRadius:
+                BorderRadius.all(Radius.circular(ScreenUtil().setSp(50.0))),
             color: Colors.white,
             boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0),
+              BoxShadow(
+                  color: Colors.black.withAlpha(100),
+                  blurRadius: ScreenUtil().setSp(20.0)),
             ]),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          padding: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(40.0),
+              vertical: ScreenUtil().setWidth(40.0)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -55,27 +64,27 @@ class _TotalCowPageState extends State<TotalCowPage> {
                 children: <Widget>[
                   Text(
                     cowItem.name,
-                    style: const TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(80.0),
+                        fontWeight: FontWeight.bold),
                   ),
                   Text(
                     cowItem.byreName,
-                    style: const TextStyle(fontSize: 17, color: Colors.grey),
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(60.0), color: Colors.grey),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: ScreenUtil().setHeight(40.0)),
                   Text(
                     cowItem.gender,
-                    style: const TextStyle(
-                        fontSize: 25,
+                    style: TextStyle(
+                        fontSize: ScreenUtil().setSp(80.0),
                         color: Colors.black,
                         fontWeight: FontWeight.bold),
                   )
                 ],
               ),
               Image.asset(
-                "assets/layout/cow.png",
+                "assets/layout/cowmale.png",
                 height: double.infinity,
               )
             ],
@@ -151,7 +160,7 @@ class _TotalCowPageState extends State<TotalCowPage> {
                                         ));
                                   },
                                   child: Align(
-                                      heightFactor: 0.7,
+                                      heightFactor: ScreenUtil().setHeight(2.5),
                                       alignment: Alignment.topCenter,
                                       child: item(responseList[index])),
                                 )),
