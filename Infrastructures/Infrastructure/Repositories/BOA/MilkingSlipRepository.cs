@@ -30,5 +30,23 @@ namespace Infrastructure.Repositories.BOA
         {
             return dbSet.Where(r => r.Id == id);
         }
+
+        public IQueryable GetMilkingSlipByDate(int date, int month, int year, int session)
+        {
+            string sessionString = "";
+            if(session == 0)
+            {
+                sessionString = "Sáng";
+            }
+            else
+            {
+                sessionString = "Chiều";
+            }
+            var data = dbSet.Where(a => a.CreatedDate.Day == date)
+                .Where(a => a.CreatedDate.Month == month)
+                .Where(a => a.CreatedDate.Year == year)
+                .Where(a => a.Session == sessionString);
+            return data;
+        }
     }
 }
