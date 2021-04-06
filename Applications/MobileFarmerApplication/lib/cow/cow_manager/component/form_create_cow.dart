@@ -130,7 +130,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                 title: Text('Tạo bò'),
               ),
               body: Container(
-                margin: EdgeInsets.all(24),
+                margin: EdgeInsets.all(ScreenUtil().setSp(30.0)),
                 child: SingleChildScrollView(
                   key: _formKey,
                   child: Column(
@@ -153,11 +153,11 @@ class FormCreateCowState extends State<FormCreateCow> {
                               codeController: _codeController,
                               width: width,
                               setTextFuction: setTextValue),
-                          // buildIdFather(
-                          //     title: "Thức ăn",
-                          //     foodSuggestionModel: this.foodSuggestionModel,
-                          //     foodSuggestionId: foodSuggestionId,
-                          //     changeValueFuction: changeValue),
+                          buildIdFather(
+                              title: "Thức ăn",
+                              foodSuggestionModel: this.foodSuggestionModel,
+                              foodSuggestionId: foodSuggestionId,
+                              changeValueFuction: changeValue),
                           buildIdFather(
                               title: "Chuồng",
                               byreModel: this.byreModel,
@@ -200,9 +200,10 @@ class FormCreateCowState extends State<FormCreateCow> {
                           child: Container(
                             decoration:  BoxDecoration(
                               color: Color(0xff9CCC65),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(ScreenUtil().setSp(60)),
-                              ),
+                              // // borderRadius: BorderRadius.all(
+                              // //   Radius.circular(ScreenUtil().setSp(60)),
+                              // ),
+                              
                             ),
                             padding: EdgeInsets.symmetric(
                                 horizontal: ScreenUtil().setHeight(50),

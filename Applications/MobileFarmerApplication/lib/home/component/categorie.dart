@@ -10,19 +10,20 @@ class CategoriesScroller extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double categoryHeight =
-        MediaQuery.of(context).size.height * 0.30 - 50;
+        MediaQuery.of(context).size.height * ScreenUtil().setHeight(0.9);
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(60.0), horizontal: ScreenUtil().setWidth(60.0) ),
+        margin: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(60.0), 
+        horizontal: ScreenUtil().setWidth(60.0) ),
         child: FittedBox(
           fit: BoxFit.fill,
           alignment: Alignment.topCenter,
           child: Row(
             children: <Widget>[
               Container(
-                width: 150,
+                width: ScreenUtil().setWidth(450.0),
                 margin: EdgeInsets.only(right: 20),
                 height: categoryHeight,
                 decoration: BoxDecoration(
@@ -56,8 +57,8 @@ class CategoriesScroller extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 150,
-                margin: EdgeInsets.only(right: 20),
+                width: ScreenUtil().setWidth(450.0),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(60.0)),
                 height: categoryHeight,
                 decoration: BoxDecoration(
                     color: Colors.blue.shade400,
