@@ -60,9 +60,11 @@ class AuthenticationBloc
       //print(userInfo);
       final Map<String, dynamic> farmerInfo =
           json.decode(await Token.getFarmerInfo());
-      print(farmerInfo);
+
       if (farmerInfo != null) {
         FarmerInfoModel farmerInfoModel = FarmerInfoModel.fromJson(farmerInfo);
+        var farmerId = farmerInfoModel.id;
+        Storage.saveString("farmerId", farmerId.toString());
         yield AuthenticationAuthenticated(
             userInfo: null, farmerInfoModel: farmerInfoModel);
       } else {
