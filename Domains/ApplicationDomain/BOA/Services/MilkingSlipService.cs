@@ -123,7 +123,8 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<MilkingSlipModel> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
         {
-           var data = await _milkingSlipRepository.GetMilkingSlipByDate(date,month,year,session).MapQueryTo<MilkingSlipModel>(_mapper).FirstOrDefaultAsync();
+            var data = await _milkingSlipRepository.GetMilkingSlipByDate(date,month,year,session).MapQueryTo<MilkingSlipModel>(_mapper).FirstOrDefaultAsync();
+            
             return data;
         }
     }

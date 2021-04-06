@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.Cows;
+using ApplicationDomain.BOA.Models.ImportHistorys;
 using ApplicationDomain.BOA.Models.MilkingSlips;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -12,38 +13,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class MilkingSlipController : BaseController
+    public class ImportHistoryController : BaseController
     {
-        private readonly IMilkingSlipService _milkingSlipService;
-        public MilkingSlipController(IMilkingSlipService milkingSlipService)
+        private readonly IImportHistoryService _importHistoryService;
+        public ImportHistoryController(IImportHistoryService importHistoryService)
         {
-            _milkingSlipService = milkingSlipService;
+            _importHistoryService = importHistoryService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipAsync()
+        public async Task<IActionResult> GetImportHistoryAsync()
         {
-            return Ok(await _milkingSlipService.GetMilkingSlipAsync());
-        }
-
-        [Route("checkingcode/{code}")]
-        [HttpGet]
-        public async Task<IActionResult> CheckCodeExistsAsync(string code)
-        {
-            return Ok(await _milkingSlipService.CheckCodeExistsAsync(code));
+            return Ok(await _importHistoryService.GetImportHistoryAsync());
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipByIdAsync(int id)
+        public async Task<IActionResult> GetImportHistoryByIdAsync(int id)
         {
-            return Ok(await _milkingSlipService.GetMilkingSlipByIdAsync(id));
+            return Ok(await _importHistoryService.GetImportHistoryByIdAsync(id));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateMilkingSlipAsync([FromBody]MilkingSlipModelRq model)
+        public async Task<IActionResult> CreateImportHistoryAsync([FromBody]ImportHistoryModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -56,12 +50,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                
-                if (await _milkingSlipService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
-                return Ok(await _milkingSlipService.CreateMilkingSlipAsync(model, issuer));
+                //if (await _ImportHistoryService.CheckCodeExistsAsync(model.Code))
+                //{
+                //    return BadRequest("Code Exists");
+                //}
+                return Ok(await _importHistoryService.CreateImportHistoryAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -72,11 +65,11 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteMilkingSlipAsync(int id)
+        public async Task<IActionResult> DeleteImportHistoryAsync(int id)
         {
             try
             {
-                await _milkingSlipService.DeleteMilkingSlipAsync(id);
+                await _importHistoryService.DeleteImportHistoryAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -87,7 +80,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateMilkingSlipAsync(int id, [FromBody]MilkingSlipModelRq model)
+        public async Task<IActionResult> UpdateImportHistoryAsync(int id, [FromBody]ImportHistoryModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -100,7 +93,7 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _milkingSlipService.UpdateMilkingSlipAsync(id, model, issuer));
+                return Ok(await _importHistoryService.UpdateImportHistoryAsync(id, model, issuer));
             }
             catch (Exception e)
             {
@@ -108,26 +101,5 @@ namespace WebAdminApplication.Controllers
             }
         }
 
-        [Route("newcode")]
-        [HttpGet]
-        public async Task<IActionResult> AutoGenerateCodeAsync()
-        {
-            return OkValueObject(await _milkingSlipService.AutoGenerateCodeAsync());
-        }
-
-        [Route("{date}/{month}/{year}/{session}")]
-        [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
-        {
-            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session);
-            if(data != null)
-            {
-                return Ok(data);
-            }
-            else
-            {
-                return Ok("Null");
-            }
-        }
     }
 }

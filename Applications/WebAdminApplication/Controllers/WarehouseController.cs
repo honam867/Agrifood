@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.Cows;
+using ApplicationDomain.BOA.Models.Warehouses;
 using ApplicationDomain.BOA.Models.MilkingSlips;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
@@ -12,38 +13,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class MilkingSlipController : BaseController
+    public class WarehouseController : BaseController
     {
-        private readonly IMilkingSlipService _milkingSlipService;
-        public MilkingSlipController(IMilkingSlipService milkingSlipService)
+        private readonly IWarehouseService _WarehouseService;
+        public WarehouseController(IWarehouseService WarehouseService)
         {
-            _milkingSlipService = milkingSlipService;
+            _WarehouseService = WarehouseService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipAsync()
+        public async Task<IActionResult> GetWarehouseAsync()
         {
-            return Ok(await _milkingSlipService.GetMilkingSlipAsync());
-        }
-
-        [Route("checkingcode/{code}")]
-        [HttpGet]
-        public async Task<IActionResult> CheckCodeExistsAsync(string code)
-        {
-            return Ok(await _milkingSlipService.CheckCodeExistsAsync(code));
+            return Ok(await _WarehouseService.GetWarehouseAsync());
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipByIdAsync(int id)
+        public async Task<IActionResult> GetWarehouseByIdAsync(int id)
         {
-            return Ok(await _milkingSlipService.GetMilkingSlipByIdAsync(id));
+            return Ok(await _WarehouseService.GetWarehouseByIdAsync(id));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateMilkingSlipAsync([FromBody]MilkingSlipModelRq model)
+        public async Task<IActionResult> CreateWarehouseAsync([FromBody]WarehouseModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -56,12 +50,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                
-                if (await _milkingSlipService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
-                return Ok(await _milkingSlipService.CreateMilkingSlipAsync(model, issuer));
+                //if (await _WarehouseService.CheckCodeExistsAsync(model.Code))
+                //{
+                //    return BadRequest("Code Exists");
+                //}
+                return Ok(await _WarehouseService.CreateWarehouseAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -72,11 +65,11 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteMilkingSlipAsync(int id)
+        public async Task<IActionResult> DeleteWarehouseAsync(int id)
         {
             try
             {
-                await _milkingSlipService.DeleteMilkingSlipAsync(id);
+                await _WarehouseService.DeleteWarehouseAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -87,7 +80,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateMilkingSlipAsync(int id, [FromBody]MilkingSlipModelRq model)
+        public async Task<IActionResult> UpdateWarehouseAsync(int id, [FromBody]WarehouseModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -100,7 +93,7 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _milkingSlipService.UpdateMilkingSlipAsync(id, model, issuer));
+                return Ok(await _WarehouseService.UpdateWarehouseAsync(id, model, issuer));
             }
             catch (Exception e)
             {
@@ -108,26 +101,5 @@ namespace WebAdminApplication.Controllers
             }
         }
 
-        [Route("newcode")]
-        [HttpGet]
-        public async Task<IActionResult> AutoGenerateCodeAsync()
-        {
-            return OkValueObject(await _milkingSlipService.AutoGenerateCodeAsync());
-        }
-
-        [Route("{date}/{month}/{year}/{session}")]
-        [HttpGet]
-        public async Task<IActionResult> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
-        {
-            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session);
-            if(data != null)
-            {
-                return Ok(data);
-            }
-            else
-            {
-                return Ok("Null");
-            }
-        }
     }
 }
