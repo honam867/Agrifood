@@ -3,6 +3,7 @@ import 'package:AgrifoodApp/byre/page/byre_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
+import 'package:AgrifoodApp/history/page/daily_page.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/information.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
@@ -166,7 +167,9 @@ class _DashboardState extends State<Dashboard> {
                                   cowRepository: CowRepository(),
                                   foodSuggestionRepository:
                                       FoodSuggestionRepository()),
-                              child: CowPage(route: "DashBoard",),
+                              child: CowPage(
+                                route: "DashBoard",
+                              ),
                             ),
                           ));
                     });
@@ -183,6 +186,9 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ));
                     });
+                  } else if (data.title == "Thống kê") {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DailyPage()));
                   } else {
                     showToast(
                         string: "Chưa khả dụng", context: widget.contextHome);

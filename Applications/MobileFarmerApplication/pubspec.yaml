@@ -29,13 +29,16 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
   flutter_bloc: ^6.1.1
+  intl: ^0.16.0
   getwidget: ^1.2.4
   firebase_analytics: ^5.0.2
   cloud_firestore: "^0.14.0+2"
   http: ^0.12.2
   shared_preferences: ^0.5.12+4
   flutter_spinkit: "^4.1.2"
+  date_picker_timeline: ^1.2.1
   toast: ^0.1.5
+  quiver: ^2.1.5
   edge_alert: ^0.0.1
   simple_animations: ^1.3.3
   flutter_secure_storage: ^3.3.3
@@ -76,7 +79,8 @@ flutter:
     - assets/layout/
     - assets/profile/
     - assets/crud/
-
+    - assets/images/
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
