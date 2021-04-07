@@ -120,7 +120,9 @@
       </button>
     </div>
 </form>
-<div class="byre-list">
+<h5 *ngIf="!!byreSource">Danh sách chuồng</h5>
+<h5 *ngIf="!byreSource">Nông dân chưa tạo bất kỳ chuồng nào.</h5>
+<div class="byre-list" *ngIf="!!byreSource">
     <table mat-table [dataSource]="byreSource">
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -131,7 +133,24 @@
             <td mat-cell *matCellDef="let byre"> {{byre.code}} </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsByre"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumnsByre;"></tr>
+        <tr mat-row *matRowDef="let byre; columns: displayedColumnsByre;" (click)="viewCows(byre)"></tr>
+    </table>
+</div>
+
+<h5 *ngIf="!!cowSource">Danh sách bò</h5>
+<h5 *ngIf="!!alert">{{alert}}</h5>
+<div class="cow-list" *ngIf="!!cowSource">
+    <table mat-table [dataSource]="cowSource">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let cow"> {{cow.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <td mat-cell *matCellDef="let cow"> {{cow.code}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsByre"></tr>
+        <tr mat-row *matRowDef="let cow; columns: displayedColumnsByre;"></tr>
     </table>
 </div>
 <div style="margin:0 auto;text-align: center;">
