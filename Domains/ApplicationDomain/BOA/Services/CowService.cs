@@ -28,7 +28,7 @@ namespace ApplicationDomain.BOA.Services
             ) : base(mapper, uow)
         {
             _cowRepository = cowRepository;
-        
+
         }
 
         public async Task<int> CreateCowAsync(CowModelRq model, UserIdentity<int> issuer)
@@ -71,7 +71,7 @@ namespace ApplicationDomain.BOA.Services
         public async Task<IEnumerable<CowModel>> GetCowsAsync()
         {
             return await _cowRepository.GetCows().MapQueryTo<CowModel>(_mapper).ToListAsync();
-           
+
         }
 
         public async Task<CowModel> GetCowByIdAsync(int id)
@@ -111,7 +111,7 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<CowModel>> GetCowByByreId(int byreId)
         {
-            return  await _cowRepository.GetCowByByreId(byreId).MapQueryTo<CowModel>(_mapper).ToListAsync();
+            return await _cowRepository.GetCowByByreId(byreId).MapQueryTo<CowModel>(_mapper).ToListAsync();
         }
 
         public async Task<IEnumerable<CowModel>> GetCowByUserIdAsync(int userId)

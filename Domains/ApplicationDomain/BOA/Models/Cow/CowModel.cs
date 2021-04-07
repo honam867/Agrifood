@@ -8,18 +8,17 @@ namespace ApplicationDomain.BOA.Models.Cows
     {
         public int Id { get; set; }
         public int ByreId { set; get; }
-        public string ByreName { set; get; }
-        public int MotherId { set; get; }
-        public int FatherId { set; get; }
+        public int? MotherId { set; get; }
+        public int? FatherId { set; get; }
         public string Name { set; get; }
-        public string QRCode { set; get; }
+        public string Status { get; set; }
         public string Code { set; get; }
+        public string TinhCode { get; set; }
         public DateTime Birthday { set; get; }
-        public int AgeNumber { set; get; }
         public string Gender { set; get; }
         public DateTime WeaningDate { set; get; }
         public int FoodSuggestionId { set; get; }
-        
+
     }
     public class CowModelMapper : Profile
     {

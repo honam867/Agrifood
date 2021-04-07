@@ -11,7 +11,6 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public string Name { set; get; }
         public string Code { set; get; }
         public string FullName { get; set; }
-        public string QrCode { get; set; }
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
         public DateTime Birthday { get; set; }
@@ -21,9 +20,14 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public bool IsBlock { get; set; }
         public DateTime ContractCreatetionDate { get; set; }
         public int? UserId { get; set; }
-        public string UserUserName { get; set; }
-        public string AvatarURL { set; get; }   
         public int? MilkCollectionStationId { get; set; }
+        public int? WareHouseId { get; set; }
+        public string IdentificationNo { get; set; }
+        public DateTime IssuedOn { get; set; }
+        public string IssuedBy { get; set; }
+        public string AccountNumber { get; set; }
+        public string Bank { get; set; }
+        public string BankBranch { get; set; }
     }
 
     public class FarmerModelMapper : Profile
