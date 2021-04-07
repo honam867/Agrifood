@@ -12,6 +12,7 @@ import { Farmer } from './../../models/farmer';
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Byre } from '../../models/byre';
+import { Cow } from '../../models/cow';
 
 @Component({
   selector: 'app-crud-farmer',
@@ -38,8 +39,12 @@ export class CrudFarmerComponent implements OnInit {
   provinces: Province[] = [];
   byreSource: MatTableDataSource<Byre>;
   byres: Byre[] = [];
+  cows: Cow[] = [];
+  cowsInByre: Cow[] =[];
+  cowSource:MatTableDataSource<Cow>;
   farmerByres: Byre[] = [];
   valueObject: ValueObject = new ValueObject();
+  alert: any;
 
   displayedColumnsByre: string[] = ['name', 'code'];
 
@@ -96,7 +101,10 @@ export class CrudFarmerComponent implements OnInit {
     this.farmerService.getByres().subscribe(result => {
       this.byres = result;
       this.farmerByres = this.byres.filter(byre => byre.farmerId == this.sourceView.id);
-      this.byreSource = new MatTableDataSource(this.farmerByres);
+      if (this.farmerByres.length > 0) {
+        this.byreSource = new MatTableDataSource(this.farmerByres);
+      }
+
     });
   }
 
@@ -188,6 +196,23 @@ export class CrudFarmerComponent implements OnInit {
     this.dialogRef.close({
       action: StatusForm.VIEW,
       data: this.farmer,
+    });
+  }
+
+  viewCows(byre: Byre) {
+    // console.log(byre);
+    this.farmerService.getCows().subscribe(result => {
+      this.cows = result;
+      // console.log(this.cows, "default");
+      this.cowsInByre = this.cows.filter(cow => cow.byreId == byre.id);
+      if (this.cowsInByre.length > 0) {
+        this.cowSource = new MatTableDataSource(this.cowsInByre);
+        this.alert="";
+      } else {
+        this.alert = "Nông dân chưa tạo bò trong chuồng này";
+      }
+
+      // console.log(this.cowsInByre, "after filter");
     });
   }
 }
