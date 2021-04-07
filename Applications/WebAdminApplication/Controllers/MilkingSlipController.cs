@@ -126,7 +126,11 @@ namespace WebAdminApplication.Controllers
             }
             else
             {
-                return Ok("Null");
+                MilkingSlipModel milkingSlipModel = new MilkingSlipModel();
+                milkingSlipModel.Id = -1;
+                milkingSlipModel.Code = null;
+                milkingSlipModel.Session = null;
+                return Ok(milkingSlipModel);
             }
         }
     }
