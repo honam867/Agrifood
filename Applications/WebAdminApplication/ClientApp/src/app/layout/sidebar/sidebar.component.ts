@@ -84,6 +84,21 @@ export const ROUTES: RouteInfo[] = [{
     icontype: 'work'
 },
 {
+  path: '/milk',
+  type: 'sub',
+  title: 'Quản lý sữa',
+  collapse: 'milk',
+  children: [
+      {
+          path: 'milkcoupon',
+          title: 'Phiếu sữa',
+          type: 'link',
+          ab: null
+      }
+  ],
+  icontype: 'format_color_fill'
+},
+{
   path: '/province',
   type: 'sub',
   title: 'Địa điểm',
