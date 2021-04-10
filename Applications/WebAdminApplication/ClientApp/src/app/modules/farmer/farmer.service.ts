@@ -7,7 +7,9 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Byre } from './models/byre';
-import { Cow } from './models/cow';
+import { Cow } from '../cow/models/cow';
+
+
 // import {RoleOfUser} from './models/roleofUser';
 // import {Role} from '../system/models/role';
 // import { RqListRole } from 'src/app/shared/models/RqListRoles';

@@ -49,7 +49,13 @@ export const ROUTES: RouteInfo[] = [{
             title: 'DANH SÁCH NÔNG DÂN',
             type: 'link',
             ab: null
-        }
+        },
+        {
+          path: 'cowlist',
+          title: 'DANH SÁCH BÒ',
+          type: 'link',
+          ab: null
+      }
     ],
     icontype: 'supervised_user_circle'
 },

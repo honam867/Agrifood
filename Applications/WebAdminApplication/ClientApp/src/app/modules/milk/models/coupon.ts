@@ -14,6 +14,7 @@
 // }
 export class Coupon {
   id: number;
+  code: string;
   farmerId: number;
   scaleCode: string;
   employeeId: number;
@@ -24,6 +25,7 @@ export class Coupon {
 
   constructor() {
    this.id =0;
+   this.code = "";
    this.farmerId = 0;
    this.scaleCode = "";
    this.employeeId = 0;
