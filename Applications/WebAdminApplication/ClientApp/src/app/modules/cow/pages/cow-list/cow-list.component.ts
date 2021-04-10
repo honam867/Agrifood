@@ -5,8 +5,9 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Cow } from 'src/app/modules/farmer/models/cow';
 import { CowService } from '../../cow-service';
+import { Cow } from '../../models/cow';
+
 
 @Component({
   selector: 'app-cow-list',
