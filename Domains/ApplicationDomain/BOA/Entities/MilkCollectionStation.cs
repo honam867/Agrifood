@@ -13,8 +13,10 @@ namespace ApplicationDomain.BOA.Entities
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int WardId { get; set; }
-        public Ward Ward { get; set; }
+        public int DistrictId { get; set; }
+        public District District { get; set; }
+        public int TypeOfMilkId { get; set; }
+        public TypeOfMilk TypeOfMilk { get; set; }
 
     }
 }
