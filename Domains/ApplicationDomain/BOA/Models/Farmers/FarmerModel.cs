@@ -27,6 +27,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public string IssuedBy { get; set; }
         public string AccountNumber { get; set; }
         public string Bank { get; set; }
+        public string UserUserName { get; set; }
         public string BankBranch { get; set; }
     }
 
