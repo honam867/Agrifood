@@ -46,7 +46,8 @@ export class CrudFarmerComponent implements OnInit {
   valueObject: ValueObject = new ValueObject();
   alert: any;
 
-  displayedColumnsByre: string[] = ['name', 'code'];
+  displayedColumnsByre: string[] = ['name', 'code', 'action'];
+  displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status'];
 
   // dataSource: MatTableDataSource<Role>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -209,7 +210,11 @@ export class CrudFarmerComponent implements OnInit {
         this.cowSource = new MatTableDataSource(this.cowsInByre);
         this.alert="";
       } else {
-        this.alert = "Nông dân chưa tạo bò trong chuồng này";
+        this.dialog.open(AlertComponent,{
+          data:{
+            message:"Nông dân chưa tạo bò trong chuồng này!"
+          }
+        });
       }
 
       // console.log(this.cowsInByre, "after filter");
