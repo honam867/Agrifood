@@ -145,14 +145,14 @@ class _FormDetailCowState extends State<FormDetailCow> {
                               thickness: 1,
                               color: Colors.grey,
                             ),
-                            builItem(
-                                title: "thức ăn: ", 
-                                string: widget.cowItem.foodSuggestionId.toString()),
-                            Divider(
-                              height: 20,
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
+                            // builItem(
+                            //     title: "thức ăn: ", 
+                            //     string: widget.cowItem.foodSuggestionId.toString()),
+                            // Divider(
+                            //   height: 20,
+                            //   thickness: 1,
+                            //   color: Colors.grey,
+                            // ),
                             builItem(
                                 title: "Ngày cai sữa: ",
                                 string: Formator.convertDatatimeToString(

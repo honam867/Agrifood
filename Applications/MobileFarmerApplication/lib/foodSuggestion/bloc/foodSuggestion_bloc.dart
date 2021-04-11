@@ -14,7 +14,7 @@ class FoodSuggestionBloc extends Bloc<FoodEvent, FoodState>{
       : super(FoodLoadInprocess());
   @override
   Stream<FoodState> mapEventToState(FoodEvent event) async* {
-    if( event is FoodLoaded){
+    if( event is FoodLoadedSuccess){
       yield* _mapfoodLoadedToState();
           }
   }
