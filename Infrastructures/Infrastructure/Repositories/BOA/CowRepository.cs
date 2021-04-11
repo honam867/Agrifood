@@ -7,6 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MSSQL;
+using System.Data;
+using AspNetCore.DataBinding.AutoMapper;
+using ApplicationDomain.BOA.Models.Cows;
 
 namespace Infrastructure.Repositories.BOA
 {
@@ -43,6 +47,21 @@ namespace Infrastructure.Repositories.BOA
         {
             var list = this.dbSet.Include(o => o.Byre).Where(q => q.Byre.FarmerId == farmerId);
             return list;
+        }
+        public IQueryable GetCowNotExitsByMilkingSlipId(int id)
+        {
+            //IQueryable result = dbSet.Except(from c in dbSet
+            //                                 join mkd in context.Set<MilkingSlipDetail>() on c.Id equals mkd.CowId
+            //                                 where mkd.MilkingSlipId == id
+            //                                 select c);
+            var cowId = from c in dbSet
+                        join mkd in context.Set<MilkingSlipDetail>() on c.Id equals mkd.CowId
+                        where mkd.MilkingSlipId == id
+                        select c.Id;
+            var result = from c in dbSet
+                         where !cowId.Contains(c.Id)
+                         select c;
+            return result;
         }
     }
 }

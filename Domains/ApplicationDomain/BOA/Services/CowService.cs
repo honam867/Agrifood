@@ -119,5 +119,10 @@ namespace ApplicationDomain.BOA.Services
             var list = await _cowRepository.GetCowsByFarmerId(userId).MapQueryTo<CowModel>(_mapper).ToListAsync();
             return list;
         }
+        public async Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int id)
+        {
+            return await _cowRepository.GetCowNotExitsByMilkingSlipId(id).MapQueryTo<CowModel>(_mapper).ToListAsync();
+            
+        }
     }
 }

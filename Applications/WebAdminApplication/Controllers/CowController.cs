@@ -119,5 +119,12 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Route("checkcow/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetCowNotExitsByMilkingSlipIdAsync(int id)
+        {
+            return Ok(await _cowService.GetCowNotExitsByMilkingSlipIdAsync(id));
+        }
     }
 }
