@@ -114,5 +114,6 @@ namespace WebAdminApplication.Controllers
         {
             return Ok(await _milkingSlipDetailService.GetMilkingSlipDetailByMilkingSlipIdAsync(id));
         }
+
     }
 }

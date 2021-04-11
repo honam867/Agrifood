@@ -1,4 +1,5 @@
 ﻿using ApplicationDomain.BOA.Entities;
+using ApplicationDomain.BOA.Models.Cows;
 using AspNetCore.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetCowsByFarmerId(int farmerId);
         IQueryable GetCowByByreId(int byreId);
         Task<bool> CheckCodeExistsAsync(string code);
-        
+        IQueryable GetCowNotExitsByMilkingSlipId(int id);
+
     }
 }
