@@ -120,37 +120,57 @@
       </button>
     </div>
 </form>
-<h5 *ngIf="!!byreSource">Danh sách chuồng</h5>
-<h5 *ngIf="!byreSource">Nông dân chưa tạo bất kỳ chuồng nào.</h5>
+<h5 *ngIf="!!byreSource" class="list-header">Danh sách chuồng</h5>
+<h5 *ngIf="!byreSource" class="list-header">Nông dân chưa tạo bất kỳ chuồng nào.</h5>
 <div class="byre-list" *ngIf="!!byreSource">
     <table mat-table [dataSource]="byreSource">
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <th mat-header-cell *matHeaderCellDef> Tên chuồng </th>
             <td mat-cell *matCellDef="let byre"> {{byre.name}} </td>
         </ng-container>
         <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <th mat-header-cell *matHeaderCellDef> Mã chuồng </th>
             <td mat-cell *matCellDef="let byre"> {{byre.code}} </td>
         </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef width="7%"></th>
+            <td mat-cell *matCellDef="let byre">
+                <button mat-button (click)="viewCows(byre)">
+        <mat-icon>search</mat-icon>
+      </button>
+            </td>
+        </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumnsByre"></tr>
-        <tr mat-row *matRowDef="let byre; columns: displayedColumnsByre;" (click)="viewCows(byre)"></tr>
+        <tr mat-row class="table-row" *matRowDef="let byre; columns: displayedColumnsByre;"></tr>
     </table>
 </div>
 
-<h5 *ngIf="!!cowSource">Danh sách bò</h5>
-<h5 *ngIf="!!alert">{{alert}}</h5>
+<h5 *ngIf="!!cowSource" class="list-header">Danh sách bò</h5>
+<!-- <h5 *ngIf="!!alert" class="list-header">{{alert}}</h5> -->
 <div class="cow-list" *ngIf="!!cowSource">
     <table mat-table [dataSource]="cowSource">
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <th mat-header-cell *matHeaderCellDef width="20%"> Tên </th>
             <td mat-cell *matCellDef="let cow"> {{cow.name}} </td>
         </ng-container>
         <ng-container matColumnDef="code">
-            <th mat-header-cell *matHeaderCellDef> Code </th>
+            <th mat-header-cell *matHeaderCellDef width="20%"> Mã bò </th>
             <td mat-cell *matCellDef="let cow"> {{cow.code}} </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumnsByre"></tr>
-        <tr mat-row *matRowDef="let cow; columns: displayedColumnsByre;"></tr>
+        <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef width="20%"> Giới tính </th>
+            <td mat-cell *matCellDef="let cow"> {{cow.gender}} </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Tình trạng </th>
+            <td mat-cell *matCellDef="let cow"> {{cow.status}} </td>
+        </ng-container>
+        <ng-container matColumnDef="birthday" width="25%">
+            <th mat-header-cell *matHeaderCellDef> Ngày sinh </th>
+            <td mat-cell *matCellDef="let cow"> {{cow.birthday}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsCow"></tr>
+        <tr mat-row *matRowDef="let cow; columns: displayedColumnsCow;"></tr>
     </table>
 </div>
 <div style="margin:0 auto;text-align: center;">

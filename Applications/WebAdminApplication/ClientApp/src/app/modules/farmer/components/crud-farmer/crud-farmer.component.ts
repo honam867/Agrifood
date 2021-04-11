@@ -12,7 +12,8 @@ import { Farmer } from './../../models/farmer';
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Byre } from '../../models/byre';
-import { Cow } from '../../models/cow';
+import { Cow } from 'src/app/modules/cow/models/cow';
+
 
 @Component({
   selector: 'app-crud-farmer',
@@ -46,7 +47,8 @@ export class CrudFarmerComponent implements OnInit {
   valueObject: ValueObject = new ValueObject();
   alert: any;
 
-  displayedColumnsByre: string[] = ['name', 'code'];
+  displayedColumnsByre: string[] = ['name', 'code', 'action'];
+  displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status'];
 
   // dataSource: MatTableDataSource<Role>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -209,7 +211,11 @@ export class CrudFarmerComponent implements OnInit {
         this.cowSource = new MatTableDataSource(this.cowsInByre);
         this.alert="";
       } else {
-        this.alert = "Nông dân chưa tạo bò trong chuồng này";
+        this.dialog.open(AlertComponent,{
+          data:{
+            message:"Nông dân chưa tạo bò trong chuồng này!"
+          }
+        });
       }
 
       // console.log(this.cowsInByre, "after filter");

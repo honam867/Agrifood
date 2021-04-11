@@ -18,5 +18,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateMilkingSlipDetailAsync(int id, MilkingSlipDetailModelRq model, UserIdentity<int> issuer);
         //Task<bool> CheckCodeExistsAsync(string code);
         Task<IEnumerable<MilkingSlipDetailModel>> GetMilkingSlipDetailByMilkingSlipIdAsync(int id);
+        
     }
 }
