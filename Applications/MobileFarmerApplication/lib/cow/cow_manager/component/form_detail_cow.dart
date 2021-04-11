@@ -1,8 +1,10 @@
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
+import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/popup_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/feedCow/page/feedCow_page.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
@@ -39,6 +41,15 @@ class _FormDetailCowState extends State<FormDetailCow> {
                   if (index == 0) {
                     openPopupDeleteCow(context,
                         cowId: widget.cowItem.id, deleteCowFuction: deleteCow);
+                  } else if (index == 2) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                                  create: (context) => FoodSuggestionBloc(
+                                      foodSuggestionRepository:
+                                          FoodSuggestionRepository()),
+                                )));
                   } else {
                     Navigator.push(
                         context,
@@ -68,7 +79,11 @@ class _FormDetailCowState extends State<FormDetailCow> {
                 BottomNavigationBarItem(
                   icon: Icon(Icons.edit),
                   label: "Chỉnh sửa",
-                )
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.food_bank),
+                  label: "Cho ăn",
+                ),
               ],
             ),
             appBar: AppBar(
@@ -130,6 +145,14 @@ class _FormDetailCowState extends State<FormDetailCow> {
                               thickness: 1,
                               color: Colors.grey,
                             ),
+                            // builItem(
+                            //     title: "thức ăn: ", 
+                            //     string: widget.cowItem.foodSuggestionId.toString()),
+                            // Divider(
+                            //   height: 20,
+                            //   thickness: 1,
+                            //   color: Colors.grey,
+                            // ),
                             builItem(
                                 title: "Ngày cai sữa: ",
                                 string: Formator.convertDatatimeToString(

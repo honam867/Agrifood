@@ -97,7 +97,7 @@ class CowCard extends StatelessWidget {
             IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
-                size: 18,
+                size: ScreenUtil().setSp(60.0),
               ),
               onPressed: () {
                 Navigator.push(

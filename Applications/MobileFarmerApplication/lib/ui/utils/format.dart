@@ -13,5 +13,4 @@ class Formator {
     }
     return formatCurrency.format(source);
   }
-  
 }
