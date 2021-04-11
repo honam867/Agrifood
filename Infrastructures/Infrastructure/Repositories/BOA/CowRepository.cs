@@ -59,7 +59,7 @@ namespace Infrastructure.Repositories.BOA
                         where mkd.MilkingSlipId == id
                         select c.Id;
             var result = from c in dbSet
-                         where !cowId.Contains(c.Id)
+                         where !cowId.Contains(c.Id) && c.Gender == "Cái"
                          select c;
             return result;
         }
