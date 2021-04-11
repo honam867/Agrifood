@@ -4,6 +4,7 @@ import 'package:AgrifoodApp/history/model/daily_json.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart' as prefix;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final String defaultLocale = Platform.localeName;
 
@@ -60,17 +61,26 @@ class _DailyPageState extends State<DailyPage> {
               ),
             ]),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 60, right: 20, left: 20, bottom: 25),
+              padding: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(60), 
+                  right: ScreenUtil().setWidth(20), 
+                  left: ScreenUtil().setWidth(20), 
+                  bottom: ScreenUtil().setHeight(25)
+              ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      IconButton(
+                        icon: Icon(Icons.navigate_before), 
+                        onPressed: (){
+                          Navigator.pop(context);
+                      }),
                       Text(
                         "Thống kê",
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: ScreenUtil().setSp(80),
                             fontWeight: FontWeight.bold,
                             color: black),
                       ),
@@ -84,15 +94,16 @@ class _DailyPageState extends State<DailyPage> {
                               maxTime: DateTime(
                                   current.year, current.month - 1, current.day),
                               theme: DatePickerTheme(
-                                  headerColor: Colors.orange,
-                                  backgroundColor: Colors.blue,
+                                  headerColor: Colors.white,
+                                  backgroundColor: Colors.white,
+                                  containerHeight: ScreenUtil().setHeight(600),
                                   itemStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                      color: Colors.black,
+                                      //fontWeight: FontWeight.bold,
+                                      fontSize: ScreenUtil().setSp(70)),
                                   doneStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16)), onChanged: (date) {
+                                      color: Colors.black,
+                                      fontSize: ScreenUtil().setSp(60))), onChanged: (date) {
                             print('change $date in time zone ' +
                                 date.timeZoneOffset.inHours.toString());
                           }, onConfirm: (date) {
@@ -107,7 +118,7 @@ class _DailyPageState extends State<DailyPage> {
                     ],
                   ),
                   SizedBox(
-                    height: 25,
+                    height: ScreenUtil().setHeight(60)
                   ),
                   prefix.DatePicker(
                     selectStartDate,
@@ -131,7 +142,7 @@ class _DailyPageState extends State<DailyPage> {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: ScreenUtil().setHeight(60)
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
@@ -219,7 +230,7 @@ class _DailyPageState extends State<DailyPage> {
             })),
           ),
           SizedBox(
-            height: 15,
+            height: ScreenUtil().setHeight(60)
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),

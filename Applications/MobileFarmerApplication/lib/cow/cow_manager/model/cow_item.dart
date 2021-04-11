@@ -12,6 +12,7 @@ class CowItem {
   String gender;
   DateTime weaningDate;
   int foodSuggestionId;
+  String foodSuggestionItem;
 
   CowItem(
       {this.id,
@@ -26,7 +27,8 @@ class CowItem {
       this.ageNumber,
       this.gender,
       this.weaningDate,
-      this.foodSuggestionId});
+      this.foodSuggestionId,
+      this.foodSuggestionItem});
 
   CowItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -42,6 +44,7 @@ class CowItem {
     gender = json['gender'];
     weaningDate = DateTime.tryParse(json['weaningDate']);
     foodSuggestionId = json['foodSuggestionId'];
+    foodSuggestionItem = json['foodSuggestionItem'];
   }
 
   Map<String, dynamic> toJson() {
@@ -59,6 +62,7 @@ class CowItem {
     data['gender'] = this.gender;
     data['weaningDate'] = this.weaningDate.toIso8601String();
     data['foodSuggestionId'] = this.foodSuggestionId;
+    data['foodSuggestionItem'] = this.foodSuggestionItem;
     return data;
   }
 }

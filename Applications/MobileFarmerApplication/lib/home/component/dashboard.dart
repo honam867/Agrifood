@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
       title: "Quản lí chuồng",
       //subtitle: "Danh sách các chuồng hiện có",
       event: "",
-      img: "assets/layout/list.png");
+      img: "assets/layout/stable.png");
 
   Items item2 = new Items(
     title: "Quản lí bò",
