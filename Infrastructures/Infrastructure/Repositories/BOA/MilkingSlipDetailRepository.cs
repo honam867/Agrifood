@@ -12,8 +12,10 @@ namespace Infrastructure.Repositories.BOA
 {
     public class MilkingSlipDetailRepository : GenericRepository<MilkingSlipDetail, int>, IMilkingSlipDetailRepository
     {
-        public MilkingSlipDetailRepository(ApplicationDbContext dbContext) : base(dbContext)
+        private ICowRepository _cowRepository;
+        public MilkingSlipDetailRepository(ApplicationDbContext dbContext, ICowRepository cowRepository) : base(dbContext)
         {
+            _cowRepository = cowRepository;
         }
 
         //public async Task<bool> CheckCodeExistsAsync(string code)
@@ -33,7 +35,10 @@ namespace Infrastructure.Repositories.BOA
 
         public IQueryable GetMilkingSlipDetailByMilkingSlipId(int id)
         {
-            return dbSet.Where(a => a.MilkingSlipId == id);
+            IQueryable rs = dbSet.Where(a => a.MilkingSlipId == id);
+            return rs;
         }
+
+        
     }
 }
