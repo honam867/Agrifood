@@ -12,7 +12,8 @@ import { Farmer } from './../../models/farmer';
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Byre } from '../../models/byre';
-import { Cow } from '../../models/cow';
+import { Cow } from 'src/app/modules/cow/models/cow';
+
 
 @Component({
   selector: 'app-crud-farmer',

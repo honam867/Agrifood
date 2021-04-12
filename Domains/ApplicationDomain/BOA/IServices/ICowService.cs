@@ -18,5 +18,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteCowAsync(int id);
         Task<bool> UpdateCowAsync(int id, CowModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
+        Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int id);
     }
 }

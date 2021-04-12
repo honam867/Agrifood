@@ -64,9 +64,7 @@ namespace Infrastructure.SeedData
             var systemAdmin = userManagement.FindByNameAsync("sysadmin").Result;
             await userManagement.AddToRoleAsync(systemAdmin, ROLE_CONSTANT.SYSADMIN);
             await SeedEmailTemplate(dbContext);
-            await SeedDistrictAsync(dbContext,
-               await SeedProvinceAsync(dbContext));
-                        await SeedCompanyAsync(dbContext);
+           
       
           
 

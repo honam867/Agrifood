@@ -1,3 +1,4 @@
+import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
@@ -36,6 +37,7 @@ class TotalCowPage extends StatefulWidget {
 class _TotalCowPageState extends State<TotalCowPage> {
   List<Widget> itemsData = [];
   List<CowItem> responseList = new List<CowItem>();
+  List<ByreItem> responseListByre = new List<ByreItem>();
   Widget item(CowItem cowItem) {
     return Container(
         height: ScreenUtil().setHeight(500.0),

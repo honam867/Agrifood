@@ -49,7 +49,13 @@ export const ROUTES: RouteInfo[] = [{
             title: 'DANH SÁCH NÔNG DÂN',
             type: 'link',
             ab: null
-        }
+        },
+        {
+          path: 'cowlist',
+          title: 'DANH SÁCH BÒ',
+          type: 'link',
+          ab: null
+      }
     ],
     icontype: 'supervised_user_circle'
 },
@@ -82,6 +88,21 @@ export const ROUTES: RouteInfo[] = [{
         }
     ],
     icontype: 'work'
+},
+{
+  path: '/milk',
+  type: 'sub',
+  title: 'Quản lý sữa',
+  collapse: 'milk',
+  children: [
+      {
+          path: 'milkcoupon',
+          title: 'Phiếu sữa',
+          type: 'link',
+          ab: null
+      }
+  ],
+  icontype: 'format_color_fill'
 },
 {
   path: '/province',

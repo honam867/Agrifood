@@ -6,11 +6,11 @@ typedef SetTextFuction = Function({String value, String title});
 Widget buildTextForm({hint, validatorText, nameController, codeController, width, SetTextFuction setTextFuction}) {
     return Padding(
         padding: EdgeInsets.only(
-          top: ScreenUtil().setSp(10.0),
+          top: ScreenUtil().setSp(20.0),
         ),
         child: Container(
           height: ScreenUtil().setHeight(300.0),
-          width: hint == "Mã bò" ? width / 4 : width,
+          width: hint == "Mã bò" ? width / ScreenUtil().setWidth(15) : width,
           child: TextFormField(
             controller: hint == "Mã bò" ? codeController : nameController,
             decoration: InputDecoration(
