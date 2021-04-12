@@ -9,13 +9,10 @@ abstract class FoodEvent extends Equatable {
 }
 
 class FoodLoadedSuccess extends FoodEvent {
-  final FoodSuggestionItem foodSuggestionItem;
-
-  const FoodLoadedSuccess(this.foodSuggestionItem);
-
+  
   @override
-  List<Object> get props => [foodSuggestionItem];
+  List<Object> get props => [];
 
-  @override
-  String toString() => 'TodoLoaded { todo: $foodSuggestionItem }';
+  // @override
+  // String toString() => 'TodoLoaded { todo: $foodSuggestionItem }';
 }
