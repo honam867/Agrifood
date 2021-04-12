@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:AgrifoodApp/history/bloc/history_bloc.dart';
 import 'package:AgrifoodApp/history/component/colors.dart';
-import 'package:AgrifoodApp/history/model/daily_json.dart';
+import 'package:AgrifoodApp/history/component/item_history.dart';
+import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart' as prefix;
 
@@ -12,13 +15,59 @@ class DailyPage extends StatefulWidget {
   _DailyPageState createState() => _DailyPageState();
 }
 
-class _DailyPageState extends State<DailyPage> {
+class _DailyPageState extends State<DailyPage>
+    with AutomaticKeepAliveClientMixin {
+  var top = 0.0;
+  ScrollController _scrollController = new ScrollController();
+  final _formKey = new GlobalKey<FormState>();
+  int indexTab = 0;
+  bool lastStatus = true;
   prefix.DatePickerController _controller = prefix.DatePickerController();
+  double offset = 0.0;
+  _scrollListener() {
+    if (isShrink != lastStatus) {
+      setState(() {
+        lastStatus = isShrink;
+        //_scrollController.jumpTo(50.0);
+      });
+    }
+    if (_scrollController.position.pixels == 0.0) {
+      setState(() {
+        _controller.animateToDate(selectedValue);
+        _controller.animateToSelection(
+            duration: Duration(microseconds: 500), curve: Curves.bounceIn);
+      });
+    }
+  }
+
+  void refeshList({DateTime getDate, int session}) {
+    BlocProvider.of<HistoryBloc>(context)
+      ..add(HistoryLoadedSucces(
+          day: getDate.day,
+          month: getDate.month,
+          year: getDate.year,
+          session: session));
+  }
+
+  bool get isShrink {
+    return _scrollController.hasClients &&
+        _scrollController.offset > (205 - kToolbarHeight);
+  }
+
+  DateTime selectedValue = DateTime.now();
+
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _controller.animateToDate(DateTime.now());
+      _controller.animateToDate(selectedValue);
     });
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    super.dispose();
   }
 
   int activeDay = 3;
@@ -28,7 +77,6 @@ class _DailyPageState extends State<DailyPage> {
     current.month - 1,
   );
 
-  DateTime _selectedValue = DateTime.now();
   static int daysInEnd(DateTime date) {
     var firstDayThisMonth = new DateTime(date.year, date.month, date.day);
     var firstDayNextMonth =
@@ -39,221 +87,210 @@ class _DailyPageState extends State<DailyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.green[100],
-      body: getBody(),
-    );
-  }
-
-  Widget getBody() {
-    var size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(color: white, boxShadow: [
-              BoxShadow(
-                color: grey.withOpacity(0.01),
-                spreadRadius: 10,
-                blurRadius: 3,
-                // changes position of shadow
-              ),
-            ]),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 60, right: 20, left: 20, bottom: 25),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Thống kê",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: black),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () {
-                          DatePicker.showDatePicker(context,
-                              showTitleActions: true,
-                              minTime: DateTime(current.year - 1,
-                                  current.month - 2, current.day),
-                              maxTime: DateTime(
-                                  current.year, current.month - 1, current.day),
-                              theme: DatePickerTheme(
-                                  headerColor: Colors.orange,
-                                  backgroundColor: Colors.blue,
-                                  itemStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                  doneStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16)), onChanged: (date) {
-                            print('change $date in time zone ' +
-                                date.timeZoneOffset.inHours.toString());
-                          }, onConfirm: (date) {
-                            setState(() {
-                              selectStartDate = date;
-                            });
-                          },
-                              currentTime: DateTime.now(),
-                              locale: LocaleType.vi);
-                        },
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  prefix.DatePicker(
-                    selectStartDate,
-                    locale: "vi",
-                    selectionColor: Colors.blue,
-                    controller: _controller,
-                    daysCount: daysInEnd(selectStartDate) == 0
-                        ? 30
-                        : daysInEnd(selectStartDate),
-                    initialSelectedDate: DateTime.now(),
-                    onDateChange: (date) {
-                      // New date selected
-                      setState(() {
-                        _selectedValue = date;
-                        _controller.animateToDate(date);
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Column(
-                children: List.generate(daily.length, (index) {
-              return Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: (size.width - 40) * 0.7,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: grey.withOpacity(0.1),
+    super.build(context);
+    return DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: SafeArea(
+          child: Scaffold(
+              backgroundColor: Colors.green[100],
+              body: BlocBuilder<HistoryBloc, HistoryState>(
+                builder: (context, state) {
+                  return CustomScrollView(
+                      controller: _scrollController,
+                      slivers: <Widget>[
+                        SliverAppBar(
+                            leading: IconButton(
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.black,
                               ),
-                              child: Center(
-                                child: Image.asset(
-                                  daily[index]['icon'],
-                                  width: 30,
-                                  height: 30,
-                                ),
-                              ),
+                              onPressed: () => Navigator.pop(context),
                             ),
-                            SizedBox(width: 15),
-                            Container(
-                              width: (size.width - 90) * 0.5,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    daily[index]['name'],
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: black,
-                                        fontWeight: FontWeight.w500),
-                                    overflow: TextOverflow.ellipsis,
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                title(),
+                                IconButton(
+                                  icon: Icon(Icons.calendar_today),
+                                  onPressed: () {
+                                    DatePicker.showDatePicker(context,
+                                        showTitleActions: true,
+                                        minTime: DateTime(current.year - 1,
+                                            current.month - 2, current.day),
+                                        maxTime: DateTime(current.year,
+                                            current.month - 1, 30),
+                                        theme: DatePickerTheme(
+                                            headerColor: Colors.orange,
+                                            backgroundColor: colorApp,
+                                            itemStyle: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18),
+                                            doneStyle: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16)),
+                                        onChanged: (date) {},
+                                        onConfirm: (date) {
+                                      setState(() {
+                                        selectStartDate = date;
+                                      });
+                                    },
+                                        currentTime: DateTime.now(),
+                                        locale: LocaleType.vi);
+                                  },
+                                )
+                              ],
+                            ),
+                            pinned: true,
+                            expandedHeight: 205.0,
+                            backgroundColor: colorApp,
+                            bottom: PreferredSize(
+                              preferredSize: Size.fromHeight(50),
+                              child: TabBar(
+                                onTap: (int index) {
+                                  indexTab = index == 0 ? 0 : 1;
+                                  refeshList(getDate: selectedValue, session: indexTab);
+                                },
+                                labelColor: Colors.black87,
+                                tabs: [
+                                  Tab(
+                                    child: tabTille(title: "Sáng")
                                   ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    daily[index]['date'],
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: black.withOpacity(0.5),
-                                        fontWeight: FontWeight.w400),
-                                    overflow: TextOverflow.ellipsis,
+                                  Tab(
+                                    child: tabTille(title: "Tối")
                                   ),
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: (size.width - 40) * 0.3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              daily[index]['price'],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 15,
-                                  color: Colors.green),
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 65, top: 8),
-                    child: Divider(
-                      thickness: 0.8,
-                    ),
-                  )
-                ],
-              );
-            })),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              children: [
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 80),
-                  child: Text(
-                    "Total",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: black.withOpacity(0.4),
-                        fontWeight: FontWeight.w600),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    "\$1780.00",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: black,
-                        fontWeight: FontWeight.bold),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                            flexibleSpace: LayoutBuilder(
+                              builder: (context, constraints) {
+                                top = constraints.biggest.height;
+                                return FlexibleSpaceBar(
+                                  background: top > 56 && top > 110
+                                      ? Container(
+                                          decoration: BoxDecoration(
+                                              color: white,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: grey.withOpacity(0.01),
+                                                  spreadRadius: 10,
+                                                  blurRadius: 3,
+                                                  // changes position of shadow
+                                                ),
+                                              ]),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 40,
+                                                right: 20,
+                                                left: 20,
+                                                bottom: 25),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  height: 25,
+                                                ),
+                                                prefix.DatePicker(
+                                                  selectStartDate,
+                                                  locale: "vi",
+                                                  key: _formKey,
+                                                  selectionColor: Colors.blue,
+                                                  controller: _controller,
+                                                  daysCount: daysInEnd(
+                                                              selectStartDate) ==
+                                                          0
+                                                      ? 30
+                                                      : daysInEnd(
+                                                          selectStartDate),
+                                                  initialSelectedDate:
+                                                      DateTime.now(),
+                                                  onDateChange: (date) {
+                                                    setState(() {
+                                                      this.selectedValue = date;
+                                                      _controller
+                                                          .animateToDate(date);
+                                                      refeshList(getDate: selectedValue, session: indexTab);
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 50,
+                                          color: colorApp,
+                                        ),
+                                );
+                              },
+                            )),
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (BuildContext context, int index1) {
+                              if (state is HistoryLoadInprocess) {
+                                BlocProvider.of<HistoryBloc>(context)
+                                  ..add(HistoryLoadedSucces(
+                                      day: current.day,
+                                      month: current.month,
+                                      year: current.year,
+                                      session: 0));
+                              }
+                              if (state is HistoryLoading) {
+                                return Container(
+                                  padding: EdgeInsets.only(top: 20),
+                                  width: 50,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              }
+                              if (state is HistoryLoaded) {
+                                var list =
+                                    state.historyModel.milkingSlipDetaiItem;
+                                return list.length > 0
+                                    ? SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.only(top: 20),
+                                              child: ListView.builder(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    NeverScrollableScrollPhysics(),
+                                                itemCount: list.length,
+                                                itemBuilder: (context, index) {
+                                                  return ListTile(
+                                                    title: ItemHistory(
+                                                      list: list[index],
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: 200, // Some height
+                                        child: Center(
+                                          child: Text("Không có báo cáo nào"),
+                                        ),
+                                      );
+                              }
+                              return Container(
+                                  //height: 50,
+                                  child: Center(
+                                      child: CircularProgressIndicator()));
+                            },
+                            childCount: 1,
+                          ),
+                        )
+                      ]);
+                },
+              )),
+        ));
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -82,6 +82,18 @@ class AddMilkingSlipDoneLoaded extends MilkingSlipState {
   const AddMilkingSlipDoneLoaded({this.milkingSlipId});
 }
 
+class GetmilkingSlipDoneLoaded extends MilkingSlipState {
+  final MilkingSlipDetailModel milkingSlipDetailModel;
+  final int milkingSlipId;
+  const GetmilkingSlipDoneLoaded({this.milkingSlipDetailModel, this.milkingSlipId});
+}
+
+class FullReportCowState extends MilkingSlipState {
+  final String toast;
+
+  const FullReportCowState({this.toast});
+}
+
 class CreateMilkingSlipDetailDone extends MilkingSlipState {
   final int milkingdetailId;
   const CreateMilkingSlipDetailDone({this.milkingdetailId});
