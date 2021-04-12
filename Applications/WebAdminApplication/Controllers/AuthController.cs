@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using ApplicationDomain.Identity.IServices;
 using ApplicationDomain.Identity.Models;
 using ApplicationDomain.Identity.Models.Permissions;
-using ApplicationDomain.Identity.Models.Users;
 using AspNetCore.Common.Identity;
 using AspNetCore.Mvc;
 using AspNetCore.Mvc.JwtBearer;
@@ -99,20 +98,7 @@ namespace WebAdminApplication.Controllers
             }
         }
 
-        [Route("tltquotation")]
-        [HttpPost]
-        public async Task<IActionResult> TLTQuotationAsync([FromBody]TLTQuotationRq model)
-        {
-            try
-            {
-                var issuer = GetCurrentUserIdentity<int>();
-                return Ok(await _authService.TLTQuotationAsync(model, issuer));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+
 
         [Route("mobile/resetpassword")]
         [HttpPut]
