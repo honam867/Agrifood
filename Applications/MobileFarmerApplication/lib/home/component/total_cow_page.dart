@@ -65,19 +65,19 @@ class _TotalCowPageState extends State<TotalCowPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    cowItem.name,
+                    cowItem.name ?? "",
                     style: TextStyle(
                         fontSize: ScreenUtil().setSp(80.0),
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    cowItem.byreName,
+                    cowItem.byreName ?? "",
                     style: TextStyle(
                         fontSize: ScreenUtil().setSp(60.0), color: Colors.grey),
                   ),
                   SizedBox(height: ScreenUtil().setHeight(40.0)),
                   Text(
-                    cowItem.gender,
+                    cowItem.gender ?? "",
                     style: TextStyle(
                         fontSize: ScreenUtil().setSp(80.0),
                         color: Colors.black,

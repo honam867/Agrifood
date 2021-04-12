@@ -1,5 +1,6 @@
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
+import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
@@ -30,16 +31,18 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
     } else if (event is MilkingSlipDetailoading) {
       yield* _mapMilkingSlipDetailLoadedToState();
     } else if (event is OnPressAddItemMilkingSlipEvent) {
-      yield* _mapOnPressAddItemMilkingSlipEvent();
+      yield* _mapOnPressAddItemMilkingSlipEvent(event);
     } else if (event is MilkingSlipDetailUpdated) {
       yield* _mapTodoUpdatedToState(event);
     }
   }
 
-  Stream<MilkingSlipState> _mapOnPressAddItemMilkingSlipEvent() async* {
+  Stream<MilkingSlipState> _mapOnPressAddItemMilkingSlipEvent(
+      OnPressAddItemMilkingSlipEvent event) async* {
     try {
       CowRepository cowRepository = new CowRepository();
-      final cowModel = await cowRepository.getAllCow();
+      final cowModel = await cowRepository.getCowByDateMilkingSlip(
+          milkingSlipId: event.milkingSlipId);
       yield OnPressAddItemMilkingSlipState(cowModel);
     } catch (_) {
       yield MilkingSlipError();
@@ -71,11 +74,35 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
       MilkingSlipAddProcess event) async* {
     final MilkingSlipRepository milkingSlipRepository =
         new MilkingSlipRepository();
+    final DateTime current = new DateTime.now();
     try {
-      var result = await milkingSlipRepository.addMilkingSlip(
-          milkingSlipItem: event.milkingSlipItem);
-      if (result != "0") {
-        yield AddMilkingSlipDoneLoaded(milkingSlipId: int.parse(result));
+      var checkCreate = await milkingSlipRepository.getMilkingSlipByDateAsync(
+          day: current.day,
+          month: current.month,
+          year: current.year,
+          session: event.milkingSlipItem.session == "Sáng" ? 0 : 1);
+      CowRepository cowRepository = new CowRepository();
+
+      if (checkCreate.id == -1) {
+        var result = await milkingSlipRepository.addMilkingSlip(
+            milkingSlipItem: event.milkingSlipItem);
+        if (result != "0") {
+          yield AddMilkingSlipDoneLoaded(milkingSlipId: int.parse(result));
+        }
+      } else {
+        var checkCow = await cowRepository.getCowByDateMilkingSlip(
+            milkingSlipId: checkCreate.id);
+        if (checkCow.cowItem.length > 0) {
+          MilkingSlipDetailModel milkingSlipDetailModel =
+              await milkingSlipRepository.getMilkingSlipDetailByMilkingSlipId(
+                  milkingSlipId: checkCreate.id);
+
+          yield GetmilkingSlipDoneLoaded(
+              milkingSlipDetailModel: milkingSlipDetailModel,
+              milkingSlipId: checkCreate.id);
+        } else {
+          yield FullReportCowState(toast: "Bạn đã báo cáo buổi hôm nay");
+        }
       }
     } catch (_) {
       yield MilkingSlipError();
@@ -124,7 +151,7 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
           event.milkingSlipDetailItem.id,
           milkingSlipDetailItem: event.milkingSlipDetailItem);
       if (result == true) {
-       yield UpdateMilkingSlipDetailDone(result: result);
+        yield UpdateMilkingSlipDetailDone(result: result);
       }
     } catch (_) {
       yield MilkingSlipError();

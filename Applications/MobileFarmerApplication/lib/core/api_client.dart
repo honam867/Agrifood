@@ -32,7 +32,10 @@ class APIClient {
       apiUrl,
       headers: await addHeader(),
     );
-    return json.decode(response.body) as Map<String, dynamic>;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return json.decode(response.body) as Map<String, dynamic>;
+    }
+    return null;
   }
 
   static Future<List<dynamic>> getList(String url) async {

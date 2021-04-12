@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
+import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
 
@@ -11,6 +12,35 @@ class MilkingSlipRepository {
       List<dynamic> jsonRs = await APIClient.getList("api/milkingSlip");
       MilkingSlipModel milkingSlipModel = MilkingSlipModel.fromJson(jsonRs);
       return milkingSlipModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<MilkingSlipDetailModel> getMilkingSlipDetailByMilkingSlipId(
+      {int milkingSlipId}) async {
+    try {
+      List<dynamic> jsonRs = await APIClient.getList(
+          "api/milkingSlipDetail/detail/$milkingSlipId");
+      if (jsonRs != null) {
+        MilkingSlipDetailModel milkingSlipModel =
+            MilkingSlipDetailModel.fromJson(jsonRs);
+        return milkingSlipModel;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<MilkingSlipItem> getMilkingSlipByDateAsync(
+      {int day, int month, int year, int session}) async {
+    try {
+      Map<String, dynamic> jsonRs =
+          await APIClient.get("api/milkingSlip/$day/$month/$year/$session");
+       MilkingSlipItem milkingSlipModel = MilkingSlipItem.fromJson(jsonRs);
+        return milkingSlipModel;
     } catch (error) {
       throw error;
     }

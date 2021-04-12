@@ -191,26 +191,12 @@ class _MyHomePageState extends State<MyHomePage>
           appBar: AppBar(
             bottom: TabBar(
               onTap: (index) {
-                // Should not used it as it only called when tab options are clicked,
-                // not when user swapped
               },
               controller: _tabController,
               tabs: list,
             ),
-            // title: Text(
-            //   "Trang chủ",
-            //   style: GoogleFonts.openSans(
-            //       textStyle: TextStyle(
-            //           color: Colors.black,
-            //           fontSize: ScreenUtil().setSp(100),
-            //           fontWeight: FontWeight.w600)),
-            // ),
             elevation: 0,
             backgroundColor: Color(0xff9CCC65),
-            // leading: Icon(
-            //   Icons.menu,
-            //   color: Colors.black,
-            // ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search, color: Colors.black),
