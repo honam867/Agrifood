@@ -81,7 +81,7 @@ class PopupReport extends StatelessWidget {
                     topLeft: Radius.circular(ScreenUtil().setSp(40.0)),
                     topRight: Radius.circular(ScreenUtil().setSp(40.0)))),
           ),
-          SizedBox(height: ScreenUtil().setHeight(100.0)),
+          SizedBox(height: ScreenUtil().setHeight(150.0)),
           Text(
             'Bạn đang vắt buổi?',
             style: TextStyle(
@@ -102,11 +102,12 @@ class PopupReport extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-          SizedBox(height: ScreenUtil().setHeight(90.0)),
-          TextField(
+          SizedBox(height: ScreenUtil().setHeight(70)),
+           TextField(
             enabled: false,
             controller: codeController,
           ),
+          SizedBox(height: ScreenUtil().setHeight(110)),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -122,7 +123,7 @@ class PopupReport extends StatelessWidget {
                 child: Text('Chiều'),
                 textColor: Colors.white,
               ),
-              SizedBox(width: ScreenUtil().setWidth(60.0)),
+              SizedBox(width: ScreenUtil().setWidth(100.0)),
               RaisedButton(
                 onPressed: () {
                   MilkingSlipItem item = new MilkingSlipItem(
