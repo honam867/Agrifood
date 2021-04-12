@@ -1,17 +1,10 @@
-import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/milkingslip/bloc/milkingslip_bloc.dart';
 import 'package:AgrifoodApp/milkingslip/component/milkingslip_detail_card.dart';
-import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
-import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
-import 'package:AgrifoodApp/ui/utils/show_toast.dart';
-import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screen_util.dart';
-import 'package:AgrifoodApp/milkingslip/component/select_drop_list.dart';
-import 'package:AgrifoodApp/milkingslip/model/drop_list_model.dart';
 
 class MilkingSlipDetailPage extends StatefulWidget {
   final String value;
@@ -23,8 +16,7 @@ class MilkingSlipDetailPage extends StatefulWidget {
 }
 
 class _MilkingSlipDetailPageState extends State<MilkingSlipDetailPage> {
-  List<BlocProvider<MilkingSlipBloc>> listReport =
-      new List<BlocProvider<MilkingSlipBloc>>();
+  List<BlocProvider<MilkingSlipBloc>> listReport = new List<BlocProvider<MilkingSlipBloc>>();
   TextEditingController nameController = TextEditingController();
 
   void addItemToList({CowModel cowModel, int mikingSlipId}) {
@@ -33,7 +25,7 @@ class _MilkingSlipDetailPageState extends State<MilkingSlipDetailPage> {
         0,
         BlocProvider(
             create: (BuildContext context) =>
-                MilkingSlipBloc()..add(OnPressAddItemMilkingSlipEvent()),
+                MilkingSlipBloc()..add(OnPressAddItemMilkingSlipEvent(widget.milkingSlipId)),
             child: MilkingSlipDetailCard(
               milkingSlipId: widget.milkingSlipId,
               deleteFunction: deleteItemToList,

@@ -11,7 +11,11 @@ class MilkingSlipLoadedSucces extends MilkingSlipEvent {}
 
 class MilkingSlipDetailoading extends MilkingSlipEvent {}
 
-class OnPressAddItemMilkingSlipEvent extends MilkingSlipEvent {}
+class OnPressAddItemMilkingSlipEvent extends MilkingSlipEvent {
+  final int milkingSlipId;
+
+  OnPressAddItemMilkingSlipEvent(this.milkingSlipId);
+}
 
 class MilkingSlipDetailLoaded extends MilkingSlipEvent {}
 
