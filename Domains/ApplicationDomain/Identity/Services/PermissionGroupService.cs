@@ -18,7 +18,6 @@ namespace ApplicationDomain.Identity.Services
     {
         private IPermissionGroupRepository _permissionGroupRepository;
         private IPermissionMembershipRepository _permissionMembershipRepository;
-        private IMenuPermissionRepository _menuPermissionRepository;
         private IFarmerPermissionRepository _farmerPermissionRepository;
 
         public PermissionGroupService(
@@ -27,14 +26,12 @@ namespace ApplicationDomain.Identity.Services
             IUnitOfWork uow,
             IPermissionGroupRepository permissionGroupRepository,
             IPermissionMembershipRepository permissionMembershipRepository,
-            IMenuPermissionRepository menuPermissionRepository,
             IFarmerPermissionRepository farmerPermissionRepository
             ) : base(mapper, uow)
         {
 
             _permissionGroupRepository = permissionGroupRepository;
             _permissionMembershipRepository = permissionMembershipRepository;
-            _menuPermissionRepository = menuPermissionRepository;
             _farmerPermissionRepository = farmerPermissionRepository;
         }
 

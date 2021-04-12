@@ -3,7 +3,6 @@ using ApplicationDomain.Core.IServices;
 using ApplicationDomain.Identity.Entities;
 using ApplicationDomain.Identity.IServices;
 using ApplicationDomain.Identity.Models;
-using ApplicationDomain.Identity.Models.Users;
 using AspNetCore.Common.Identity;
 using AspNetCore.UnitOfWork;
 using AutoMapper;
@@ -198,17 +197,6 @@ namespace ApplicationDomain.Identity.Services
                 throw e;
             }
 
-        }
-        public async Task<bool> TLTQuotationAsync(TLTQuotationRq model, UserIdentity<int> issuer)
-        {
-            var user = await _userManager.FindByIdAsync(issuer.Id.ToString());
-            if (user == null)
-            {
-                return false;
-            }
-            user.UpdateBy(issuer);
-            await _uow.SaveChangesAsync();
-            return true;
         }
 
         public async Task<bool> CheckExistUserPasswordAsync(int id, UserCheckPasswordRq model)

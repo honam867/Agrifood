@@ -22,7 +22,6 @@ namespace ApplicationDomain.BOA.Services
         
         public BreedService(
             IBreedRepository breedRepository,
-            ICompanyRepository companyRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
