@@ -1,3 +1,4 @@
+import { DetailOfCoupon } from './../../models/detailOfCoupon';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { MilkService } from './../../milk.service';
@@ -5,6 +6,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Coupon } from '../../models/coupon';
+import { Detail } from '../../models/detail';
+import { MatTableDataSource } from '@angular/material/table';
+import { CrudDetailComponent } from '../crud-detail/crud-detail.component';
 
 @Component({
   selector: 'app-crud-coupon',
@@ -23,6 +27,8 @@ export class CrudCouponComponent implements OnInit {
   isView = true;
   isCreate = true;
   loading: boolean;
+  detailsOfCoupon: any[];
+  dataSource: MatTableDataSource<Detail>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Coupon = new Coupon();
   constructor(
@@ -115,6 +121,32 @@ export class CrudCouponComponent implements OnInit {
   //     });
   // }
 
+  fetchDetailInCoupon() {
+    this.couponService.getDetailByCouponId(this.sourceView.id).subscribe(res => {
+      this.detailsOfCoupon = res;
+      this.dataSource = new MatTableDataSource(this.detailsOfCoupon);
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  popUpAddMilkCouponDetail() {
+    const createDialog = this.dialog.open(CrudDetailComponent, {
+      height: '80%',
+      width: '60%',
+      data: {
+        action: StatusForm.CREATE,
+        detailOfCoupon: new DetailOfCoupon(this.coupon.id),
+      },
+      disableClose: true,
+    });
+    createDialog.afterClosed().subscribe(
+      result => {
+        if (result.data) { // result => data:true
+          this.fetchDetailInCoupon();
+        }
+      }
+    );
+  }
 
 
 }

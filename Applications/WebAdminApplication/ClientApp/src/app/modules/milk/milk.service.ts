@@ -1,3 +1,4 @@
+import { Detail } from './models/detail';
 import { District } from './../../models/district';
 import { Province } from './../../models/province';
 import { Injectable } from '@angular/core';
@@ -33,6 +34,17 @@ export class MilkService {
   createCoupon(coupon: Coupon) {
     return this.http.post(`milkcoupon`, coupon);
   }
+
+  getDetailByCouponId(couponId: number): Observable<Coupon[]> {
+    return this.http.get(`milkcoupon/milkcoupondetail/${couponId}`);
+  }
+
+  createDetail(detail: Detail) {
+    return this.http.post(`milkcoupondetail`, detail);
+  }
+
+
+
   // getProvince(): Observable<Province[]> {
   //   return this.http.get(`province`)
   // }
