@@ -42,10 +42,11 @@ namespace WebAdminApplication.Controllers
             return Ok(await _milkCouponDetailService.GetMilkCouponDetailByIdAsync(id));
         }
 
-        [Route("milkcoupondetail/{milkCounponId}")]
+        [Route("milkcoupon/{milkCounponId}")]
         [HttpGet]
         public async Task<IActionResult> GetMilkcouponDetailByMilkcouponIdAsync(int milkCounponId) {
-            return Ok(await _milkCouponDetailService.GetMilkcouponDetailByMilkcouponIdAsync(milkCounponId));
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _milkCouponDetailService.GetMilkcouponDetailByMilkcouponIdAsync(milkCounponId, issuer));
         }
 
         [Route("")]
