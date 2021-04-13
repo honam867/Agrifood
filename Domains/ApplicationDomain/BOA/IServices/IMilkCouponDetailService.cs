@@ -17,6 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteMilkCouponDetailAsync(int id);
         Task<bool> UpdateMilkCouponDetailAsync(int id, MilkCouponDetailModelRq model, UserIdentity<int> issuer);
         //Task<bool> CheckCodeExistsAsync(string code);
-        Task<MilkCouponDetailModel> GetMilkcouponDetailByMilkcouponIdAsync(int id);
+        Task<MilkCouponDetailModel> GetMilkcouponDetailByMilkcouponIdAsync(int id, UserIdentity<int> issuer);
     }
 }
