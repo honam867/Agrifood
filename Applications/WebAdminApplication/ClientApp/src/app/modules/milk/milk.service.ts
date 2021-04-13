@@ -43,6 +43,13 @@ export class MilkService {
     return this.http.post(`milkcoupondetail`, detail);
   }
 
+  deleteCouponDetail(detailId: number){
+    return this.http.delete(`milkcoupondetail/${detailId}`);
+  }
+
+  updateCouponDetail(detailId: number, updatedDetail: Detail): Observable<boolean> {
+    return this.http.put(`milkcoupon/${detailId}`, updatedDetail);
+  }
 
 
   // getProvince(): Observable<Province[]> {

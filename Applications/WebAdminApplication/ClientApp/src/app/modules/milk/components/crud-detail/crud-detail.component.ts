@@ -1,3 +1,4 @@
+import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { Detail } from './../../models/detail';
 import { StatusForm } from './../../../../shared/enum/status-form';
 import { MilkService } from './../../milk.service';
@@ -15,73 +16,104 @@ import { MatTableDataSource } from '@angular/material/table';
   templateUrl: './crud-detail.component.html',
   styleUrls: ['./crud-detail.component.scss']
 })
+
 export class CrudDetailComponent implements OnInit {
+  page = 1;
   displayedColumns: string[] = [
-    'select',
     'name',
-  ];
-  form: FormGroup;
+    'action'];
+  status: string;
+  detail: Detail = new Detail();
   isView = true;
   isCreate = true;
-  name = [];
-  // roles: Role[] = [];
-  details: Detail[] = [];
-  DetailsSelected: Detail[] = [];
-  sourceView: DetailOfCoupon = new DetailOfCoupon();
-  detailOfCoupon: DetailOfCoupon = new DetailOfCoupon();
-  dataSource: MatTableDataSource<Detail>;
-  selection = new SelectionModel<Detail>(true, []);
-  detail : Detail = new Detail;
-  // rqListRoles: RqListRole = new RqListRole();
-  loaded = false;
+  loading: boolean;
+  // rolesOfUser: any[];
+  // removeRole: any = {
+  //   userId: 0,
+  //   roleName: '',
+  // };
+  // dataSource: MatTableDataSource<Role>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  sourceView: Detail = new Detail();
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CrudDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private couponService: MilkService,
-    private snackBar: MatSnackBar
-  ) {
+    public couponService: MilkService
+    // private roleService: RoleService,
+    // private systemService: SystemService,
+  ) { }
 
-  }
-
-  ngOnInit() {
-    this.detailOfCoupon = this.data.detailOfCoupon;
+  ngOnInit(): void {
+    this.detail = this.data.detail;
+    if (this.data.action === StatusForm.DETELE) {
+      this.delete();
+    }
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
-    this.sourceView = Object.assign({}, this.detailOfCoupon);
+    this.sourceView = Object.assign({}, this.detail);
   }
 
+  delete() {
+    const deleteDialog = this.dialog.open(ConfirmationComponent, {
+      data: {
+        message: 'Bạn có muốn xóa?',
+      },
+      disableClose: true,
+    });
 
-  edit() {
-    this.isView = false;
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.couponService.deleteCouponDetail(this.detail.id).subscribe(
+            success => {
+              this.dialogRef.close({
+                action: StatusForm.DETELE,
+                data: this.detail,
+              });
+            }
+          );
+        }
+      }
+    );
+  }
+
+  create() {
+    this.sourceView.milkCouponId = this.data.couponId;
+    this.couponService.createDetail(this.sourceView).subscribe(
+      result => {
+        this.dialogRef.close({
+          data: result,
+        });
+      }
+    );
   }
 
   close() {
     this.dialogRef.close({
       action: StatusForm.VIEW,
-      data: this.detailOfCoupon
+      data: this.detail,
     });
   }
 
-  create() {
-    this.couponService.createDetail(this.detail).subscribe(
-      result => {
-        if (result.value) {
-          this.dialogRef.close({
-            data: result,
-          });
-          this.snackBar.open('Đã thêm !', 'Tắt');
-        }
-
-      }
-      , error => {
-        if (error.error.message === 'Code Exists') {
-          // this.CreateCus = false;
-        }
-      });
+  edit() {
+    this.isView = false;
   }
 
+  discard() {
+    this.isView = true;
+    this.sourceView = this.detail;
+  }
 
+  save() {
+    this.loading = true;
+    this.couponService.updateCouponDetail(this.detail.id, this.sourceView).subscribe(
+      result => {
+        this.isView = true;
+        this.loading = false;
+        this.detail = this.sourceView;
+      }
+    );
+  }
 
 }
