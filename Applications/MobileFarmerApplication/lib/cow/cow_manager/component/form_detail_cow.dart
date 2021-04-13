@@ -5,6 +5,7 @@ import 'package:AgrifoodApp/cow/cow_manager/component/popup_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/feedCow/page/feedCow_page.dart';
+import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
@@ -17,7 +18,8 @@ import 'package:flutter_screenutil/screen_util.dart';
 
 class FormDetailCow extends StatefulWidget {
   final CowItem cowItem;
-  const FormDetailCow({Key key, this.cowItem}) : super(key: key);
+  final FoodSuggestionItem foodSuggestionItem;
+  const FormDetailCow({Key key, this.cowItem, this.foodSuggestionItem}) : super(key: key);
   @override
   _FormDetailCowState createState() => _FormDetailCowState();
 }
@@ -30,8 +32,8 @@ class _FormDetailCowState extends State<FormDetailCow> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CowBloc, CowState>(
-        child: SafeArea(
+    return BlocConsumer<CowBloc, CowState>(builder: (context, state){
+      return SafeArea(
           child: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
               //backgroundColor: Color(0xff9CCC65),
@@ -49,6 +51,11 @@ class _FormDetailCowState extends State<FormDetailCow> {
                                   create: (context) => FoodSuggestionBloc(
                                       foodSuggestionRepository:
                                           FoodSuggestionRepository()),
+                                  child: FeedCow(
+                                    contextfoodPage: context,
+                                    routefoodName: "FeedCow", 
+                                    foodSuggestionItem: widget.foodSuggestionItem
+                                    ),
                                 )));
                   } else {
                     Navigator.push(
@@ -175,15 +182,15 @@ class _FormDetailCowState extends State<FormDetailCow> {
               ),
             ),
           ),
-        ),
-        listener: (context, state) {
-          if (state is CowDeleted) {
+        );
+    }, listener: (context, state){
+       if (state is CowDeleted) {
             showToast(context: context, string: state.result);
             reloadCow(context: context, routeName: "HomePage");
             //BlocProvider.of<CowBloc>(context).add(CowLoadedSucces());
             Navigator.pop(context);
           }
-        });
+    });
   }
 }
 

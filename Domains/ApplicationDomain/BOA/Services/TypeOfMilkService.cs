@@ -22,7 +22,6 @@ namespace ApplicationDomain.BOA.Services
         
         public TypeOfMilkService(
             ITypeOfMilkRepository typeOfMilkRepository,
-            ICompanyRepository companyRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)

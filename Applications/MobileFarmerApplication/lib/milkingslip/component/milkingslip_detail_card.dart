@@ -385,14 +385,14 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
               milkingSlipDetailId = state.milkingdetailId;
               showToast(context: context, string: status);
               BlocProvider.of<MilkingSlipBloc>(context)
-                ..add(OnPressAddItemMilkingSlipEvent());
+                ..add(OnPressAddItemMilkingSlipEvent(widget.milkingSlipId));
             } else if (state is UpdateMilkingSlipDetailDone) {
               status = "Đã sửa";
               sended = true;
               isEdited = false;
               minimze = !minimze;
               BlocProvider.of<MilkingSlipBloc>(context)
-                ..add(OnPressAddItemMilkingSlipEvent());
+                ..add(OnPressAddItemMilkingSlipEvent(widget.milkingSlipId));
             }
           })
         : Container(

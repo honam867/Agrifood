@@ -18,6 +18,7 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteCowAsync(int id);
         Task<bool> UpdateCowAsync(int id, CowModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
-        Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int id);
+        Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int milkingSlipId, UserIdentity<int> issuer);
+        Task<IEnumerable<CowModel>> GetCowByGenderAsync(int gd, UserIdentity<int> issuer);
     }
 }
