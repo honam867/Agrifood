@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/core/token.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
-import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authentication_event.dart';

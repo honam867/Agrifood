@@ -112,6 +112,7 @@ class APIClient {
   }
 
   static Future uploadFile(String url, File file) async {
+    // ignore: deprecated_member_use
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
     var length = await file.length();
 

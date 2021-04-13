@@ -1,12 +1,12 @@
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
-import 'package:AgrifoodApp/ui/splash_page.dart';
+//import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screen_util.dart';
-import 'package:quiver/iterables.dart';
+//import 'package:quiver/iterables.dart';
 
 class FeedCow extends StatefulWidget {
   final FoodSuggestionItem foodSuggestionItem;
@@ -62,12 +62,12 @@ class _FeedCowState extends State<FeedCow> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               builItem(
-                                                    title: foodSugestion
+                                                    title: "Thức ăn thô", 
+                                                    string: foodSugestion
                                                             .foodSuggestionItem[
                                                                 index]
                                                             .content ??
-                                                        "",
-                                                    string: "212a"),
+                                                        ""),
                                               
                                               Divider(
                                                 height: 20,

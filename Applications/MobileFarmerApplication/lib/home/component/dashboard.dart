@@ -2,7 +2,7 @@ import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
 import 'package:AgrifoodApp/byre/page/byre_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
-import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
+//import 'package:AgrifoodApp/cow/cow_manager/page/list_cow.dart';
 import 'package:AgrifoodApp/history/bloc/history_bloc.dart';
 import 'package:AgrifoodApp/history/page/daily_page.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';

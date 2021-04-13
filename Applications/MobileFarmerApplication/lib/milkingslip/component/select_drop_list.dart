@@ -1,6 +1,7 @@
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:flutter/material.dart';
 import 'package:AgrifoodApp/milkingslip/model/drop_list_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectDropList extends StatefulWidget {
   final CowItem itemSelected;
@@ -58,13 +59,15 @@ class _SelectDropListState extends State<SelectDropList>
       child: Column(
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 17),
+            padding: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(60.0),
+              vertical: ScreenUtil().setHeight(60.0)),
             decoration: new BoxDecoration(
-              borderRadius: BorderRadius.circular(20.0),
-              color: Colors.white,
+              borderRadius: BorderRadius.circular(0.0),
+              color: Colors.orange[300],
               boxShadow: [
                 BoxShadow(
-                    blurRadius: 10, color: Colors.black26, offset: Offset(0, 2))
+                    blurRadius: ScreenUtil().setSp(0.0), color: Colors.black26, offset: Offset(0, 2))
               ],
             ),
             child: new Row(
@@ -73,10 +76,10 @@ class _SelectDropListState extends State<SelectDropList>
               children: <Widget>[
                 Icon(
                   Icons.card_travel,
-                  color: Color(0xFF307DF1),
+                  color: Colors.black
                 ),
                 SizedBox(
-                  width: 10,
+                  width: ScreenUtil().setWidth(30)
                 ),
                 Expanded(
                     child: GestureDetector(
@@ -87,15 +90,15 @@ class _SelectDropListState extends State<SelectDropList>
                   },
                   child: Text(
                     optionItemSelected.name,
-                    style: TextStyle(color: Color(0xFF307DF1), fontSize: 16),
+                    style: TextStyle(color: Colors.black, fontSize: ScreenUtil().setWidth(50)),
                   ),
                 )),
                 Align(
                   alignment: Alignment(1, 0),
                   child: Icon(
                     isShow ? Icons.arrow_drop_down : Icons.arrow_right,
-                    color: Color(0xFF307DF1),
-                    size: 15,
+                    color: Colors.black,
+                    size: ScreenUtil().setSp(100),
                   ),
                 ),
               ],
@@ -109,8 +112,8 @@ class _SelectDropListState extends State<SelectDropList>
                   padding: const EdgeInsets.only(bottom: 10),
                   decoration: new BoxDecoration(
                     borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(80)),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -149,7 +152,7 @@ class _SelectDropListState extends State<SelectDropList>
                 ),
                 child: Text(item.name,
                     style: TextStyle(
-                        color: Color(0xFF307DF1),
+                        color: Colors.black,
                         fontWeight: FontWeight.w400,
                         fontSize: 14),
                     maxLines: 3,

@@ -3,7 +3,7 @@ import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
-import 'package:AgrifoodApp/respository/byre_repository.dart';
+//import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/respository/milkingslip_repository.dart';
