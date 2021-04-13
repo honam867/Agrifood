@@ -31,9 +31,9 @@ namespace Infrastructure.Repositories.BOA
             return dbSet.Where(r => r.Id == id);
         }
 
-        public IQueryable GetMilkcouponDetailByMilkcouponId(int id)
+        public IQueryable GetMilkcouponDetailByMilkcouponId(int id, int userId)
         {
-            return dbSet.Where(a => a.MilkCouponId == id);
+            return dbSet.Where(a => a.MilkCouponId == id).Where(a => a.CreatedByUserId == userId);
         }
     }
 }
