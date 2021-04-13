@@ -1,14 +1,14 @@
 import 'dart:async';
 
 import 'package:AgrifoodApp/authentication/bloc/authentication.dart';
-import 'package:AgrifoodApp/authentication/bloc/authentication_cubit.dart';
-import 'package:AgrifoodApp/authentication/login/component/login_form.dart';
-import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
-import 'package:AgrifoodApp/authentication/login/login_event.dart';
-import 'package:AgrifoodApp/authentication/signup/component/verification_phoneNumber_component.dart';
+// import 'package:AgrifoodApp/authentication/bloc/authentication_cubit.dart';
+// import 'package:AgrifoodApp/authentication/login/component/login_form.dart';
+// import 'package:AgrifoodApp/authentication/login/login_bloc.dart';
+// import 'package:AgrifoodApp/authentication/login/login_event.dart';
+// import 'package:AgrifoodApp/authentication/signup/component/verification_phoneNumber_component.dart';
 import 'package:AgrifoodApp/respository/authentication_repository.dart';
-import 'package:AgrifoodApp/respository/register_repository.dart';
-import 'package:AgrifoodApp/ui/utils/text_style.dart';
+// import 'package:AgrifoodApp/respository/register_repository.dart';
+// import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:AgrifoodApp/ui/animation/FadeAnimation.dart';
@@ -39,8 +39,8 @@ class _InitPageState extends State<InitPage> {
 
   @override
   Widget build(BuildContext context) {
-    AuthenticationRepository authenticationRepository =
-        new AuthenticationRepository();
+    // AuthenticationRepository authenticationRepository =
+    //     new AuthenticationRepository();
     return Scaffold(
       body: SafeArea(
         child: Container(

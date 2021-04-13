@@ -6,6 +6,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 typedef SelectDateFunction = Function({DateTime dateTime});
 
+// ignore: must_be_immutable
 class BuildBirth extends StatefulWidget {
   SelectDateFunction selectDateFunction;
   String birthdayString;

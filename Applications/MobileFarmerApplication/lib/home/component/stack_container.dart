@@ -1,5 +1,5 @@
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
-import 'package:AgrifoodApp/home/model/userInfo_model.dart';
+//import 'package:AgrifoodApp/home/model/userInfo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'top_bar.dart';
