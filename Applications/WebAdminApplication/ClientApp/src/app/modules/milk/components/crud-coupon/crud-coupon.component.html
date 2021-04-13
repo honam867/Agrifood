@@ -16,24 +16,26 @@
     Chỉnh sửa phiếu sữa
 </mat-card-title>
 
-<mat-card>
-    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
-        <div class="row">
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Mã nhân viên</mat-label>
-                    <input id="employeeId" [(ngModel)]="sourceView.employeeId" name="employeeId" #name="ngModel" matInput placeholder="id" [disabled]="isView">
-                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Mã nhân viên không được bỏ trống
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Mã nông dân</mat-label>
-                    <input id="farmerId" [(ngModel)]="sourceView.farmerId" name="farmerId" matInput placeholder="id" [disabled]="isView">
-                </mat-form-field>
-            </div>
-            <!-- <div class="col-lg-6">
+<mat-tab-group>
+    <mat-tab label="Thông tin">
+        <mat-card>
+            <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Mã nhân viên</mat-label>
+                            <input id="employeeId" [(ngModel)]="sourceView.employeeId" name="employeeId" #name="ngModel" matInput placeholder="id" [disabled]="isView">
+                            <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Mã nhân viên không được bỏ trống
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Mã nông dân</mat-label>
+                            <input id="farmerId" [(ngModel)]="sourceView.farmerId" name="farmerId" matInput placeholder="id" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-lg-6">
               <mat-form-field class="input-fluid" appearance="outline">
                   <h6 style="color: grey;">Tỉnh</h6>
                   <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="sourceView.provinceId" [placeholder]="sourceView.provinceName" id="provinceId" name="provinceId" [disabled]="isView">
@@ -42,61 +44,99 @@
                   </mat-select>
               </mat-form-field>
           </div> -->
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Mã trạm sữa</mat-label>
-                    <input id="milkCollectionStationId" [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" matInput placeholder="" [disabled]="isView">
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Scale code</mat-label>
-                    <input id="scaleCode" [(ngModel)]="sourceView.scaleCode" name="scaleCode" matInput placeholder="" [disabled]="isView">
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Ngày tạo phiếu</mat-label>
-                    <input matInput [matDatepicker]="picker2" [(ngModel)]="sourceView.createdDate" [disabled]="isView" [ngModelOptions]="{ standalone: true }" />
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Mã bình chứa</mat-label>
-                    <input id="storageTankCode" [(ngModel)]="sourceView.storageTankCode" name="storageTankCode" matInput placeholder="" [disabled]="isView">
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Phiên</mat-label>
-                    <input id="session" [(ngModel)]="sourceView.session" name="session" matInput placeholder="" [disabled]="isView">
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Code</mat-label>
-                    <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="" [disabled]="isView">
-                </mat-form-field>
-            </div>
-        </div>
-        <!-- <mat-form-field class="input-fluid" appearance="outline">
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Mã trạm sữa</mat-label>
+                            <input id="milkCollectionStationId" [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Scale code</mat-label>
+                            <input id="scaleCode" [(ngModel)]="sourceView.scaleCode" name="scaleCode" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Ngày tạo phiếu</mat-label>
+                            <input matInput [matDatepicker]="picker2" [(ngModel)]="sourceView.createdDate" [disabled]="isView" [ngModelOptions]="{ standalone: true }" />
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Mã bình chứa</mat-label>
+                            <input id="storageTankCode" [(ngModel)]="sourceView.storageTankCode" name="storageTankCode" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Phiên</mat-label>
+                            <input id="session" [(ngModel)]="sourceView.session" name="session" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-6">
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Code</mat-label>
+                            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <mat-form-field class="input-fluid" appearance="outline">
           <mat-label>Code</mat-label>
           <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView">
       </mat-form-field> -->
-        <div style="margin:0 auto;text-align: center;">
-            <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+                <div style="margin:0 auto;text-align: center;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
                Thêm
           </button>
-        </div>
-    </form>
-    <div style="margin:0 auto;text-align: center;">
-        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
+                </div>
+            </form>
+            <div style="margin:0 auto;text-align: center;">
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
               class="fas fa-trash-alt"></i> Xóa</button>
-        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
-        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
-        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh
+                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+                <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
+                <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh
           sửa</button>
-    </div>
-</mat-card>
+            </div>
+        </mat-card>
+    </mat-tab>
+    <mat-tab label="Chi tiết" *ngIf="!isCreate">
+        <button mat-icon-button color="warn" matTooltip="Thêm mới" *ngIf="!isCreate" (click)="popUpAddMilkCouponDetail()">
+    <mat-icon>add</mat-icon>
+  </button>
+        <div class="mat-elevation-z8">
+            <mat-paginator [pageSizeOptions]="[10,20,50]"></mat-paginator>
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã phiếu sữa</th>
+                    <td mat-cell *matCellDef="let detailOfCoupon">{{detailOfCoupon.milkCouponId}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Số lượng</th>
+                    <td mat-cell *matCellDef="let detailOfCoupon">{{detailOfCoupon.quantity}}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Loại sữa</th>
+                    <td mat-cell *matCellDef="let detailOfCoupon">{{detailOfCoupon.typeMilk}}</td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef width="5%"></th>
+                  <td mat-cell *matCellDef="let rolesOfUser">
+                      <button (click)="deleteRolesOfUser(rolesOfUser)" mat-icon-button color="primary">
+              <mat-icon>delete</mat-icon>
+            </button>
+                  </td>
+              </ng-container> -->
+                <tr mat-row class="table-row" *matRowDef="let assetCategoryPart; columns: displayedColumns; ">
+                </tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
+            </table>
+        </div>
+    </mat-tab>
+</mat-tab-group>
