@@ -182,34 +182,34 @@ namespace Infrastructure.SeedData
         }
 
 
-        private static async Task<int> SeedCompanyAsync(ApplicationDbContext dbContext)
-        {
-            Console.WriteLine("Start to seed Company");
-            var userManagement = _serviceProvider.GetService<UserManager<User>>();
-            var system = userManagement.FindByNameAsync("sysadmin").Result;
-            var model = new Company
-            {
-                Code = "VNT",
-                Email = "VNT@gmail.com",
-                Address = "Quận 12",
-                Fax = "123456789",
-                ForeignName = "Viet Nhat Tan",
-                LogoURL = "http://www.vietnhattan.com.vn/wp-content/uploads/2016/12/cropped-VNT_LOGO-192x192.png",
-                Name = "CTY TNHH CƠ KHÍ CHÍNH XÁC VIỆT NHẬT TÂN",
-                PhoneNumber = "0936915227",
-                ShortName = "VNT",
-                TaxCode = "123456789",
-                WebsiteURL = "http://www.vietnhattan.com.vn/",
-                CreatedByUserId = system.Id,
-                CreatedByUserName = system.UserName,
-                UpdatedByUserId = system.Id,
-                UpdatedByUserName = system.UserName,
-            };
-            await dbContext.AddAsync(model);
-            await dbContext.SaveChangesAsync();
-            Console.WriteLine("Finished seed Company");
-            return model.Id;
-        }
+        //private static async Task<int> SeedCompanyAsync(ApplicationDbContext dbContext)
+        //{
+        //    Console.WriteLine("Start to seed Company");
+        //    var userManagement = _serviceProvider.GetService<UserManager<User>>();
+        //    var system = userManagement.FindByNameAsync("sysadmin").Result;
+        //    var model = new Company
+        //    {
+        //        Code = "VNT",
+        //        Email = "VNT@gmail.com",
+        //        Address = "Quận 12",
+        //        Fax = "123456789",
+        //        ForeignName = "Viet Nhat Tan",
+        //        LogoURL = "http://www.vietnhattan.com.vn/wp-content/uploads/2016/12/cropped-VNT_LOGO-192x192.png",
+        //        Name = "CTY TNHH CƠ KHÍ CHÍNH XÁC VIỆT NHẬT TÂN",
+        //        PhoneNumber = "0936915227",
+        //        ShortName = "VNT",
+        //        TaxCode = "123456789",
+        //        WebsiteURL = "http://www.vietnhattan.com.vn/",
+        //        CreatedByUserId = system.Id,
+        //        CreatedByUserName = system.UserName,
+        //        UpdatedByUserId = system.Id,
+        //        UpdatedByUserName = system.UserName,
+        //    };
+        //    await dbContext.AddAsync(model);
+        //    await dbContext.SaveChangesAsync();
+        //    Console.WriteLine("Finished seed Company");
+        //    return model.Id;
+        //}
 
 
         //private static async Task<int> SeedBranchAsync(ApplicationDbContext dbContext, int companyid)

@@ -22,7 +22,6 @@ namespace ApplicationDomain.BOA.Services
         
         public FoodService(
             IFoodRepository foodRepository,
-            ICompanyRepository companyRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)

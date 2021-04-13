@@ -48,20 +48,34 @@ namespace Infrastructure.Repositories.BOA
             var list = this.dbSet.Include(o => o.Byre).Where(q => q.Byre.FarmerId == farmerId);
             return list;
         }
-        public IQueryable GetCowNotExitsByMilkingSlipId(int id)
+        public IQueryable GetCowNotExitsByMilkingSlipId(int milkingSlipId, int userId)
         {
             //IQueryable result = dbSet.Except(from c in dbSet
             //                                 join mkd in context.Set<MilkingSlipDetail>() on c.Id equals mkd.CowId
             //                                 where mkd.MilkingSlipId == id
             //                                 select c);
-            var cowId = from c in dbSet
+
+            var cowId = from c in dbSet.Include(o => o.Byre).Where(q => q.CreatedByUserId == userId)
                         join mkd in context.Set<MilkingSlipDetail>() on c.Id equals mkd.CowId
-                        where mkd.MilkingSlipId == id
+                        where mkd.MilkingSlipId == milkingSlipId
                         select c.Id;
-            var result = from c in dbSet
+            var result = from c in dbSet.Include(o => o.Byre).Where(q => q.CreatedByUserId == userId)
                          where !cowId.Contains(c.Id) && c.Gender == "Cái"
                          select c;
             return result;
+        }
+
+        public IQueryable GetCowByGender(int gd, int userId)
+        {
+            string gender = "";
+            if(gd == 0)
+            {
+                gender = "Cái";
+            } else
+            {
+                gender = "Đực";
+            }
+            return dbSet.Where(a => a.Gender == gender).Include(a => a.Byre).Where(q => q.CreatedByUserId == userId);
         }
     }
 }
