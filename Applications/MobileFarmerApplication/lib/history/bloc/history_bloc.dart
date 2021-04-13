@@ -78,6 +78,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     }
   }
 
+  // ignore: unused_element
   Stream<HistoryState> _mapTodoDeletedToState(
       HistoryDeleteProcess event) async* {
     try {
@@ -92,6 +93,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     }
   }
 
+  // ignore: unused_element
   Stream<HistoryState> _mapFoodSuggestionLoadInprocessToState() async* {
     try {
       // final foodSuggestionModel =
@@ -104,6 +106,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     }
   }
 
+  // ignore: unused_element
   Stream<HistoryState> _mapTodoUpdatedToState(HistoryUpdated event) async* {
     // final result = await this
     //     .historyRepository
