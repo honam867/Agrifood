@@ -40,6 +40,14 @@ namespace WebAdminApplication.Controllers
             return Ok(await _cowService.GetCowByUserIdAsync(userId));
         }
 
+        [Route("gender/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetCowByGenderAsync(int id)
+        {
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _cowService.GetCowByGenderAsync(id,issuer));
+        }
+
         [Route("checkingcode/{code}")]
         [HttpGet]
         public async Task<IActionResult> CheckCodeExistsAsync(string code)
@@ -124,7 +132,8 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCowNotExitsByMilkingSlipIdAsync(int id)
         {
-            return Ok(await _cowService.GetCowNotExitsByMilkingSlipIdAsync(id));
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _cowService.GetCowNotExitsByMilkingSlipIdAsync(id, issuer));
         }
     }
 }
