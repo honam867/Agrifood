@@ -19,8 +19,7 @@ import { CrudDetailComponent } from '../crud-detail/crud-detail.component';
 export class CrudCouponComponent implements OnInit {
   page = 1;
   displayedColumns: string[] = [
-    'name',
-    'action'];
+    'quantity','typeMilk', 'action'];
   status: string;
   coupon: Coupon = new Coupon();
   // provinces: Province[] = [];
@@ -135,7 +134,7 @@ export class CrudCouponComponent implements OnInit {
       width: '60%',
       data: {
         action: StatusForm.CREATE,
-        detailOfCoupon: new DetailOfCoupon(this.coupon.id),
+        couponId : this.coupon.id
       },
       disableClose: true,
     });
@@ -143,6 +142,25 @@ export class CrudCouponComponent implements OnInit {
       result => {
         if (result.data) { // result => data:true
           this.fetchDetailInCoupon();
+        }
+      }
+    );
+  }
+
+  deleteDetailOfCoupon(detailOfCoupon: DetailOfCoupon) {
+    const deleteDialog = this.dialog.open(ConfirmationComponent, {
+      data: {
+        message: 'Bạn có muốn xóa?',
+      },
+      disableClose: true,
+    });
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.couponService.deleteCouponDetail(this.sourceView.id).subscribe(
+            success => {
+              this.fetchDetailInCoupon();
+            })
         }
       }
     );
