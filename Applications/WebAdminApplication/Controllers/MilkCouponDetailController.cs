@@ -42,6 +42,12 @@ namespace WebAdminApplication.Controllers
             return Ok(await _milkCouponDetailService.GetMilkCouponDetailByIdAsync(id));
         }
 
+        [Route("milkcoupon/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetMilkcouponDetailByMilkcouponIdAsync(int id) {
+            return Ok(await _milkCouponDetailService.GetMilkcouponDetailByMilkcouponIdAsync(id));
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<IActionResult> CreateMilkCouponDetailAsync([FromBody]MilkCouponDetailModelRq model)

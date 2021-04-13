@@ -79,6 +79,11 @@ namespace ApplicationDomain.BOA.Services
             return await _milkCouponDetailRepository.GetMilkCouponDetailById(id).MapQueryTo<MilkCouponDetailModel>(_mapper).FirstOrDefaultAsync();
         }
 
+        public async Task<MilkCouponDetailModel> GetMilkcouponDetailByMilkcouponIdAsync(int id)
+        {
+            return await _milkCouponDetailRepository.GetMilkcouponDetailByMilkcouponId(id).MapQueryTo<MilkCouponDetailModel>(_mapper).FirstOrDefaultAsync();
+        }
+
         public async Task<bool> UpdateMilkCouponDetailAsync(int id, MilkCouponDetailModelRq model, UserIdentity<int> issuer)
         {
             try
