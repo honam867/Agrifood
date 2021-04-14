@@ -79,9 +79,9 @@ namespace ApplicationDomain.BOA.Services
             return await _milkCouponDetailRepository.GetMilkCouponDetailById(id).MapQueryTo<MilkCouponDetailModel>(_mapper).FirstOrDefaultAsync();
         }
 
-        public async Task<MilkCouponDetailModel> GetMilkcouponDetailByMilkcouponIdAsync(int id, UserIdentity<int> issuer)
+        public async Task<IEnumerable<MilkCouponDetailModel>> GetMilkcouponDetailByMilkcouponIdAsync(int id, UserIdentity<int> issuer)
         {
-            return await _milkCouponDetailRepository.GetMilkcouponDetailByMilkcouponId(id, issuer.Id).MapQueryTo<MilkCouponDetailModel>(_mapper).FirstOrDefaultAsync();
+            return await _milkCouponDetailRepository.GetMilkcouponDetailByMilkcouponId(id, issuer.Id).MapQueryTo<MilkCouponDetailModel>(_mapper).ToListAsync();
         }
 
         public async Task<bool> UpdateMilkCouponDetailAsync(int id, MilkCouponDetailModelRq model, UserIdentity<int> issuer)
