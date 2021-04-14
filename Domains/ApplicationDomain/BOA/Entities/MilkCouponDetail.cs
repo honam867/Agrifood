@@ -11,6 +11,7 @@ namespace ApplicationDomain.BOA.Entities
         public int? MilkCouponId { get; set; }
         public MilkCoupon MilkCoupon { get; set; }
         public int Quantity { get; set; }
-        public int TypeMilk { get; set; }
+        public string TypeMilk { get; set; }
+        public string MilkQuality { get; set; }
     }
 }
