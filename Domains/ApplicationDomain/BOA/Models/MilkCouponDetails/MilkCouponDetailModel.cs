@@ -9,7 +9,8 @@ namespace ApplicationDomain.BOA.Models.MilkCouponDetails
         public int Id { get; set; }
         public int? MilkCouponId { get; set; }
         public int Quantity { get; set; }
-        public int TypeMilk { get; set; }
+        public string TypeMilk { get; set; }
+        public string MilkQuality { get; set; }
 
     }
     public class MilkCouponDetailModelMapper : Profile
