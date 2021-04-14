@@ -9,11 +9,10 @@ namespace ApplicationDomain.BOA.Models.MilkCouponDetails
 {
     public class MilkCouponDetailModelRq
     {
-        public int CowId { get; set; }
-        public int MilkCouponId { get; set; }
+        public int? MilkCouponId { get; set; }
         public int Quantity { get; set; }
-        public string Note { get; set; }
-        public int TypeMilk { get; set; }
+        public string TypeMilk { get; set; }
+        public string MilkQuality { get; set; }
     }
 
     public class MilkCouponDetailModelRqMapper : Profile
