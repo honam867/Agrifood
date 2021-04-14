@@ -36,7 +36,7 @@ export class MilkService {
   }
 
   getDetailByCouponId(couponId: number): Observable<Coupon[]> {
-    return this.http.get(`milkcoupon/milkcoupondetail/${couponId}`);
+    return this.http.get(`milkcoupondetail/milkcoupon/${couponId}`);
   }
 
   createDetail(detail: Detail) {
