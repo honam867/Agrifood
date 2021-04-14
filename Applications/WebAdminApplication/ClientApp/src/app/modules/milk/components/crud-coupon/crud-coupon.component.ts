@@ -1,3 +1,4 @@
+import { MatSort } from '@angular/material/sort';
 import { DetailOfCoupon } from './../../models/detailOfCoupon';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { StatusForm } from 'src/app/shared/enum/status-form';
@@ -27,8 +28,10 @@ export class CrudCouponComponent implements OnInit {
   isCreate = true;
   loading: boolean;
   detailsOfCoupon: any[];
+  detailId: any;
   dataSource: MatTableDataSource<Detail>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   sourceView: Coupon = new Coupon();
   constructor(
     public dialog: MatDialog,
@@ -45,6 +48,7 @@ export class CrudCouponComponent implements OnInit {
     if (this.data.action === StatusForm.DETELE) {
       this.delete();
     }
+    this.fetchDetailInCoupon();
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.coupon);
@@ -114,17 +118,18 @@ export class CrudCouponComponent implements OnInit {
   //   this.foodService.getProvinces().subscribe(
   //     res => {
   //       this.provinces = res;
-  //       // this.dataSource = new MatTableDataSource(this.foods);
+  //       // this.dataSource = new MatTableDataSource(this.foods );
   //       // this.dataSource.paginator = this.paginator;
   //       // this.dataSource.sort = this.sort;
   //     });
   // }
 
   fetchDetailInCoupon() {
-    this.couponService.getDetailByCouponId(this.sourceView.id).subscribe(res => {
+    this.couponService.getDetailByCouponId(this.coupon.id).subscribe(res => {
       this.detailsOfCoupon = res;
       this.dataSource = new MatTableDataSource(this.detailsOfCoupon);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -148,6 +153,7 @@ export class CrudCouponComponent implements OnInit {
   }
 
   deleteDetailOfCoupon(detailOfCoupon: DetailOfCoupon) {
+    this.detailId = detailOfCoupon.id;
     const deleteDialog = this.dialog.open(ConfirmationComponent, {
       data: {
         message: 'Bạn có muốn xóa?',
@@ -157,7 +163,7 @@ export class CrudCouponComponent implements OnInit {
     deleteDialog.afterClosed().subscribe(
       result => {
         if (result.confirmed) {
-          this.couponService.deleteCouponDetail(this.sourceView.id).subscribe(
+          this.couponService.deleteCouponDetail(this.detailId).subscribe(
             success => {
               this.fetchDetailInCoupon();
             })

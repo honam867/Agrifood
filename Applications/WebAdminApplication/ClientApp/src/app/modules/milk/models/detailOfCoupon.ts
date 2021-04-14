@@ -1,4 +1,5 @@
 export class DetailOfCoupon {
+  id: number;
   milkCouponId: number;
   quantity: number;
   typeMilk: number;
