@@ -52,6 +52,12 @@ const routes: Routes = [
           import('./modules/milk/milk.module').then(mod => mod.MilkModule),
       },
       {
+        path: 'milk',
+        canLoad: [AuthGuard],
+        loadChildren: () =>
+          import('./modules/station/station.module').then(mod => mod.StationModule),
+      },
+      {
         path: 'farmer',
         canLoad: [AuthGuard],
         loadChildren: () =>
