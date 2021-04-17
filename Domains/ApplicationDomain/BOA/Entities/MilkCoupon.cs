@@ -13,7 +13,8 @@ namespace ApplicationDomain.BOA.Entities
         public Farmer Farmer { get; set; }
         public int EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        public string StorageTankCode { get; set; }
+        public string StorageTankId { get; set; }
+        public StorageTank StorageTank { get; set; }
         public string Session { get; set; }
         public int MilkCollectionStationId { get; set; }
         public MilkCollectionStation MilkCollectionStation { get; set; }

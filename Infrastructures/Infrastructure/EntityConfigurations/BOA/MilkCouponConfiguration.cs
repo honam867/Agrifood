@@ -13,6 +13,7 @@ namespace Infrastructure.EntityConfigurations.BOA
             builder.HasOne(p => p.MilkCollectionStation).WithMany().HasForeignKey(p => p.MilkCollectionStationId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
             builder.HasOne(p => p.Employee).WithMany().HasForeignKey(p => p.EmployeeId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
             builder.HasOne(p => p.Farmer).WithMany().HasForeignKey(p => p.FarmerId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.StorageTank).WithMany().HasForeignKey(p => p.StorageTankId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
 
         }
     }
