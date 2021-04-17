@@ -24,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(CheckByreLoaded(amonth));
     } catch (Exception) {
       emit(Exception("Couldn't fetch weather. Is the device online?"));
-    }
+    }       
   }
 
   Future<void> getListCow() async {
