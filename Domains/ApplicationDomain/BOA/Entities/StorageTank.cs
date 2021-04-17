@@ -6,15 +6,14 @@ using System.Text;
 
 namespace ApplicationDomain.BOA.Entities
 {
-    public class MilkCollectionStation : EntityBase<int>
+    public class StorageTank : EntityBase<int>
     {
         public string Name { get; set; }
         public string Code { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public int DistrictId { get; set; }
-        public District District { get; set; }
+        public string TypeMilk { get; set; }
+        public int Quantity { get; set; }
+        public int MilkCollectionStationId { get; set; }
+        public MilkCollectionStation MilkCollectionStation { get; set; }
 
     }
 }

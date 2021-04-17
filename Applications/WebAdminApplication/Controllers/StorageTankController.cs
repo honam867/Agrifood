@@ -4,45 +4,40 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.TypeOfMilks;
+using ApplicationDomain.BOA.Models.Cows;
+using ApplicationDomain.BOA.Models.StorageTanks;
+using ApplicationDomain.BOA.Models.MilkingSlips;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class TypeOfMilkController : BaseController
+    public class StorageTankController : BaseController
     {
-        private readonly ITypeOfMilkService _typeOfMilkService;
-        public TypeOfMilkController(ITypeOfMilkService typeOfMilkService)
+        private readonly IStorageTankService _StorageTankService;
+        public StorageTankController(IStorageTankService StorageTankService)
         {
-            _typeOfMilkService = typeOfMilkService;
+            _StorageTankService = StorageTankService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetTypeOfMilksAsync()
+        public async Task<IActionResult> GetStorageTankAsync()
         {
-            return Ok(await _typeOfMilkService.GetTypeOfMilksAsync());
-        }
-
-        [Route("checkingcode/{code}")]
-        [HttpGet]
-        public async Task<IActionResult> CheckCodeExistsAsync(string code)
-        {
-            return Ok(await _typeOfMilkService.CheckCodeExistsAsync(code));
+            return Ok(await _StorageTankService.GetStorageTankAsync());
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetTypeOfMilkById(int id)
+        public async Task<IActionResult> GetStorageTankByIdAsync(int id)
         {
-            return Ok(await _typeOfMilkService.GetTypeOfMilkByIdAsync(id));
+            return Ok(await _StorageTankService.GetStorageTankByIdAsync(id));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateTypeOfMilkAsync([FromBody]TypeOfMilkModelRq model)
+        public async Task<IActionResult> CreateStorageTankAsync([FromBody]StorageTankModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -55,11 +50,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _typeOfMilkService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
-                return Ok(await _typeOfMilkService.CreateTypeOfMilkAsync(model, issuer));
+                //if (await _StorageTankService.CheckCodeExistsAsync(model.Code))
+                //{
+                //    return BadRequest("Code Exists");
+                //}
+                return Ok(await _StorageTankService.CreateStorageTankAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -70,11 +65,11 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteTypeOfMilkAsync(int id)
+        public async Task<IActionResult> DeleteStorageTankAsync(int id)
         {
             try
             {
-                await _typeOfMilkService.DeleteTypeOfMilkAsync(id);
+                await _StorageTankService.DeleteStorageTankAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -85,7 +80,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateTypeOfMilkAsync(int id, [FromBody]TypeOfMilkModelRq model)
+        public async Task<IActionResult> UpdateStorageTankAsync(int id, [FromBody]StorageTankModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -98,12 +93,13 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _typeOfMilkService.UpdateTypeOfMilkAsync(id, model, issuer));
+                return Ok(await _StorageTankService.UpdateStorageTankAsync(id, model, issuer));
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
+
     }
 }
