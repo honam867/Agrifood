@@ -135,5 +135,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             return Ok(await _cowService.GetCowNotExitsByMilkingSlipIdAsync(id, issuer));
         }
+        [Route("newcode")]
+        [HttpGet]
+        public async Task<IActionResult> AutoGenerateCodeAsync()
+        {
+            return OkValueObject(await _cowService.AutoGenerateCodeAsync());
+        }
     }
 }

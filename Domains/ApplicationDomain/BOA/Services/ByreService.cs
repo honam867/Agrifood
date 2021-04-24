@@ -83,9 +83,9 @@ namespace ApplicationDomain.BOA.Services
             return await _byreRepository.GetByreById(id).MapQueryTo<ByreModel>(_mapper).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<ByreModel>> GetByreByFarmerId(int id)
+        public async Task<IEnumerable<ByreModel>> GetByreByFarmerId(UserIdentity<int> issuer)
         {
-            return await _byreRepository.GetByreByFarmerId(id).MapQueryTo<ByreModel>(_mapper).ToListAsync();
+            return await _byreRepository.GetByreByFarmerId(issuer.Id).MapQueryTo<ByreModel>(_mapper).ToListAsync();
         }
 
 
