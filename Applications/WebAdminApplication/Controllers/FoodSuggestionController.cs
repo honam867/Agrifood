@@ -102,5 +102,12 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Route("farmer")]
+        [HttpGet]
+        public async Task<IActionResult> GetFoodSuggestionsByFarmerIdAsync()
+        {
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _breedService.GetFoodSuggestionsByFarmerIdAsync(issuer));
+        }
     }
 }

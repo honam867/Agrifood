@@ -99,6 +99,11 @@ namespace ApplicationDomain.BOA.Services
 
         }
 
+        public async Task<IEnumerable<FoodSuggestionModel>> GetFoodSuggestionsByFarmerIdAsync(UserIdentity<int> issuer)
+        {
+            return await _breedRepository.GetFoodSuggestionByFarmerId(issuer.Id).MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
+        }
+
         /*public async Task<bool> CheckCodeExistsAsync(string code)
         {
             return await _breedRepository.CheckCodeExistsAsync(code);
