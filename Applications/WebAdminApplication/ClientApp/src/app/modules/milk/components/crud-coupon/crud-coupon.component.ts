@@ -1,3 +1,5 @@
+import { MatSort } from '@angular/material/sort';
+import { DetailOfCoupon } from './../../models/detailOfCoupon';
 import { ConfirmationComponent } from 'src/app/shared/components/confirmation/confirmation.component';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { MilkService } from './../../milk.service';
@@ -5,6 +7,9 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Coupon } from '../../models/coupon';
+import { Detail } from '../../models/detail';
+import { MatTableDataSource } from '@angular/material/table';
+import { CrudDetailComponent } from '../crud-detail/crud-detail.component';
 
 @Component({
   selector: 'app-crud-coupon',
@@ -15,15 +20,18 @@ import { Coupon } from '../../models/coupon';
 export class CrudCouponComponent implements OnInit {
   page = 1;
   displayedColumns: string[] = [
-    'name',
-    'action'];
+    'quantity','typeMilk', 'action'];
   status: string;
   coupon: Coupon = new Coupon();
   // provinces: Province[] = [];
   isView = true;
   isCreate = true;
   loading: boolean;
+  detailsOfCoupon: any[];
+  detailId: any;
+  dataSource: MatTableDataSource<Detail>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   sourceView: Coupon = new Coupon();
   constructor(
     public dialog: MatDialog,
@@ -40,6 +48,7 @@ export class CrudCouponComponent implements OnInit {
     if (this.data.action === StatusForm.DETELE) {
       this.delete();
     }
+    this.fetchDetailInCoupon();
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.coupon);
@@ -109,12 +118,59 @@ export class CrudCouponComponent implements OnInit {
   //   this.foodService.getProvinces().subscribe(
   //     res => {
   //       this.provinces = res;
-  //       // this.dataSource = new MatTableDataSource(this.foods);
+  //       // this.dataSource = new MatTableDataSource(this.foods );
   //       // this.dataSource.paginator = this.paginator;
   //       // this.dataSource.sort = this.sort;
   //     });
   // }
 
+  fetchDetailInCoupon() {
+    this.couponService.getDetailByCouponId(this.coupon.id).subscribe(res => {
+      this.detailsOfCoupon = res;
+      this.dataSource = new MatTableDataSource(this.detailsOfCoupon);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  popUpAddMilkCouponDetail() {
+    const createDialog = this.dialog.open(CrudDetailComponent, {
+      height: '80%',
+      width: '60%',
+      data: {
+        action: StatusForm.CREATE,
+        couponId : this.coupon.id
+      },
+      disableClose: true,
+    });
+    createDialog.afterClosed().subscribe(
+      result => {
+        if (result.data) { // result => data:true
+          this.fetchDetailInCoupon();
+        }
+      }
+    );
+  }
+
+  deleteDetailOfCoupon(detailOfCoupon: DetailOfCoupon) {
+    this.detailId = detailOfCoupon.id;
+    const deleteDialog = this.dialog.open(ConfirmationComponent, {
+      data: {
+        message: 'Bạn có muốn xóa?',
+      },
+      disableClose: true,
+    });
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.couponService.deleteCouponDetail(this.detailId).subscribe(
+            success => {
+              this.fetchDetailInCoupon();
+            })
+        }
+      }
+    );
+  }
 
 
 }

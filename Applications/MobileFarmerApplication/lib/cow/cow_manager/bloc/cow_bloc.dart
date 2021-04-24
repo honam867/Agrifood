@@ -2,7 +2,7 @@ import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
-import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
+//import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
@@ -120,6 +120,7 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     }
   }
 
+  // ignore: unused_element
   Future _saveCow(CowModel cow) {
     return cowRepository.getAllCow();
   }

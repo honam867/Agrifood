@@ -9,9 +9,7 @@ namespace ApplicationDomain.BOA.Models.MilkCoupons
         public int Id { get; set; }
         public string Code { get; set; }
         public int FarmerId { get; set; }
-        public string ScaleCode { get; set; }
         public int EmployeeId { get; set; }
-        public DateTime CreatedDate { get; set; }
         public string StorageTankCode { get; set; }
         public string Session { get; set; }
         public int MilkCollectionStationId { get; set; }

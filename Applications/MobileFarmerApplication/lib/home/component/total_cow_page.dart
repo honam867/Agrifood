@@ -1,9 +1,9 @@
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
-import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
+//import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
-import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
+//import 'package:AgrifoodApp/cow/cow_manager/page/cow_page.dart';
 import 'package:AgrifoodApp/home/component/categorie.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';

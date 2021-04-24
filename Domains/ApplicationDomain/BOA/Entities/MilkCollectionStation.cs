@@ -15,8 +15,6 @@ namespace ApplicationDomain.BOA.Entities
         public string Email { get; set; }
         public int DistrictId { get; set; }
         public District District { get; set; }
-        public int TypeOfMilkId { get; set; }
-        public TypeOfMilk TypeOfMilk { get; set; }
 
     }
 }

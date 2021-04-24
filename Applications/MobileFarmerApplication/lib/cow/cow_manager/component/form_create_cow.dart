@@ -31,6 +31,7 @@ class FormCreateCow extends StatefulWidget {
 }
 
 class FormCreateCowState extends State<FormCreateCow> {
+  // ignore: unused_field
   String _namecow, gender = "Đực", birthdayString;
   DateTime _birthday;
   int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId, byreId;

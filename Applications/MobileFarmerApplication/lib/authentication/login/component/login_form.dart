@@ -35,12 +35,12 @@ class _LoginComponentState extends State<LoginComponent> {
     });
   }
 
-  Future<bool> _willPopCallback() async {
-    Navigator.of(context).pop(false);
-    BlocProvider.of<AuthenticationBloc>(context).add(RedirectToLoginPage());
-    //Navigator.of(context).pop(false);
-    return false;
-  }
+  // Future<bool> _willPopCallback() async {
+  //   Navigator.of(context).pop(false);
+  //   BlocProvider.of<AuthenticationBloc>(context).add(RedirectToLoginPage());
+  //   //Navigator.of(context).pop(false);
+  //   return false;
+  // }
 
   @override
   Widget build(BuildContext context) {

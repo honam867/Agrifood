@@ -1,7 +1,7 @@
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/milkingslip/bloc/milkingslip_bloc.dart';
-import 'package:AgrifoodApp/milkingslip/component/select_drop_list.dart';
-import 'package:AgrifoodApp/milkingslip/model/drop_list_model.dart';
+import 'package:AgrifoodApp/milkingslip/component/select_drop_list_cow.dart';
+import 'package:AgrifoodApp/milkingslip/model/drop_list_model_cow.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:AgrifoodApp/ui/utils/text_style.dart';
