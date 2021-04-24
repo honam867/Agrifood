@@ -10,25 +10,26 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.BOA
 {
-    public class TypeOfMilkRepository : GenericRepository<TypeOfMilk, int>, ITypeOfMilkRepository
+    public class StorageTankRepository : GenericRepository<StorageTank, int>, IStorageTankRepository
     {
-        public TypeOfMilkRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public StorageTankRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
-        public async Task<bool> CheckCodeExistsAsync(string code)
-        {
-            return await this.dbSet.AnyAsync(r => r.Code == code);
-        }
+        //public async Task<bool> CheckCodeExistsAsync(string code)
+        //{
+        //    return await this.dbSet.AnyAsync(r => r.Code == code);
+        //}
 
-        public IQueryable GetTypeOfMilks()
+        public IQueryable GetStorageTanks()
         {
             return this.dbSet;
         }
 
-        public IQueryable GetTypeOfMilkById(int id)
+        public IQueryable GetStorageTankById(int id)
         {
             return dbSet.Where(r => r.Id == id);
         }
+
     }
 }

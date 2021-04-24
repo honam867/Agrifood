@@ -15,6 +15,7 @@ namespace ApplicationDomain.BOA.IServices
         Task<int> CreateFoodSuggestionAsync(FoodSuggestionModelRq model, UserIdentity<int> issuer);
         Task<bool> DeleteFoodSuggestionAsync(int id);
         Task<bool> UpdateFoodSuggestionAsync(int id, FoodSuggestionModelRq model, UserIdentity<int> issuer);
-   /*     Task<bool> CheckCodeExistsAsync(string code);*/
+        /*     Task<bool> CheckCodeExistsAsync(string code);*/
+        Task<IEnumerable<FoodSuggestionModel>> GetFoodSuggestionsByFarmerIdAsync(UserIdentity<int> issuer);
     }
 }

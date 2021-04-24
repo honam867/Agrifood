@@ -31,7 +31,7 @@ namespace Infrastructure.Repositories.BOA
             return dbSet.Where(r => r.Id == id);
         }
 
-        public IQueryable GetMilkingSlipByDate(int date, int month, int year, int session)
+        public IQueryable GetMilkingSlipByDate(int date, int month, int year, int session, int farmerId)
         {
             string sessionString = "";
             if(session == 0)
@@ -45,7 +45,8 @@ namespace Infrastructure.Repositories.BOA
             var data = dbSet.Where(a => a.CreatedDate.Day == date)
                 .Where(a => a.CreatedDate.Month == month)
                 .Where(a => a.CreatedDate.Year == year)
-                .Where(a => a.Session == sessionString);
+                .Where(a => a.Session == sessionString)
+                .Where(a => a.CreatedByUserId == farmerId);
             return data;
         }
     }

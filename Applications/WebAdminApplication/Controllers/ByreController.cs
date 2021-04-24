@@ -40,11 +40,24 @@ namespace WebAdminApplication.Controllers
             return Ok(await _byreService.GetByreByIdAsync(id));
         }
 
-        [Route("farmer/{id}")]
+        [Route("farmer")]
         [HttpGet]
-        public async Task<IActionResult> GetByreByFarmerId(int id)
+        public async Task<IActionResult> GetByreByFarmerId()
         {
-            return Ok(await _byreService.GetByreByFarmerId(id));
+            var issuer = GetCurrentUserIdentity<int>();
+            var data = await _byreService.GetByreByFarmerId(issuer);
+            if(data != null)
+            {
+                return Ok(data);
+            } else
+            {
+                ByreModel byreModel = new ByreModel();
+                byreModel.Id = -1;
+                byreModel.Name = null;
+                byreModel.QuantityCow = 0;
+                byreModel.FarmerId = -1;
+                return Ok(byreModel);
+            }
         }
 
         [Route("")]

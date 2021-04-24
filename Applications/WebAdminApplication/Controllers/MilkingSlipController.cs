@@ -41,9 +41,9 @@ namespace WebAdminApplication.Controllers
             return Ok(await _milkingSlipService.GetMilkingSlipByIdAsync(id));
         }
 
-        [Route("")]
+        [Route("{day}/{month}/{year}")]
         [HttpPost]
-        public async Task<IActionResult> CreateMilkingSlipAsync([FromBody]MilkingSlipModelRq model)
+        public async Task<IActionResult> CreateMilkingSlipAsync([FromBody]MilkingSlipModelRq model, int day, int month, int year)
         {
             if (!ModelState.IsValid)
             {
@@ -61,7 +61,7 @@ namespace WebAdminApplication.Controllers
                 {
                     return BadRequest("Code Exists");
                 }
-                return Ok(await _milkingSlipService.CreateMilkingSlipAsync(model, issuer));
+                return Ok(await _milkingSlipService.CreateMilkingSlipAsync(model, issuer,day,month,year));
             }
             catch (Exception e)
             {
@@ -119,7 +119,8 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
         {
-            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session);
+            var issuer = GetCurrentUserIdentity<int>();
+            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session,issuer);
             if(data != null)
             {
                 return Ok(data);

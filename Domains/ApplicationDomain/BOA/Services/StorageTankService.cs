@@ -2,7 +2,8 @@
 using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.TypeOfMilks;
+using ApplicationDomain.BOA.Models.StorageTanks;
+using ApplicationDomain.BOA.Models.MilkingSlips;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
 using AspNetCore.UnitOfWork;
@@ -16,28 +17,32 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.BOA.Services
 {
-    public class TypeOfMilkService : ServiceBase, ITypeOfMilkService
+    public class StorageTankService : ServiceBase, IStorageTankService
     {
-        private readonly ITypeOfMilkRepository _typeOfMilkRepository;
-        
-        public TypeOfMilkService(
-            ITypeOfMilkRepository typeOfMilkRepository,
+        private readonly IStorageTankRepository _StorageTankRepository;
+
+        public StorageTankService(
+            IStorageTankRepository StorageTankRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
-            _typeOfMilkRepository = typeOfMilkRepository;
-            
+            _StorageTankRepository = StorageTankRepository;
+        
         }
 
-        public async Task<int> CreateTypeOfMilkAsync(TypeOfMilkModelRq model, UserIdentity<int> issuer)
+        public async Task<int> CreateStorageTankAsync(StorageTankModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = _mapper.Map<TypeOfMilk>(model);
+                var entity = _mapper.Map<StorageTank>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
-                _typeOfMilkRepository.Create(entity);
-                return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
+                _StorageTankRepository.Create(entity);
+                if (await _uow.SaveChangesAsync() == 1)
+                {
+                    return entity.Id;
+                }
+                return 0;
             }
             catch (Exception e)
             {
@@ -45,12 +50,12 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<bool> DeleteTypeOfMilkAsync(int id)
+        public async Task<bool> DeleteStorageTankAsync(int id)
         {
             try
             {
-                var entity = await _typeOfMilkRepository.GetEntityByIdAsync(id);
-                _typeOfMilkRepository.Delete(entity);
+                var entity = await _StorageTankRepository.GetEntityByIdAsync(id);
+                _StorageTankRepository.Delete(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -63,29 +68,30 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<IEnumerable<TypeOfMilkModel>> GetTypeOfMilksAsync()
+        public async Task<IEnumerable<StorageTankModel>> GetStorageTankAsync()
         {
-            return await _typeOfMilkRepository.GetTypeOfMilks().MapQueryTo<TypeOfMilkModel>(_mapper).ToListAsync();
+            return await _StorageTankRepository.GetStorageTanks().MapQueryTo<StorageTankModel>(_mapper).ToListAsync();
            
         }
 
-        public async Task<TypeOfMilkModel> GetTypeOfMilkByIdAsync(int id)
+        public async Task<StorageTankModel> GetStorageTankByIdAsync(int id)
         {
-            return await _typeOfMilkRepository.GetTypeOfMilkById(id).MapQueryTo<TypeOfMilkModel>(_mapper).FirstOrDefaultAsync();
+            return await _StorageTankRepository.GetStorageTankById(id).MapQueryTo<StorageTankModel>(_mapper).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> UpdateTypeOfMilkAsync(int id, TypeOfMilkModelRq model, UserIdentity<int> issuer)
+
+        public async Task<bool> UpdateStorageTankAsync(int id, StorageTankModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = await _typeOfMilkRepository.GetEntityByIdAsync(id);
+                var entity = await _StorageTankRepository.GetEntityByIdAsync(id);
                 if (entity == null)
                 {
                     return false;
                 }
                 _mapper.Map(model, entity);
                 entity.UpdateBy(issuer);
-                _typeOfMilkRepository.Update(entity);
+                _StorageTankRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -99,9 +105,5 @@ namespace ApplicationDomain.BOA.Services
 
         }
 
-        public async Task<bool> CheckCodeExistsAsync(string code)
-        {
-            return await _typeOfMilkRepository.CheckCodeExistsAsync(code);
-        }
     }
 }

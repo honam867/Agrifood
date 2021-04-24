@@ -362,6 +362,8 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate");
 
+                    b.Property<int>("FoodId");
+
                     b.Property<byte[]>("RowVersion");
 
                     b.Property<int>("UpdatedByUserId");
@@ -371,6 +373,8 @@ namespace Infrastructure.DbMigration.Migrations
                     b.Property<DateTimeOffset>("UpdatedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
 
                     b.ToTable("FoodSuggestion");
                 });
@@ -434,8 +438,6 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<byte[]>("RowVersion");
 
-                    b.Property<int>("TypeOfMilkId");
-
                     b.Property<int>("UpdatedByUserId");
 
                     b.Property<string>("UpdatedByUserName");
@@ -445,8 +447,6 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictId");
-
-                    b.HasIndex("TypeOfMilkId");
 
                     b.ToTable("MilkCollectionStation");
                 });
@@ -475,7 +475,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<string>("Session");
 
-                    b.Property<string>("StorageTankCode");
+                    b.Property<int>("StorageTankId");
 
                     b.Property<int>("UpdatedByUserId");
 
@@ -490,6 +490,8 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasIndex("FarmerId");
 
                     b.HasIndex("MilkCollectionStationId");
+
+                    b.HasIndex("StorageTankId");
 
                     b.ToTable("MilkCoupon");
                 });
@@ -630,7 +632,7 @@ namespace Infrastructure.DbMigration.Migrations
                     b.ToTable("Province");
                 });
 
-            modelBuilder.Entity("ApplicationDomain.BOA.Entities.TypeOfMilk", b =>
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.StorageTank", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -644,9 +646,15 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate");
 
+                    b.Property<int>("MilkCollectionStationId");
+
                     b.Property<string>("Name");
 
+                    b.Property<int>("Quantity");
+
                     b.Property<byte[]>("RowVersion");
+
+                    b.Property<string>("TypeMilk");
 
                     b.Property<int>("UpdatedByUserId");
 
@@ -656,7 +664,9 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeOfMilk");
+                    b.HasIndex("MilkCollectionStationId");
+
+                    b.ToTable("StorageTank");
                 });
 
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.Warehouse", b =>
@@ -743,7 +753,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 797, DateTimeKind.Unspecified).AddTicks(5063), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 593, DateTimeKind.Unspecified).AddTicks(1830), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -755,7 +765,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 801, DateTimeKind.Unspecified).AddTicks(6837), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 597, DateTimeKind.Unspecified).AddTicks(7244), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -776,7 +786,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 809, DateTimeKind.Unspecified).AddTicks(9972), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 605, DateTimeKind.Unspecified).AddTicks(6074), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<string>("Description");
 
@@ -790,7 +800,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 810, DateTimeKind.Unspecified).AddTicks(398), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 605, DateTimeKind.Unspecified).AddTicks(6500), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.HasKey("Id");
 
@@ -809,7 +819,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 813, DateTimeKind.Unspecified).AddTicks(7232), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 609, DateTimeKind.Unspecified).AddTicks(1669), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("PermissionGroupId");
 
@@ -821,7 +831,7 @@ namespace Infrastructure.DbMigration.Migrations
 
                     b.Property<DateTimeOffset>("UpdatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 14, 15, 42, 19, 813, DateTimeKind.Unspecified).AddTicks(7585), new TimeSpan(0, 7, 0, 0, 0)));
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(2021, 4, 24, 18, 55, 23, 609, DateTimeKind.Unspecified).AddTicks(2044), new TimeSpan(0, 7, 0, 0, 0)));
 
                     b.Property<int>("UserId");
 
@@ -1112,6 +1122,14 @@ namespace Infrastructure.DbMigration.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.FoodSuggestion", b =>
+                {
+                    b.HasOne("ApplicationDomain.BOA.Entities.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("ApplicationDomain.BOA.Entities.ImportHistory", b =>
                 {
                     b.HasOne("ApplicationDomain.BOA.Entities.Warehouse", "WareHouse")
@@ -1125,11 +1143,6 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasOne("ApplicationDomain.BOA.Entities.District", "District")
                         .WithMany()
                         .HasForeignKey("DistrictId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("ApplicationDomain.BOA.Entities.TypeOfMilk", "TypeOfMilk")
-                        .WithMany()
-                        .HasForeignKey("TypeOfMilkId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1148,6 +1161,11 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasOne("ApplicationDomain.BOA.Entities.MilkCollectionStation", "MilkCollectionStation")
                         .WithMany()
                         .HasForeignKey("MilkCollectionStationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ApplicationDomain.BOA.Entities.StorageTank", "StorageTank")
+                        .WithMany()
+                        .HasForeignKey("StorageTankId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
@@ -1177,6 +1195,14 @@ namespace Infrastructure.DbMigration.Migrations
                     b.HasOne("ApplicationDomain.BOA.Entities.MilkingSlip", "MilkingSlip")
                         .WithMany()
                         .HasForeignKey("MilkingSlipId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("ApplicationDomain.BOA.Entities.StorageTank", b =>
+                {
+                    b.HasOne("ApplicationDomain.BOA.Entities.MilkCollectionStation", "MilkCollectionStation")
+                        .WithMany()
+                        .HasForeignKey("MilkCollectionStationId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 

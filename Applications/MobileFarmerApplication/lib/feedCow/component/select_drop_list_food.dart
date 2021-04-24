@@ -1,31 +1,31 @@
-import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:flutter/material.dart';
-import 'package:AgrifoodApp/milkingslip/model/drop_list_model.dart';
+import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
+import 'package:AgrifoodApp/feedcow/model/drop_model_food.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SelectDropList extends StatefulWidget {
-  final CowItem itemSelected;
-  final DropListModel dropListModel;
-  final Function(CowItem optionItem) onOptionSelected;
+class SelectDropListFood extends StatefulWidget {
+  final FoodSuggestionItem itemFoodSelected;
+  final DropListFoodModel dropListFoodModel;
+  final Function(FoodSuggestionItem optionItem) onOptionSelected;
 
-  SelectDropList(this.itemSelected, this.dropListModel, this.onOptionSelected);
+  SelectDropListFood(this.itemFoodSelected, this.dropListFoodModel, this.onOptionSelected);
 
   @override
-  _SelectDropListState createState() =>
-      _SelectDropListState(itemSelected, dropListModel);
+  _SelectDropListFoodState createState() =>
+      _SelectDropListFoodState(itemFoodSelected, dropListFoodModel);
 }
 
-class _SelectDropListState extends State<SelectDropList>
+class _SelectDropListFoodState extends State<SelectDropListFood>
     with SingleTickerProviderStateMixin {
-  CowItem optionItemSelected;
-  final DropListModel dropListModel;
+  FoodSuggestionItem optionItemSelected;
+  final DropListFoodModel dropListFoodModel;
 
   AnimationController expandController;
   Animation<double> animation;
 
   bool isShow = false;
 
-  _SelectDropListState(this.optionItemSelected, this.dropListModel);
+  _SelectDropListFoodState(this.optionItemSelected, this.dropListFoodModel);
 
   @override
   void initState() {
@@ -89,7 +89,7 @@ class _SelectDropListState extends State<SelectDropList>
                     setState(() {});
                   },
                   child: Text(
-                    optionItemSelected.name,
+                    optionItemSelected.content,
                     style: TextStyle(color: Colors.black, fontSize: ScreenUtil().setWidth(50)),
                   ),
                 )),
@@ -123,20 +123,20 @@ class _SelectDropListState extends State<SelectDropList>
                     ],
                   ),
                   child: _buildDropListOptions(
-                      dropListModel.listOptionItems, context))),
+                      dropListFoodModel.listFoodOptionItems, context))),
 //          Divider(color: Colors.grey.shade300, height: 1,)
         ],
       ),
     );
   }
 
-  Column _buildDropListOptions(List<CowItem> items, BuildContext context) {
+  Column _buildDropListOptions(List<FoodSuggestionItem> items, BuildContext context) {
     return Column(
       children: items.map((item) => _buildSubMenu(item, context)).toList(),
     );
   }
 
-  Widget _buildSubMenu(CowItem item, BuildContext context) {
+  Widget _buildSubMenu(FoodSuggestionItem item, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 26.0, top: 5, bottom: 5),
       child: GestureDetector(
@@ -150,7 +150,7 @@ class _SelectDropListState extends State<SelectDropList>
                   border: Border(
                       top: BorderSide(color: Colors.grey[200], width: 1)),
                 ),
-                child: Text(item.name,
+                child: Text(item.content,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,

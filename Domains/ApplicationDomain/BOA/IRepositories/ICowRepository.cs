@@ -18,6 +18,5 @@ namespace ApplicationDomain.BOA.IRepositories
         Task<bool> CheckCodeExistsAsync(string code);
         IQueryable GetCowNotExitsByMilkingSlipId(int milkingSlipId, int farmerId);
         IQueryable GetCowByGender(int gd, int userId);
-
     }
 }
