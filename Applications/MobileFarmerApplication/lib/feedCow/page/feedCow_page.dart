@@ -1,20 +1,15 @@
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
-import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
-import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screen_util.dart';
-import 'package:quiver/iterables.dart';
 
 class FeedCow extends StatefulWidget {
-  final FoodSuggestionItem foodSuggestionItem;
   final BuildContext contextfoodPage;
   final String routefoodName;
   const FeedCow(
       {Key key,
-      this.foodSuggestionItem,
       this.contextfoodPage,
       this.routefoodName})
       : super(key: key);
