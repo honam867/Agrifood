@@ -32,14 +32,16 @@ namespace ApplicationDomain.BOA.Services
         
         }
 
-        public async Task<int> CreateMilkingSlipAsync(MilkingSlipModelRq model, UserIdentity<int> issuer)
+        public async Task<int> CreateMilkingSlipAsync(MilkingSlipModelRq model, UserIdentity<int> issuer, int day, int month, int year)
         {
             try
             {
+                DateTime dateMilkingSlip = new DateTime(day, month, year);
                 var code = await AutoGenerateCodeAsync();
                 model.Code = code;
                 var entity = _mapper.Map<MilkingSlip>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
+                entity.CreateBy(issuer).CreatedDate = dateMilkingSlip;
                 _milkingSlipRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
