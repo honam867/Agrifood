@@ -8,6 +8,8 @@ namespace ApplicationDomain.BOA.Models.MilkingSlipDetails
     {
         public int Id { get; set; }
         public int CowId { get; set; }
+        //public Cow Cow { get; set; }
+        public string CowName { get; set; }
         public int MilkingSlipId { get; set; }
         public int Quantity { get; set; }
         public string Note { get; set; }

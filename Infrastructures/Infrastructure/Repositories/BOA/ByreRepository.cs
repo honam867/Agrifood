@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories.BOA
 
         public IQueryable GetByreByFarmerId(int id)
         {
-            return dbSet.Where(r => r.FarmerId == id);
+            return dbSet.Where(r => r.CreatedByUserId == id);
         }
     }
 }
