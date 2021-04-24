@@ -11,6 +11,7 @@ using MSSQL;
 using System.Data;
 using AspNetCore.DataBinding.AutoMapper;
 using ApplicationDomain.BOA.Models.Cows;
+using Infrastructures;
 
 namespace Infrastructure.Repositories.BOA
 {

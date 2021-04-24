@@ -13,11 +13,11 @@ namespace MSSQL
         private SqlConnection _connection;
 
         public MSSQLProvider(
-            string connectionString
+            string alias
             )
         {
-            _connectionString = connectionString;
-            //_connectionString = GetConnectionStringFromAppSetting(alias);
+            //_connectionString = connectionString;
+            _connectionString = GetConnectionStringFromAppSetting(alias);
             _connection = new SqlConnection(_connectionString);
         }
         public int ExecuteSqlCommand(string cmd)
@@ -52,6 +52,7 @@ namespace MSSQL
 
         public async Task<DataTable> FromQueryAsync(string cmd)
         {
+            
             return await Task.Run(() =>
             {
                 _connection.Open();
@@ -60,6 +61,7 @@ namespace MSSQL
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 adapter.Fill(data);
                 adapter.Dispose();
+                
                 _connection.Close();
                 return data;
             });
