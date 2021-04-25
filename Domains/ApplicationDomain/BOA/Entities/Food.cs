@@ -10,7 +10,7 @@ namespace ApplicationDomain.BOA.Entities
         public string Code { set; get; }
         public string Name { set; get; }
         public string Type { set; get; }
-        public int Provinceid { set; get; }
+        public int ProvinceId { set; get; }
         public Province Province { set; get; }
     }
 }
