@@ -36,6 +36,7 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
+                model.Code = await AutoGenerateCodeAsync();
                 var entity = _mapper.Map<Cow>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _cowRepository.Create(entity);
@@ -115,9 +116,9 @@ namespace ApplicationDomain.BOA.Services
             return await _cowRepository.GetCowByByreId(byreId).MapQueryTo<CowModel>(_mapper).ToListAsync();
         }
 
-        public async Task<IEnumerable<CowModel>> GetCowByUserIdAsync(int userId)
+        public async Task<IEnumerable<CowModel>> GetCowByUserIdAsync(UserIdentity<int> issuer)
         {
-            var list = await _cowRepository.GetCowsByFarmerId(userId).MapQueryTo<CowModel>(_mapper).ToListAsync();
+            var list = await _cowRepository.GetCowsByFarmerId(issuer.Id).MapQueryTo<CowModel>(_mapper).ToListAsync();
             return list;
         }
         public async Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int milkingSlipId, UserIdentity<int> issuer)

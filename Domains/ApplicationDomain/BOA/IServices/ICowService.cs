@@ -13,7 +13,7 @@ namespace ApplicationDomain.BOA.IServices
         Task<IEnumerable<CowModel>> GetCowsAsync();
         Task<CowModel> GetCowByIdAsync(int id);
         Task<IEnumerable<CowModel>> GetCowByByreId(int byreId);
-        Task<IEnumerable<CowModel>> GetCowByUserIdAsync(int userId);
+        Task<IEnumerable<CowModel>> GetCowByUserIdAsync(UserIdentity<int> issuer);
         Task<int> CreateCowAsync(CowModelRq model, UserIdentity<int> issuer);
         Task<bool> DeleteCowAsync(int id);
         Task<bool> UpdateCowAsync(int id, CowModelRq model, UserIdentity<int> issuer);
