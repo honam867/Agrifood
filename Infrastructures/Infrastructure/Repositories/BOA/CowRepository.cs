@@ -44,9 +44,9 @@ namespace Infrastructure.Repositories.BOA
 
         }
 
-        public IQueryable GetCowsByFarmerId(int farmerId)
+        public IQueryable GetCowsByFarmerId(int userId)
         {
-            var list = this.dbSet.Include(o => o.Byre).Where(q => q.Byre.FarmerId == farmerId);
+            var list = this.dbSet.Include(o => o.Byre).Where(q => q.CreatedByUserId == userId);
             return list;
         }
         public IQueryable GetCowNotExitsByMilkingSlipId(int milkingSlipId, int userId)
