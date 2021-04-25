@@ -10,7 +10,7 @@ namespace Infrastructure.EntityConfigurations.BOA
     {
         public override void OnConfigure(EntityTypeBuilder<FoodSuggestion> builder)
         {
-            //builder.HasOne(p => p.Food).WithMany().HasForeignKey(p => p.FoodId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.Food).WithMany().HasForeignKey(p => p.FoodId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
         }
     }
 }
