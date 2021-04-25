@@ -26,6 +26,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
   TextEditingController nameController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController quantiTyController = TextEditingController();
+  int maxLength = 50;
+  String text = "";
   int cowId;
   bool sended = false,
       minimze = false,
@@ -93,7 +95,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                       ),
                                     )
                                   : Padding(
-                                      padding: EdgeInsets.all(ScreenUtil().setHeight(10.0)),
+                                      padding: EdgeInsets.all(
+                                          ScreenUtil().setHeight(10.0)),
                                       child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
@@ -103,8 +106,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                             style: TextStyles.labelTextStyle,
                                           ),
                                           SizedBox(
-                                            width: ScreenUtil().setWidth(20.0)
-                                          ),
+                                              width:
+                                                  ScreenUtil().setWidth(20.0)),
                                           RichText(
                                               text: TextSpan(
                                             text: cowName,
@@ -114,7 +117,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                         ],
                                       )),
                               Padding(
-                                  padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
+                                  padding: EdgeInsets.all(
+                                      ScreenUtil().setWidth(20.0)),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -130,7 +134,7 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                         height: ScreenUtil().setWidth(120.0),
                                         width:
                                             MediaQuery.of(context).size.width -
-                                                ScreenUtil().setWidth(600.0),
+                                                ScreenUtil().setWidth(900.0),
                                         child: TextField(
                                           decoration: InputDecoration(
                                             errorText: _validate == true
@@ -153,7 +157,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                     ],
                                   )),
                               Padding(
-                                  padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
+                                  padding: EdgeInsets.all(
+                                      ScreenUtil().setWidth(20.0)),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
@@ -172,6 +177,17 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                                 ScreenUtil().setWidth(480.0),
                                         child: TextField(
                                           controller: noteController,
+                                          maxLength: 50,
+                                          onChanged: (String newVal) {
+                                            if (newVal.length <= maxLength) {
+                                              text = newVal;
+                                            } else {
+                                              noteController.text = text;
+                                            }
+                                          },
+                                          
+                                          decoration:
+                                              InputDecoration(counterText: ''),
                                           enabled:
                                               sended == true ? false : true,
                                           keyboardType: TextInputType.multiline,
@@ -268,13 +284,17 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            isEdited == true ? Icons.edit : Icons.send,
+                                            isEdited == true
+                                                ? Icons.edit
+                                                : Icons.send,
                                             color: sended == false
                                                 ? Colors.yellowAccent
                                                 : Colors.grey,
                                           ),
                                           Text(
-                                            isEdited == true ? "Chỉnh sửa" : "Gửi",
+                                            isEdited == true
+                                                ? "Chỉnh sửa"
+                                                : "Gửi",
                                             style: TextStyle(
                                                 color: sended == false
                                                     ? Colors.yellowAccent
@@ -310,8 +330,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                               ),
                               Padding(
                                 padding: EdgeInsets.only(
-                                    left: ScreenUtil().setWidth(30.0), 
-                                    top: ScreenUtil().setWidth(15.0), 
+                                    left: ScreenUtil().setWidth(30.0),
+                                    top: ScreenUtil().setWidth(15.0),
                                     bottom: ScreenUtil().setWidth(15.0)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,7 +349,8 @@ class _MilkingSlipDetailCardState extends State<MilkingSlipDetailCard> {
                               ),
                               new Spacer(),
                               Padding(
-                                padding: EdgeInsets.only(right: ScreenUtil().setWidth(30.0)),
+                                padding: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(30.0)),
                                 child: RaisedButton(
                                   color: Colors.green[100],
                                   shape: RoundedRectangleBorder(

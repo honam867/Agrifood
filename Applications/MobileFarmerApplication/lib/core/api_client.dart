@@ -44,6 +44,7 @@ class APIClient {
       apiUrl,
       headers: await addHeader(),
     );
+    print(response.statusCode);
     return json.decode(response.body) as List<dynamic>;
   }
 

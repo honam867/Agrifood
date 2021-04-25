@@ -14,12 +14,10 @@ import 'package:flutter_screenutil/screen_util.dart';
 //import 'package:quiver/iterables.dart';
 
 class FeedCow extends StatefulWidget {
-  final FoodSuggestionItem foodSuggestionItem;
   final BuildContext contextfoodPage;
   final String routefoodName;
   const FeedCow(
       {Key key,
-      this.foodSuggestionItem,
       this.contextfoodPage,
       this.routefoodName})
       : super(key: key);

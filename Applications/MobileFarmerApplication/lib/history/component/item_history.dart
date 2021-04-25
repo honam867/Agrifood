@@ -2,6 +2,7 @@ import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cmoon_icons/flutter_cmoon_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
@@ -43,7 +44,7 @@ class _ItemHistoryState extends State<ItemHistory> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.list.cowId.toString() ?? "",
+                          widget.list.cowName ?? "",
                           style: TextStyle(
                               fontSize: ScreenUtil().setSp(60),
                               color: black,
@@ -51,13 +52,19 @@ class _ItemHistoryState extends State<ItemHistory> {
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: ScreenUtil().setHeight(2)),
-                        Text(
-                          widget.list.note ?? "",
-                          style: TextStyle(
-                              fontSize: ScreenUtil().setSp(50),
-                              color: black.withOpacity(0.5),
-                              fontWeight: FontWeight.w400),
-                          overflow: TextOverflow.ellipsis,
+                        RichText(
+                          text: TextSpan(
+                            text: 'Ghi chú: ',
+                            style: TextStyle(fontSize: 15, color: Colors.black),
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: widget.list.note,
+                                  style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(50),
+                                      color: black.withOpacity(0.5),
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -70,20 +77,27 @@ class _ItemHistoryState extends State<ItemHistory> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    widget.list.quantity.toString() ?? "",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: ScreenUtil().setSp(60),
-                        color: Colors.green),
-                  ),
+                  RichText(
+                    text: TextSpan(
+                        text: widget.list.quantity.toString(),
+                        style: GoogleFonts.lato(color: Colors.redAccent, fontSize: 20),
+                        children: [
+                          TextSpan(
+                              text: " Kg",
+                              style: GoogleFonts.lato(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic))
+                        ]),
+                  )
                 ],
               ),
             )
           ],
         ),
         Padding(
-          padding: EdgeInsets.only(left: ScreenUtil().setWidth(40), top: ScreenUtil().setHeight(30)),
+          padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(40), top: ScreenUtil().setHeight(30)),
           child: Divider(
             thickness: ScreenUtil().setSp(2),
           ),
@@ -96,7 +110,10 @@ class _ItemHistoryState extends State<ItemHistory> {
 Widget title() {
   return Text(
     "Thống kê",
-    style: TextStyle(fontSize: ScreenUtil().setSp(80), fontWeight: FontWeight.bold, color: black),
+    style: TextStyle(
+        fontSize: ScreenUtil().setSp(80),
+        fontWeight: FontWeight.bold,
+        color: black),
   );
 }
 
@@ -116,7 +133,9 @@ Row tabTille({title}) {
               //size: 20,
             ),
       Padding(
-        padding: EdgeInsets.only(left: ScreenUtil().setWidth(20),),
+        padding: EdgeInsets.only(
+          left: ScreenUtil().setWidth(20),
+        ),
         child: Text(title),
       )
     ],

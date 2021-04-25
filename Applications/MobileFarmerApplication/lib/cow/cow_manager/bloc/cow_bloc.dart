@@ -37,7 +37,7 @@ class CowBloc extends Bloc<CowEvent, CowState> {
       //yield* _mapClearCompletedToState();
     } else if (event is GetCowByByreId) {
       yield* _mapGetCowByByreIdState(event);
-    } else if (event is GetCowByFarmerId){
+    } else if (event is GetCowByFarmerId) {
       yield* _mapGetCowByFarmerIdState(event);
     }
   }
@@ -63,9 +63,10 @@ class CowBloc extends Bloc<CowEvent, CowState> {
 
   Stream<CowState> _mapGetCowByFarmerIdState(GetCowByFarmerId event) async* {
     try {
-      var farmerId = await Storage.getString("farmerId");
-      final cowModel =
-          await this.cowRepository.getCowByFatmerId(farmerId: int.parse(farmerId));
+      //var farmerId = await Storage.getString("farmerId");
+      final cowModel = await this
+          .cowRepository
+          .getCowByFatmerId();
       yield CowLoaded(cowModel);
     } catch (_) {
       yield CowError();
@@ -101,9 +102,14 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     try {
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
-      final byreModel = await this.foodSuggestionRepository.getAllByre();
-      final cowModel = await this.cowRepository.getAllCow();
-      yield FoodSuggestionLoaded(foodSuggestionModel, byreModel, cowModel);
+      final byreModel = await this.foodSuggestionRepository.getByreByFarmer();
+      final listCowMale = await this.cowRepository.getCowByGender(gender: 1);
+      final listCowFeMale = await this.cowRepository.getCowByGender(gender: 0);
+      yield FoodSuggestionLoaded(
+          foodSuggestionModel: foodSuggestionModel,
+          byreModel: byreModel,
+          listCowFeMale: listCowFeMale,
+          listCowMale: listCowMale);
     } catch (_) {
       yield CowError();
     }

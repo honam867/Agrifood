@@ -58,7 +58,7 @@ class _ListByresState extends State<ListByres> {
 
   void getListByre(BuildContext context) {
     final byreCubit = context.watch<ByreCubit>();
-    byreCubit.getListByreByFarmerId(farmerId: widget.farmerId);
+    byreCubit.getListByreByFarmerId();
   }
 
   typeTrue(BuildContext contextHome) {
@@ -121,6 +121,7 @@ class _ListByresState extends State<ListByres> {
 
           return SafeArea(
             child: Scaffold(
+              backgroundColor: Colors.lightGreen[200],
               appBar: AppBar(
                 backgroundColor: Color(0xff9CCC65),
                 title: Text('Quản lí chuồng'),
