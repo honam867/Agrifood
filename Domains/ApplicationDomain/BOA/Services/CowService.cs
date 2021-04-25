@@ -36,6 +36,7 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
+                model.Code = await AutoGenerateCodeAsync();
                 var entity = _mapper.Map<Cow>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _cowRepository.Create(entity);
