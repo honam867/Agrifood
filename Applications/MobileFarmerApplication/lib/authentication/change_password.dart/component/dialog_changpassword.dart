@@ -104,7 +104,9 @@ Widget textForm(
           borderSide: BorderSide(
               color: Color(0xffCED0D2), width: ScreenUtil().setWidth(1000)),
           borderRadius:
-              BorderRadius.all(Radius.circular(ScreenUtil().setSp(60)))),
+              BorderRadius.all(Radius.circular(ScreenUtil().setSp(60)),
+              )),
+              
       labelText: labelText,
       suffixIcon: IconButton(
           icon: obscureText

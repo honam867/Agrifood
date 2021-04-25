@@ -36,7 +36,7 @@ class _CowPageState extends State<CowPage> {
   }
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return BlocConsumer<CowBloc, CowState>(
       listener: (context, state) {
         if (state is AddCowDoneLoaded) {
@@ -50,8 +50,9 @@ class _CowPageState extends State<CowPage> {
       },
       builder: (context, state) {
         if (state is CowLoadInprocess) {
-          if(widget.route == "ByrePage"){
-            BlocProvider.of<CowBloc>(context).add(GetCowByByreId(widget.byreId));
+          if (widget.route == "ByrePage") {
+            BlocProvider.of<CowBloc>(context)
+                .add(GetCowByByreId(widget.byreId));
           } else if (widget.route == "DashBoard") {
             BlocProvider.of<CowBloc>(context).add(GetCowByFarmerId());
           } else {
@@ -90,28 +91,31 @@ class _CowPageState extends State<CowPage> {
                             ),
                           ));
                     })
-              ],  
-            ),
-            body: Column(
-              children: <Widget>[
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-                  child: ListView.builder(
-                    // children: [CowCard(), CowCard(), CowCard()],
-                    itemCount: cowModel.cowItem.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final cowItem = cowModel.cowItem[index];
-
-                      return SlidableWidget(
-                        child: CowCard(cowItem: cowItem),
-                        onDismissed: (action) => dismissSlidableItem(
-                            context, index, action, cowItem),
-                      );
-                    },
-                  ),
-                )),
               ],
+            ),
+            body: Container(
+              color: Colors.lightGreen[50],
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                      child: Padding(
+                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+                    child: ListView.builder(
+                      // children: [CowCard(), CowCard(), CowCard()],
+                      itemCount: cowModel.cowItem.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final cowItem = cowModel.cowItem[index];
+
+                        return SlidableWidget(
+                          child: CowCard(cowItem: cowItem),
+                          onDismissed: (action) => dismissSlidableItem(
+                              context, index, action, cowItem),
+                        );
+                      },
+                    ),
+                  )),
+                ],
+              ),
             ),
           ));
         }
