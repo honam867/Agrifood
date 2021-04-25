@@ -45,7 +45,19 @@ namespace WebAdminApplication.Controllers
         public async Task<IActionResult> GetByreByFarmerId()
         {
             var issuer = GetCurrentUserIdentity<int>();
-            return Ok(await _byreService.GetByreByFarmerId(issuer));
+            var data = await _byreService.GetByreByFarmerId(issuer);
+            if(data != null)
+            {
+                return Ok(data);
+            } else
+            {
+                ByreModel byreModel = new ByreModel();
+                byreModel.Id = -1;
+                byreModel.Name = null;
+                byreModel.QuantityCow = 0;
+                byreModel.FarmerId = -1;
+                return Ok(byreModel);
+            }
         }
 
         [Route("")]

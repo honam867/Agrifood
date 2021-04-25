@@ -7,8 +7,9 @@ namespace ApplicationDomain.BOA.Models.FoodSuggestions
     public class FoodSuggestionModel
     {
         public int Id { get; set; }
-        public int CowId { set; get; }
         public string Content { set; get; }
+        public int FoodId { get; set; }
+        public string FoodType { get; set; }
     }
     public class FoodSuggestionModelMapper : Profile
     {

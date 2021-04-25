@@ -1,7 +1,10 @@
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
+import 'package:AgrifoodApp/feedcow/component/build_text_form_food.dart';
 import 'package:AgrifoodApp/feedCow/component/select_drop_list_food.dart';
 import 'package:AgrifoodApp/feedcow/model/drop_model_food.dart';
+import 'package:AgrifoodApp/history/component/item_history.dart';
+import 'package:AgrifoodApp/ui/splash_page.dart';
 //import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/text_style.dart';
@@ -29,19 +32,7 @@ class _FeedCowState extends State<FeedCow> {
   String status = "Đang tải", foodName = "";
   FoodSuggestionItem optionItemSelected =
       FoodSuggestionItem(id: null, content: "Chọn loại thức ăn");
-  TextEditingController quantiTyController = TextEditingController();
-  int _counter = 0;
-  void increment() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void decrement() {
-    setState(() {
-      _counter--;
-    });
-  }
+  TextEditingController quantityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +42,8 @@ class _FeedCowState extends State<FeedCow> {
         BlocProvider.of<FoodSuggestionBloc>(context).add(FoodLoadedSuccess());
       }
       if (state is FoodLoaded) {
-        DropListFoodModel dropListFoodModel =
-            DropListFoodModel(state.foodSuggestionModel.foodSuggestionItem);
+        List<FoodSuggestionItem> test =
+            state.foodSuggestionModel.foodSuggestionItem;
         return SafeArea(
           child: Scaffold(
             appBar: AppBar(
@@ -65,281 +56,196 @@ class _FeedCowState extends State<FeedCow> {
                   }),
             ),
             body: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
                 child: Column(
-                  children: [
-                    //sended == false
-                    Padding(
+              children: [
+                Container(
+                    color: Colors.lightGreen[50],
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Padding(
                       padding: EdgeInsets.only(
                           top: ScreenUtil().setHeight(20.0),
-                          bottom: ScreenUtil().setHeight(10.0),
+                          bottom: ScreenUtil().setHeight(20.0),
                           left: ScreenUtil().setHeight(20.0),
                           right: ScreenUtil().setHeight(20.0)),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        // child: SelectDropListFood(
-                        //   this.optionItemSelected,
-                        //   dropListFoodModel,
-                        //   (optionItem) {
-                        //     optionItemSelected = optionItem;
-                        //     setState(() {
-                        //       foodId = int.parse(optionItem.id.toString());
-                        //       foodName = optionItem.content;
-                        //       print(foodId);
-                        //     });
-                        //   },
-                        // ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                                        "Số lượng:",
-                                        style: TextStyles.labelTextStyle,
+                      child: ListView.builder(
+                          itemCount: test.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: MediaQuery.of(context).size.height,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListTile(
+                                title: Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: Text(
+                                          "Thức ăn thô",
+                                          style: TextStyle(fontSize: 20.0),
+                                        ),
+                                        padding: EdgeInsets.all(10.0),
+                                        margin: EdgeInsets.all(0.01),
+                                        alignment: Alignment.center,
+                                        width: 1200,
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange[200],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
                                       ),
-                                      SizedBox(
-                                        width: ScreenUtil().setWidth(10.0),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(test[index].content ?? ''),
+                                          Row(
+                                            children: [
+                                              buildTextFormFood(
+                                                validatorText:
+                                                    "Vui lòng không bỏ trống",
+
+                                                nameController:
+                                                    quantityController,
+                                                width: 60.0,
+                                                // changeValueFuction: changeValue
+                                              ),
+                                              Text(" Kg")
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(test[index].content ?? ''),
+                                          Row(
+                                            children: [
+                                              buildTextFormFood(
+                                                validatorText:
+                                                    "Vui lòng không bỏ trống",
+
+                                                nameController:
+                                                    quantityController,
+                                                width: 60.0,
+                                                // changeValueFuction: changeValue
+                                              ),
+                                              Text(" Kg")
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(
+                                        height: 20,
+                                        thickness: 1,
+                                        color: Colors.grey,
                                       ),
                                       Container(
-                                        height: ScreenUtil().setWidth(120.0),
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                ScreenUtil().setWidth(600.0),
-                            child:
-                            TextField(
-                              decoration: InputDecoration(
-                                errorText: _validate == true
-                                    ? 'Không được bỏ trống'
-                                    : null,
+                                        child: Text(
+                                          "Thức ăn tinh",
+                                          style: TextStyle(fontSize: 20.0),
+                                        ),
+                                        padding: EdgeInsets.all(10.0),
+                                        margin: EdgeInsets.all(0.01),
+                                        alignment: Alignment.center,
+                                        width: 1200,
+                                        decoration: BoxDecoration(
+                                          color: Colors.orange[200],
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5.0)),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(test[index].content ?? ''),
+                                          Row(
+                                            children: [
+                                              buildTextFormFood(
+                                                validatorText:
+                                                    "Vui lòng không bỏ trống",
+
+                                                nameController:
+                                                    quantityController,
+                                                width: 60.0,
+                                                // changeValueFuction: changeValue
+                                              ),
+                                              Text(" Kg")
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(test[index].content ?? ''),
+                                          Row(
+                                            children: [
+                                              buildTextFormFood(
+                                                validatorText:
+                                                    "Vui lòng không bỏ trống",
+
+                                                nameController:
+                                                    quantityController,
+                                                width: 60.0,
+                                                // changeValueFuction: changeValue
+                                              ),
+                                              Text(" Kg")
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(top: 20.0),
+                                        child: OutlinedButton(
+                                          onPressed: () {},
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty
+                                                    .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                                if (states.contains(
+                                                    MaterialState.pressed))
+                                                  return Colors.green[300];
+                                                return colorApp; // Use the component's default.
+                                              },
+                                            ),
+                                            shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0))),
+                                          ),
+                                          child: Text(
+                                            "Gửi",
+                                            style: TextStyle(
+                                                fontSize:
+                                                    ScreenUtil().setSp(80),
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                              // enabled:
-                              //     sended == true ? false : true,
-                              controller: quantiTyController,
-                              keyboardType: TextInputType.phone,
-                            ),
-                            
-                                      )
-                          ],
-                        ),
-                      ),
-                    )
-                    //     : Padding(
-                    //         padding: EdgeInsets.all(ScreenUtil().setHeight(10.0)),
-                    //         child: Row(
-                    //           crossAxisAlignment:
-                    //               CrossAxisAlignment.center,
-                    //           children: [
-                    //             Text(
-                    //               "Bò:",
-                    //               style: TextStyles.labelTextStyle,
-                    //             ),
-                    //             SizedBox(
-                    //               width: ScreenUtil().setWidth(20.0)
-                    //             ),
-                    //             RichText(
-                    //                 text: TextSpan(
-                    //               text: cowName,
-                    //               style: DefaultTextStyle.of(context)
-                    //                   .style,
-                    //             ))
-                    //           ],
-                    //         )),
-                    // Padding(
-                    //     padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
-                    //     child: Row(
-                    //       crossAxisAlignment:
-                    //           CrossAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           "Số lượng:",
-                    //           style: TextStyles.labelTextStyle,
-                    //         ),
-                    //         SizedBox(
-                    //           width: ScreenUtil().setWidth(10.0),
-                    //         ),
-                    //         Container(
-                    //           height: ScreenUtil().setWidth(120.0),
-                    //           width:
-                    //               MediaQuery.of(context).size.width -
-                    //                   ScreenUtil().setWidth(600.0),
-                    //           child: TextField(
-                    //             decoration: InputDecoration(
-                    //               errorText: _validate == true
-                    //                   ? 'Không được bỏ trống'
-                    //                   : null,
-                    //             ),
-                    //             enabled:
-                    //                 sended == true ? false : true,
-                    //             controller: quantiTyController,
-                    //             keyboardType: TextInputType.phone,
-                    //           ),
-                    //         ),
-                    //         //ew Spacer(),
-                    //         RichText(
-                    //             text: TextSpan(
-                    //           text: " ml",
-                    //           style:
-                    //               DefaultTextStyle.of(context).style,
-                    //         ))
-                    //       ],
-                    //     )),
-                    // Padding(
-                    //     padding: EdgeInsets.all(ScreenUtil().setWidth(20.0)),
-                    //     child: Row(
-                    //       crossAxisAlignment:
-                    //           CrossAxisAlignment.center,
-                    //       children: [
-                    //         Text(
-                    //           "Ghi chú:",
-                    //           style: TextStyles.labelTextStyle,
-                    //         ),
-                    //         SizedBox(
-                    //           width: ScreenUtil().setWidth(10.0),
-                    //         ),
-                    //         Container(
-                    //           height: ScreenUtil().setWidth(140.0),
-                    //           width:
-                    //               MediaQuery.of(context).size.width -
-                    //                   ScreenUtil().setWidth(480.0),
-                    //           child: TextField(
-                    //             controller: noteController,
-                    //             enabled:
-                    //                 sended == true ? false : true,
-                    //             keyboardType: TextInputType.multiline,
-                    //           ),
-                    //         )
-                    //       ],
-                    //     )),
-                    // Divider(),
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   mainAxisAlignment:
-                    //       MainAxisAlignment.spaceAround,
-                    //   children: [
-                    //     FlatButton(
-                    //         onPressed: () {
-                    //           deleteItem();
-                    //         },
-                    //         child: Row(
-                    //           crossAxisAlignment:
-                    //               CrossAxisAlignment.center,
-                    //           mainAxisAlignment:
-                    //               MainAxisAlignment.center,
-                    //           children: [
-                    //             Icon(
-                    //               Icons.delete,
-                    //               color: Colors.redAccent,
-                    //             ),
-                    //             Text(
-                    //               "Xóa",
-                    //               style: TextStyle(
-                    //                   color: Colors.redAccent),
-                    //             )
-                    //           ],
-                    //         )),
-                    //     FlatButton(
-                    //         onPressed: sended == false
-                    //             ? () {
-                    //                 setState(() {
-                    //                   quantiTyController.text.isEmpty
-                    //                       ? _validate = true
-                    //                       : _validate = false;
-                    //                   if (isEdited == true) {
-                    //                     MilkingSlipDetailItem
-                    //                         milkingSlipDetailItem =
-                    //                         new MilkingSlipDetailItem(
-                    //                             id:
-                    //                                 milkingSlipDetailId,
-                    //                             cowId: cowId,
-                    //                             milkingSlipId: widget
-                    //                                 .milkingSlipId,
-                    //                             note: noteController
-                    //                                 .text,
-                    //                             quantity: int.parse(
-                    //                                 quantiTyController
-                    //                                     .text));
-                    //                     BlocProvider.of<
-                    //                         MilkingSlipBloc>(context)
-                    //                       ..add((MilkingSlipDetailUpdated(
-                    //                           milkingSlipDetailItem)));
-                    //                   } else {
-                    //                     if (_validate == false) {
-                    //                       MilkingSlipDetailItem
-                    //                           milkingSlipDetailItem =
-                    //                           new MilkingSlipDetailItem(
-                    //                               cowId: cowId,
-                    //                               milkingSlipId: widget
-                    //                                   .milkingSlipId,
-                    //                               note: noteController
-                    //                                   .text,
-                    //                               quantity: int.parse(
-                    //                                   quantiTyController
-                    //                                       .text));
-                    //                       print(
-                    //                           milkingSlipDetailItem);
-                    //                       BlocProvider.of<
-                    //                               MilkingSlipBloc>(
-                    //                           context)
-                    //                         ..add(CreateMilkingSlipDetail(
-                    //                             milkingSlipDetailItem));
-                    //                     }
-                    //                   }
-                    //                 });
-                    //               }
-                    //             : () {
-                    //                 setState(() {
-                    //                   isEdited = true;
-                    //                   sended = false;
-                    //                 });
-                    //               },
-                    //         child: Row(
-                    //           crossAxisAlignment:
-                    //               CrossAxisAlignment.center,
-                    //           mainAxisAlignment:
-                    //               MainAxisAlignment.center,
-                    //           children: [
-                    //             Icon(
-                    //               isEdited == true ? Icons.edit : Icons.send,
-                    //               color: sended == false
-                    //                   ? Colors.yellowAccent
-                    //                   : Colors.grey,
-                    //             ),
-                    //             Text(
-                    //               isEdited == true ? "Chỉnh sửa" : "Gửi",
-                    //               style: TextStyle(
-                    //                   color: sended == false
-                    //                       ? Colors.yellowAccent
-                    //                       : Colors.grey),
-                    //             )
-                    //           ],
-                    //         )),
-                    //   ],
-                    // )
-                  ],
-                ),
-              ),
-              // decoration: BoxDecoration(
-              //   color: Colors.green[100],
-              //   borderRadius: BorderRadius.only(
-              //     topLeft: Radius.circular(20),
-              //     topRight: Radius.circular(20),
-              //     bottomLeft: Radius.circular(75),
-              //     bottomRight: Radius.circular(75),
-              // )),
-              // );
-              //}),)
-              //],
-            ),
+                            );
+                          }),
+                    )),
+              ],
+            )),
           ),
         );
       }
-      return CircularProgressIndicator();
+
+      return SplashPage();
     });
   }
 }
 
-Widget builItem({title, string}) {
+Widget buildItem({title, string}) {
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.spaceBetween,

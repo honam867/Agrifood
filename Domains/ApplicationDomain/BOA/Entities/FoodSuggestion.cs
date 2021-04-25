@@ -6,5 +6,10 @@ namespace ApplicationDomain.BOA.Entities
     {
         public string Code { get; set; }
         public string Content { set; get; }
+        public int FoodId { get; set; }
+        public Food Food { get; set; }
+        
+
+
     }
 }

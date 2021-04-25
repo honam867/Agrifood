@@ -119,7 +119,8 @@ namespace WebAdminApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> GetMilkingSlipByDateAsync(int date, int month, int year, int session)
         {
-            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session);
+            var issuer = GetCurrentUserIdentity<int>();
+            var data = await _milkingSlipService.GetMilkingSlipByDateAsync(date, month, year, session,issuer);
             if(data != null)
             {
                 return Ok(data);

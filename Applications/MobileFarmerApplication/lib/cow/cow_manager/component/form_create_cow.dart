@@ -13,6 +13,7 @@ import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -198,26 +199,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                         padding: EdgeInsets.only(
                           top: ScreenUtil().setHeight(20),
                         ),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(0.0),
-                          child: Container(
-                            decoration:  BoxDecoration(
-                              color: Color(0xff9CCC65),
-                              // // borderRadius: BorderRadius.all(
-                              // //   Radius.circular(ScreenUtil().setSp(60)),
-                              // ),
-                              
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setHeight(50),
-                                vertical: ScreenUtil().setWidth(40)),
-                            child: Text(
-                              "Tạo bò",
-                              style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(80),
-                                  color: Colors.white),
-                            ),
-                          ),
+                        child: OutlinedButton(
                           onPressed: () {
                             CowItem cowItem = new CowItem(
                                 id: widget.routeName == "EditCow"
@@ -245,8 +227,50 @@ class FormCreateCowState extends State<FormCreateCow> {
                               }
                             });
                           },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.pressed))
+                                  return Colors.green[300];
+                                return colorApp; // Use the component's default.
+                              },
+                            ),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0))),
+                          ),
+                          child: Text(
+                            "Tạo bò",
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(80),
+                                color: Colors.white),
+                          ),
                         ),
                       )
+
+                      // Container(
+                      //   child: FlatButton(
+
+                      //     disabledColor: Colors.transparent,
+                      //     //mouseCursor: MouseCursor.uncontrolled,
+                      //     padding: EdgeInsets.all(0.0),
+                      //     child: Container(
+                      //       padding: EdgeInsets.symmetric(
+                      //           horizontal: ScreenUtil().setHeight(50),
+                      //           vertical: ScreenUtil().setWidth(40)),
+                      //       child: Text(
+                      //         "Tạo bò",
+                      //         style: TextStyle(
+                      //             fontSize: ScreenUtil().setSp(80),
+                      //             color: Colors.white),
+                      //       ),
+                      //     ),
+                      //     onPressed: () {
+
+                      //     },
+                      //   ),
+                      // ))
                     ],
                   ),
                 ),

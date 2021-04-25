@@ -104,6 +104,7 @@ class _FormDetailCowState extends State<FormDetailCow> {
               ),
             ),
             body: Container(
+              color: Colors.lightGreen[50],
               width: double.infinity,
               height: double.infinity,
               child: Column(
