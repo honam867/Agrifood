@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories.BOA
 
         public IQueryable GetFoodSuggestionByFarmerId(int id)
         {
-            return dbSet.Where(a => a.CreatedByUserId == id).Include(a => a.Food);
+            return dbSet.Where(a => a.CreatedByUserId == id);
         }
     }
 }
