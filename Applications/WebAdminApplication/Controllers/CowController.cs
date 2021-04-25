@@ -33,11 +33,12 @@ namespace WebAdminApplication.Controllers
             return Ok(await _cowService.GetCowByByreId(byreId));
         }
 
-        [Route("user/{userId}")]
+        [Route("farmer")]
         [HttpGet]
-        public async Task<IActionResult> GetCowsByUserIdAsync(int userId)
-        {            
-            return Ok(await _cowService.GetCowByUserIdAsync(userId));
+        public async Task<IActionResult> GetCowsByUserIdAsync()
+        {
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _cowService.GetCowByUserIdAsync(issuer));
         }
 
         [Route("gender/{id}")]
