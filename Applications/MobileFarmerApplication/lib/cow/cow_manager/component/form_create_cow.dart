@@ -37,7 +37,8 @@ class FormCreateCowState extends State<FormCreateCow> {
   int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId, byreId;
   FoodSuggestionModel foodSuggestionModelName;
   CowModel cowModelName;
-  CowModel cowModel = new CowModel();
+  CowModel listCowMale = new CowModel();
+  CowModel listCowFaMale = new CowModel();
   FoodSuggestionModel foodSuggestionModel = new FoodSuggestionModel();
   ByreModel byreModel = new ByreModel();
 
@@ -122,7 +123,8 @@ class FormCreateCowState extends State<FormCreateCow> {
         if (state is FoodSuggestionLoaded) {
           foodSuggestionModel = state.foodSuggestionModel;
           byreModel = state.byreModel;
-          cowModel = state.cowModel;
+          listCowFaMale = state.listCowFeMale;
+          listCowMale = state.listCowMale;
 
           return SafeArea(
             child: Scaffold(
@@ -148,12 +150,12 @@ class FormCreateCowState extends State<FormCreateCow> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildTextForm(
-                              validatorText: "Vui lòng không bỏ trống",
-                              hint: "Mã bò",
-                              codeController: _codeController,
-                              width: width,
-                              setTextFuction: setTextValue),
+                          // buildTextForm(
+                          //     validatorText: "Vui lòng không bỏ trống",
+                          //     hint: "Mã bò",
+                          //     codeController: _codeController,
+                          //     width: width,
+                          //     setTextFuction: setTextValue),
                           buildIdFather(
                               title: "Thức ăn",
                               foodSuggestionModel: this.foodSuggestionModel,
@@ -166,7 +168,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                               changeValueFuction: changeValue),
                         ],
                       ),
-                      state.cowModel.cowItem.length > 0
+                      listCowMale.cowItem.length > 0 || listCowFaMale.cowItem.length > 0
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,11 +176,11 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 buildIdFather(
                                     title: "Bò cha",
                                     cowFatherId: cowFatherId,
-                                    cowModel: this.cowModel,
+                                    cowModel: this.listCowMale,
                                     changeValueFuction: changeValue),
                                 buildIdFather(
                                     title: "Bò mẹ",
-                                    cowModel: this.cowModel,
+                                    cowModel: this.listCowFaMale,
                                     changeValueFuction: changeValue,
                                     cowMotherId: cowMotherId)
                               ],
@@ -223,7 +225,6 @@ class FormCreateCowState extends State<FormCreateCow> {
                                     : null,
                                 gender: gender,
                                 byreId: byreId,
-                                code: _codeController.text,
                                 birthday:
                                     DateTime.parse(_birthday.toIso8601String()),
                                 weaningDate:
@@ -231,6 +232,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 name: _nameController.text,
                                 fatherId: cowFatherId,
                                 ageNumber: 1,
+                                code: "AAA",
                                 motherId: cowMotherId,
                                 foodSuggestionId: foodSuggestionId);
                             setState(() {

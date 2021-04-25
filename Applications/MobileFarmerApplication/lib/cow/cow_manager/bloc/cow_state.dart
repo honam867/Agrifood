@@ -17,13 +17,14 @@ class FoodSuggestionLoadInprocess extends CowState {}
 class FoodSuggestionLoaded extends CowState {
   final FoodSuggestionModel foodSuggestionModel;
   final ByreModel byreModel;
-  final CowModel cowModel;
+  final CowModel listCowMale;
+  final CowModel listCowFeMale;
 
   const FoodSuggestionLoaded(
-      [this.foodSuggestionModel, this.byreModel, this.cowModel]);
+      {this.foodSuggestionModel, this.byreModel, this.listCowMale, this.listCowFeMale});
 
   @override
-  List<Object> get props => [foodSuggestionModel, byreModel, cowModel];
+  List<Object> get props => [foodSuggestionModel, byreModel, listCowMale, listCowFeMale];
 
   @override
   String toString() => 'TodosLoadSuccess { todos: $foodSuggestionModel }';

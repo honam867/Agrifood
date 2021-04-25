@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:AgrifoodApp/history/bloc/history_bloc.dart';
 import 'package:AgrifoodApp/history/component/colors.dart';
+import 'package:AgrifoodApp/history/component/custom_splash.dart';
+import 'package:AgrifoodApp/history/component/floating_button.dart';
 import 'package:AgrifoodApp/history/component/item_history.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +96,7 @@ class _DailyPageState extends State<DailyPage>
         length: 2,
         child: SafeArea(
           child: Scaffold(
+              floatingActionButton: FloatingButtonMiking(),
               backgroundColor: Colors.green[100],
               body: BlocBuilder<HistoryBloc, HistoryState>(
                 builder: (context, state) {
@@ -113,7 +116,10 @@ class _DailyPageState extends State<DailyPage>
                               children: [
                                 title(),
                                 IconButton(
-                                  icon: Icon(Icons.calendar_today),
+                                  icon: Icon(
+                                    Icons.calendar_today,
+                                    color: Colors.black,
+                                  ),
                                   onPressed: () {
                                     DatePicker.showDatePicker(context,
                                         showTitleActions: true,
@@ -122,14 +128,14 @@ class _DailyPageState extends State<DailyPage>
                                         maxTime: DateTime(current.year,
                                             current.month - 1, 30),
                                         theme: DatePickerTheme(
-                                            headerColor: Colors.orange,
-                                            backgroundColor: colorApp,
+                                            headerColor: Colors.transparent,
+                                            backgroundColor: Colors.white,
                                             itemStyle: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 18),
                                             doneStyle: TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.blue,
                                                 fontSize: 16)),
                                         onChanged: (date) {},
                                         onConfirm: (date) {
@@ -151,16 +157,14 @@ class _DailyPageState extends State<DailyPage>
                               child: TabBar(
                                 onTap: (int index) {
                                   indexTab = index == 0 ? 0 : 1;
-                                  refeshList(getDate: selectedValue, session: indexTab);
+                                  refeshList(
+                                      getDate: selectedValue,
+                                      session: indexTab);
                                 },
                                 labelColor: Colors.black87,
                                 tabs: [
-                                  Tab(
-                                    child: tabTille(title: "Sáng")
-                                  ),
-                                  Tab(
-                                    child: tabTille(title: "Tối")
-                                  ),
+                                  Tab(child: tabTille(title: "Sáng")),
+                                  Tab(child: tabTille(title: "Tối")),
                                 ],
                               ),
                             ),
@@ -210,7 +214,10 @@ class _DailyPageState extends State<DailyPage>
                                                       this.selectedValue = date;
                                                       _controller
                                                           .animateToDate(date);
-                                                      refeshList(getDate: selectedValue, session: indexTab);
+                                                      refeshList(
+                                                          getDate:
+                                                              selectedValue,
+                                                          session: indexTab);
                                                     });
                                                   },
                                                 ),
@@ -237,13 +244,7 @@ class _DailyPageState extends State<DailyPage>
                                       session: 0));
                               }
                               if (state is HistoryLoading) {
-                                return Container(
-                                  padding: EdgeInsets.only(top: 20),
-                                  width: 50,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
+                                return CustomSplashPage();
                               }
                               if (state is HistoryLoaded) {
                                 var list =
@@ -271,17 +272,9 @@ class _DailyPageState extends State<DailyPage>
                                           ],
                                         ),
                                       )
-                                    : SizedBox(
-                                        height: 200, // Some height
-                                        child: Center(
-                                          child: Text("Không có báo cáo nào"),
-                                        ),
-                                      );
+                                    : CustomNondataSizeBox();
                               }
-                              return Container(
-                                  //height: 50,
-                                  child: Center(
-                                      child: CircularProgressIndicator()));
+                              return CustomSplashPage();
                             },
                             childCount: 1,
                           ),

@@ -6,7 +6,17 @@ import '../core/api_client.dart';
 class CowRepository {
   Future<CowModel> getAllCow() async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/cow");
+      List<dynamic> jsonRs = await APIClient.getList("api/cow/farmer");
+      CowModel cowModel = CowModel.fromJson(jsonRs);
+      return cowModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<CowModel> getCowByGender({gender}) async {
+    try {
+      List<dynamic> jsonRs = await APIClient.getList("api/cow/gender/$gender");
       CowModel cowModel = CowModel.fromJson(jsonRs);
       return cowModel;
     } catch (error) {
@@ -16,7 +26,8 @@ class CowRepository {
 
   Future<CowModel> getCowByDateMilkingSlip({milkingSlipId}) async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/cow/checkcow/$milkingSlipId");
+      List<dynamic> jsonRs =
+          await APIClient.getList("api/cow/checkcow/$milkingSlipId");
       CowModel cowModel = CowModel.fromJson(jsonRs);
       return cowModel;
     } catch (error) {
@@ -34,9 +45,9 @@ class CowRepository {
     }
   }
 
-  Future<CowModel> getCowByFatmerId({farmerId}) async {
+  Future<CowModel> getCowByFatmerId() async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/cow/user/$farmerId");
+      List<dynamic> jsonRs = await APIClient.getList("api/cow/farmer");
       CowModel cowModel = CowModel.fromJson(jsonRs);
       return cowModel;
     } catch (error) {

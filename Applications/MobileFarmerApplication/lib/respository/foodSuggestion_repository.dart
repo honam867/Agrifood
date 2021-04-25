@@ -8,7 +8,7 @@ import '../core/api_client.dart';
 class FoodSuggestionRepository {
   Future<FoodSuggestionModel> getAllFoodSuggestion() async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/foodSuggestion");
+      List<dynamic> jsonRs = await APIClient.getList("api/foodSuggestion/farmer");
       FoodSuggestionModel foodSuggestionModel =
           FoodSuggestionModel.fromJson(jsonRs);
       return foodSuggestionModel;
@@ -17,9 +17,9 @@ class FoodSuggestionRepository {
     }
   }
 
-  Future<ByreModel> getAllByre() async {
+  Future<ByreModel> getByreByFarmer() async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/byre");
+      List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer");
       ByreModel byreModel = ByreModel.fromJson(jsonRs);
       return byreModel;
     } catch (error) {
