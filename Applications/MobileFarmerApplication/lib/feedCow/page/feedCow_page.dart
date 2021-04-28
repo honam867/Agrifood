@@ -16,7 +16,7 @@ import 'package:flutter_screenutil/screen_util.dart';
 class FeedCow extends StatefulWidget {
   final BuildContext contextfoodPage;
   final String routefoodName;
-  const FeedCow({Key key, this.contextfoodPage, this.routefoodName})
+  const FeedCow({Key key, this.contextfoodPage, this.routefoodName, FoodSuggestionItem foodSuggestionItem})
       : super(key: key);
   @override
   _FeedCowState createState() => _FeedCowState();

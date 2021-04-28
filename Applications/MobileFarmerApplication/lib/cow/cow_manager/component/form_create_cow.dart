@@ -7,6 +7,7 @@ import 'package:AgrifoodApp/cow/cow_manager/component/dropdown_mother_father_cow
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
+import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
@@ -21,9 +22,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FormCreateCow extends StatefulWidget {
   final BuildContext contextCowPage;
   final CowItem cowItem;
+  final FoodSuggestionItem foodSuggestionItem;
   final String routeName;
 
-  FormCreateCow({Key key, this.contextCowPage, this.routeName, this.cowItem})
+  FormCreateCow({Key key, this.contextCowPage, this.routeName, this.cowItem, this.foodSuggestionItem})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
