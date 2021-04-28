@@ -35,8 +35,8 @@ class CowCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 10),
-              blurRadius: 33,
-              color: Color(0xFFD3D3D3).withOpacity(.84),
+              blurRadius: 1,
+              color: Colors.grey[400].withOpacity(.84),
             ),
           ],
         ),

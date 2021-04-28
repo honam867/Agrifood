@@ -63,6 +63,7 @@ class _CowPageState extends State<CowPage> {
           cowModel = state.cowModel;
           return SafeArea(
               child: Scaffold(
+            backgroundColor: Colors.lightGreen[200],
             appBar: AppBar(
               backgroundColor: Color(0xff9CCC65),
               title: Text('Quản lí bò'),
@@ -94,7 +95,7 @@ class _CowPageState extends State<CowPage> {
               ],
             ),
             body: Container(
-              color: Colors.lightGreen[50],
+              color: Colors.lightGreen[200],
               child: Column(
                 children: <Widget>[
                   Expanded(

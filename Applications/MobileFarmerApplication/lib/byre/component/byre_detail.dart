@@ -32,10 +32,10 @@ class ChapterCard extends StatelessWidget {
         width: size.width - 48,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20.5),
+          borderRadius: BorderRadius.circular(38.5),
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 7),
+              offset: Offset(0, 10),
               blurRadius: 1,
               color: Colors.grey[400].withOpacity(.84),
             ),
@@ -79,10 +79,10 @@ class ChapterCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 )),
                             TextSpan(
-                              text: "${this.byreItem.name}",
-                              style: TextStyle(
+                              text: this.byreItem.name,
+                              style: GoogleFonts.notoSans(
                                 fontSize: ScreenUtil().setSp(60),
-                                color: Colors.black,
+                                color: Colors.black87,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -91,31 +91,33 @@ class ChapterCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Container(
-                      width: MediaQuery.of(context).size.width /
-                          ScreenUtil().setWidth(8),
-                      child: Divider(color: Colors.transparent)),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                            text: "Mã chuồng: ",
-                            style: GoogleFonts.notoSerif(
-                              fontSize: ScreenUtil().setSp(50),
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        TextSpan(
-                          text: "${this.byreItem.code}",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(50),
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                      Container(
+                          width: MediaQuery.of(context).size.width /
+                              ScreenUtil().setWidth(8),
+                          child: Divider(color: Colors.transparent)),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: "Mã: ",
+                                style: GoogleFonts.notoSerif(
+                                  fontSize: ScreenUtil().setSp(50),
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                              text: this.byreItem.code,
+                              style: GoogleFonts.notoSans(
+                                fontSize: ScreenUtil().setSp(60),
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    
+                  
                 ],
               ),
             ),

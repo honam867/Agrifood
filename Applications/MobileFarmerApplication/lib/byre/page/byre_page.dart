@@ -40,7 +40,7 @@ class _ListByresState extends State<ListByres> {
   }
 
   void addByreFuction(BuildContext context, ByreItem byreItem) {
-    byreItem.breedId= breedId;
+    byreItem.breedId = breedId;
     byreItem.farmerId = widget.farmerId;
     final byreCubit = context.read<ByreCubit>();
     byreCubit.addByre(byreItem: byreItem);
