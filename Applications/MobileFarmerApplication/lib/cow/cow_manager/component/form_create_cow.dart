@@ -7,12 +7,14 @@ import 'package:AgrifoodApp/cow/cow_manager/component/dropdown_mother_father_cow
 import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
+import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/format.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,9 +22,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FormCreateCow extends StatefulWidget {
   final BuildContext contextCowPage;
   final CowItem cowItem;
+  final FoodSuggestionItem foodSuggestionItem;
   final String routeName;
 
-  FormCreateCow({Key key, this.contextCowPage, this.routeName, this.cowItem})
+  FormCreateCow({Key key, this.contextCowPage, this.routeName, this.cowItem, this.foodSuggestionItem})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -37,7 +40,8 @@ class FormCreateCowState extends State<FormCreateCow> {
   int selectedRadio = 1, foodSuggestionId, cowFatherId, cowMotherId, byreId;
   FoodSuggestionModel foodSuggestionModelName;
   CowModel cowModelName;
-  CowModel cowModel = new CowModel();
+  CowModel listCowMale = new CowModel();
+  CowModel listCowFaMale = new CowModel();
   FoodSuggestionModel foodSuggestionModel = new FoodSuggestionModel();
   ByreModel byreModel = new ByreModel();
 
@@ -122,7 +126,8 @@ class FormCreateCowState extends State<FormCreateCow> {
         if (state is FoodSuggestionLoaded) {
           foodSuggestionModel = state.foodSuggestionModel;
           byreModel = state.byreModel;
-          cowModel = state.cowModel;
+          listCowFaMale = state.listCowFeMale;
+          listCowMale = state.listCowMale;
 
           return SafeArea(
             child: Scaffold(
@@ -148,12 +153,12 @@ class FormCreateCowState extends State<FormCreateCow> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          buildTextForm(
-                              validatorText: "Vui lòng không bỏ trống",
-                              hint: "Mã bò",
-                              codeController: _codeController,
-                              width: width,
-                              setTextFuction: setTextValue),
+                          // buildTextForm(
+                          //     validatorText: "Vui lòng không bỏ trống",
+                          //     hint: "Mã bò",
+                          //     codeController: _codeController,
+                          //     width: width,
+                          //     setTextFuction: setTextValue),
                           buildIdFather(
                               title: "Thức ăn",
                               foodSuggestionModel: this.foodSuggestionModel,
@@ -166,7 +171,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                               changeValueFuction: changeValue),
                         ],
                       ),
-                      state.cowModel.cowItem.length > 0
+                      listCowMale.cowItem.length > 0 || listCowFaMale.cowItem.length > 0
                           ? Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,11 +179,11 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 buildIdFather(
                                     title: "Bò cha",
                                     cowFatherId: cowFatherId,
-                                    cowModel: this.cowModel,
+                                    cowModel: this.listCowMale,
                                     changeValueFuction: changeValue),
                                 buildIdFather(
                                     title: "Bò mẹ",
-                                    cowModel: this.cowModel,
+                                    cowModel: this.listCowFaMale,
                                     changeValueFuction: changeValue,
                                     cowMotherId: cowMotherId)
                               ],
@@ -196,26 +201,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                         padding: EdgeInsets.only(
                           top: ScreenUtil().setHeight(20),
                         ),
-                        child: RaisedButton(
-                          padding: EdgeInsets.all(0.0),
-                          child: Container(
-                            decoration:  BoxDecoration(
-                              color: Color(0xff9CCC65),
-                              // // borderRadius: BorderRadius.all(
-                              // //   Radius.circular(ScreenUtil().setSp(60)),
-                              // ),
-                              
-                            ),
-                            padding: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setHeight(50),
-                                vertical: ScreenUtil().setWidth(40)),
-                            child: Text(
-                              "Tạo bò",
-                              style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(80),
-                                  color: Colors.white),
-                            ),
-                          ),
+                        child: OutlinedButton(
                           onPressed: () {
                             CowItem cowItem = new CowItem(
                                 id: widget.routeName == "EditCow"
@@ -223,7 +209,6 @@ class FormCreateCowState extends State<FormCreateCow> {
                                     : null,
                                 gender: gender,
                                 byreId: byreId,
-                                code: _codeController.text,
                                 birthday:
                                     DateTime.parse(_birthday.toIso8601String()),
                                 weaningDate:
@@ -231,6 +216,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                                 name: _nameController.text,
                                 fatherId: cowFatherId,
                                 ageNumber: 1,
+                                code: "AAA",
                                 motherId: cowMotherId,
                                 foodSuggestionId: foodSuggestionId);
                             setState(() {
@@ -243,8 +229,50 @@ class FormCreateCowState extends State<FormCreateCow> {
                               }
                             });
                           },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.resolveWith<Color>(
+                              (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.pressed))
+                                  return Colors.green[300];
+                                return colorApp; // Use the component's default.
+                              },
+                            ),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0))),
+                          ),
+                          child: Text(
+                            "Tạo bò",
+                            style: TextStyle(
+                                fontSize: ScreenUtil().setSp(80),
+                                color: Colors.white),
+                          ),
                         ),
                       )
+
+                      // Container(
+                      //   child: FlatButton(
+
+                      //     disabledColor: Colors.transparent,
+                      //     //mouseCursor: MouseCursor.uncontrolled,
+                      //     padding: EdgeInsets.all(0.0),
+                      //     child: Container(
+                      //       padding: EdgeInsets.symmetric(
+                      //           horizontal: ScreenUtil().setHeight(50),
+                      //           vertical: ScreenUtil().setWidth(40)),
+                      //       child: Text(
+                      //         "Tạo bò",
+                      //         style: TextStyle(
+                      //             fontSize: ScreenUtil().setSp(80),
+                      //             color: Colors.white),
+                      //       ),
+                      //     ),
+                      //     onPressed: () {
+
+                      //     },
+                      //   ),
+                      // ))
                     ],
                   ),
                 ),

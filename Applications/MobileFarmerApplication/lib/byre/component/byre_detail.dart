@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChapterCard extends StatelessWidget {
   final ByreItem byreItem;
@@ -35,8 +36,8 @@ class ChapterCard extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 10),
-              blurRadius: 33,
-              color: Color(0xFFD3D3D3).withOpacity(.84),
+              blurRadius: 1,
+              color: Colors.grey[400].withOpacity(.84),
             ),
           ],
         ),
@@ -56,41 +57,67 @@ class ChapterCard extends StatelessWidget {
                     fit: BoxFit.fill),
               ),
             ),
-            Container(height: ScreenUtil().setHeight(150), child: VerticalDivider(color: Colors.black)),
+            Container(
+                height: ScreenUtil().setHeight(150),
+                child: VerticalDivider(color: Colors.black)),
             InkWell(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Mã ${this.byreItem.code}",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(60),
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: "Tên chuồng: ",
+                                style: GoogleFonts.notoSerif(
+                                  fontSize: ScreenUtil().setSp(50),
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                              text: this.byreItem.name,
+                              style: GoogleFonts.notoSans(
+                                fontSize: ScreenUtil().setSp(60),
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  Container(
-                      width: MediaQuery.of(context).size.width / ScreenUtil().setWidth(8),
-                      child: Divider(color: Colors.transparent)),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "${this.byreItem.name}",
-                          style: TextStyle(
-                            fontSize: ScreenUtil().setSp(50),
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                      Container(
+                          width: MediaQuery.of(context).size.width /
+                              ScreenUtil().setWidth(8),
+                          child: Divider(color: Colors.transparent)),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: "Mã: ",
+                                style: GoogleFonts.notoSerif(
+                                  fontSize: ScreenUtil().setSp(50),
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                              text: this.byreItem.code,
+                              style: GoogleFonts.notoSans(
+                                fontSize: ScreenUtil().setSp(60),
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    
+                  
                 ],
               ),
             ),

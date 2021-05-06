@@ -19,7 +19,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> checkAmountByre(FarmerInfoModel farmerInfoModel) async {
     try {
       final ByreModel byre =
-          await _byreRepository.getCowByFarmerId(farmerId: farmerInfoModel.id);
+          await _byreRepository.getByreByFarmerId();
       int amonth = byre.byreItem.length;
       emit(CheckByreLoaded(amonth));
     } catch (Exception) {

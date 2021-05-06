@@ -1,12 +1,13 @@
 class MilkingSlipDetailItem {
   int id;
   int cowId;
+  String cowName;
   int milkingSlipId;
   int quantity;
   String note;
 
   MilkingSlipDetailItem(
-      {this.id, this.cowId, this.milkingSlipId, this.quantity, this.note});
+      {this.id, this.cowId, this.milkingSlipId, this.quantity, this.note, this.cowName});
 
   MilkingSlipDetailItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -14,6 +15,7 @@ class MilkingSlipDetailItem {
     milkingSlipId = json['milkingSlipId'];
     quantity = json['quantity'];
     note = json['note'];
+    cowName = json['cowName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class MilkingSlipDetailItem {
     data['milkingSlipId'] = this.milkingSlipId;
     data['quantity'] = this.quantity;
     data['note'] = this.note;
+    data['cowName'] = this.cowName;
     return data;
   }
 }
