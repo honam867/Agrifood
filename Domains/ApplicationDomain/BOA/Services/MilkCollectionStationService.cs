@@ -41,24 +41,23 @@ namespace ApplicationDomain.BOA.Services
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCollectionStationRepository.Create(entity);
 
-                for (int i = 1; i <= 10; i++)
-                {
-                    StorageTank storageTank = new StorageTank
-                    {
-                        Name = "Thùng " + i,
-                        Quantity = 50,
-                        TypeMilk = "Sữa Bò",
-                        MilkCollectionStationId = entity.Id
-                    };
-                    storageTank.CreateBy(issuer).UpdateBy(issuer);
-                    _storageTankRepository.Create(storageTank);
-                    await _uow.SaveChangesAsync();
-                }
                 if (await _uow.SaveChangesAsync() > 0)
                 {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        StorageTank storageTank = new StorageTank
+                        {
+                            Name = "Thùng " + i,
+                            Quantity = 50,
+                            TypeMilk = "Sữa Bò",
+                            MilkCollectionStationId = entity.Id
+                        };
+                        storageTank.CreateBy(issuer).UpdateBy(issuer);
+                        _storageTankRepository.Create(storageTank);
+                        await _uow.SaveChangesAsync();
+                    }
                     return entity.Id;
                 }
-
                 return 0;
             }
             catch (Exception e)
