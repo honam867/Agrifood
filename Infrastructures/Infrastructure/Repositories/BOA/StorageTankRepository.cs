@@ -31,5 +31,9 @@ namespace Infrastructure.Repositories.BOA
             return dbSet.Where(r => r.Id == id);
         }
 
+        public async Task<StorageTank> GetStorageTankByMilkCollectionId(int id)
+        {
+            return await dbSet.Where(a => a.MilkCollectionStationId == id).FirstOrDefaultAsync();
+        }
     }
 }
