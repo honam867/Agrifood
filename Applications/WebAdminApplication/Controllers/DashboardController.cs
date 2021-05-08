@@ -13,9 +13,15 @@ namespace WebAdminApplication.Controllers
     public class DashboardController : BaseController
     {
         private readonly ICowDashboardService _cowDashboardService;
-        public DashboardController(ICowDashboardService cowDashboardService)
+        private readonly IMilkingSlipDashboardService _milkingSlipDashboardService;
+        private readonly IMilkCouponDashboardService _milkCouponDashboardService;
+        public DashboardController(ICowDashboardService cowDashboardService
+            ,IMilkingSlipDashboardService milkingSlipDashboardService
+            ,IMilkCouponDashboardService milkCouponDashboardService)
         {
             _cowDashboardService = cowDashboardService;
+            _milkingSlipDashboardService = milkingSlipDashboardService;
+            _milkCouponDashboardService = milkCouponDashboardService;
         }
 
         [Route("dashboardCow/{id}")]
@@ -32,5 +38,18 @@ namespace WebAdminApplication.Controllers
             return Ok(await _cowDashboardService.GetCowTotalAsync(id));
         }
 
+        [Route("milkingslip/{month}/{year}/{farmerId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetMilkingSlipDashboardAsync(int month, int year, int farmerId)
+        {
+            return Ok(await _milkingSlipDashboardService.GetMilkingSlipDashboardAsync(month,year,farmerId));
+        }
+
+        [Route("milkcoupon/{month}/{year}/{farmerId}")]
+        [HttpGet]
+        public async Task<IActionResult> GetMilkCouponDashboardAsync(int month, int year, int farmerId)
+        {
+            return Ok(await _milkCouponDashboardService.GetMilkCouponDashboardAsync(month, year, farmerId));
+        }
     }
 }

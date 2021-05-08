@@ -4,7 +4,7 @@ using System;
 
 namespace ApplicationDomain.Dashboard.Models.Cows
 {
-    public class CowTotal
+    public class CowTotalModel
     {
         public int TongBo { get; set; }
         public int SinhSan { get; set; }

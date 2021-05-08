@@ -25,7 +25,7 @@ namespace ApplicationDomain.BOA.Services
 
         }
 
-        public async Task<IEnumerable<CowDashboard>> GetCowDashboardAsync(int id)
+        public async Task<IEnumerable<CowDashboardModel>> GetCowDashboardAsync(int id)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<IEnumerable<CowTotal>> GetCowTotalAsync(int id)
+        public async Task<IEnumerable<CowTotalModel>> GetCowTotalAsync(int id)
         {
             try
             {
