@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.MilkCollectionStations;
+using ApplicationDomain.BOA.Models.StorageTanks;
 using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
@@ -20,16 +21,16 @@ namespace ApplicationDomain.BOA.Services
     public class MilkCollectionStationService : ServiceBase, IMilkCollectionStationService
     {
         private readonly IMilkCollectionStationRepository _milkCollectionStationRepository;
-
+        private readonly IStorageTankRepository _storageTankRepository;
         public MilkCollectionStationService(
             IMilkCollectionStationRepository milkCollectionStationRepository,
-            IBreedRepository breedRepository,
+            IStorageTankRepository storageTankRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
             _milkCollectionStationRepository = milkCollectionStationRepository;
-        
+            _storageTankRepository = storageTankRepository;
         }
 
         public async Task<int> CreateMilkCollectionStationAsync(MilkCollectionStationModelRq model, UserIdentity<int> issuer)
@@ -39,10 +40,25 @@ namespace ApplicationDomain.BOA.Services
                 var entity = _mapper.Map<MilkCollectionStation>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCollectionStationRepository.Create(entity);
-                if (await _uow.SaveChangesAsync() == 1)
+
+                for (int i = 1; i <= 10; i++)
+                {
+                    StorageTank storageTank = new StorageTank
+                    {
+                        Name = "Thùng " + i,
+                        Quantity = 50,
+                        TypeMilk = "Sữa Bò",
+                        MilkCollectionStationId = entity.Id
+                    };
+                    storageTank.CreateBy(issuer).UpdateBy(issuer);
+                    _storageTankRepository.Create(storageTank);
+                    await _uow.SaveChangesAsync();
+                }
+                if (await _uow.SaveChangesAsync() > 0)
                 {
                     return entity.Id;
                 }
+
                 return 0;
             }
             catch (Exception e)
@@ -56,8 +72,14 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = await _milkCollectionStationRepository.GetEntityByIdAsync(id);
+                for (int i = 1; i <= 10; i++)
+                {
+                    var storageTank = await _storageTankRepository.GetStorageTankByMilkCollectionId(id);
+                    _storageTankRepository.Delete(storageTank);
+                    await _uow.SaveChangesAsync();
+                }
                 _milkCollectionStationRepository.Delete(entity);
-                if (await _uow.SaveChangesAsync() == 1)
+                if (await _uow.SaveChangesAsync() > 0)
                 {
                     return true;
                 }
