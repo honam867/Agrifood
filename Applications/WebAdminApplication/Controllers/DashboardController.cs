@@ -24,14 +24,14 @@ namespace WebAdminApplication.Controllers
             _milkCouponDashboardService = milkCouponDashboardService;
         }
 
-        [Route("dashboardCow/{id}")]
+        [Route("dashboardCow/{farmerId}")]
         [HttpGet]
         public async Task<IActionResult> GetCowDashboardAsync(int id)
         {
             return Ok( await _cowDashboardService.GetCowDashboardAsync(id));
         }
 
-        [Route("totalCow/{id}")]
+        [Route("totalCow/{farmerId}")]
         [HttpGet]
         public async Task<IActionResult> GetCowTotalAsync(int id)
         {
