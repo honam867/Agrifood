@@ -32,7 +32,7 @@ class ChapterCard extends StatelessWidget {
         width: size.width - 48,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(38.5),
+          borderRadius: BorderRadius.circular(15.0),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 10),
