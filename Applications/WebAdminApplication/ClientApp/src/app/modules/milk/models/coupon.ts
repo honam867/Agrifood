@@ -19,7 +19,7 @@ export class Coupon {
   scaleCode: string;
   employeeId: number;
   createdDate: Date;
-  storageTankCode: string;
+  storageTankId: number;
   session: string;
   milkCollectionStationId : number;
 
@@ -29,7 +29,7 @@ export class Coupon {
    this.farmerId = 0;
    this.scaleCode = "";
    this.employeeId = 0;
-   this.storageTankCode = "";
+   this.storageTankId = 0;
    this.session = "";
    this.createdDate = new Date();
    this.milkCollectionStationId = 0;
