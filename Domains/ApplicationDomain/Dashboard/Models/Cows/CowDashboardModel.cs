@@ -4,7 +4,7 @@ using System;
 
 namespace ApplicationDomain.Dashboard.Models.Cows
 {
-    public class CowDashboard
+    public class CowDashboardModel
     {
         public int Be04Thang { get; set; }
         public int Be48Thang { get; set; }

@@ -10,8 +10,8 @@ namespace ApplicationDomain.Dashboard.IServices
 {
     public interface ICowDashboardService
     {
-        Task<IEnumerable<CowDashboard>> GetCowDashboardAsync(int id);
-        Task<IEnumerable<CowTotal>> GetCowTotalAsync(int id);
+        Task<IEnumerable<CowDashboardModel>> GetCowDashboardAsync(int id);
+        Task<IEnumerable<CowTotalModel>> GetCowTotalAsync(int id);
 
     }
 }
