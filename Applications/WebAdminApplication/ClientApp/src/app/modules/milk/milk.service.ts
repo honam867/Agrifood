@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Coupon } from './models/coupon';
+import { Employee } from '../employee/models/employee';
+import { Farmer } from '../farmer/models/farmer';
+import { Station } from '../station/models/station';
+import { StorageTank } from './models/storage';
 // import {RoleOfUser} from './models/roleofUser';
 // import {Role} from '../system/models/role';
 // import { RqListRole } from 'src/app/shared/models/RqListRoles';
@@ -51,6 +55,21 @@ export class MilkService {
     return this.http.put(`milkcoupon/${detailId}`, updatedDetail);
   }
 
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get(`employee`);
+  }
+
+  getFarmers(): Observable<Farmer[]> {
+    return this.http.get(`farmer`);
+  }
+
+  getStations(): Observable<Station[]> {
+    return this.http.get(`milkcollectionstation`);
+  }
+
+  getTanks(): Observable<StorageTank[]> {
+    return this.http.get(`storagetank`);
+  }
 
   // getProvince(): Observable<Province[]> {
   //   return this.http.get(`province`)

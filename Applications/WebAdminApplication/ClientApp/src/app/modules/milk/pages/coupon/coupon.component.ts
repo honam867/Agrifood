@@ -17,7 +17,7 @@ export class CouponComponent implements OnInit {
   value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['farmer', 'scaleCode', 'employee'];
+  displayedColumns: string[] = ['farmer', 'employee'];
   dataSource: MatTableDataSource<Coupon>;
   coupons: Coupon[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

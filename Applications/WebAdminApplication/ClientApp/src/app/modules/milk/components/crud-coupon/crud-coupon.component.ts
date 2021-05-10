@@ -10,6 +10,10 @@ import { Coupon } from '../../models/coupon';
 import { Detail } from '../../models/detail';
 import { MatTableDataSource } from '@angular/material/table';
 import { CrudDetailComponent } from '../crud-detail/crud-detail.component';
+import { Employee } from 'src/app/modules/employee/models/employee';
+import { Farmer } from 'src/app/modules/farmer/models/farmer';
+import { Station } from 'src/app/modules/station/models/station';
+import { StorageTank } from '../../models/storage';
 
 @Component({
   selector: 'app-crud-coupon',
@@ -24,6 +28,10 @@ export class CrudCouponComponent implements OnInit {
   status: string;
   coupon: Coupon = new Coupon();
   // provinces: Province[] = [];
+  employees: Employee[] =[];
+  farmers: Farmer[] = [];
+  milkStations: Station[] = [];
+  storageTanks: StorageTank[] = [];
   isView = true;
   isCreate = true;
   loading: boolean;
@@ -49,6 +57,14 @@ export class CrudCouponComponent implements OnInit {
       this.delete();
     }
     this.fetchDetailInCoupon();
+    this.fetchEmployees();
+    this.fetchFarmers();
+    this.fetchStations();
+
+    if (this.isView) {
+      this.getStorageTanks(this.coupon.milkCollectionStationId);
+    }
+    // this.getStorageTanks();
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.coupon);
@@ -130,6 +146,31 @@ export class CrudCouponComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.detailsOfCoupon);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    });
+  }
+
+  fetchEmployees() {
+    this.couponService.getEmployees().subscribe(result => {
+      this.employees = result;
+    });
+  }
+
+  fetchFarmers() {
+    this.couponService.getFarmers().subscribe(result => {
+      this.farmers = result;
+    });
+  }
+
+  fetchStations() {
+    this.couponService.getStations().subscribe(result => {
+      this.milkStations = result;
+    });
+  }
+
+  getStorageTanks(milkCollectionStationId: number) {
+    this.couponService.getTanks().subscribe(result => {
+      this.storageTanks = result.filter(tank => tank.milkCollectionStationId == milkCollectionStationId);
+      console.log(this.storageTanks);
     });
   }
 
