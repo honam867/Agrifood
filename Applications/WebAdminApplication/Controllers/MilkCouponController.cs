@@ -75,8 +75,15 @@ namespace WebAdminApplication.Controllers
         {
             try
             {
-                await _MilkCouponService.DeleteMilkCouponAsync(id);
-                return Ok();
+                var result = await _MilkCouponService.DeleteMilkCouponAsync(id);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
             catch (Exception e)
             {

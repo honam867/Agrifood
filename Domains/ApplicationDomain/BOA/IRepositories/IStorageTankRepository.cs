@@ -12,7 +12,7 @@ namespace ApplicationDomain.BOA.IRepositories
     {
         IQueryable GetStorageTanks();
         IQueryable GetStorageTankById(int id);
-        Task<StorageTank> GetStorageTankByMilkCollectionId(int id);
+        IQueryable GetStorageTankByMilkCollectionId(int id);
         //Task<bool> CheckCodeExistsAsync(string code);
         //IQueryable GetStorageTankByDate(int date, int month, int year, int session);
     }

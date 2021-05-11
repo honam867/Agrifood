@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.MilkCollectionStations;
+using ApplicationDomain.BOA.Models.MilkCoupons;
 using ApplicationDomain.BOA.Models.StorageTanks;
 using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
@@ -22,15 +23,18 @@ namespace ApplicationDomain.BOA.Services
     {
         private readonly IMilkCollectionStationRepository _milkCollectionStationRepository;
         private readonly IStorageTankRepository _storageTankRepository;
+        private readonly IMilkCouponRepository _milkCouponRepository;
         public MilkCollectionStationService(
             IMilkCollectionStationRepository milkCollectionStationRepository,
             IStorageTankRepository storageTankRepository,
+            IMilkCouponRepository milkCouponRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
             _milkCollectionStationRepository = milkCollectionStationRepository;
             _storageTankRepository = storageTankRepository;
+            _milkCouponRepository = milkCouponRepository;
         }
 
         public async Task<int> CreateMilkCollectionStationAsync(MilkCollectionStationModelRq model, UserIdentity<int> issuer)
@@ -48,7 +52,7 @@ namespace ApplicationDomain.BOA.Services
                         StorageTank storageTank = new StorageTank
                         {
                             Name = "Thùng " + i,
-                            Quantity = 50,
+                            Quantity = 0,
                             TypeMilk = "Sữa Bò",
                             MilkCollectionStationId = entity.Id
                         };
@@ -70,19 +74,28 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                var entity = await _milkCollectionStationRepository.GetEntityByIdAsync(id);
-                for (int i = 1; i <= 10; i++)
+                var milkcoupon = await _milkCouponRepository.GetMilkCouponByMilkCollectionStationId(id).MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
+                var result = true;
+                if (milkcoupon.Count() == 0)
                 {
-                    var storageTank = await _storageTankRepository.GetStorageTankByMilkCollectionId(id);
-                    _storageTankRepository.Delete(storageTank);
-                    await _uow.SaveChangesAsync();
-                }
-                _milkCollectionStationRepository.Delete(entity);
-                if (await _uow.SaveChangesAsync() > 0)
+                    var entity = await _milkCollectionStationRepository.GetEntityByIdAsync(id);
+                    var storageTank = await _storageTankRepository.GetStorageTankByMilkCollectionId(id).MapQueryTo<StorageTankModel>(_mapper).ToListAsync();
+                    foreach (var st in storageTank)
+                    {
+                        var stEntity = _mapper.Map<StorageTank>(st);
+                        _storageTankRepository.Delete(stEntity);
+                        await _uow.SaveChangesAsync();
+                    }
+                    _milkCollectionStationRepository.Delete(entity);
+                    if (await _uow.SaveChangesAsync() > 0)
+                    {
+                        result = true;
+                    }
+                } else
                 {
-                    return true;
+                    result = false;
                 }
-                return false;
+                return result;
             }
             catch (Exception e)
             {
