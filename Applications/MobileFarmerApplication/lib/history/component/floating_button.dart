@@ -30,7 +30,7 @@ class _FloatingButtonMikingState extends State<FloatingButtonMiking> {
         onPressed: () {
           showDialog(
             context: context,
-            child: BlocProvider<MilkingSlipBloc>(
+            builder:(context) =>  BlocProvider<MilkingSlipBloc>(
               create: (_) => MilkingSlipBloc()..add(MilkingSlipLoadedSucces()),
               child: PopupReport(
                 farmerId: farmerId,

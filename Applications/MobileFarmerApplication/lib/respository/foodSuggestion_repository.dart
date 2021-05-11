@@ -8,7 +8,8 @@ import '../core/api_client.dart';
 class FoodSuggestionRepository {
   Future<FoodSuggestionModel> getAllFoodSuggestion() async {
     try {
-      List<dynamic> jsonRs = await APIClient.getList("api/foodSuggestion/farmer");
+      List<dynamic> jsonRs = await APIClient.getList("api/food");
+      print(jsonRs);
       FoodSuggestionModel foodSuggestionModel =
           FoodSuggestionModel.fromJson(jsonRs);
       return foodSuggestionModel;

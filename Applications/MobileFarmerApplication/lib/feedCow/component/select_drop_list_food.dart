@@ -89,7 +89,7 @@ class _SelectDropListFoodState extends State<SelectDropListFood>
                     setState(() {});
                   },
                   child: Text(
-                    optionItemSelected.content,
+                    optionItemSelected.name,
                     style: TextStyle(color: Colors.black, fontSize: ScreenUtil().setWidth(50)),
                   ),
                 )),
@@ -150,7 +150,7 @@ class _SelectDropListFoodState extends State<SelectDropListFood>
                   border: Border(
                       top: BorderSide(color: Colors.grey[200], width: 1)),
                 ),
-                child: Text(item.content,
+                child: Text(item.name,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w400,
