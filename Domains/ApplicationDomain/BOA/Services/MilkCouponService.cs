@@ -2,6 +2,7 @@
 using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
+using ApplicationDomain.BOA.Models.MilkCouponDetails;
 using ApplicationDomain.BOA.Models.MilkCoupons;
 using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
@@ -20,16 +21,17 @@ namespace ApplicationDomain.BOA.Services
     public class MilkCouponService : ServiceBase, IMilkCouponService
     {
         private readonly IMilkCouponRepository _milkCouponRepository;
-
+        private readonly IMilkCouponDetailRepository _milkCouponDetailRepository;
         public MilkCouponService(
             IMilkCouponRepository milkCouponRepository,
+            IMilkCouponDetailRepository milkCouponDetailRepository,
             IBreedRepository breedRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
             _milkCouponRepository = milkCouponRepository;
-        
+            _milkCouponDetailRepository = milkCouponDetailRepository;
         }
 
         public async Task<int> CreateMilkCouponAsync(MilkCouponModelRq model, UserIdentity<int> issuer)
@@ -55,13 +57,23 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                var entity = await _milkCouponRepository.GetEntityByIdAsync(id);
-                _milkCouponRepository.Delete(entity);
-                if (await _uow.SaveChangesAsync() == 1)
+                var milkcouponDetail = await _milkCouponDetailRepository.GetMilkcouponDetailByMilkcouponId(id).MapQueryTo<MilkCouponDetailModel>(_mapper).ToListAsync();
+                var result = true;
+                if (milkcouponDetail.Count() == 0)
                 {
-                    return true;
+                    var entity = await _milkCouponRepository.GetEntityByIdAsync(id);
+
+                    _milkCouponRepository.Delete(entity);
+                    if (await _uow.SaveChangesAsync() == 1)
+                    {
+                        result = true;
+                    }
+                }else
+                {
+                    result = false;
                 }
-                return false;
+                
+                return result;
             }
             catch (Exception e)
             {

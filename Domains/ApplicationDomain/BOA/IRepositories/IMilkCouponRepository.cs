@@ -13,5 +13,6 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetMilkCoupons();
         IQueryable GetMilkCouponById(int id);
         Task<bool> CheckCodeExistsAsync(string code);
+        IQueryable GetMilkCouponByMilkCollectionStationId(int id);
     }
 }

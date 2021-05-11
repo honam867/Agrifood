@@ -35,6 +35,13 @@ namespace WebAdminApplication.Controllers
             return Ok(await _StorageTankService.GetStorageTankByIdAsync(id));
         }
 
+        [Route("milkcollection/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetStorageTankByMilkCollectionIdAsync(int id)
+        {
+            return Ok(await _StorageTankService.GetStorageTankByMilkCollectionIdAsync(id));
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<IActionResult> CreateStorageTankAsync([FromBody]StorageTankModelRq model)
@@ -100,6 +107,7 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+
 
     }
 }
