@@ -5,7 +5,8 @@ import 'package:flutter/widgets.dart';
 typedef SelectRadioFunction = Function({int val, String title});
 Widget buildGender({selectedRadio, SelectRadioFunction selectRadioFunction}) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: <Widget>[
       ButtonBar(
         mainAxisSize: MainAxisSize.max,
