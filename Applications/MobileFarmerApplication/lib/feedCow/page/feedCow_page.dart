@@ -27,8 +27,8 @@ class _FeedCowState extends State<FeedCow> {
   bool _validate = false;
   int foodId;
   String status = "Đang tải", foodName = "";
-  FoodSuggestionItem optionItemSelected =
-      FoodSuggestionItem(id: null, content: "Chọn loại thức ăn");
+  // FoodSuggestionItem optionItemSelected =
+  //     FoodSuggestionItem(id: null, content: "Chọn loại thức ăn");
   TextEditingController quantityController = TextEditingController();
 
   @override
