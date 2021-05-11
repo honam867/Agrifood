@@ -18,15 +18,15 @@ namespace ApplicationDomain.BOA.Services
 {
     public class FoodSuggestionService : ServiceBase, IFoodSuggestionService
     {
-        private readonly IFoodSuggestionRepository _breedRepository;
+        private readonly IFoodSuggestionRepository _foodSuggestionRepository;
         
         public FoodSuggestionService(
-            IFoodSuggestionRepository breedRepository,
+            IFoodSuggestionRepository foodSuggestionRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
-            _breedRepository = breedRepository;
+            _foodSuggestionRepository = foodSuggestionRepository;
             
         }
 
@@ -36,7 +36,7 @@ namespace ApplicationDomain.BOA.Services
             {
                 var entity = _mapper.Map<FoodSuggestion>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
-                _breedRepository.Create(entity);
+                _foodSuggestionRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
             }
             catch (Exception e)
@@ -49,8 +49,8 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                var entity = await _breedRepository.GetEntityByIdAsync(id);
-                _breedRepository.Delete(entity);
+                var entity = await _foodSuggestionRepository.GetEntityByIdAsync(id);
+                _foodSuggestionRepository.Delete(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -65,27 +65,27 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<FoodSuggestionModel>> GetFoodSuggestionsAsync()
         {
-            return await _breedRepository.GetFoodSuggestions().MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
+            return await _foodSuggestionRepository.GetFoodSuggestions().MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
            
         }
 
         public async Task<FoodSuggestionModel> GetFoodSuggestionByIdAsync(int id)
         {
-            return await _breedRepository.GetFoodSuggestionById(id).MapQueryTo<FoodSuggestionModel>(_mapper).FirstOrDefaultAsync();
+            return await _foodSuggestionRepository.GetFoodSuggestionById(id).MapQueryTo<FoodSuggestionModel>(_mapper).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateFoodSuggestionAsync(int id, FoodSuggestionModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = await _breedRepository.GetEntityByIdAsync(id);
+                var entity = await _foodSuggestionRepository.GetEntityByIdAsync(id);
                 if (entity == null)
                 {
                     return false;
                 }
                 _mapper.Map(model, entity);
                 entity.UpdateBy(issuer);
-                _breedRepository.Update(entity);
+                _foodSuggestionRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -101,7 +101,7 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<FoodSuggestionModel>> GetFoodSuggestionsByFarmerIdAsync(UserIdentity<int> issuer)
         {
-            return await _breedRepository.GetFoodSuggestionByFarmerId(issuer.Id).MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
+            return await _foodSuggestionRepository.GetFoodSuggestionByFarmerId(issuer.Id).MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
         }
 
         /*public async Task<bool> CheckCodeExistsAsync(string code)

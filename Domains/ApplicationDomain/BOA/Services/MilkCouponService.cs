@@ -2,6 +2,7 @@
 using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
+using ApplicationDomain.BOA.Models.Farmers;
 using ApplicationDomain.BOA.Models.MilkCouponDetails;
 using ApplicationDomain.BOA.Models.MilkCoupons;
 using AspNetCore.AutoGenerate;
@@ -22,9 +23,11 @@ namespace ApplicationDomain.BOA.Services
     {
         private readonly IMilkCouponRepository _milkCouponRepository;
         private readonly IMilkCouponDetailRepository _milkCouponDetailRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         public MilkCouponService(
             IMilkCouponRepository milkCouponRepository,
             IMilkCouponDetailRepository milkCouponDetailRepository,
+            IEmployeeRepository employeeRepository,
             IBreedRepository breedRepository,
             IMapper mapper,
             IUnitOfWork uow
@@ -32,6 +35,7 @@ namespace ApplicationDomain.BOA.Services
         {
             _milkCouponRepository = milkCouponRepository;
             _milkCouponDetailRepository = milkCouponDetailRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<int> CreateMilkCouponAsync(MilkCouponModelRq model, UserIdentity<int> issuer)
@@ -83,8 +87,17 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<MilkCouponModel>> GetMilkCouponAsync()
         {
+            //var milkCoupon = await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
+            //List<MilkCouponModel> result = new List<MilkCouponModel>();
+            //foreach (var mc in milkCoupon)
+            //{
+            //    var tmp = await _employeeRepository.GetEmployeeById(mc.EmployeeId).MapQueryTo<EmployeeModel>(_mapper).FirstOrDefaultAsync();
+
+            //    mc.EmployeeName = tmp.Name;
+            //    result.Add(mc);
+            //}
+            //return result;
             return await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
-           
         }
 
         public async Task<MilkCouponModel> GetMilkCouponByIdAsync(int id)
