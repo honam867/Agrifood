@@ -18,5 +18,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> CheckCodeExistsAsync(string code);
         Task<IEnumerable<FeedHistoryModel>> GetFeedHistoryByFarmerIdAsync(int id);
         Task<IEnumerable<FeedHistoryModel>> GetFeedHistoryByDateAsync(int day, int month, int year, int farmerId);
+        Task<string> AutoGenerateCodeAsync(string code = "");
     }
 }
