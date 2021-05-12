@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
+import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
@@ -19,10 +20,12 @@ class FoodSuggestionRepository {
     }
   }
 
- 
+
 
   Future<ByreModel> getByreByFarmer() async {
     try {
+      var farmerId = await Storage.getString('farmerId');
+      int.parse(farmerId);
       List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer");
       ByreModel byreModel = ByreModel.fromJson(jsonRs);
       return byreModel;
