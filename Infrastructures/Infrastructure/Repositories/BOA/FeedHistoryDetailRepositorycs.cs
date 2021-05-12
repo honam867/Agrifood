@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.BOA
 {
-    public class MilkCouponRepository : GenericRepository<MilkCoupon, int>, IMilkCouponRepository
+    public class FeedHistoryDetailRepository : GenericRepository<FeedHistoryDetail, int>, IFeedHistoryDetailRepository
     {
-        public MilkCouponRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public FeedHistoryDetailRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
@@ -21,19 +21,19 @@ namespace Infrastructure.Repositories.BOA
             return await this.dbSet.AnyAsync(r => r.Code == code);
         }
 
-        public IQueryable GetMilkCoupons()
+        public IQueryable GetFeedHistoryDetails()
         {
-            return this.dbSet.Include(a => a.Employee.Name);
+            return this.dbSet;
         }
 
-        public IQueryable GetMilkCouponById(int id)
+        public IQueryable GetFeedHistoryDetailById(int id)
         {
             return dbSet.Where(r => r.Id == id);
         }
 
-        public IQueryable GetMilkCouponByMilkCollectionStationId(int id)
+        public IQueryable GetFeedHistoryDetailByFeedHistoryId(int id)
         {
-            return dbSet.Where(a => a.MilkCollectionStationId == id);
+            return dbSet.Where(a => a.FeedHistoryId == id);
         }
     }
 }

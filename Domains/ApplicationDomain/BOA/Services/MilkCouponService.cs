@@ -2,6 +2,8 @@
 using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
+using ApplicationDomain.BOA.Models.Farmers;
+using ApplicationDomain.BOA.Models.MilkCouponDetails;
 using ApplicationDomain.BOA.Models.MilkCoupons;
 using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
@@ -20,16 +22,20 @@ namespace ApplicationDomain.BOA.Services
     public class MilkCouponService : ServiceBase, IMilkCouponService
     {
         private readonly IMilkCouponRepository _milkCouponRepository;
-
+        private readonly IMilkCouponDetailRepository _milkCouponDetailRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         public MilkCouponService(
             IMilkCouponRepository milkCouponRepository,
+            IMilkCouponDetailRepository milkCouponDetailRepository,
+            IEmployeeRepository employeeRepository,
             IBreedRepository breedRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
             _milkCouponRepository = milkCouponRepository;
-        
+            _milkCouponDetailRepository = milkCouponDetailRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<int> CreateMilkCouponAsync(MilkCouponModelRq model, UserIdentity<int> issuer)
@@ -55,13 +61,23 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                var entity = await _milkCouponRepository.GetEntityByIdAsync(id);
-                _milkCouponRepository.Delete(entity);
-                if (await _uow.SaveChangesAsync() == 1)
+                var milkcouponDetail = await _milkCouponDetailRepository.GetMilkcouponDetailByMilkcouponId(id).MapQueryTo<MilkCouponDetailModel>(_mapper).ToListAsync();
+                var result = true;
+                if (milkcouponDetail.Count() == 0)
                 {
-                    return true;
+                    var entity = await _milkCouponRepository.GetEntityByIdAsync(id);
+
+                    _milkCouponRepository.Delete(entity);
+                    if (await _uow.SaveChangesAsync() == 1)
+                    {
+                        result = true;
+                    }
+                }else
+                {
+                    result = false;
                 }
-                return false;
+                
+                return result;
             }
             catch (Exception e)
             {
@@ -71,8 +87,17 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<MilkCouponModel>> GetMilkCouponAsync()
         {
+            //var milkCoupon = await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
+            //List<MilkCouponModel> result = new List<MilkCouponModel>();
+            //foreach (var mc in milkCoupon)
+            //{
+            //    var tmp = await _employeeRepository.GetEmployeeById(mc.EmployeeId).MapQueryTo<EmployeeModel>(_mapper).FirstOrDefaultAsync();
+
+            //    mc.EmployeeName = tmp.Name;
+            //    result.Add(mc);
+            //}
+            //return result;
             return await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
-           
         }
 
         public async Task<MilkCouponModel> GetMilkCouponByIdAsync(int id)

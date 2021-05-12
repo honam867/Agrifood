@@ -45,8 +45,7 @@ namespace WebAdminApplication.Controllers
         [Route("milkcoupon/{milkCounponId}")]
         [HttpGet]
         public async Task<IActionResult> GetMilkcouponDetailByMilkcouponIdAsync(int milkCounponId) {
-            var issuer = GetCurrentUserIdentity<int>();
-            return Ok(await _milkCouponDetailService.GetMilkcouponDetailByMilkcouponIdAsync(milkCounponId, issuer));
+            return Ok(await _milkCouponDetailService.GetMilkcouponDetailByMilkcouponIdAsync(milkCounponId));
         }
 
         [Route("")]
@@ -83,8 +82,8 @@ namespace WebAdminApplication.Controllers
         {
             try
             {
-                await _milkCouponDetailService.DeleteMilkCouponDetailAsync(id);
-                return Ok();
+                
+                return Ok(await _milkCouponDetailService.DeleteMilkCouponDetailAsync(id));
             }
             catch (Exception e)
             {

@@ -2,7 +2,7 @@
 using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.Foods;
+using ApplicationDomain.BOA.Models.Orders;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
 using AspNetCore.UnitOfWork;
@@ -16,27 +16,27 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.BOA.Services
 {
-    public class FoodService : ServiceBase, IFoodService
+    public class OrderService : ServiceBase, IOrderService
     {
-        private readonly IFoodRepository _foodRepository;
+        private readonly IOrderRepository _orderRepository;
         
-        public FoodService(
-            IFoodRepository foodRepository,
+        public OrderService(
+            IOrderRepository orderRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
-            _foodRepository = foodRepository;
+            _orderRepository = orderRepository;
             
         }
 
-        public async Task<int> CreateFoodAsync(FoodModelRq model, UserIdentity<int> issuer)
+        public async Task<int> CreateOrderAsync(OrderModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = _mapper.Map<Food>(model);
+                var entity = _mapper.Map<Order>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
-                _foodRepository.Create(entity);
+                _orderRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
             }
             catch (Exception e)
@@ -45,12 +45,12 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<bool> DeleteFoodAsync(int id)
+        public async Task<bool> DeleteOrderAsync(int id)
         {
             try
             {
-                var entity = await _foodRepository.GetEntityByIdAsync(id);
-                _foodRepository.Delete(entity);
+                var entity = await _orderRepository.GetEntityByIdAsync(id);
+                _orderRepository.Delete(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -63,29 +63,29 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<IEnumerable<FoodModel>> GetFoodsAsync()
+        public async Task<IEnumerable<OrderModel>> GetOrdersAsync()
         {
-            return await _foodRepository.GetFoods().MapQueryTo<FoodModel>(_mapper).ToListAsync();
+            return await _orderRepository.GetOrders().MapQueryTo<OrderModel>(_mapper).ToListAsync();
            
         }
 
-        public async Task<FoodModel> GetFoodByIdAsync(int id)
+        public async Task<OrderModel> GetOrderByIdAsync(int id)
         {
-            return await _foodRepository.GetFoodById(id).MapQueryTo<FoodModel>(_mapper).FirstOrDefaultAsync();
+            return await _orderRepository.GetOrderById(id).MapQueryTo<OrderModel>(_mapper).FirstOrDefaultAsync();
         }
 
-        public async Task<bool> UpdateFoodAsync(int id, FoodModelRq model, UserIdentity<int> issuer)
+        public async Task<bool> UpdateOrderAsync(int id, OrderModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = await _foodRepository.GetEntityByIdAsync(id);
+                var entity = await _orderRepository.GetEntityByIdAsync(id);
                 if (entity == null)
                 {
                     return false;
                 }
                 _mapper.Map(model, entity);
                 entity.UpdateBy(issuer);
-                _foodRepository.Update(entity);
+                _orderRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -101,12 +101,12 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<bool> CheckCodeExistsAsync(string code)
         {
-            return await _foodRepository.CheckCodeExistsAsync(code);
+            return await _orderRepository.CheckCodeExistsAsync(code);
         }
 
-        public async Task<IEnumerable<FoodModel>> GetFoodByProvinceIdAsync(int id)
+        public async Task<IEnumerable<OrderModel>> GetOrderByFarmerIdAsync(int id)
         {
-            return await _foodRepository.GetFoodByProvinceId(id).MapQueryTo<FoodModel>(_mapper).ToListAsync();
+            return await _orderRepository.GetOrderByFarmerId(id).MapQueryTo<OrderModel>(_mapper).ToListAsync();
         }
     }
 }

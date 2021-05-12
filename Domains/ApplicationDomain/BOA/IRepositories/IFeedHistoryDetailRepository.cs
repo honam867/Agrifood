@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ApplicationDomain.BOA.IRepositories
 {
-    public interface IFoodRepository : IGenericRepository<Food, int>
+    public interface IFeedHistoryDetailRepository : IGenericRepository<FeedHistoryDetail, int>
     {
-        IQueryable GetFoods();
-        IQueryable GetFoodById(int id);
+        IQueryable GetFeedHistoryDetails();
+        IQueryable GetFeedHistoryDetailById(int id);
         Task<bool> CheckCodeExistsAsync(string code);
-        IQueryable GetFoodByProvinceId(int id);
+        IQueryable GetFeedHistoryDetailByFeedHistoryId(int id);
     }
 }

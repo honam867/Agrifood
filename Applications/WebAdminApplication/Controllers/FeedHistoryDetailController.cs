@@ -4,46 +4,52 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.Cows;
-using ApplicationDomain.BOA.Models.MilkCollectionStations;
+using ApplicationDomain.BOA.Models.FeedHistoryDetails;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class MilkCollectionStationController : BaseController
+    public class FeedHistoryDetailController : BaseController
     {
-        private readonly IMilkCollectionStationService _milkCollectionStationService;
-        public MilkCollectionStationController(IMilkCollectionStationService milkCollectionStationService)
+        private readonly IFeedHistoryDetailService _feedHistoryDetailService;
+        public FeedHistoryDetailController(IFeedHistoryDetailService feedHistoryDetailService)
         {
-            _milkCollectionStationService = milkCollectionStationService;
+            _feedHistoryDetailService = feedHistoryDetailService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkCollectionStationAsync()
+        public async Task<IActionResult> GetFeedHistoryDetailsAsync()
         {
-            return Ok(await _milkCollectionStationService.GetMilkCollectionStationAsync());
+            return Ok(await _feedHistoryDetailService.GetFeedHistoryDetailsAsync());
+        }
+
+        [Route("feedhistory/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFeedHistoryDetailByFeedHistoryIdAsync(int id)
+        {
+            return Ok(await _feedHistoryDetailService.GetFeedHistoryDetailByFeedHistoryIdAsync(id));
         }
 
         [Route("checkingcode/{code}")]
         [HttpGet]
         public async Task<IActionResult> CheckCodeExistsAsync(string code)
         {
-            return Ok(await _milkCollectionStationService.CheckCodeExistsAsync(code));
+            return Ok(await _feedHistoryDetailService.CheckCodeExistsAsync(code));
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetMilkCollectionStationByIdAsync(int id)
+        public async Task<IActionResult> GetFeedHistoryDetailById(int id)
         {
-            return Ok(await _milkCollectionStationService.GetMilkCollectionStationByIdAsync(id));
+            return Ok(await _feedHistoryDetailService.GetFeedHistoryDetailByIdAsync(id));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateMilkCollectionStationAsync([FromBody]MilkCollectionStationModelRq model)
+        public async Task<IActionResult> CreateFeedHistoryDetailAsync([FromBody]FeedHistoryDetailModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -56,11 +62,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _milkCollectionStationService.CheckCodeExistsAsync(model.Code))
+                if (await _feedHistoryDetailService.CheckCodeExistsAsync(model.Code))
                 {
                     return BadRequest("Code Exists");
                 }
-                return Ok(await _milkCollectionStationService.CreateMilkCollectionStationAsync(model, issuer));
+                return Ok(await _feedHistoryDetailService.CreateFeedHistoryDetailAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -71,20 +77,12 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteMilkCollectionStationAsync(int id)
+        public async Task<IActionResult> DeleteFeedHistoryDetailAsync(int id)
         {
             try
             {
-                var result = await _milkCollectionStationService.DeleteMilkCollectionStationAsync(id);
-                if (result)
-                {
-                    return Ok(result);
-                }
-                else
-                {
-                    return BadRequest();
-                }
-                
+                await _feedHistoryDetailService.DeleteFeedHistoryDetailAsync(id);
+                return Ok();
             }
             catch (Exception e)
             {
@@ -94,7 +92,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateMilkCollectionStationAsync(int id, [FromBody]MilkCollectionStationModelRq model)
+        public async Task<IActionResult> UpdateFeedHistoryDetailAsync(int id, [FromBody]FeedHistoryDetailModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -107,19 +105,12 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _milkCollectionStationService.UpdateMilkCollectionStationAsync(id, model, issuer));
+                return Ok(await _feedHistoryDetailService.UpdateFeedHistoryDetailAsync(id, model, issuer));
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-        }
-
-        [Route("newcode")]
-        [HttpGet]
-        public async Task<IActionResult> AutoGenerateCodeAsync()
-        {
-            return OkValueObject(await _milkCollectionStationService.AutoGenerateCodeAsync());
         }
     }
 }
