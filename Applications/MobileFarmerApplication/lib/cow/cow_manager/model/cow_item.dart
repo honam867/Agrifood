@@ -34,7 +34,6 @@ class CowItem {
     id = json['id'];
     byreId = json['byreId'];
     byreName = json['byreName'];
-    print(byreName);
     motherId = json['motherId'];
     fatherId = json['fatherId'];
     name = json['name'];

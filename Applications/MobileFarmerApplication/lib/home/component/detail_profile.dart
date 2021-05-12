@@ -26,7 +26,6 @@ class CardItem extends StatelessWidget {
         item(
             title: "Giới tính",
             detail: this.farmerInfoModel.gender == true ? "Nam" : "Nữ", urlImage: "assets/profile/personplus.png"),
-        
       ],
     );
   }

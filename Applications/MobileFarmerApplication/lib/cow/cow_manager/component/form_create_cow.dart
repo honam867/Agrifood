@@ -238,7 +238,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                                       name: _nameController.text,
                                       fatherId: cowFatherId,
                                       ageNumber: 1,
-                                      code: "AAA",
+                                      code: "VBZ",
                                       motherId: cowMotherId,
                                       foodSuggestionId: foodSuggestionId);
                                   setState(() {

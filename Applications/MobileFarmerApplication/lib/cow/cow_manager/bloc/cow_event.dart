@@ -21,7 +21,11 @@ class GetCowByFarmerId extends CowEvent {
   List<Object> get props => [];
 }
 
-class FoodSuggestionSuccess extends CowEvent {}
+class FoodSuggestionSuccess extends CowEvent {
+  
+  @override
+  List<Object> get props => [];
+}
 
 class CowAddProcess extends CowEvent {
   final CowItem cowItem;
