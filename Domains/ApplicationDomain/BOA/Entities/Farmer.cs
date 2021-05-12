@@ -25,8 +25,6 @@ namespace ApplicationDomain.BOA.Entities
         public User User { get; set; }
         public int? MilkCollectionStationId { get; set; }
         public MilkCollectionStation MilkCollectionStation { get; set; }
-        public int? WareHouseId { get; set; }
-        public Warehouse Warehouse { get; set; }
         public string IdentificationNo { get; set; }
         public DateTime IssuedOn { get; set; }
         public string IssuedBy { get; set; }
