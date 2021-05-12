@@ -1,3 +1,4 @@
+import { FeedHistory } from './../../models/feedHistory';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertComponent } from './../../../../shared/components/alert/alert.component';
 import { AddFarmerToUserComponent } from './../../../user/components/add-farmer-to-user/add-farmer-to-user.component';
@@ -40,17 +41,17 @@ export class CrudFarmerComponent implements OnInit {
   provinces: Province[] = [];
   byreSource: MatTableDataSource<Byre>;
   byres: Byre[] = [];
+  histories: FeedHistory[] =[];
   cows: Cow[] = [];
   cowsInByre: Cow[] =[];
   cowSource:MatTableDataSource<Cow>;
   farmerByres: Byre[] = [];
   valueObject: ValueObject = new ValueObject();
   alert: any;
-
   displayedColumnsByre: string[] = ['name', 'code', 'action'];
   displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status'];
-
-  // dataSource: MatTableDataSource<Role>;
+  historySource: MatTableDataSource<FeedHistory>;
+  displayedColumnsHistory: string[] =['cowId', 'createdDate', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Farmer = new Farmer();
   constructor(
@@ -74,6 +75,7 @@ export class CrudFarmerComponent implements OnInit {
     if (this.isView) {
       this.fetchDistrict(this.sourceView.provinceId);
       this.fetchByre();
+      this.fetchHistory();
     } else {
       this.fetchNewcode();
     }
@@ -107,6 +109,13 @@ export class CrudFarmerComponent implements OnInit {
         this.byreSource = new MatTableDataSource(this.farmerByres);
       }
 
+    });
+  }
+
+  fetchHistory() {
+    this.farmerService.getFeedHistories().subscribe(result => {
+      this.histories = result;
+      this.historySource = new MatTableDataSource(this.histories);
     });
   }
 

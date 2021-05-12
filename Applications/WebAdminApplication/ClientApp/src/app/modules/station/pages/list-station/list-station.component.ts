@@ -17,7 +17,7 @@ export class ListStationComponent implements OnInit {
   value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['name', 'typeOfMilkId', 'code', 'districtId', 'address', 'phoneNumber', 'email'];
+  displayedColumns: string[] = ['name', 'code', 'districtId', 'address', 'phoneNumber', 'email'];
   dataSource: MatTableDataSource<Station>;
   stations: Station[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
