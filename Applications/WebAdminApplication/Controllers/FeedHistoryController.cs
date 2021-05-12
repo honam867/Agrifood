@@ -119,5 +119,12 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Route("newcode")]
+        [HttpGet]
+        public async Task<IActionResult> AutoGenerateCodeAsync()
+        {
+            return OkValueObject(await _feedHistoryService.AutoGenerateCodeAsync());
+        }
     }
 }
