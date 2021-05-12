@@ -13,6 +13,6 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetFoods();
         IQueryable GetFoodById(int id);
         Task<bool> CheckCodeExistsAsync(string code);
-        IQueryable GetFoodByProvinceId(int id);
+        IQueryable GetFoodByProvince(int id);
     }
 }

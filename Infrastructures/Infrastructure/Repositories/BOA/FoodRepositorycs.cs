@@ -28,12 +28,17 @@ namespace Infrastructure.Repositories.BOA
 
         public IQueryable GetFoodById(int id)
         {
-            return dbSet.Where(r => r.Id == id);
+            var result = dbSet.Where(r => r.Id == id);
+            return result;
         }
 
-        public IQueryable GetFoodByProvinceId(int id)
+        public IQueryable GetFoodByProvince(int id)
         {
-            return dbSet.Where(a => a.ProvinceId == id);
+            var result = from f in dbSet
+                         join fm in context.Set<Farmer>() on f.ProvinceId equals fm.ProvinceId
+                         where fm.UserId == id
+                         select f;
+            return result;
         }
     }
 }
