@@ -62,10 +62,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _feedHistoryDetailService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _feedHistoryDetailService.CreateFeedHistoryDetailAsync(model, issuer));
             }
             catch (Exception e)
