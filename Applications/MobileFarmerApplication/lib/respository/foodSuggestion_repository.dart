@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
+import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import '../core/api_client.dart';
+
 
 class FoodSuggestionRepository {
   Future<FoodSuggestionModel> getAllFoodSuggestion() async {
     try {
       List<dynamic> jsonRs = await APIClient.getList("api/food");
-      print(jsonRs);
       FoodSuggestionModel foodSuggestionModel =
           FoodSuggestionModel.fromJson(jsonRs);
       return foodSuggestionModel;
@@ -18,8 +20,12 @@ class FoodSuggestionRepository {
     }
   }
 
+
+
   Future<ByreModel> getByreByFarmer() async {
     try {
+      var farmerId = await Storage.getString('farmerId');
+      int.parse(farmerId);
       List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer");
       ByreModel byreModel = ByreModel.fromJson(jsonRs);
       return byreModel;
@@ -37,6 +43,8 @@ class FoodSuggestionRepository {
   //     throw error;
   //   }
   // }
+
+ 
 
   Future<bool> deleteCow({int cowId}) async {
     var rs = await APIClient.delete('api/cow/$cowId');

@@ -13,9 +13,9 @@ class FoodLoadInprocess extends FoodState {}
 
 class FoodLoaded extends FoodState {
   final FoodSuggestionModel foodSuggestionModel;
-  final List<FoodSuggestionItem> listBoKho;
+  final List<FoodSuggestionItem> listBoTho;
   final List<FoodSuggestionItem> listBoTinh;
-  const FoodLoaded({this.foodSuggestionModel, this.listBoKho, this.listBoTinh});
+  const FoodLoaded({this.foodSuggestionModel, this.listBoTho, this.listBoTinh});
 
   @override
   List<Object> get props => [foodSuggestionModel];

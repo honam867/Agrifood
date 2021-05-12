@@ -39,7 +39,7 @@ class FoodSuggestionBloc extends Bloc<FoodEvent, FoodState> {
       listTinh.addAll(listTinhTemp);
       yield FoodLoaded(
           foodSuggestionModel: foodSuggestionModel,
-          listBoKho: listTho,
+          listBoTho: listTho,
           listBoTinh: listTinh);
     } catch (_) {
       yield FoodError();
