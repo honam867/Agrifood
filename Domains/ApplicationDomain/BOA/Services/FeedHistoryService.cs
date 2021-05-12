@@ -36,11 +36,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<FeedHistory>(model);
-                var code = AutoGenerate.AutoGenerateCode(3);
-                if (!await CheckCodeExistsAsync(code))
-                {
-                    entity.Code = code;
-                }
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _feedHistoryRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
