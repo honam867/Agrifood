@@ -32,6 +32,9 @@ export class CrudCouponComponent implements OnInit {
   farmers: Farmer[] = [];
   milkStations: Station[] = [];
   storageTanks: StorageTank[] = [];
+  sessions: string[] =[
+    'Sáng', 'Chiều'
+  ]
   isView = true;
   isCreate = true;
   loading: boolean;
@@ -140,6 +143,7 @@ export class CrudCouponComponent implements OnInit {
   //     });
   // }
 
+
   fetchDetailInCoupon() {
     this.couponService.getDetailByCouponId(this.coupon.id).subscribe(res => {
       this.detailsOfCoupon = res;
@@ -170,7 +174,6 @@ export class CrudCouponComponent implements OnInit {
   getStorageTanks(milkCollectionStationId: number) {
     this.couponService.getTanks().subscribe(result => {
       this.storageTanks = result.filter(tank => tank.milkCollectionStationId == milkCollectionStationId);
-      console.log(this.storageTanks);
     });
   }
 
@@ -180,7 +183,7 @@ export class CrudCouponComponent implements OnInit {
       width: '60%',
       data: {
         action: StatusForm.CREATE,
-        couponId : this.coupon.id
+        coupon : this.coupon,
       },
       disableClose: true,
     });
@@ -188,6 +191,7 @@ export class CrudCouponComponent implements OnInit {
       result => {
         if (result.data) { // result => data:true
           this.fetchDetailInCoupon();
+          this.getStorageTanks(this.coupon.milkCollectionStationId);
         }
       }
     );
@@ -207,6 +211,7 @@ export class CrudCouponComponent implements OnInit {
           this.couponService.deleteCouponDetail(this.detailId).subscribe(
             success => {
               this.fetchDetailInCoupon();
+              this.getStorageTanks(this.coupon.milkCollectionStationId);
             })
         }
       }

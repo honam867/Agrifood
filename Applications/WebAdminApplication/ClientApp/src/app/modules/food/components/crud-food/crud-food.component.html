@@ -28,9 +28,17 @@
                 </mat-form-field>
             </div>
             <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
+                <!-- <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Loại</mat-label>
                     <input id="type" [(ngModel)]="sourceView.type" name="type" matInput placeholder="Tỉnh/Thành" [disabled]="isView">
+                </mat-form-field> -->
+
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Loại</mat-label>
+                    <mat-select [(ngModel)]="sourceView.type" name="type" [disabled]="isView" #type="ngModel">
+                        <mat-option *ngFor="let type of types" [value]="type">{{type}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
             <div class="col-lg-6">

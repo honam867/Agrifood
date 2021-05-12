@@ -18,14 +18,26 @@
         </mat-paginator>
         <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="farmer">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã nông dân</th>
-                <td mat-cell *matCellDef="let coupon">{{coupon.farmerId}}</td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nông dân</th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.farmerFullName}}--ID:{{coupon.farmerId}}</td>
             </ng-container>
 
             <ng-container matColumnDef="employee">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Mã nhân viên</th>
-                <td mat-cell *matCellDef="let coupon">{{coupon.employeeId}}</td>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.employeeFullName}}--ID:{{coupon.employeeId}}</td>
             </ng-container>
+
+            <ng-container matColumnDef="session">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Phiên</th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.session}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo phiếu</th>
+                <td mat-cell *matCellDef="let coupon">{{coupon.createdDate | date:'dd/MM/yyyy'}}</td>
+            </ng-container>
+
+
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef width="7%"></th>
