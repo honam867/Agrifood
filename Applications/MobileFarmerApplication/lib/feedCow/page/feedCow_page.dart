@@ -1,10 +1,13 @@
 import 'package:AgrifoodApp/feedCow/component/build_item.dart';
 import 'package:AgrifoodApp/feedCow/component/build_text_form_food.dart';
 import 'package:AgrifoodApp/feedCow/component/button_send.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_detail_item.dart';
+import 'package:AgrifoodApp/feedCow/model/food_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
+import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,11 +16,14 @@ import 'package:flutter_screenutil/screen_util.dart';
 class FeedCow extends StatefulWidget {
   final BuildContext contextfoodPage;
   final String routefoodName;
+  final int cowId;
+
   const FeedCow(
       {Key key,
       this.contextfoodPage,
       this.routefoodName,
-      FoodSuggestionItem foodSuggestionItem})
+      FoodSuggestionItem foodSuggestionItem,
+      this.cowId})
       : super(key: key);
   @override
   _FeedCowState createState() => _FeedCowState();
@@ -28,12 +34,13 @@ class _FeedCowState extends State<FeedCow> {
   bool isShow = false;
   int foodId;
   String status = "Đang tải", foodName = "";
-  FoodSuggestionItem optionItemSelected =
-      FoodSuggestionItem(id: null, name: "Chọn loại thức ăn");
+  FoodItem optionItemSelected = FoodItem(id: null, name: "Chọn loại thức ăn");
 
-  List<FoodSuggestionItem> list;
-  List<FoodSuggestionItem> listResoult;
+  List<FoodItem> list;
+  List<FoodItem> listResoult;
   TextEditingController quantityController;
+  List<FoodItem> listFood = [];
+  List<FeedHistoryDetailItem> listFeed = [];
 
   void showed() {
     setState(() {
@@ -41,27 +48,59 @@ class _FeedCowState extends State<FeedCow> {
     });
   }
 
-  void setText({TextEditingController controller, String value}) {
+  void addFoodItem() {}
+
+  void setText(
+      {TextEditingController controller,
+      String value,
+      FoodItem foodItem,
+      int feedHistoryId}) {
     setState(() {
       controller.text = value;
-      print(value);
+      FeedHistoryDetailItem feedHistoryDetailItem = new FeedHistoryDetailItem(
+          foodId: foodItem.id,
+          feedHistoryId: feedHistoryId,
+          code: 'NYU',
+          quantity: int.parse(controller.text));
+      List<FeedHistoryDetailItem> l = [];
+      l.add(feedHistoryDetailItem);
+      listFeed.addAll(l);
+      print(listFeed);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = ScreenUtil().setHeight(400);
+    double height = 105;
     var media = MediaQuery.of(context).size;
     var textEditingControllers = <TextEditingController>[];
+    var textEditContrllersBoTinh = <TextEditingController>[];
 
-    return BlocBuilder<FoodSuggestionBloc, FoodState>(
-        builder: (context, state) {
-      if (state is FoodLoadInprocess) {
-        BlocProvider.of<FoodSuggestionBloc>(context).add(FoodLoadedSuccess());
+    void addController({TextEditingController controller}) {
+      textEditingControllers.add(controller);
+    }
+
+    return BlocConsumer<FoodSuggestionBloc, FoodState>(
+        listener: (context, state) {
+      if (state is SendFoodLoaded) {
+        if (state.result == "Thành công") {
+          Navigator.pop(context);
+        } else {
+          BlocProvider.of<FoodSuggestionBloc>(context)
+              .add(FoodLoadedSuccess(widget.cowId));
+          final snackBar = SnackBar(content: Text('Gửi thất bại!'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       }
+    }, builder: (context, state) {
+      if (state is FoodLoadInprocess) {
+        BlocProvider.of<FoodSuggestionBloc>(context)
+            .add(FoodLoadedSuccess(widget.cowId));
+      }
+
       if (state is FoodLoaded) {
-        list = state.foodSuggestionModel.foodSuggestionItem;
-        final listBoKho = state.listBoTho;
+        list = state.foodModel.foodItem;
+        final listBoKho = state.listBoKho;
         final listBoTinh = state.listBoTinh;
 
         return SafeArea(
@@ -88,7 +127,7 @@ class _FeedCowState extends State<FeedCow> {
                                   vertical: ScreenUtil().setWidth(30)),
                               child: ContaineTitleFeed(
                                   title: "Thức ăn thô", showFood: showed)),
-                          isShow == true
+                          isShow == false
                               ? Container(
                                   height: height * (listBoKho.length + 0.2),
                                   width: media.width,
@@ -96,8 +135,6 @@ class _FeedCowState extends State<FeedCow> {
                                       physics: NeverScrollableScrollPhysics(),
                                       itemCount: listBoKho.length,
                                       itemBuilder: (context, index) {
-                                        textEditingControllers
-                                            .add(quantityController);
                                         return ListTile(
                                           title: Container(
                                             height: ScreenUtil().setHeight(400),
@@ -110,6 +147,7 @@ class _FeedCowState extends State<FeedCow> {
                                                       MainAxisAlignment
                                                           .spaceAround,
                                                   children: <Widget>[
+                                                    Icon(Icons.food_bank),
                                                     Text(
                                                         listBoKho[index].name ??
                                                             ''),
@@ -122,13 +160,18 @@ class _FeedCowState extends State<FeedCow> {
                                                               .center,
                                                       children: [
                                                         TextFieldFeedCow(
+                                                          addControllerToList:
+                                                              addController,
+                                                          foodItem:
+                                                              listBoKho[index],
+                                                          feedHistoryId: state
+                                                              .feedHistoryMasterId,
                                                           setTextFuction2:
                                                               setText,
                                                           validatorText:
                                                               "Vui lòng không bỏ trống",
                                                           valueController:
-                                                              textEditingControllers[
-                                                                  index],
+                                                              quantityController,
                                                           width: ScreenUtil()
                                                               .setWidth(60),
                                                         ),
@@ -183,9 +226,16 @@ class _FeedCowState extends State<FeedCow> {
                                               Row(
                                                 children: [
                                                   TextFieldFeedCow(
+                                                    addControllerToList:
+                                                        addController,
+                                                    foodItem: listBoTinh[index],
+                                                    setTextFuction2: setText,
+                                                    feedHistoryId: state
+                                                        .feedHistoryMasterId,
                                                     validatorText:
                                                         "Vui lòng không bỏ trống",
-                                                    valueController: null,
+                                                    valueController:
+                                                        quantityController,
                                                     width: ScreenUtil()
                                                         .setWidth(60),
                                                   ),
@@ -207,7 +257,13 @@ class _FeedCowState extends State<FeedCow> {
                       ])
                     : SizedBox(),
                 Container(
-                    height: ScreenUtil().setHeight(300), child: ButtonSend())
+                    height: ScreenUtil().setHeight(300),
+                    child: ButtonSend(
+                        listTestEditController: textEditingControllers,
+                        listTextEditControllerBoTinh: textEditContrllersBoTinh,
+                        listbotho: listBoKho,
+                        listbotinh: listBoTinh,
+                        list: listFeed))
               ],
             )),
           ),

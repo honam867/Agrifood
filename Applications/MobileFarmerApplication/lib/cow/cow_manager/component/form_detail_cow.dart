@@ -1,4 +1,3 @@
-import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
@@ -20,11 +19,8 @@ import 'package:flutter_screenutil/screen_util.dart';
 class FormDetailCow extends StatefulWidget {
   final CowItem cowItem;
   final FoodSuggestionItem foodSuggestionItem;
-  const FormDetailCow({
-    Key key,
-    this.cowItem,
-    this.foodSuggestionItem,
-  }) : super(key: key);
+  const FormDetailCow({Key key, this.cowItem, this.foodSuggestionItem})
+      : super(key: key);
   @override
   _FormDetailCowState createState() => _FormDetailCowState();
 }
@@ -58,6 +54,7 @@ class _FormDetailCowState extends State<FormDetailCow> {
                                         FoodSuggestionRepository()),
                                 child: FeedCow(
                                     contextfoodPage: context,
+                                    cowId: widget.cowItem.id,
                                     routefoodName: "FeedCow",
                                     foodSuggestionItem:
                                         widget.foodSuggestionItem),
@@ -128,7 +125,16 @@ class _FormDetailCowState extends State<FormDetailCow> {
                             color: Colors.grey,
                           ),
                           builItem(
-                              title: "Mã bò: ", string: widget.cowItem.code),
+                              title: "Id bò cha: ",
+                              string: widget.cowItem.fatherId.toString()),
+                          Divider(
+                            height: 20,
+                            thickness: 1,
+                            color: Colors.grey,
+                          ),
+                          builItem(
+                              title: "Id bò mẹ: ",
+                              string: widget.cowItem.motherId.toString()),
                           Divider(
                             height: 20,
                             thickness: 1,
@@ -143,38 +149,20 @@ class _FormDetailCowState extends State<FormDetailCow> {
                             color: Colors.grey,
                           ),
                           builItem(
-                              title: "Bò cha: ",
-                              string: widget.cowItem.fatherId.toString()),
+                              title: "Mã bò: ", string: widget.cowItem.code),
                           Divider(
                             height: 20,
                             thickness: 1,
                             color: Colors.grey,
                           ),
-                          builItem(
-                              title: "Bò mẹ: ",
-                              string: widget.cowItem.motherId.toString()),
-                          Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
-                          ),
-                          builItem(
-                              title: "Giới tính: ",
-                              string: widget.cowItem.gender),
-                          Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
-                          ),
-                          builItem(
-                              title: "Ngày sinh: ",
-                              string: Formator.convertDatatimeToString(
-                                  widget.cowItem.birthday ?? DateTime.now())),
-                          Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
-                          ),
+                          // builItem(
+                          //     title: "thức ăn: ",
+                          //     string: widget.cowItem.foodSuggestionId.toString()),
+                          // Divider(
+                          //   height: 20,
+                          //   thickness: 1,
+                          //   color: Colors.grey,
+                          // ),
                           builItem(
                               title: "Ngày cai sữa: ",
                               string: Formator.convertDatatimeToString(
@@ -183,6 +171,14 @@ class _FormDetailCowState extends State<FormDetailCow> {
                         ],
                       ),
                     ),
+                    // decoration: BoxDecoration(
+                    //   color: Colors.green[100],
+                    //   borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(20),
+                    //     topRight: Radius.circular(20),
+                    //     bottomLeft: Radius.circular(75),
+                    //     bottomRight: Radius.circular(75),
+                    // )),
                   ),
                 )
               ],

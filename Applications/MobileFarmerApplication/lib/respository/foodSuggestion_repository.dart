@@ -2,16 +2,18 @@ import 'dart:convert';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
-import 'package:AgrifoodApp/home/model/farmer_model.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_detail_item.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_item.dart';
+import 'package:AgrifoodApp/feedCow/model/food_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
 import '../core/api_client.dart';
-
 
 class FoodSuggestionRepository {
   Future<FoodSuggestionModel> getAllFoodSuggestion() async {
     try {
       List<dynamic> jsonRs = await APIClient.getList("api/food");
+      print(jsonRs);
       FoodSuggestionModel foodSuggestionModel =
           FoodSuggestionModel.fromJson(jsonRs);
       return foodSuggestionModel;
@@ -20,12 +22,21 @@ class FoodSuggestionRepository {
     }
   }
 
+   Future<FoodModel> getAllFood() async {
+    try {
+      List<dynamic> jsonRs = await APIClient.getList("Api/food/province");
+      print(jsonRs);
+      FoodModel foodModel =
+          FoodModel.fromJson(jsonRs);
+      return foodModel;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 
   Future<ByreModel> getByreByFarmer() async {
     try {
-      var farmerId = await Storage.getString('farmerId');
-      int.parse(farmerId);
       List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer");
       ByreModel byreModel = ByreModel.fromJson(jsonRs);
       return byreModel;
@@ -44,8 +55,6 @@ class FoodSuggestionRepository {
   //   }
   // }
 
- 
-
   Future<bool> deleteCow({int cowId}) async {
     var rs = await APIClient.delete('api/cow/$cowId');
     if (rs != null) {
@@ -56,6 +65,29 @@ class FoodSuggestionRepository {
     return false;
   }
 
+  Future<int> addFeedHistoryMaster({FeedHistoryItem feedHistoryItem}) async {
+    Map rqData = feedHistoryItem.toJson();
+    var rs = await APIClient.post('api/feedHistory', rqData);
+    if (rs != null) {
+      var data = json.decode(rs);
+      print(data);
+      return data;
+    }
+    return 0;
+  }
+
+  Future<bool> addFeedHistoryDetail(
+      {FeedHistoryDetailItem feedHistoryDetailItem}) async {
+    Map rqData = feedHistoryDetailItem.toJson();
+    var rs = await APIClient.post('api/feedHistoryDetail', rqData);
+    if (rs != null) {
+      var data = json.decode(rs);
+      print(data);
+      return true;
+    }
+    return false;
+  }
+  
   Future<bool> addCow({CowItem cowItem}) async {
     Map rqData = cowItem.toJson();
     var rs = await APIClient.post('api/cow', rqData);

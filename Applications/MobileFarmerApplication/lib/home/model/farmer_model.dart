@@ -10,7 +10,6 @@ class FarmerInfoModel {
   bool status;
   int userId;
   String userUserName;
-  int provinceId;
 
   bool gender;
   DateTime birthday;
@@ -29,7 +28,6 @@ class FarmerInfoModel {
     this.phoneNumber,
     this.avatarURL,
     this.status,
-    this.provinceId
   });
 
   FarmerInfoModel.fromJson(Map<String, dynamic> json) {
@@ -46,7 +44,6 @@ class FarmerInfoModel {
     phoneNumber = json['PhoneNumber'];
     avatarURL = json['AvatarURL'];
     status = json['Status'];
-    provinceId = json['ProvinceId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,7 +60,6 @@ class FarmerInfoModel {
     data['PhoneNumber'] = this.phoneNumber;
     data['AvatarURL'] = this.avatarURL;
     data['Status'] = this.status;
-    data['ProvinceId'] = this.provinceId;
     return data;
   }
 }

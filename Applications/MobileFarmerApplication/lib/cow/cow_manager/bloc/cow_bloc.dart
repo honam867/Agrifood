@@ -100,6 +100,7 @@ class CowBloc extends Bloc<CowEvent, CowState> {
 
   Stream<CowState> _mapFoodSuggestionLoadInprocessToState() async* {
     try {
+      
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
       final byreModel = await this.foodSuggestionRepository.getByreByFarmer();

@@ -1,3 +1,4 @@
+import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
@@ -69,7 +70,9 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   Stream<HistoryState> _mapGetHistoryByFarmerIdState(
       GetHistoryByFarmerId event) async* {
     try {
-      // var farmerId = await Storage.getString("farmerId");
+      //  var farmerId = await Storage.getString("farmerId");
+      
+       
       // final historyModel =
       //     await this.historyRepository.getHistoryByFatmerId(farmerId: int.parse(farmerId));
       // yield HistoryLoaded(historyModel);
