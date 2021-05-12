@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.BOA
 {
-    public class FoodRepository : GenericRepository<Food, int>, IFoodRepository
+    public class OrderRepository : GenericRepository<Order, int>, IOrderRepository
     {
-        public FoodRepository(ApplicationDbContext dbContext) : base(dbContext)
+        public OrderRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
@@ -21,19 +21,19 @@ namespace Infrastructure.Repositories.BOA
             return await this.dbSet.AnyAsync(r => r.Code == code);
         }
 
-        public IQueryable GetFoods()
+        public IQueryable GetOrders()
         {
             return this.dbSet;
         }
 
-        public IQueryable GetFoodById(int id)
+        public IQueryable GetOrderById(int id)
         {
             return dbSet.Where(r => r.Id == id);
         }
 
-        public IQueryable GetFoodByProvinceId(int id)
+        public IQueryable GetOrderByFarmerId(int id)
         {
-            return dbSet.Where(a => a.ProvinceId == id);
+            return dbSet.Where(a => a.FarmerId == id);
         }
     }
 }
