@@ -21,6 +21,9 @@ export class CrudFoodComponent implements OnInit {
   status: string;
   food: Food = new Food();
   provinces: Province[] = [];
+  types: string[] =[
+    'Thô', 'Tinh'
+  ]
   isView = true;
   isCreate = true;
   loading: boolean;
