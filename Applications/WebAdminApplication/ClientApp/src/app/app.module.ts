@@ -7,7 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TranslateService } from './shared/services/translate.service';
 import { DropzoneDirective } from './shared/directives/dropzone.directive';
 import { environment } from 'src/environments/environment';
@@ -74,7 +74,7 @@ const INTERNAL_SERVICE = [
     MetasearchModule,
     KeyboardShortcutsModule
   ],
-  providers: [MAIN_SERVICE, INTERNAL_SERVICE, JwtHelperService, CurrencyPipe],
+  providers: [MAIN_SERVICE, INTERNAL_SERVICE, JwtHelperService, CurrencyPipe, {provide: MAT_DATE_LOCALE, useValue:'fr'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

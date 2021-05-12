@@ -1,3 +1,4 @@
+import { Province } from './../../../province/models/province';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { StatusForm } from './../../../../shared/enum/status-form';
 import { StationService } from './../../station.service';
@@ -5,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Station } from '../../models/station';
+import { District } from 'src/app/models/district';
 
 @Component({
   selector: 'app-crud-station',
@@ -17,8 +19,10 @@ export class CrudStationComponent implements OnInit {
     'name',
     'action'];
   status: string;
+  districts: District[] = [];
   station: Station = new Station();
   isView = true;
+  provinces: Province[] = [];
   isCreate = true;
   loading: boolean;
   // rolesOfUser: any[];
@@ -46,6 +50,22 @@ export class CrudStationComponent implements OnInit {
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.station);
+    if (this.isView) {
+      this.fetchProvince();
+    }
+
+  }
+
+  fetchProvince() {
+    this.stationService.getProvince().subscribe(result => {
+      this.provinces = result;
+    });
+  }
+
+  getDistrict(provinceId: number) {
+    this.stationService.getDistrictByProvinceId(provinceId).subscribe(result => {
+      this.districts = result;
+    });
   }
 
   delete() {

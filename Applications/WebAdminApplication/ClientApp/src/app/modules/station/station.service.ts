@@ -1,8 +1,10 @@
+import { Province } from './../province/models/province';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Station } from './models/station';
+import { District } from 'src/app/models/district';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +29,13 @@ export class StationService {
 
   createStation(station: Station) {
     return this.http.post(`milkcollectionstation`, station);
+  }
+
+  getProvince(): Observable<Province[]> {
+    return this.http.get(`province`)
+  }
+  getDistrictByProvinceId(provinceId: number): Observable<District[]> {
+    return this.http.get(`district/provinceId/${provinceId}`);
   }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);

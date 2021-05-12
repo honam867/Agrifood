@@ -1,3 +1,4 @@
+import { FeedHistory } from './models/feedHistory';
 import { ValueObject } from './../../shared/models/value-object';
 import { District } from './../../models/district';
 import { Province } from './../../models/province';
@@ -53,6 +54,12 @@ export class FarmerService {
   getCows(): Observable<Cow[]> {
     return this.http.get(`cow`);
   }
+  getFeedHistories(): Observable<FeedHistory[]> {
+    return this.http.get(`feedhistory`);
+  }
+  // getFeedHistories(): Observable<FeedHistory[]> {
+  //   return this.http.get(`http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/feedhistory`);
+  // }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);
   // }
