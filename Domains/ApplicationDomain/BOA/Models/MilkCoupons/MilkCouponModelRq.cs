@@ -12,7 +12,7 @@ namespace ApplicationDomain.BOA.Models.MilkCoupons
         public string Code { get; set; }
         public int FarmerId { get; set; }
         public int EmployeeId { get; set; }
-        public string StorageTankCode { get; set; }
+        public int StorageTankId { get; set; }
         public string Session { get; set; }
         public int MilkCollectionStationId { get; set; }
     }

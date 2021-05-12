@@ -25,17 +25,17 @@ namespace Infrastructure.Repositories.Dashboard
             _sqlProvider = new MSSQLProvider(EFConnectionString.Alias);
         }
 
-        public async Task<IEnumerable<CowDashboard>> GetCowDashboardAsync(int id)
+        public async Task<IEnumerable<CowDashboardModel>> GetCowDashboardAsync(int id)
         {
             DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_Thong_Ke_Bo {0}", id));
-            IEnumerable<CowDashboard> results = IMapperExtentions.ConvertDataTable<CowDashboard>(dtResult).ToList();
+            IEnumerable<CowDashboardModel> results = IMapperExtentions.ConvertDataTable<CowDashboardModel>(dtResult).ToList();
             return results;
         }
 
-        public async Task<IEnumerable<CowTotal>> GetCowTotalAsync(int id)
+        public async Task<IEnumerable<CowTotalModel>> GetCowTotalAsync(int id)
         {
             DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_Tong_Dan_Bo {0}", id));
-            IEnumerable<CowTotal> results = IMapperExtentions.ConvertDataTable<CowTotal>(dtResult).ToList();
+            IEnumerable<CowTotalModel> results = IMapperExtentions.ConvertDataTable<CowTotalModel>(dtResult).ToList();
             return results;
         }
     }

@@ -1,22 +1,23 @@
+import 'package:AgrifoodApp/feedCow/component/build_item.dart';
+import 'package:AgrifoodApp/feedCow/component/build_text_form_food.dart';
+import 'package:AgrifoodApp/feedCow/component/button_send.dart';
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
-import 'package:AgrifoodApp/feedcow/component/build_text_form_food.dart';
-import 'package:AgrifoodApp/feedCow/component/select_drop_list_food.dart';
-import 'package:AgrifoodApp/feedcow/model/drop_model_food.dart';
-import 'package:AgrifoodApp/history/component/item_history.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
-//import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
-import 'package:AgrifoodApp/ui/utils/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screen_util.dart';
-//import 'package:quiver/iterables.dart';
 
 class FeedCow extends StatefulWidget {
   final BuildContext contextfoodPage;
   final String routefoodName;
-  const FeedCow({Key key, this.contextfoodPage, this.routefoodName, FoodSuggestionItem foodSuggestionItem})
+  const FeedCow(
+      {Key key,
+      this.contextfoodPage,
+      this.routefoodName,
+      FoodSuggestionItem foodSuggestionItem})
       : super(key: key);
   @override
   _FeedCowState createState() => _FeedCowState();
@@ -24,25 +25,48 @@ class FeedCow extends StatefulWidget {
 
 class _FeedCowState extends State<FeedCow> {
   bool sended = false;
-  bool _validate = false;
+  bool isShow = false;
   int foodId;
   String status = "Đang tải", foodName = "";
   FoodSuggestionItem optionItemSelected =
-      FoodSuggestionItem(id: null, content: "Chọn loại thức ăn");
-  TextEditingController quantityController = TextEditingController();
+      FoodSuggestionItem(id: null, name: "Chọn loại thức ăn");
+
+  List<FoodSuggestionItem> list;
+  List<FoodSuggestionItem> listResoult;
+  TextEditingController quantityController;
+
+  void showed() {
+    setState(() {
+      isShow = !isShow ;
+    });
+  }
+
+  void setText({TextEditingController controller, String value}) {
+    setState(() {
+      controller.text = value;
+      print(value);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    double height = 105;
+    var media = MediaQuery.of(context).size;
+    var textEditingControllers = <TextEditingController>[];
+
     return BlocBuilder<FoodSuggestionBloc, FoodState>(
         builder: (context, state) {
       if (state is FoodLoadInprocess) {
         BlocProvider.of<FoodSuggestionBloc>(context).add(FoodLoadedSuccess());
       }
       if (state is FoodLoaded) {
-        List<FoodSuggestionItem> test =
-            state.foodSuggestionModel.foodSuggestionItem;
+        list = state.foodSuggestionModel.foodSuggestionItem;
+        final listBoKho = state.listBoKho;
+        final listBoTinh = state.listBoTinh;
+
         return SafeArea(
           child: Scaffold(
+            backgroundColor: Colors.lightGreen[50],
             appBar: AppBar(
               backgroundColor: colorApp,
               title: Text("Cho bò ăn"),
@@ -55,182 +79,132 @@ class _FeedCowState extends State<FeedCow> {
             body: SingleChildScrollView(
                 child: Column(
               children: [
-                Container(
-                    color: Colors.lightGreen[50],
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: ScreenUtil().setHeight(20.0),
-                          bottom: ScreenUtil().setHeight(20.0),
-                          left: ScreenUtil().setHeight(20.0),
-                          right: ScreenUtil().setHeight(20.0)),
-                      child: ListView.builder(
-                          itemCount: test.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: MediaQuery.of(context).size.height,
-                              width: MediaQuery.of(context).size.width,
-                              child: ListTile(
-                                title: Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        child: Text(
-                                          "Thức ăn thô",
-                                          style: TextStyle(fontSize: 20.0),
-                                        ),
-                                        padding: EdgeInsets.all(10.0),
-                                        margin: EdgeInsets.all(0.01),
-                                        alignment: Alignment.center,
-                                        width: 1200,
-                                        decoration: BoxDecoration(
-                                          color: Colors.orange[200],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(test[index].content ?? ''),
-                                          Row(
-                                            children: [
-                                              buildTextFormFood(
-                                                validatorText:
-                                                    "Vui lòng không bỏ trống",
-
-                                                nameController:
-                                                    quantityController,
-                                                width: 60.0,
-                                                // changeValueFuction: changeValue
-                                              ),
-                                              Text(" Kg")
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(test[index].content ?? ''),
-                                          Row(
-                                            children: [
-                                              buildTextFormFood(
-                                                validatorText:
-                                                    "Vui lòng không bỏ trống",
-
-                                                nameController:
-                                                    quantityController,
-                                                width: 60.0,
-                                                // changeValueFuction: changeValue
-                                              ),
-                                              Text(" Kg")
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Divider(
-                                        height: 20,
-                                        thickness: 1,
-                                        color: Colors.grey,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Thức ăn tinh",
-                                          style: TextStyle(fontSize: 20.0),
-                                        ),
-                                        padding: EdgeInsets.all(10.0),
-                                        margin: EdgeInsets.all(0.01),
-                                        alignment: Alignment.center,
-                                        width: 1200,
-                                        decoration: BoxDecoration(
-                                          color: Colors.orange[200],
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(5.0)),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(test[index].content ?? ''),
-                                          Row(
-                                            children: [
-                                              buildTextFormFood(
-                                                validatorText:
-                                                    "Vui lòng không bỏ trống",
-
-                                                nameController:
-                                                    quantityController,
-                                                width: 60.0,
-                                                // changeValueFuction: changeValue
-                                              ),
-                                              Text(" Kg")
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(test[index].content ?? ''),
-                                          Row(
-                                            children: [
-                                              buildTextFormFood(
-                                                validatorText:
-                                                    "Vui lòng không bỏ trống",
-
-                                                nameController:
-                                                    quantityController,
-                                                width: 60.0,
-                                                // changeValueFuction: changeValue
-                                              ),
-                                              Text(" Kg")
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(top: 20.0),
-                                        child: OutlinedButton(
-                                          onPressed: () {},
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty
-                                                    .resolveWith<Color>(
-                                              (Set<MaterialState> states) {
-                                                if (states.contains(
-                                                    MaterialState.pressed))
-                                                  return Colors.green[300];
-                                                return colorApp; // Use the component's default.
-                                              },
+                listBoKho.length > 0
+                    ? Column(
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setHeight(20),
+                                  vertical: ScreenUtil().setWidth(30)),
+                              child: ContaineTitleFeed(
+                                  title: "Thức ăn thô", showFood: showed)),
+                          isShow == false
+                              ? Container(
+                                  height: height * (listBoKho.length + 0.2),
+                                  width: media.width,
+                                  child: ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount: listBoKho.length,
+                                      itemBuilder: (context, index) {
+                                        textEditingControllers
+                                            .add(quantityController);
+                                        return ListTile(
+                                          title: Container(
+                                            height: ScreenUtil().setHeight(400),
+                                            width: media.width /
+                                                ScreenUtil().setWidth(2),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: <Widget>[
+                                                    Icon(Icons.food_bank),
+                                                    Text(listBoKho[index]
+                                                            .name ??
+                                                        ''),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        TextFieldFeedCow(
+                                                          setTextFuction2:
+                                                              setText,
+                                                          validatorText:
+                                                              "Vui lòng không bỏ trống",
+                                                          valueController:
+                                                              textEditingControllers[
+                                                                  index],
+                                                          width: ScreenUtil()
+                                                              .setWidth(60),
+                                                        ),
+                                                        Text(" Kg")
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  height: ScreenUtil()
+                                                      .setHeight(70),
+                                                  thickness: 5,
+                                                  color: Colors.lightGreen[200],
+                                                ),
+                                              ],
                                             ),
-                                            shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0))),
                                           ),
-                                          child: Text(
-                                            "Gửi",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    ScreenUtil().setSp(80),
-                                                color: Colors.white),
+                                        );
+                                      }))
+                              : SizedBox(),
+                        ],
+                      )
+                    : SizedBox(),
+                listBoTinh.length > 0
+                    ? Column(children: [
+                      
+                        ContaineTitleFeed(title: "Thức ăn tinh", showFood: showed),
+                        Container(
+                            height: height * (listBoTinh.length + 0.2),
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.builder(
+                                physics:  NeverScrollableScrollPhysics(),
+                                itemCount: listBoTinh.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Container(
+                                      height: ScreenUtil().setHeight(400),
+                                      width: MediaQuery.of(context).size.width /
+                                          ScreenUtil().setWidth(2),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(listBoTinh[index].name ??
+                                                  ''),
+                                              Row(
+                                                children: [
+                                                  TextFieldFeedCow(
+                                                    validatorText:
+                                                        "Vui lòng không bỏ trống",
+                                                    valueController: null,
+                                                    width: ScreenUtil()
+                                                        .setWidth(60),
+                                                  ),
+                                                  Text(" Kg")
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                        ),
+                                          Divider(
+                                            height: ScreenUtil().setHeight(30),
+                                            thickness: 1,
+                                            color: Colors.grey,
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    )),
+                                    ),
+                                  );
+                                })),
+                      ])
+                    : SizedBox(),
+                Container(
+                    height: ScreenUtil().setHeight(300), child: ButtonSend())
               ],
             )),
           ),
@@ -240,21 +214,4 @@ class _FeedCowState extends State<FeedCow> {
       return SplashPage();
     });
   }
-}
-
-Widget buildItem({title, string}) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Padding(
-        padding: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
-        child: Text(title, style: TextStyles.labelTextStyle),
-      ),
-      Padding(
-        padding: EdgeInsets.only(top: ScreenUtil().setHeight(60)),
-        child: Text(string, style: TextStyles.detailTextCow),
-      ),
-    ],
-  );
 }

@@ -23,7 +23,7 @@ Widget buildIdFather(
       return new DropdownMenuItem(
         value: car.id,
         child: new Text(
-          car.content,
+          car.name,
           style: new TextStyle(color: Colors.black),
         ),
       );

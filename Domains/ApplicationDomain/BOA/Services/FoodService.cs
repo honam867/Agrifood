@@ -103,5 +103,10 @@ namespace ApplicationDomain.BOA.Services
         {
             return await _foodRepository.CheckCodeExistsAsync(code);
         }
+
+        public async Task<IEnumerable<FoodModel>> GetFoodByProvinceIdAsync(int id)
+        {
+            return await _foodRepository.GetFoodByProvinceId(id).MapQueryTo<FoodModel>(_mapper).ToListAsync();
+        }
     }
 }

@@ -19,15 +19,15 @@ namespace ApplicationDomain.BOA.Services
 {
     public class StorageTankService : ServiceBase, IStorageTankService
     {
-        private readonly IStorageTankRepository _StorageTankRepository;
+        private readonly IStorageTankRepository _storageTankRepository;
 
         public StorageTankService(
-            IStorageTankRepository StorageTankRepository,
+            IStorageTankRepository storageTankRepository,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
-            _StorageTankRepository = StorageTankRepository;
+            _storageTankRepository = storageTankRepository;
         
         }
 
@@ -37,7 +37,7 @@ namespace ApplicationDomain.BOA.Services
             {
                 var entity = _mapper.Map<StorageTank>(model);
                 entity.CreateBy(issuer).UpdateBy(issuer);
-                _StorageTankRepository.Create(entity);
+                _storageTankRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return entity.Id;
@@ -54,8 +54,8 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                var entity = await _StorageTankRepository.GetEntityByIdAsync(id);
-                _StorageTankRepository.Delete(entity);
+                var entity = await _storageTankRepository.GetEntityByIdAsync(id);
+                _storageTankRepository.Delete(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;
@@ -70,28 +70,32 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<StorageTankModel>> GetStorageTankAsync()
         {
-            return await _StorageTankRepository.GetStorageTanks().MapQueryTo<StorageTankModel>(_mapper).ToListAsync();
+            return await _storageTankRepository.GetStorageTanks().MapQueryTo<StorageTankModel>(_mapper).ToListAsync();
            
         }
 
         public async Task<StorageTankModel> GetStorageTankByIdAsync(int id)
         {
-            return await _StorageTankRepository.GetStorageTankById(id).MapQueryTo<StorageTankModel>(_mapper).FirstOrDefaultAsync();
+            return await _storageTankRepository.GetStorageTankById(id).MapQueryTo<StorageTankModel>(_mapper).FirstOrDefaultAsync();
         }
 
+        public async Task<IEnumerable<StorageTankModel>> GetStorageTankByMilkCollectionIdAsync(int id)
+        {
+            return await _storageTankRepository.GetStorageTankByMilkCollectionId(id).MapQueryTo<StorageTankModel>(_mapper).ToListAsync();
+        }
 
         public async Task<bool> UpdateStorageTankAsync(int id, StorageTankModelRq model, UserIdentity<int> issuer)
         {
             try
             {
-                var entity = await _StorageTankRepository.GetEntityByIdAsync(id);
+                var entity = await _storageTankRepository.GetEntityByIdAsync(id);
                 if (entity == null)
                 {
                     return false;
                 }
                 _mapper.Map(model, entity);
                 entity.UpdateBy(issuer);
-                _StorageTankRepository.Update(entity);
+                _storageTankRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {
                     return true;

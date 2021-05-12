@@ -15,7 +15,6 @@ namespace ApplicationDomain.BOA.Models.MilkCollectionStations
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public int DistrictId { get; set; }
-        public int TypeOfMilkId { get; set; }
     }
 
     public class MilkCollectionStationModelRqMapper : Profile

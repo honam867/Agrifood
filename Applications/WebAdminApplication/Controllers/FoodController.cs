@@ -26,6 +26,13 @@ namespace WebAdminApplication.Controllers
             return Ok(await _foodService.GetFoodsAsync());
         }
 
+        [Route("province/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFoodByProvinceIdAsync(int id)
+        {
+            return Ok(await _foodService.GetFoodByProvinceIdAsync(id));
+        }
+
         [Route("checkingcode/{code}")]
         [HttpGet]
         public async Task<IActionResult> CheckCodeExistsAsync(string code)

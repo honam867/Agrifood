@@ -75,8 +75,16 @@ namespace WebAdminApplication.Controllers
         {
             try
             {
-                await _milkCollectionStationService.DeleteMilkCollectionStationAsync(id);
-                return Ok();
+                var result = await _milkCollectionStationService.DeleteMilkCollectionStationAsync(id);
+                if (result)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+                
             }
             catch (Exception e)
             {

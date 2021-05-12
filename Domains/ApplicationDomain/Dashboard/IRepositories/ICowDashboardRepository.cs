@@ -10,7 +10,7 @@ namespace ApplicationDomain.Dashboard.IRepositories
 {
     public interface ICowDashboardRepository
     { 
-        Task<IEnumerable<CowDashboard>> GetCowDashboardAsync(int id);
-        Task<IEnumerable<CowTotal>> GetCowTotalAsync(int id);
+        Task<IEnumerable<CowDashboardModel>> GetCowDashboardAsync(int id);
+        Task<IEnumerable<CowTotalModel>> GetCowTotalAsync(int id);
     }
 }

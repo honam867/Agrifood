@@ -22,17 +22,37 @@
             <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
                 <div class="row">
                     <div class="col-lg-6">
+
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Nhân viên</mat-label>
+                            <mat-select [(ngModel)]="sourceView.employeeId" name="employeeId" [disabled]="isView" #employeeId="ngModel">
+                                <mat-option>---</mat-option>
+                                <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.fullName }} -- ID:{{employee.id}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-lg-6">
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Mã nhân viên</mat-label>
                             <input id="employeeId" [(ngModel)]="sourceView.employeeId" name="employeeId" #name="ngModel" matInput placeholder="id" [disabled]="isView">
                             <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Mã nhân viên không được bỏ trống
                             </mat-error>
                         </mat-form-field>
-                    </div>
+                    </div> -->
                     <div class="col-lg-6">
-                        <mat-form-field class="input-fluid" appearance="outline">
+                        <!-- <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Mã nông dân</mat-label>
                             <input id="farmerId" [(ngModel)]="sourceView.farmerId" name="farmerId" matInput placeholder="id" [disabled]="isView">
+                        </mat-form-field> -->
+
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Nông dân</mat-label>
+                            <mat-select [(ngModel)]="sourceView.farmerId" name="farmerId" [disabled]="isView" #farmerId="ngModel">
+                                <mat-option>---</mat-option>
+                                <mat-option *ngFor="let farmer of farmers" [value]="farmer.id">{{ farmer.fullName }} -- ID:{{farmer.id}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <!-- <div class="col-lg-6">
@@ -45,15 +65,18 @@
               </mat-form-field>
           </div> -->
                     <div class="col-lg-6">
-                        <mat-form-field class="input-fluid" appearance="outline">
+                        <!-- <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Mã trạm sữa</mat-label>
                             <input id="milkCollectionStationId" [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" matInput placeholder="" [disabled]="isView">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-6">
+                        </mat-form-field> -->
+
                         <mat-form-field class="input-fluid" appearance="outline">
-                            <mat-label>Scale code</mat-label>
-                            <input id="scaleCode" [(ngModel)]="sourceView.scaleCode" name="scaleCode" matInput placeholder="" [disabled]="isView">
+                            <mat-label>Trạm sữa</mat-label>
+                            <mat-select [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" [disabled]="isView" #milkCollectionStationId="ngModel" (selectionChange)="getStorageTanks(sourceView.milkCollectionStationId)">
+                                <mat-option>---</mat-option>
+                                <mat-option *ngFor="let milkStation of milkStations" [value]="milkStation.id">{{milkStation.name}} -- {{milkStation.address}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">
@@ -65,9 +88,18 @@
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">
-                        <mat-form-field class="input-fluid" appearance="outline">
+                        <!-- <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Mã bình chứa</mat-label>
-                            <input id="storageTankCode" [(ngModel)]="sourceView.storageTankCode" name="storageTankCode" matInput placeholder="" [disabled]="isView">
+                            <input id="storageTankCode" [(ngModel)]="sourceView.storageTankId" name="storageTankCode" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field> -->
+
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Bình chứa</mat-label>
+                            <mat-select [(ngModel)]="sourceView.storageTankId" name="storageTankId" [disabled]="isView" #storageTankId="ngModel">
+                                <mat-option>---</mat-option>
+                                <mat-option *ngFor="let storageTank of storageTanks" [value]="storageTank.id">{{storageTank.name}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">

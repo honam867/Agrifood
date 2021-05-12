@@ -30,5 +30,10 @@ namespace Infrastructure.Repositories.BOA
         {
             return dbSet.Where(r => r.Id == id);
         }
+
+        public IQueryable GetFoodByProvinceId(int id)
+        {
+            return dbSet.Where(a => a.ProvinceId == id);
+        }
     }
 }

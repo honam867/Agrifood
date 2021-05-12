@@ -23,12 +23,17 @@ namespace Infrastructure.Repositories.BOA
 
         public IQueryable GetMilkCoupons()
         {
-            return this.dbSet;
+            return this.dbSet.Include(a => a.Employee.Name);
         }
 
         public IQueryable GetMilkCouponById(int id)
         {
             return dbSet.Where(r => r.Id == id);
+        }
+
+        public IQueryable GetMilkCouponByMilkCollectionStationId(int id)
+        {
+            return dbSet.Where(a => a.MilkCollectionStationId == id);
         }
     }
 }
