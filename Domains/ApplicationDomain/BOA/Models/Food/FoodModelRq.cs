@@ -23,14 +23,4 @@ namespace ApplicationDomain.BOA.Models.Foods
             var mapers = CreateMap<Food, FoodModelRq>();
         }
     }
-    public class FoodModelRqValidator : AbstractValidator<FoodModelRq>
-    {
-        public FoodModelRqValidator()
-        {
-            RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.Name).MinimumLength(3);
-            RuleFor(p => p.Code).NotEmpty();
-            RuleFor(p => p.Code).Length(3);
-        }
-    }
 }

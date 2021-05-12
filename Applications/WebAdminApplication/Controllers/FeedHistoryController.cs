@@ -4,40 +4,59 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
-using ApplicationDomain.BOA.Models.Cows;
-using ApplicationDomain.BOA.Models.ImportHistorys;
-using ApplicationDomain.BOA.Models.MilkingSlips;
+using ApplicationDomain.BOA.Models.FeedHistorys;
 using AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAdminApplication.Controllers
 {
-    public class ImportHistoryController : BaseController
+    public class FeedHistoryController : BaseController
     {
-        private readonly IImportHistoryService _importHistoryService;
-        public ImportHistoryController(IImportHistoryService importHistoryService)
+        private readonly IFeedHistoryService _feedHistoryService;
+        public FeedHistoryController(IFeedHistoryService feedHistoryService)
         {
-            _importHistoryService = importHistoryService;
+            _feedHistoryService = feedHistoryService;
         }
 
         [Route("")]
         [HttpGet]
-        public async Task<IActionResult> GetImportHistoryAsync()
+        public async Task<IActionResult> GetFeedHistorysAsync()
         {
-            return Ok(await _importHistoryService.GetImportHistoryAsync());
+            return Ok(await _feedHistoryService.GetFeedHistorysAsync());
+        }
+
+        [Route("checkingcode/{code}")]
+        [HttpGet]
+        public async Task<IActionResult> CheckCodeExistsAsync(string code)
+        {
+            return Ok(await _feedHistoryService.CheckCodeExistsAsync(code));
         }
 
         [Route("{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetImportHistoryByIdAsync(int id)
+        public async Task<IActionResult> GetFeedHistoryById(int id)
         {
-            return Ok(await _importHistoryService.GetImportHistoryByIdAsync(id));
+            return Ok(await _feedHistoryService.GetFeedHistoryByIdAsync(id));
+        }
+
+        [Route("farmer/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFeedHistoryByFarmerIdAsync(int id)
+        {
+            return Ok(await _feedHistoryService.GetFeedHistoryByFarmerIdAsync(id));
+        }
+
+        [Route("{day}/{month}/{year}/{farmerid}")]
+        [HttpGet]
+        public async Task<IActionResult> GetFeedHistoryByDateAsync(int day, int month, int year, int farmerId)
+        {
+            return Ok(await _feedHistoryService.GetFeedHistoryByDateAsync(day,month,year,farmerId));
         }
 
         [Route("")]
         [HttpPost]
-        public async Task<IActionResult> CreateImportHistoryAsync([FromBody]ImportHistoryModelRq model)
+        public async Task<IActionResult> CreateFeedHistoryAsync([FromBody]FeedHistoryModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -50,11 +69,11 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                //if (await _ImportHistoryService.CheckCodeExistsAsync(model.Code))
-                //{
-                //    return BadRequest("Code Exists");
-                //}
-                return Ok(await _importHistoryService.CreateImportHistoryAsync(model, issuer));
+                if (await _feedHistoryService.CheckCodeExistsAsync(model.Code))
+                {
+                    return BadRequest("Code Exists");
+                }
+                return Ok(await _feedHistoryService.CreateFeedHistoryAsync(model, issuer));
             }
             catch (Exception e)
             {
@@ -65,11 +84,11 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteImportHistoryAsync(int id)
+        public async Task<IActionResult> DeleteFeedHistoryAsync(int id)
         {
             try
             {
-                await _importHistoryService.DeleteImportHistoryAsync(id);
+                await _feedHistoryService.DeleteFeedHistoryAsync(id);
                 return Ok();
             }
             catch (Exception e)
@@ -80,7 +99,7 @@ namespace WebAdminApplication.Controllers
 
         [Route("{id}")]
         [HttpPut]
-        public async Task<IActionResult> UpdateImportHistoryAsync(int id, [FromBody]ImportHistoryModelRq model)
+        public async Task<IActionResult> UpdateFeedHistoryAsync(int id, [FromBody]FeedHistoryModelRq model)
         {
             if (!ModelState.IsValid)
             {
@@ -93,13 +112,12 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                return Ok(await _importHistoryService.UpdateImportHistoryAsync(id, model, issuer));
+                return Ok(await _feedHistoryService.UpdateFeedHistoryAsync(id, model, issuer));
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
-
     }
 }
