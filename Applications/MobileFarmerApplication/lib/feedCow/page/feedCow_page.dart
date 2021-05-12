@@ -37,7 +37,7 @@ class _FeedCowState extends State<FeedCow> {
 
   void showed() {
     setState(() {
-      isShow = !isShow ;
+      isShow = !isShow;
     });
   }
 
@@ -50,7 +50,7 @@ class _FeedCowState extends State<FeedCow> {
 
   @override
   Widget build(BuildContext context) {
-    double height = 105;
+    double height = ScreenUtil().setHeight(400);
     var media = MediaQuery.of(context).size;
     var textEditingControllers = <TextEditingController>[];
 
@@ -61,7 +61,7 @@ class _FeedCowState extends State<FeedCow> {
       }
       if (state is FoodLoaded) {
         list = state.foodSuggestionModel.foodSuggestionItem;
-        final listBoKho = state.listBoKho;
+        final listBoKho = state.listBoTho;
         final listBoTinh = state.listBoTinh;
 
         return SafeArea(
@@ -88,7 +88,7 @@ class _FeedCowState extends State<FeedCow> {
                                   vertical: ScreenUtil().setWidth(30)),
                               child: ContaineTitleFeed(
                                   title: "Thức ăn thô", showFood: showed)),
-                          isShow == false
+                          isShow == true
                               ? Container(
                                   height: height * (listBoKho.length + 0.2),
                                   width: media.width,
@@ -110,10 +110,9 @@ class _FeedCowState extends State<FeedCow> {
                                                       MainAxisAlignment
                                                           .spaceAround,
                                                   children: <Widget>[
-                                                    Icon(Icons.food_bank),
-                                                    Text(listBoKho[index]
-                                                            .name ??
-                                                        ''),
+                                                    Text(
+                                                        listBoKho[index].name ??
+                                                            ''),
                                                     Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -155,13 +154,17 @@ class _FeedCowState extends State<FeedCow> {
                     : SizedBox(),
                 listBoTinh.length > 0
                     ? Column(children: [
-                      
-                        ContaineTitleFeed(title: "Thức ăn tinh", showFood: showed),
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setHeight(20),
+                                vertical: ScreenUtil().setWidth(30)),
+                            child: ContaineTitleFeed(
+                                title: "Thức ăn tinh", showFood: showed)),
                         Container(
                             height: height * (listBoTinh.length + 0.2),
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
-                                physics:  NeverScrollableScrollPhysics(),
+                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: listBoTinh.length,
                                 itemBuilder: (context, index) {
                                   return ListTile(
@@ -175,8 +178,8 @@ class _FeedCowState extends State<FeedCow> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceAround,
                                             children: [
-                                              Text(listBoTinh[index].name ??
-                                                  ''),
+                                              Text(
+                                                  listBoTinh[index].name ?? ''),
                                               Row(
                                                 children: [
                                                   TextFieldFeedCow(
@@ -192,9 +195,9 @@ class _FeedCowState extends State<FeedCow> {
                                             ],
                                           ),
                                           Divider(
-                                            height: ScreenUtil().setHeight(30),
-                                            thickness: 1,
-                                            color: Colors.grey,
+                                            height: ScreenUtil().setHeight(70),
+                                            thickness: 5,
+                                            color: Colors.lightGreen[200],
                                           ),
                                         ],
                                       ),

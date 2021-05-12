@@ -67,7 +67,7 @@ class CowRepository {
 
   Future<bool> addCow({CowItem cowItem}) async {
     Map rqData = cowItem.toJson();
-    var rs = await APIClient.post('api/cow', rqData);
+    var rs = await APIClient.post('api/cow/newcode', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       print(data);
