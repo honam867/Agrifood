@@ -26,11 +26,12 @@ namespace WebAdminApplication.Controllers
             return Ok(await _foodService.GetFoodsAsync());
         }
 
-        [Route("province/{id}")]
+        [Route("province")]
         [HttpGet]
-        public async Task<IActionResult> GetFoodByProvinceIdAsync(int id)
+        public async Task<IActionResult> GetFoodByProvinceAsync()
         {
-            return Ok(await _foodService.GetFoodByProvinceIdAsync(id));
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _foodService.GetFoodByProvinceAsync(issuer));
         }
 
         [Route("checkingcode/{code}")]

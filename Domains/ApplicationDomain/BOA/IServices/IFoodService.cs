@@ -16,6 +16,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteFoodAsync(int id);
         Task<bool> UpdateFoodAsync(int id, FoodModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
-        Task<IEnumerable<FoodModel>> GetFoodByProvinceIdAsync(int id);
+        Task<IEnumerable<FoodModel>> GetFoodByProvinceAsync(UserIdentity<int> issuer);
     }
 }

@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.Orders;
+using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
 using AspNetCore.UnitOfWork;
@@ -35,6 +36,11 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<Order>(model);
+                var code = AutoGenerate.AutoGenerateCode(3);
+                if (!await CheckCodeExistsAsync(code))
+                {
+                    entity.Code = code;
+                }
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _orderRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
