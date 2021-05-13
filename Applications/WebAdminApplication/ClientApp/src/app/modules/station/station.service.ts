@@ -37,6 +37,9 @@ export class StationService {
   getDistrictByProvinceId(provinceId: number): Observable<District[]> {
     return this.http.get(`district/provinceId/${provinceId}`);
   }
+  getDistrict(): Observable<District[]> {
+    return this.http.get(`district`)
+  }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);
   // }

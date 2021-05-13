@@ -113,7 +113,7 @@ export class CrudFarmerComponent implements OnInit {
   }
 
   fetchHistory() {
-    this.farmerService.getFeedHistories().subscribe(result => {
+    this.farmerService.getFeedHistoriesByFarmerId(this.sourceView.id).subscribe(result => {
       this.histories = result;
       this.historySource = new MatTableDataSource(this.histories);
     });

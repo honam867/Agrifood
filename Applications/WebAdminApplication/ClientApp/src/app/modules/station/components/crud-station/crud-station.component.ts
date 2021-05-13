@@ -50,23 +50,16 @@ export class CrudStationComponent implements OnInit {
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.station);
-    if (this.isView) {
-      this.fetchProvince();
-    }
+    this.fetchDistrict();
 
   }
 
-  fetchProvince() {
-    this.stationService.getProvince().subscribe(result => {
-      this.provinces = result;
-    });
-  }
-
-  getDistrict(provinceId: number) {
-    this.stationService.getDistrictByProvinceId(provinceId).subscribe(result => {
+  fetchDistrict() {
+    this.stationService.getDistrict().subscribe(result => {
       this.districts = result;
     });
   }
+
 
   delete() {
     const deleteDialog = this.dialog.open(ConfirmationComponent, {
