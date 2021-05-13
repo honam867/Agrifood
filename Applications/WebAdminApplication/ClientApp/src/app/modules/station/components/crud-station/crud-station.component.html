@@ -51,35 +51,24 @@
         <div class="row">
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Tỉnh/Thành phố</mat-label>
-                    <mat-select [(ngModel)]="sourceView.provinceId" name="provinceId" [disabled]="isView" #provinceId="ngModel" (selectionChange)="getDistrict(sourceView.provinceId)">
-                        <mat-option>---</mat-option>
-                        <mat-option *ngFor="let province of provinces" [value]="province.id">{{ province.name }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Quận/huyện</mat-label>
                     <mat-select [(ngModel)]="sourceView.districtId" name="districtId" [disabled]="isView" #districtId="ngModel">
                         <mat-option>---</mat-option>
-                        <mat-option *ngFor="let districName of districts" [value]="districName.id">{{ districName.name }}
+                        <mat-option *ngFor="let district of districts" [value]="district.id">{{ district.name }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-        </div>
 
-        <div class="row">
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
                     <mat-label>Email</mat-label>
                     <input id="email" [(ngModel)]="sourceView.email" name="email" matInput placeholder="Code" [disabled]="isView" required>
                 </mat-form-field>
             </div>
+
         </div>
+
         <div style="margin:0 auto;text-align: center;">
             <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
           <mat-icon>add</mat-icon> Thêm

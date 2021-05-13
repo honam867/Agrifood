@@ -57,6 +57,9 @@ export class FarmerService {
   getFeedHistories(): Observable<FeedHistory[]> {
     return this.http.get(`feedhistory`);
   }
+  getFeedHistoriesByFarmerId(farmerId: number): Observable<FeedHistory[]> {
+    return this.http.get(`feedhistory/farmer/${farmerId}`);
+  }
   // getFeedHistories(): Observable<FeedHistory[]> {
   //   return this.http.get(`http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/feedhistory`);
   // }
