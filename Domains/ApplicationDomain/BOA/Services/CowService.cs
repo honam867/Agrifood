@@ -37,11 +37,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<Cow>(model);
-                var code = AutoGenerate.AutoGenerateCode(3);
-                if (!await CheckCodeExistsAsync(code))
-                {
-                    entity.Code = code;   
-                }
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _cowRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)

@@ -36,11 +36,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<Order>(model);
-                var code = AutoGenerate.AutoGenerateCode(3);
-                if (!await CheckCodeExistsAsync(code))
-                {
-                    entity.Code = code;
-                }
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _orderRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
@@ -113,6 +109,14 @@ namespace ApplicationDomain.BOA.Services
         public async Task<IEnumerable<OrderModel>> GetOrderByFarmerIdAsync(int id)
         {
             return await _orderRepository.GetOrderByFarmerId(id).MapQueryTo<OrderModel>(_mapper).ToListAsync();
+        }
+        public async Task<string> AutoGenerateCodeAsync(string code = "")
+        {
+            if (code.Equals(""))
+                code = AutoGenerate.AutoGenerateCode(3);
+            if (!await CheckCodeExistsAsync(code))
+                return code;
+            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(3));
         }
     }
 }
