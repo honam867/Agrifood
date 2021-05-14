@@ -1,0 +1,54 @@
+<div class="containter">
+    <div class="form-setting">
+        <div class="user-filter">
+            <mat-form-field class="example-form-field">
+                <mat-label>Tìm kiếm</mat-label>
+                <input matInput (keyup)="applyFilter($event.target.value)" type="text" [(ngModel)]="value">
+                <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+    <mat-icon>close</mat-icon>
+  </button>
+            </mat-form-field>
+        </div>
+        <div class="user-button">
+            <button mat-raised-button color="primary">Thêm hóa đơn</button>
+        </div>
+    </div>
+    <div class="user-list">
+        <mat-paginator [pageSizeOptions]="[10,20,50]">
+        </mat-paginator>
+        <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="farmer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nông dân</th>
+                <td mat-cell *matCellDef="let order">{{order.farmerId}}--ID:{{order.farmerId}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="employee">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
+                <td mat-cell *matCellDef="let order">{{order.employeeId}}--ID:{{order.employeeId}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="foodId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Thức ăn</th>
+                <td mat-cell *matCellDef="let order">{{order.foodId}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo phiếu</th>
+                <td mat-cell *matCellDef="let order">{{order.createdDate | date:'dd/MM/yyyy'}}</td>
+            </ng-container>
+
+
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef width="7%"></th>
+                <td mat-cell *matCellDef="let order" (click)="$event.stopPropagation()">
+                    <button mat-button><mat-icon>delete</mat-icon></button>
+
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
+            <tr mat-row class="table-row" *matRowDef="let order columns: displayedColumns;">
+            </tr>
+        </table>
+    </div>

@@ -111,6 +111,21 @@ export const ROUTES: RouteInfo[] = [{
   icontype: 'format_color_fill'
 },
 {
+  path: '/order',
+  type: 'sub',
+  title: 'Hóa đơn',
+  collapse: 'order',
+  children: [
+    {
+      path: 'orderlist',
+      title: 'DANH SÁCH HÓA ĐƠN',
+      type: 'link',
+      ab: null
+    }
+  ],
+  icontype: 'receipt'
+},
+{
   path: '/province',
   type: 'sub',
   title: 'Địa điểm',
