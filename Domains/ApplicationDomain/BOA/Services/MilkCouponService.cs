@@ -43,6 +43,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<MilkCoupon>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCouponRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)

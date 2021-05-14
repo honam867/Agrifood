@@ -29,6 +29,7 @@ namespace ApplicationDomain.BOA.Models.Farmers
         public string AccountNumber { get; set; }
         public string Bank { get; set; }
         public string BankBranch { get; set; }
+        public string Landline { get; set; }
     }
 }
 

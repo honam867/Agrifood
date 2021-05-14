@@ -16,11 +16,11 @@ namespace Infrastructure.Repositories.BOA
         {
         }
 
-/*        public async Task<bool> CheckCodeExistsAsync(string code)
+        public async Task<bool> CheckCodeExistsAsync(string code)
         {
             return await this.dbSet.AnyAsync(r => r.Code == code);
         }
-*/
+
         public IQueryable GetFoodSuggestions()
         {
             return this.dbSet;

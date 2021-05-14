@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AspNetCore.AutoGenerate;
 
 namespace ApplicationDomain.BOA.Services
 {
@@ -36,6 +37,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<StorageTank>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _storageTankRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
@@ -107,6 +109,20 @@ namespace ApplicationDomain.BOA.Services
                 throw e;
             }
 
+        }
+
+        public async Task<bool> CheckCodeExistsAsync(string code)
+        {
+            return await _storageTankRepository.CheckCodeExistsAsync(code);
+        }
+
+        public async Task<string> AutoGenerateCodeAsync(string code = "")
+        {
+            if (code.Equals(""))
+                code = AutoGenerate.AutoGenerateCode(3);
+            if (!await CheckCodeExistsAsync(code))
+                return code;
+            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(3));
         }
 
     }

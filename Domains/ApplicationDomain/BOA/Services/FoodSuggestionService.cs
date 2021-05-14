@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.FoodSuggestions;
+using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
 using AspNetCore.UnitOfWork;
@@ -35,6 +36,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<FoodSuggestion>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _foodSuggestionRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
@@ -104,9 +106,17 @@ namespace ApplicationDomain.BOA.Services
             return await _foodSuggestionRepository.GetFoodSuggestionByFarmerId(issuer.Id).MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
         }
 
-        /*public async Task<bool> CheckCodeExistsAsync(string code)
+        public async Task<bool> CheckCodeExistsAsync(string code)
         {
-            return await _breedRepository.CheckCodeExistsAsync(code);
-        }*/
+            return await _foodSuggestionRepository.CheckCodeExistsAsync(code);
+        }
+        public async Task<string> AutoGenerateCodeAsync(string code = "")
+        {
+            if (code.Equals(""))
+                code = AutoGenerate.AutoGenerateCode(3);
+            if (!await CheckCodeExistsAsync(code))
+                return code;
+            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(3));
+        }
     }
 }

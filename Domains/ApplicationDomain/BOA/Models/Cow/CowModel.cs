@@ -8,6 +8,7 @@ namespace ApplicationDomain.BOA.Models.Cows
     {
         public int Id { get; set; }
         public int ByreId { set; get; }
+        public string ByreName { get; set; }
         public int? MotherId { set; get; }
         public int? FatherId { set; get; }
         public string Name { set; get; }
@@ -18,6 +19,8 @@ namespace ApplicationDomain.BOA.Models.Cows
         public string Gender { set; get; }
         public DateTime WeaningDate { set; get; }
         public int FoodSuggestionId { set; get; }
+        public string Note { get; set; }
+        public int Weight { get; set; }
 
     }
     public class CowModelMapper : Profile

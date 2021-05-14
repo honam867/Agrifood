@@ -20,6 +20,8 @@ namespace ApplicationDomain.BOA.Models.Cows
         public string Gender { set; get; }
         public DateTime WeaningDate { set; get; }
         public int FoodSuggestionId { set; get; }
+        public string Note { get; set; }
+        public int Weight { get; set; }
     }
 
     public class CowModelRqMapper : Profile
