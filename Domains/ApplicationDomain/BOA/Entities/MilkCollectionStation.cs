@@ -15,6 +15,8 @@ namespace ApplicationDomain.BOA.Entities
         public string Email { get; set; }
         public int DistrictId { get; set; }
         public District District { get; set; }
+        public int ProvinceId { get; set; }
+        public Province Province { get; set; }
 
     }
 }

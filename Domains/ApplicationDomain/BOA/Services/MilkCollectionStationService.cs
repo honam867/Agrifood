@@ -42,6 +42,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = _mapper.Map<MilkCollectionStation>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCollectionStationRepository.Create(entity);
 

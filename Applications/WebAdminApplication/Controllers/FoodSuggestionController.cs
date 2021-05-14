@@ -50,18 +50,6 @@ namespace WebAdminApplication.Controllers
             }
             var issuer = GetCurrentUserIdentity<int>();
             return Ok(await _breedService.CreateFoodSuggestionAsync(model, issuer));
-            /*try
-            {
-                if (await _breedService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
-                return Ok(await _breedService.CreateFoodSuggestionAsync(model, issuer));
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }*/
 
         }
 

@@ -25,11 +25,4 @@ namespace ApplicationDomain.BOA.Models.MilkCoupons
             var mapers = CreateMap<MilkCoupon, MilkCouponModelRq>();
         }
     }
-    public class MilkCouponModelRqValidator : AbstractValidator<MilkCouponModelRq>
-    {
-        public MilkCouponModelRqValidator()
-        {
-            RuleFor(p => p.Code).NotEmpty();
-        }
-    }
 }

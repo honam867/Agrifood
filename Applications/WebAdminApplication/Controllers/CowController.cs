@@ -78,10 +78,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _cowService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _cowService.CreateCowAsync(model, issuer));
             }
             catch (Exception e)
