@@ -11,6 +11,7 @@ namespace Infrastructure.EntityConfigurations.BOA
         public override void OnConfigure(EntityTypeBuilder<MilkCollectionStation> builder)
         {
             builder.HasOne(p => p.District).WithMany().HasForeignKey(p => p.DistrictId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.Province).WithMany().HasForeignKey(p => p.ProvinceId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
         }
     }
 }
