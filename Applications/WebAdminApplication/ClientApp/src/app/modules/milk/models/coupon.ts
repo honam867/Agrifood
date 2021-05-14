@@ -22,6 +22,9 @@ export class Coupon {
   storageTankId: number;
   session: string;
   milkCollectionStationId : number;
+  employeeFullName: string;
+  farmerFullName: string;
+  quantity: number;
 
   constructor() {
    this.id =0;

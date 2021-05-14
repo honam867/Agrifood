@@ -7,6 +7,7 @@ export class Station {
   email: string;
   districtId: number;
   typeOfMilkId: number;
+  provinceId: number;
   constructor() {
    this.id =0;
    this.name="";
@@ -15,5 +16,6 @@ export class Station {
    this.phoneNumber="";
    this.districtId = 0;
    this.typeOfMilkId = 0;
+   this.provinceId = 0;
   }
 }

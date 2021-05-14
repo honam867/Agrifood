@@ -71,6 +71,14 @@ export class MilkService {
     return this.http.get(`storagetank`);
   }
 
+  updateStorageTank(storageTankId: number, updatedStorageTank: StorageTank): Observable<boolean> {
+    return this.http.put(`storagetank/${storageTankId}`, updatedStorageTank);
+  }
+
+  getTankById(tankId: number): Observable<Coupon> {
+    return this.http.get(`storagetank/${tankId}`);
+  }
+
   // getProvince(): Observable<Province[]> {
   //   return this.http.get(`province`)
   // }

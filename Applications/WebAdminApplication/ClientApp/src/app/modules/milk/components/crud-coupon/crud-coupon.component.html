@@ -72,7 +72,7 @@
 
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Trạm sữa</mat-label>
-                            <mat-select [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" [disabled]="isView" #milkCollectionStationId="ngModel" (selectionChange)="getStorageTanks(sourceView.milkCollectionStationId)">
+                            <mat-select [(ngModel)]="sourceView.milkCollectionStationId" name="milkCollectionStationId" [disabled]="!isCreate" #milkCollectionStationId="ngModel" (selectionChange)="getStorageTanks(sourceView.milkCollectionStationId)">
                                 <mat-option>---</mat-option>
                                 <mat-option *ngFor="let milkStation of milkStations" [value]="milkStation.id">{{milkStation.name}} -- {{milkStation.address}}
                                 </mat-option>
@@ -95,17 +95,25 @@
 
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Bình chứa</mat-label>
-                            <mat-select [(ngModel)]="sourceView.storageTankId" name="storageTankId" [disabled]="isView" #storageTankId="ngModel">
+                            <mat-select [(ngModel)]="sourceView.storageTankId" name="storageTankId" [disabled]="!isCreate" #storageTankId="ngModel">
                                 <mat-option>---</mat-option>
-                                <mat-option *ngFor="let storageTank of storageTanks" [value]="storageTank.id">{{storageTank.name}}
+                                <mat-option *ngFor="let storageTank of storageTanks" [value]="storageTank.id">{{storageTank.name}}--Dung tích:{{storageTank.quantity}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">
-                        <mat-form-field class="input-fluid" appearance="outline">
+                        <!-- <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Phiên</mat-label>
                             <input id="session" [(ngModel)]="sourceView.session" name="session" matInput placeholder="" [disabled]="isView">
+                        </mat-form-field> -->
+
+                        <mat-form-field class="input-fluid" appearance="outline">
+                            <mat-label>Phiên</mat-label>
+                            <mat-select [(ngModel)]="sourceView.session" name="session" [disabled]="isView" #session="ngModel">
+                                <mat-option *ngFor="let session of sessions" [value]="session">{{session}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">

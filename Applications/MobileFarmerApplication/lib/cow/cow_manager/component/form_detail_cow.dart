@@ -54,6 +54,7 @@ class _FormDetailCowState extends State<FormDetailCow> {
                                         FoodSuggestionRepository()),
                                 child: FeedCow(
                                     contextfoodPage: context,
+                                    cowId: widget.cowItem.id,
                                     routefoodName: "FeedCow",
                                     foodSuggestionItem:
                                         widget.foodSuggestionItem),

@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 SpeedDial buildSpeedDial({context, farmerId}) {
- // MilkingSlipRepository milkingSlipRepository = new MilkingSlipRepository();
+  // MilkingSlipRepository milkingSlipRepository = new MilkingSlipRepository();
   return SpeedDial(
     /// both default to 16
     marginEnd: 18,
@@ -56,7 +56,7 @@ SpeedDial buildSpeedDial({context, farmerId}) {
         onTap: () {
           showDialog(
             context: context,
-            child: BlocProvider<MilkingSlipBloc>(
+            builder: (context) => BlocProvider<MilkingSlipBloc>(
               create: (_) => MilkingSlipBloc()..add(MilkingSlipLoadedSucces()),
               child: PopupReport(
                 farmerId: farmerId,

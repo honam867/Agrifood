@@ -173,7 +173,6 @@ export class FarmerListComponent implements OnInit {
     this.farmerService.getFarmers().subscribe(
       res => {
         this.farmers = res;
-        console.log(this.farmers);
         this.dataSource = new MatTableDataSource(this.farmers);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
