@@ -39,7 +39,6 @@ export class CrudFoodComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.fetchProvinces();
     this.food = this.data.food;
     if (this.data.action === StatusForm.DETELE) {
       this.delete();
@@ -47,7 +46,15 @@ export class CrudFoodComponent implements OnInit {
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.food);
+    this.fetchProvince();
   }
+
+  fetchProvince() {
+    this.foodService.getProvinces().subscribe(result => {
+      this.provinces = result;
+    });
+  }
+
   delete() {
     const deleteDialog = this.dialog.open(ConfirmationComponent, {
       data: {
@@ -108,17 +115,4 @@ export class CrudFoodComponent implements OnInit {
       }
     );
   }
-
-  fetchProvinces() {
-    this.foodService.getProvinces().subscribe(
-      res => {
-        this.provinces = res;
-        // this.dataSource = new MatTableDataSource(this.foods);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
-      });
-  }
-
-
-
 }

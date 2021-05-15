@@ -3,7 +3,7 @@ export class Food {
     name: string;
     code: string;
     type: string;
-    provinceId:number;
+    provinceid:number;
     provinceName: string;
 
     constructor() {
@@ -11,7 +11,7 @@ export class Food {
      this.name="";
      this.code="";
      this.type="";
-     this.provinceId=0;
+     this.provinceid=0;
      this.provinceName="";
     }
   }

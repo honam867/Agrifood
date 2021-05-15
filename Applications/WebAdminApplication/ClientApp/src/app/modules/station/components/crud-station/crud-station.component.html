@@ -38,8 +38,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <mat-form-field class="input-fluid" appearance="outline">
-                            <mat-label>Code</mat-label>
-                            <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView" required>
+                            <mat-label>Email</mat-label>
+                            <input id="email" [(ngModel)]="sourceView.email" name="email" matInput placeholder="Code" [disabled]="isView" required>
                         </mat-form-field>
                     </div>
                     <div class="col-lg-6">
@@ -51,7 +51,6 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-
                         <mat-form-field class="input-fluid" appearance="outline">
                             <mat-label>Tỉnh/Thành phố</mat-label>
                             <mat-select [(ngModel)]="sourceView.provinceId" name="provinceId" [disabled]="isView" #provinceId="ngModel" (selectionChange)="getDistrict(sourceView.provinceId)">
@@ -71,20 +70,7 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-
-
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <mat-form-field class="input-fluid" appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input id="email" [(ngModel)]="sourceView.email" name="email" matInput placeholder="Code" [disabled]="isView" required>
-                        </mat-form-field>
-                    </div>
-                </div>
-
-
-
                 <div style="margin:0 auto;text-align: center;">
                     <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
           <mat-icon>add</mat-icon> Thêm
@@ -102,9 +88,9 @@
     </mat-tab>
 
     <mat-tab label="Danh sách thùng sữa" *ngIf="!isCreate">
-        <div class="user-button">
+        <!-- <div class="user-button">
             <button mat-raised-button color="primary" (click)="getStorageTanks(sourceView.id)">Làm mới danh sách</button>
-        </div>
+        </div> -->
         <div class="mat-elevation-z8">
             <table mat-table [dataSource]="storageTankSource">
                 <ng-container matColumnDef="name">
