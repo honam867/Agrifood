@@ -26,6 +26,8 @@ export class CrudStationComponent implements OnInit {
   isView = true;
   provinces: Province[] = [];
   storageTanks: StorageTank[] =[];
+  filteredProvinces: Province[] =[];
+  filteredDistricts: District[] =[];
   isCreate = true;
   loading: boolean;
   // rolesOfUser: any[];
@@ -63,9 +65,10 @@ export class CrudStationComponent implements OnInit {
   }
 
 
-  getDistrict(provinceId: number) {
+  getDistrict(provinceId) {
     this.stationService.getDistrictByProvinceId(provinceId).subscribe(result => {
       this.districts = result;
+      this.filteredDistricts = this.districts;
     });
   }
 
@@ -79,6 +82,7 @@ export class CrudStationComponent implements OnInit {
   fetchProvince() {
     this.stationService.getProvince().subscribe(result => {
       this.provinces = result;
+      this.filteredProvinces = this.provinces;
     });
   }
 
