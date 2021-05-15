@@ -43,17 +43,12 @@
             </div>
             <div class="col-lg-6">
                 <mat-form-field class="input-fluid" appearance="outline">
-                    <h6 style="color: grey;">Tỉnh</h6>
-                    <mat-select [ngModelOptions]="{ standalone: true }" [(ngModel)]="sourceView.provinceId" [placeholder]="sourceView.provinceName" id="provinceId" name="provinceId" [disabled]="isView">
-                        <mat-option *ngFor="let province of provinces" [value]="province.id">{{province.name}}
+                    <mat-label>Tỉnh/Thành phố</mat-label>
+                    <mat-select [(ngModel)]="sourceView.provinceid" name="provinceid" [disabled]="isView" #provinceid="ngModel">
+                        <mat-option>---</mat-option>
+                        <mat-option *ngFor="let province of provinces" [value]="province.id">{{ province.name }}
                         </mat-option>
                     </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-lg-6">
-                <mat-form-field class="input-fluid" appearance="outline">
-                    <mat-label>Code</mat-label>
-                    <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="" [disabled]="isView">
                 </mat-form-field>
             </div>
         </div>

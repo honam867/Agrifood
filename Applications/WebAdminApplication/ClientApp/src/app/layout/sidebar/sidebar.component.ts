@@ -125,21 +125,21 @@ export const ROUTES: RouteInfo[] = [{
   ],
   icontype: 'receipt'
 },
-{
-  path: '/province',
-  type: 'sub',
-  title: 'Địa điểm',
-  collapse: 'province',
-  children: [
-    {
-      path: 'provincelist',
-      title: 'DANH SÁCH TỈNH THÀNH',
-      type: 'link',
-      ab: null
-    }
-  ],
-  icontype: 'satellite'
-},
+// {
+//   path: '/province',
+//   type: 'sub',
+//   title: 'Địa điểm',
+//   collapse: 'province',
+//   children: [
+//     {
+//       path: 'provincelist',
+//       title: 'DANH SÁCH TỈNH THÀNH',
+//       type: 'link',
+//       ab: null
+//     }
+//   ],
+//   icontype: 'satellite'
+// },
 {
   path: '/food',
   type: 'sub',
