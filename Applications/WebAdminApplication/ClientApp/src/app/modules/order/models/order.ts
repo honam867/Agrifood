@@ -5,6 +5,9 @@ export class Order {
   foodId: number;
   quantity: number;
   farmerId: number
+  employeeName: string;
+  farmerName: string;
+  foodName: string;
 
   constructor() {
    this.id =0;
