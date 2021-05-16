@@ -37,7 +37,7 @@ export class CrudStationComponent implements OnInit {
   // };
   storageTankSource: MatTableDataSource<StorageTank>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumnsStorageTank: string[] =['name', 'quantity'];
+  displayedColumnsStorageTank: string[] =['name', 'quantity', 'action'];
   sourceView: Station = new Station();
   constructor(
     public dialog: MatDialog,
@@ -84,6 +84,14 @@ export class CrudStationComponent implements OnInit {
       this.provinces = result;
       this.filteredProvinces = this.provinces;
     });
+  }
+
+  setQuantityZero(tank: StorageTank) {
+    tank.quantity = 0;
+    this.stationService.updateTank(tank.id, tank).subscribe(
+      result => {
+      }
+    );
   }
 
 
