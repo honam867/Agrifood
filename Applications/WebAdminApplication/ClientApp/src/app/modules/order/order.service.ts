@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Employee } from '../employee/models/employee';
 import { Farmer } from '../farmer/models/farmer';
+import { Food } from '../food/models/food';
 @Injectable({
   providedIn: 'root'
 })
@@ -52,6 +53,10 @@ export class OrderService {
 
   getFarmers(): Observable<Farmer[]> {
     return this.http.get(`farmer`);
+  }
+
+  getFoods(): Observable<Food[]> {
+    return this.http.get(`food`);
   }
 
   // getStations(): Observable<Station[]> {

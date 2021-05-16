@@ -1,3 +1,4 @@
+import { CrudOrderComponent } from './../../components/crud-order/crud-order.component';
 import { StatusForm } from 'src/app/shared/enum/status-form';
 import { OrderService } from './../../order.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,7 +17,7 @@ export class OrderListComponent implements OnInit {
   value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['farmer', 'employee', 'foodId', 'createdDate'];
+  displayedColumns: string[] = ['employee', 'farmer', 'foodName', 'quantity', 'createdDate'];
   dataSource: MatTableDataSource<Order>;
   orders: Order[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -27,40 +28,65 @@ export class OrderListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.fetchCoupons();
+    this.fetchOrders();
   }
-  afterClose(result: any) {
-    const coupon = result.data;
-    if (result.action === StatusForm.VIEW) {
-      const employeeIndex = this.orders.map(p => p.id).indexOf(coupon.id);
-      this.orders[employeeIndex] = coupon;
-      this.dataSource.data = this.orders;
-    } else if (result.action === StatusForm.DETELE) {
-      const employeeIndex = this.orders.indexOf(coupon);
-      if (employeeIndex !== -1) {
-        this.orders.splice(employeeIndex, 1);
-        this.dataSource.data = this.orders;
-      }
-    }
-  }
-
-  // viewDetail(order: Order) {
-  //   const viewDialog = this.dialog.open(CrudCouponComponent, {
-  //     height: '75%',
-  //     width: '80%',
-  //     data: {
-  //       action: StatusForm.VIEW,
-  //       order,
-  //     },
-  //     disableClose: true,
-  //   });
-  //   viewDialog.afterClosed().subscribe(
-  //     result => {
-  //       this.afterClose(result);
+  // afterClose(result: any) {
+  //   const order = result.data;
+  //   if (result.action === StatusForm.VIEW) {
+  //     const employeeIndex = this.orders.map(p => p.id).indexOf(order.id);
+  //     this.orders[employeeIndex] = order;
+  //     this.dataSource.data = this.orders;
+  //   } else if (result.action === StatusForm.DETELE) {
+  //     const employeeIndex = this.orders.indexOf(order);
+  //     if (employeeIndex !== -1) {
+  //       this.orders.splice(employeeIndex, 1);
+  //       this.dataSource.data = this.orders;
   //     }
-  //   );
+  //   }
   // }
 
+
+  createOrder() {
+    const createDialog = this.dialog.open(CrudOrderComponent, {
+      height: '75%',
+      width: '80%',
+      data: {
+        action: StatusForm.CREATE,
+        order: new Order(),
+      },
+      disableClose: true,
+    });
+
+    createDialog.afterClosed().subscribe(
+      result => {
+        this.orderService.getOrderById(result.data).subscribe(
+          createdOrder => {
+            if (createdOrder !== null) {
+              this.orders.push(createdOrder);
+              this.dataSource.data = this.orders;
+            }
+          }
+        );
+      }
+    );
+  }
+
+  viewDetail(order: Order) {
+    const viewDialog = this.dialog.open(CrudOrderComponent, {
+      height: '75%',
+      width: '80%',
+      data: {
+        action: StatusForm.VIEW,
+        order,
+      },
+      disableClose: true,
+    });
+    viewDialog.afterClosed().subscribe(
+      result => {
+        this.fetchOrders();
+      }
+    );
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -70,7 +96,7 @@ export class OrderListComponent implements OnInit {
     }
   }
 
-  fetchCoupons() {
+  fetchOrders() {
     this.orderService.getOrders().subscribe(
       res => {
         this.orders = res;
@@ -79,31 +105,6 @@ export class OrderListComponent implements OnInit {
         this.dataSource.sort = this.sort;
       });
   }
-
-  // createCoupon() {
-  //   const createDialog = this.dialog.open(CrudCouponComponent, {
-  //     height: '75%',
-  //     width: '80%',
-  //     data: {
-  //       action: StatusForm.CREATE,
-  //       order: new Order(),
-  //     },
-  //     disableClose: true,
-  //   });
-
-  //   createDialog.afterClosed().subscribe(
-  //     result => {
-  //       this.orderService.getCouponById(result.data).subscribe(
-  //         createdOrder => {
-  //           if (createdOrder !== null) {
-  //             this.orders.push(createdOrder);
-  //             this.dataSource.data = this.orders;
-  //           }
-  //         }
-  //       );
-  //     }
-  //   );
-  // }
 
 
 }

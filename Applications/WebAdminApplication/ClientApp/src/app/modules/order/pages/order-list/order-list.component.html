@@ -10,34 +10,37 @@
             </mat-form-field>
         </div>
         <div class="user-button">
-            <button mat-raised-button color="primary">Thêm hóa đơn</button>
+            <button mat-raised-button color="primary" (click)="createOrder()">Thêm hóa đơn</button>
         </div>
     </div>
     <div class="user-list">
         <mat-paginator [pageSizeOptions]="[10,20,50]">
         </mat-paginator>
         <table mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="farmer">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nông dân</th>
-                <td mat-cell *matCellDef="let order">{{order.farmerId}}--ID:{{order.farmerId}}</td>
-            </ng-container>
-
             <ng-container matColumnDef="employee">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Nhân viên</th>
-                <td mat-cell *matCellDef="let order">{{order.employeeId}}--ID:{{order.employeeId}}</td>
+                <td mat-cell *matCellDef="let order">{{order.employeeName}}</td>
             </ng-container>
 
-            <ng-container matColumnDef="foodId">
+            <ng-container matColumnDef="farmer">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nông dân</th>
+                <td mat-cell *matCellDef="let order">{{order.farmerName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="foodName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Thức ăn</th>
-                <td mat-cell *matCellDef="let order">{{order.foodId}}</td>
+                <td mat-cell *matCellDef="let order">{{order.foodName}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Số lượng</th>
+                <td mat-cell *matCellDef="let order">{{order.quantity}}</td>
             </ng-container>
 
             <ng-container matColumnDef="createdDate">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày tạo phiếu</th>
                 <td mat-cell *matCellDef="let order">{{order.createdDate | date:'dd/MM/yyyy'}}</td>
             </ng-container>
-
-
 
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef width="7%"></th>
@@ -48,7 +51,7 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns, sticky:true"></tr>
-            <tr mat-row class="table-row" *matRowDef="let order columns: displayedColumns;">
+            <tr mat-row class="table-row" *matRowDef="let order columns: displayedColumns;" (click)="viewDetail(order)">
             </tr>
         </table>
     </div>
