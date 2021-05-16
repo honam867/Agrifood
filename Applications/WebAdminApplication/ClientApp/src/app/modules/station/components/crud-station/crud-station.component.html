@@ -101,6 +101,14 @@
                     <th mat-header-cell *matHeaderCellDef>Dung tích</th>
                     <td mat-cell *matCellDef="let tank">{{tank.quantity}}</td>
                 </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef width="7%"></th>
+                    <td mat-cell *matCellDef="let tank">
+                        <button mat-button (click)="setQuantityZero(tank)">
+                <mat-icon>refresh</mat-icon>
+              </button>
+                    </td>
+                </ng-container>
                 <tr mat-row class="table-row" *matRowDef="let assetCategoryPart; columns: displayedColumnsStorageTank; ">
                 </tr>
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsStorageTank, sticky:true"></tr>

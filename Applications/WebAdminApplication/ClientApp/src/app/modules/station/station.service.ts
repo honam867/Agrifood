@@ -44,6 +44,10 @@ export class StationService {
   getDistrict(): Observable<District[]> {
     return this.http.get(`district`)
   }
+
+  updateTank(tankId: number, updatedTank: StorageTank): Observable<boolean> {
+    return this.http.put(`storagetank/${tankId}`, updatedTank);
+  }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);
   // }
