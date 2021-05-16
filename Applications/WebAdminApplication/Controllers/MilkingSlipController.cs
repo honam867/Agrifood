@@ -56,11 +56,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                
-                if (await _milkingSlipService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _milkingSlipService.CreateMilkingSlipAsync(model, issuer,day,month,year));
             }
             catch (Exception e)
