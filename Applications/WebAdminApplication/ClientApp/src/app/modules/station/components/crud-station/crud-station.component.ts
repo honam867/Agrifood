@@ -1,3 +1,5 @@
+import { MatTableDataSource } from '@angular/material/table';
+import { StorageTank } from './../../../milk/models/storage';
 import { Province } from './../../../province/models/province';
 import { ConfirmationComponent } from './../../../../shared/components/confirmation/confirmation.component';
 import { StatusForm } from './../../../../shared/enum/status-form';
@@ -23,6 +25,9 @@ export class CrudStationComponent implements OnInit {
   station: Station = new Station();
   isView = true;
   provinces: Province[] = [];
+  storageTanks: StorageTank[] =[];
+  filteredProvinces: Province[] =[];
+  filteredDistricts: District[] =[];
   isCreate = true;
   loading: boolean;
   // rolesOfUser: any[];
@@ -30,8 +35,9 @@ export class CrudStationComponent implements OnInit {
   //   userId: 0,
   //   roleName: '',
   // };
-  // dataSource: MatTableDataSource<Role>;
+  storageTankSource: MatTableDataSource<StorageTank>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  displayedColumnsStorageTank: string[] =['name', 'quantity'];
   sourceView: Station = new Station();
   constructor(
     public dialog: MatDialog,
@@ -50,13 +56,33 @@ export class CrudStationComponent implements OnInit {
     this.isView = this.data.action === StatusForm.VIEW;
     this.isCreate = this.data.action === StatusForm.CREATE;
     this.sourceView = Object.assign({}, this.station);
-    this.fetchDistrict();
+    this.fetchProvince();
+    if (!!this.isView) {
+      this.getDistrict(this.sourceView.provinceId);
+      this.getStorageTanks(this.sourceView.id);
+    }
 
   }
 
-  fetchDistrict() {
-    this.stationService.getDistrict().subscribe(result => {
+
+  getDistrict(provinceId) {
+    this.stationService.getDistrictByProvinceId(provinceId).subscribe(result => {
       this.districts = result;
+      this.filteredDistricts = this.districts;
+    });
+  }
+
+  getStorageTanks(milkCollectionStationId: number) {
+    this.stationService.getTanks().subscribe(result => {
+      this.storageTanks = result.filter(tank => tank.milkCollectionStationId == milkCollectionStationId);
+      this.storageTankSource = new MatTableDataSource(this.storageTanks);
+    });
+  }
+
+  fetchProvince() {
+    this.stationService.getProvince().subscribe(result => {
+      this.provinces = result;
+      this.filteredProvinces = this.provinces;
     });
   }
 

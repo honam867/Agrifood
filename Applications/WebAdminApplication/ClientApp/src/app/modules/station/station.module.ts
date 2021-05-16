@@ -5,6 +5,8 @@ import { ListStationComponent } from './pages/list-station/list-station.componen
 import { StationRoutingModule } from './station-routing.modules';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CrudStationComponent } from './components/crud-station/crud-station.component';
+import { MatSelectFilterModule } from 'mat-select-filter';
+
 
 
 
@@ -13,6 +15,7 @@ import { CrudStationComponent } from './components/crud-station/crud-station.com
   imports: [
     CommonModule,
     StationRoutingModule,
+    MatSelectFilterModule,
     SharedModule.forRoot()
   ],
   entryComponents:[CrudStationComponent],
