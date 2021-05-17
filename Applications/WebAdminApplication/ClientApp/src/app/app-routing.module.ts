@@ -7,8 +7,8 @@ import { ContentComponent } from './layout/content/content.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'homepage',
-    pathMatch: 'full'
+    redirectTo: '/dashboard',
+    pathMatch: 'full',
   },
   {
     path: 'error-page',
@@ -24,6 +24,11 @@ const routes: Routes = [
     path: '',
     component: ContentComponent,
     children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/dashboard/dashboard.module').then(mod => mod.DashboardModule)
+      },
       {
         path: 'employee',
         loadChildren: () =>
