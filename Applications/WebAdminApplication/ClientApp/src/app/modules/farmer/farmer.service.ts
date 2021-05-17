@@ -1,3 +1,4 @@
+import { FeedHistoryDetail } from './models/feedHistoryDetail';
 import { FeedHistory } from './models/feedHistory';
 import { ValueObject } from './../../shared/models/value-object';
 import { District } from './../../models/district';
@@ -59,6 +60,9 @@ export class FarmerService {
   }
   getFeedHistoriesByFarmerId(farmerId: number): Observable<FeedHistory[]> {
     return this.http.get(`feedhistory/farmer/${farmerId}`);
+  }
+  getFeedHistoryDetailsByFeedHistoryId(feedHistoryId: number): Observable<FeedHistoryDetail[]> {
+    return this.http.get(`feedhistorydetail/feedhistory/${feedHistoryId}`);
   }
   // getFeedHistories(): Observable<FeedHistory[]> {
   //   return this.http.get(`http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/feedhistory`);
