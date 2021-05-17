@@ -20,7 +20,7 @@ export interface ChildrenItems {
 export const ROUTES: RouteInfo[] = [{
   path: '/dashboard',
   title: 'Thống kê',
-  type: 'link',
+  type:'link',
   icontype: 'insert_chart_outlined'
 },
 {
