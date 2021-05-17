@@ -5,11 +5,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FarmerListComponent } from './pages/farmer-list/farmer-list.component';
 import { CrudFarmerComponent } from './components/crud-farmer/crud-farmer.component';
+import { ViewDetailComponent } from './components/view-detail/view-detail.component';
 
 
 
 @NgModule({
-  declarations: [FarmerListComponent, CrudFarmerComponent],
+  declarations: [FarmerListComponent, CrudFarmerComponent, ViewDetailComponent],
   imports: [
     CommonModule,
     FarmerRoutingModule,

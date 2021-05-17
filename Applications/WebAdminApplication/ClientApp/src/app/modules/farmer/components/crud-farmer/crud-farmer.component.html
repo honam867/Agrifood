@@ -199,7 +199,7 @@
                 </ng-container>
                 <ng-container matColumnDef="action">
                     <th mat-header-cell *matHeaderCellDef width="5%"></th>
-                    <td mat-cell *matCellDef="let detail">
+                    <td mat-cell *matCellDef="let detail" (click)="viewFeedHistoryDetail(detail)">
                         <button mat-button>
                         <mat-icon>search</mat-icon>
                       </button>
