@@ -5,14 +5,14 @@ import { ListStationComponent } from './pages/list-station/list-station.componen
 import { StationRoutingModule } from './station-routing.modules';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CrudStationComponent } from './components/crud-station/crud-station.component';
-
-
+import { MatSelectFilterModule } from 'mat-select-filter';
 
 @NgModule({
   declarations: [ListStationComponent, CrudStationComponent],
   imports: [
     CommonModule,
     StationRoutingModule,
+    MatSelectFilterModule,
     SharedModule.forRoot()
   ],
   entryComponents:[CrudStationComponent],

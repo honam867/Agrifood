@@ -20,7 +20,7 @@ export interface ChildrenItems {
 export const ROUTES: RouteInfo[] = [{
   path: '/dashboard',
   title: 'Thống kê',
-  type: 'link',
+  type:'link',
   icontype: 'insert_chart_outlined'
 },
 {
@@ -111,20 +111,35 @@ export const ROUTES: RouteInfo[] = [{
   icontype: 'format_color_fill'
 },
 {
-  path: '/province',
+  path: '/order',
   type: 'sub',
-  title: 'Địa điểm',
-  collapse: 'province',
+  title: 'Hóa đơn',
+  collapse: 'order',
   children: [
     {
-      path: 'provincelist',
-      title: 'DANH SÁCH TỈNH THÀNH',
+      path: 'orderlist',
+      title: 'DANH SÁCH HÓA ĐƠN',
       type: 'link',
       ab: null
     }
   ],
-  icontype: 'satellite'
+  icontype: 'receipt'
 },
+// {
+//   path: '/province',
+//   type: 'sub',
+//   title: 'Địa điểm',
+//   collapse: 'province',
+//   children: [
+//     {
+//       path: 'provincelist',
+//       title: 'DANH SÁCH TỈNH THÀNH',
+//       type: 'link',
+//       ab: null
+//     }
+//   ],
+//   icontype: 'satellite'
+// },
 {
   path: '/food',
   type: 'sub',

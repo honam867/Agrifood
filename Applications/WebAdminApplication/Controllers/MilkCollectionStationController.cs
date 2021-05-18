@@ -56,10 +56,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _milkCollectionStationService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _milkCollectionStationService.CreateMilkCollectionStationAsync(model, issuer));
             }
             catch (Exception e)

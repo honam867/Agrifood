@@ -36,12 +36,11 @@ namespace ApplicationDomain.BOA.Services
         {
             try
             {
-                DateTime dateMilkingSlip = new DateTime(day, month, year);
-                var code = await AutoGenerateCodeAsync();
-                model.Code = code;
+                DateTime dateMilkingSlip = new DateTime(year, month, day);
                 var entity = _mapper.Map<MilkingSlip>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
-                entity.CreateBy(issuer).CreatedDate = dateMilkingSlip;
+                entity.CreatedDate = dateMilkingSlip;
                 _milkingSlipRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {

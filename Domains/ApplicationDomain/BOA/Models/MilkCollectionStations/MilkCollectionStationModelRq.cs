@@ -15,6 +15,7 @@ namespace ApplicationDomain.BOA.Models.MilkCollectionStations
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public int DistrictId { get; set; }
+        public int ProvinceId { get; set; }
     }
 
     public class MilkCollectionStationModelRqMapper : Profile
@@ -25,11 +26,5 @@ namespace ApplicationDomain.BOA.Models.MilkCollectionStations
             var mapers = CreateMap<MilkCollectionStation, MilkCollectionStationModelRq>();
         }
     }
-    public class MilkCollectionStationModelRqValidator : AbstractValidator<MilkCollectionStationModelRq>
-    {
-        public MilkCollectionStationModelRqValidator()
-        {
-            RuleFor(p => p.Code).NotEmpty();
-        }
-    }
+
 }

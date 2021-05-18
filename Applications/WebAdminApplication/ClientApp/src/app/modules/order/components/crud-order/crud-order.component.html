@@ -1,0 +1,81 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()">
+          <mat-icon style="line-height: 23px;">cancel</mat-icon>
+      </button>
+    </div>
+</div>
+
+<mat-card-title class="card-header text-center" *ngIf="isView">
+    Thông tin hóa đơn
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="isCreate">
+    Tạo hóa đơn
+</mat-card-title>
+<mat-card-title class="card-header text-center" *ngIf="!isView && !isCreate">
+    Chỉnh sửa hóa đơn
+</mat-card-title>
+
+<mat-card>
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Nhân viên</mat-label>
+                    <mat-select [(ngModel)]="sourceView.employeeId" name="employeeId" [disabled]="isView" #employeeId="ngModel">
+                        <mat-option>---</mat-option>
+                        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.fullName }} -- ID:{{employee.id}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Nông dân</mat-label>
+                    <mat-select [(ngModel)]="sourceView.farmerId" name="farmerId" [disabled]="isView" #farmerId="ngModel">
+                        <mat-option>---</mat-option>
+                        <mat-option *ngFor="let farmer of farmers" [value]="farmer.id">{{ farmer.fullName }} -- ID:{{farmer.id}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Thức ăn</mat-label>
+                    <mat-select [(ngModel)]="sourceView.foodId" name="foodId" [disabled]="isView" #foodId="ngModel">
+                        <mat-option>---</mat-option>
+                        <mat-option *ngFor="let food of foods" [value]="food.id">{{ food.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Số lượng</mat-label>
+                    <input id="quantity" [(ngModel)]="sourceView.quantity" name="name" #name="ngModel" matInput placeholder="Số lượng" [disabled]="isView">
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Số lượng không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <!-- <mat-form-field class="input-fluid" appearance="outline">
+          <mat-label>Code</mat-label>
+          <input id="code" [(ngModel)]="sourceView.code" name="code" matInput placeholder="Code" [disabled]="isView">
+      </mat-form-field> -->
+        <div style="margin:0 auto;text-align: center;">
+            <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+              <i class="fas fa-save"></i> Thêm
+          </button>
+        </div>
+    </form>
+    <div style="margin:0 auto;text-align: center;">
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
+              class="fas fa-trash-alt"></i> Xóa</button>
+        <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
+        <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh
+          sửa</button>
+    </div>
+</mat-card>

@@ -1,3 +1,5 @@
+import { ViewDetailComponent } from './../view-detail/view-detail.component';
+import { FeedHistoryDetail } from './../../models/feedHistoryDetail';
 import { FeedHistory } from './../../models/feedHistory';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertComponent } from './../../../../shared/components/alert/alert.component';
@@ -94,6 +96,17 @@ export class CrudFarmerComponent implements OnInit {
     });
   }
 
+  viewFeedHistoryDetail(detail: FeedHistoryDetail){
+    this.dialog.open(ViewDetailComponent, {
+      height: '55%',
+      width: '65%',
+      data: {
+        action: StatusForm.VIEW,
+        detail,
+      },
+      disableClose: true,
+    });
+  }
 
   fetchProvince() {
     this.farmerService.getProvince().subscribe(result => {

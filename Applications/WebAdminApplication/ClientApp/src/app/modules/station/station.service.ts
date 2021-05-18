@@ -1,3 +1,4 @@
+import { StorageTank } from './../milk/models/storage';
 import { Province } from './../province/models/province';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -30,6 +31,9 @@ export class StationService {
   createStation(station: Station) {
     return this.http.post(`milkcollectionstation`, station);
   }
+  getTanks(): Observable<StorageTank[]> {
+    return this.http.get(`storagetank`);
+  }
 
   getProvince(): Observable<Province[]> {
     return this.http.get(`province`)
@@ -39,6 +43,10 @@ export class StationService {
   }
   getDistrict(): Observable<District[]> {
     return this.http.get(`district`)
+  }
+
+  updateTank(tankId: number, updatedTank: StorageTank): Observable<boolean> {
+    return this.http.put(`storagetank/${tankId}`, updatedTank);
   }
   // getRoleByUser(farmerId: number): Observable<Farmer[]> {
   //   return this.http.get(`user/role/${userId}`);

@@ -67,7 +67,10 @@ namespace ApplicationDomain.BOA.Services
                 var entity = await _milkCouponDetailRepository.GetEntityByIdAsync(id);
                 var milkcoupon = await _milkCouponRepository.GetMilkCouponById((int)entity.MilkCouponId).MapQueryTo<MilkCouponModel>(_mapper).FirstOrDefaultAsync();
                 var storageTank = await _storageTankRepository.GetEntityByIdAsync(milkcoupon.StorageTankId);
-                storageTank.Quantity -= entity.Quantity;
+                if (storageTank.Quantity > entity.Quantity)
+                {
+                    storageTank.Quantity -= entity.Quantity;
+                }
                 _storageTankRepository.Update(storageTank);
                 await _uow.SaveChangesAsync();
                 _milkCouponDetailRepository.Delete(entity);

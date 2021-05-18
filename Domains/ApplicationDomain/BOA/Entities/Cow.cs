@@ -20,5 +20,7 @@ namespace ApplicationDomain.BOA.Entities
         public DateTime WeaningDate { set; get; }
         public int FoodSuggestionId { set; get; }
         public FoodSuggestion FoodSuggestion { set; get; }
+        public string Note { get; set; }
+        public int Weight { get; set; }
     }
 }

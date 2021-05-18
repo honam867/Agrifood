@@ -62,10 +62,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _orderService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _orderService.CreateOrderAsync(model, issuer));
             }
             catch (Exception e)
