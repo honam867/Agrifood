@@ -89,7 +89,7 @@ class _FeedCowState extends State<FeedCow> {
           BlocProvider.of<FoodSuggestionBloc>(context)
               .add(FoodLoadedSuccess(widget.cowId));
           final snackBar = SnackBar(content: Text('Gửi thất bại!'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Scaffold.of(context).showSnackBar(snackBar);
         }
       }
     }, builder: (context, state) {
@@ -123,7 +123,7 @@ class _FeedCowState extends State<FeedCow> {
                         children: [
                           Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: ScreenUtil().setHeight(20),
+                                  horizontal: ScreenUtil().setHeight(15),
                                   vertical: ScreenUtil().setWidth(30)),
                               child: ContaineTitleFeed(
                                   title: "Thức ăn thô", showFood: showed)),
@@ -147,7 +147,6 @@ class _FeedCowState extends State<FeedCow> {
                                                       MainAxisAlignment
                                                           .spaceAround,
                                                   children: <Widget>[
-                                                    Icon(Icons.food_bank),
                                                     Text(
                                                         listBoKho[index].name ??
                                                             ''),
@@ -183,7 +182,8 @@ class _FeedCowState extends State<FeedCow> {
                                                 Divider(
                                                   height: ScreenUtil()
                                                       .setHeight(70),
-                                                  thickness: 5,
+                                                  thickness: ScreenUtil()
+                                                      .setHeight(15),
                                                   color: Colors.lightGreen[200],
                                                 ),
                                               ],
@@ -199,7 +199,7 @@ class _FeedCowState extends State<FeedCow> {
                     ? Column(children: [
                         Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setHeight(20),
+                                horizontal: ScreenUtil().setHeight(15),
                                 vertical: ScreenUtil().setWidth(30)),
                             child: ContaineTitleFeed(
                                 title: "Thức ăn tinh", showFood: showed)),
@@ -246,7 +246,8 @@ class _FeedCowState extends State<FeedCow> {
                                           ),
                                           Divider(
                                             height: ScreenUtil().setHeight(70),
-                                            thickness: 5,
+                                            thickness:
+                                                ScreenUtil().setHeight(15),
                                             color: Colors.lightGreen[200],
                                           ),
                                         ],

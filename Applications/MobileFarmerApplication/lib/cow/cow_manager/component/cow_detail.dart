@@ -20,15 +20,15 @@ class CowCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
       child: Container(
         padding: EdgeInsets.symmetric(
             vertical: ScreenUtil().setHeight(40),
             horizontal: ScreenUtil().setWidth(60)),
-        margin: EdgeInsets.only(bottom: 16),
-        width: size.width - 48,
+        margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(60)),
+        // width: size.width - 48,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.0),
