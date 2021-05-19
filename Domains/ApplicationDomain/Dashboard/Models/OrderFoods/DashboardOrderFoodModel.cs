@@ -4,9 +4,10 @@ using System;
 
 namespace ApplicationDomain.Dashboard.Models.MilkingSlips
 {
-    public class MilkingSlipDashboardModel
+    public class DashboardOrderFoodModel
     {
-        public DateTime Day { get; set; }
         public int Quantity { get; set; }
+        public string FoodName { get; set; }
+        public string FoodType { get; set; }
     }
 }
