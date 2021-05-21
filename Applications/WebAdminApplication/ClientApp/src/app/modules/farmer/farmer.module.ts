@@ -1,3 +1,4 @@
+import { MatSelectFilterModule } from 'mat-select-filter';
 import { FarmerService } from './farmer.service';
 import { SharedModule } from './../../shared/shared.module';
 import { FarmerRoutingModule } from './farmer-routing.module';
@@ -14,6 +15,7 @@ import { ViewDetailComponent } from './components/view-detail/view-detail.compon
   imports: [
     CommonModule,
     FarmerRoutingModule,
+    MatSelectFilterModule,
     SharedModule.forRoot()
   ],
   entryComponents:[CrudFarmerComponent],

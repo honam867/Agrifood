@@ -41,6 +41,8 @@ export class CrudFarmerComponent implements OnInit {
     roleName: '',
   };
   provinces: Province[] = [];
+  filteredProvinces: Province[] =[];
+  filteredDistricts: District[] =[];
   byreSource: MatTableDataSource<Byre>;
   byres: Byre[] = [];
   histories: FeedHistory[] =[];
@@ -90,9 +92,10 @@ export class CrudFarmerComponent implements OnInit {
     });
   }
 
-  getDistrict(provinceId: number) {
+  getDistrict(provinceId) {
     this.farmerService.getDistrictByProvinceId(provinceId).subscribe(result => {
       this.districts = result;
+      this.filteredDistricts = this.districts;
     });
   }
 

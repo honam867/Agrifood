@@ -32,7 +32,9 @@
                 <div class="col-lg-6">
                     <mat-form-field class="input-fluid" appearance="outline">
                         <mat-label>Họ Tên</mat-label>
-                        <input id="fullName" [(ngModel)]="sourceView.fullName" name="fullName" matInput placeholder="Họ Tên" [disabled]="isView">
+                        <input id="fullName" [(ngModel)]="sourceView.fullName" name="fullName" #fullName="ngModel" matInput placeholder="Họ Tên" [disabled]="isView">
+                        <mat-error *ngIf="f.submitted && fullName.invalid && fullName.errors.required">Họ tên không được bỏ trống
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -70,12 +72,11 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-
                     <mat-form-field class="input-fluid" appearance="outline">
                         <mat-label>Tỉnh/Thành phố</mat-label>
-                        <mat-select [(ngModel)]="sourceView.provinceId" name="provinceId" [disabled]="isView" #provinceId="ngModel" (selectionChange)="getDistrict(sourceView.provinceId)">
-                            <mat-option>---</mat-option>
-                            <mat-option *ngFor="let province of provinces" [value]="province.id">{{ province.name }}
+                        <mat-select [disableOptionCentering]="true" #select1 [(ngModel)]="sourceView.provinceId" name="provinceId" [disabled]="isView" #provinceId="ngModel" (selectionChange)="getDistrict($event.value)">
+                            <mat-select-filter *ngIf="select1.focused" [array]="provinces" [displayMember]="'name'" (filteredReturn)="filteredProvinces = $event"></mat-select-filter>
+                            <mat-option *ngFor="let province of filteredProvinces" [value]="province.id">{{ province.name }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -83,9 +84,9 @@
                 <div class="col-lg-6">
                     <mat-form-field class="input-fluid" appearance="outline">
                         <mat-label>Quận/huyện</mat-label>
-                        <mat-select [(ngModel)]="sourceView.districtId" name="districtId" [disabled]="isView" #districtId="ngModel">
-                            <mat-option>---</mat-option>
-                            <mat-option *ngFor="let districName of districts" [value]="districName.id">{{ districName.name }}
+                        <mat-select [disableOptionCentering]="true" #select2 [(ngModel)]="sourceView.districtId" name="districtId" [disabled]="isView" #districtId="ngModel">
+                            <mat-select-filter *ngIf="select2.focused" [array]="districts" [displayMember]="'name'" (filteredReturn)="filteredDistricts = $event"></mat-select-filter>
+                            <mat-option *ngFor="let district of filteredDistricts" [value]="district.id">{{ district.name }}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
