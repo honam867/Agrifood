@@ -78,8 +78,8 @@
                 </div>
             </form>
             <div style="margin:0 auto;text-align: center;">
-                <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
-          class="fas fa-trash-alt"></i> Xóa</button>
+                <!-- <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()"><i
+          class="fas fa-trash-alt"></i> Xóa</button> -->
                 <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>
                 <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="!isView && !isCreate" (click)="save()">Lưu thay đổi</button>
                 <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="edit()">Chỉnh sửa</button>
