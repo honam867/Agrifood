@@ -10,9 +10,9 @@ class FarmerInfoModel {
   bool status;
   int userId;
   String userUserName;
-
   bool gender;
   DateTime birthday;
+
 
   FarmerInfoModel({
     this.id,

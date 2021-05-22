@@ -120,40 +120,52 @@ class _FormDetailCowState extends State<FormDetailCow> {
                           builItem(
                               title: "Tên bò: ", string: widget.cowItem.name),
                           Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(15),
                           ),
                           builItem(
                               title: "Id bò cha: ",
                               string: widget.cowItem.fatherId.toString()),
                           Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(15),
                           ),
                           builItem(
                               title: "Id bò mẹ: ",
                               string: widget.cowItem.motherId.toString()),
                           Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(15),
                           ),
                           builItem(
                               title: "Chuồng: ",
-                              string: widget.cowItem.byreName ?? ""),
+                              string: widget.cowItem.byreId.toString()),
                           Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(15),
                           ),
                           builItem(
                               title: "Mã bò: ", string: widget.cowItem.code),
                           Divider(
-                            height: 20,
-                            thickness: 1,
-                            color: Colors.grey,
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
                           ),
                           // builItem(
                           //     title: "thức ăn: ",
@@ -163,11 +175,19 @@ class _FormDetailCowState extends State<FormDetailCow> {
                           //   thickness: 1,
                           //   color: Colors.grey,
                           // ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(15),
+                          ),
                           builItem(
                               title: "Ngày cai sữa: ",
                               string: Formator.convertDatatimeToString(
                                   widget.cowItem.weaningDate ??
                                       DateTime.now())),
+                          Divider(
+                            height: ScreenUtil().setHeight(70),
+                            thickness: ScreenUtil().setHeight(15),
+                            color: Colors.lightGreen[200],
+                          ),
                         ],
                       ),
                     ),
