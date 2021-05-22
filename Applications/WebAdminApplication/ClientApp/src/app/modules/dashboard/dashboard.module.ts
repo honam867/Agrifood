@@ -1,3 +1,4 @@
+import { DashBoardService } from './dashboard.service';
 import { DashBoardRoutingModule } from './dashboard-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     DashBoardRoutingModule,
     SharedModule.forRoot()
-  ]
+  ],
+  providers:[DashBoardService]
 })
 export class DashboardModule { }
