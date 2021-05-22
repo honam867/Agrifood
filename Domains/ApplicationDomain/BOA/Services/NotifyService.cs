@@ -113,10 +113,10 @@ namespace ApplicationDomain.BOA.Services
         public async Task<string> AutoGenerateCodeAsync(string code = "")
         {
             if (code.Equals(""))
-                code = AutoGenerate.AutoGenerateCode(3);
+                code = AutoGenerate.AutoGenerateCode(10);
             if (!await CheckCodeExistsAsync(code))
                 return code;
-            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(3));
+            return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(10));
         }
 
         public async Task<IEnumerable<NotifyModel>> GetNotifyByEmployeeIdAsync(int id)

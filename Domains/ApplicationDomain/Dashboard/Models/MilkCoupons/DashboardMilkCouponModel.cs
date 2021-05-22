@@ -2,9 +2,9 @@
 using AutoMapper;
 using System;
 
-namespace ApplicationDomain.Dashboard.Models.MilkingSlips
+namespace ApplicationDomain.Dashboard.Models.MilkCoupons
 {
-    public class MilkingSlipDashboardModel
+    public class DashboardMilkCouponModel
     {
         public DateTime Day { get; set; }
         public int Quantity { get; set; }

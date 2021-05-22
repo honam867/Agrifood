@@ -4,10 +4,11 @@ using System;
 
 namespace ApplicationDomain.Dashboard.Models.Cows
 {
-    public class CowTotalModel
+    public class DashboardTotalCowModel
     {
         public int TongBo { get; set; }
         public int SinhSan { get; set; }
         public int BoThit { get; set; }
+        public int Be { get; set; }
     }
 }
