@@ -1,5 +1,6 @@
 import 'package:AgrifoodApp/byre/model/breed_item.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,11 +12,12 @@ typedef UpdateByreFuction = void Function(
     BuildContext context, int id, ByreItem byreItem);
 typedef ChangeBreedFuction = void Function(BuildContext context, int value);
 
+
 openPopupAddByre(BuildContext context,
     {AddByreFuction addByreFuction,
     UpdateByreFuction updateByreFuction,
     update = false,
-    ByreItem byreItem,
+    ByreItem byreItem, 
     List<BreedItem> listBreedItem,
     ChangeBreedFuction changeBreedFuction,
     int breedId}) {
@@ -57,14 +59,14 @@ openPopupAddByre(BuildContext context,
                 labelText: 'Mã chuồng',
               ),
             ),
-            TextFormField(
-              controller: _rationController,
-              //validator: (value) => value.isEmpty ? 'Email cannot be blank':null,
-              decoration: InputDecoration(
-                icon: Icon(Icons.grass),
-                labelText: 'Khẩu phần ăn',
-              ),
-            ),
+            // TextFormField(
+            //   controller: _rationController,
+            //   //validator: (value) => value.isEmpty ? 'Email cannot be blank':null,
+            //   decoration: InputDecoration(
+            //     icon: Icon(Icons.grass),
+            //     labelText: 'Khẩu phần ăn',
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -80,7 +82,7 @@ openPopupAddByre(BuildContext context,
                   code: _codeController.text,
                   ration: _rationController.text,
                   quantityCow: 0,
-                  farmerId: 20);
+                  farmerId: 37);
               update == false
                   ? addByreFuction(context, byreItemTree)
                   : updateByreFuction(context, byreItem.id, byreItemTree);

@@ -19,17 +19,23 @@ class SlidableWidget extends StatelessWidget {
     actionPane: SlidableDrawerActionPane(),
     secondaryActions: <Widget>[
       IconSlideAction(
-        caption: 'Thêm',
-        color: Colors.blueGrey,
-        icon: Icons.more_horiz,
+        caption: 'Sửa',
+        color: Colors.blueAccent[100],
+        icon: Icons.update,
         onTap: () => onDismissed(SlidableAction.more),
       ),
       IconSlideAction(
         caption: 'Xóa',
-        color: Colors.redAccent,
+        color: Colors.redAccent[100],
         icon: Icons.delete,
         onTap: () => onDismissed(SlidableAction.delete),
       ),
+      // IconSlideAction(
+      //   caption: 'Đóng',
+      //   color: Colors.grey[300],
+      //   icon: Icons.close,
+      //   onTap: () => onDismissed(SlidableAction.close),
+      // ),
     ],
     );
 }

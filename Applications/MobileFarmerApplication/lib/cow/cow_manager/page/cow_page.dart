@@ -134,6 +134,9 @@ class _CowPageState extends State<CowPage> {
         openPopupDeleteCow(context,
             cowId: cowItem.id, deleteCowFuction: deleteCow);
         break;
+      // case SlidableAction.close:
+      //   // TODO: Handle this case.
+      //   break;
     }
   }
 }
