@@ -16,6 +16,7 @@ namespace ApplicationDomain.BOA.Models.MilkCoupons
         public int StorageTankId { get; set; }
         public string Session { get; set; }
         public int MilkCollectionStationId { get; set; }
+        public int Status { get; set; }
 
     }
     public class MilkCouponModelMapper : Profile

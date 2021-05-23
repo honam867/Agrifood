@@ -44,6 +44,7 @@ namespace ApplicationDomain.BOA.Services
             {
                 var entity = _mapper.Map<MilkCoupon>(model);
                 entity.Code = await AutoGenerateCodeAsync();
+                entity.Status = 0;
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCouponRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
@@ -88,16 +89,6 @@ namespace ApplicationDomain.BOA.Services
 
         public async Task<IEnumerable<MilkCouponModel>> GetMilkCouponAsync()
         {
-            //var milkCoupon = await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
-            //List<MilkCouponModel> result = new List<MilkCouponModel>();
-            //foreach (var mc in milkCoupon)
-            //{
-            //    var tmp = await _employeeRepository.GetEmployeeById(mc.EmployeeId).MapQueryTo<EmployeeModel>(_mapper).FirstOrDefaultAsync();
-
-            //    mc.EmployeeName = tmp.Name;
-            //    result.Add(mc);
-            //}
-            //return result;
             return await _milkCouponRepository.GetMilkCoupons().MapQueryTo<MilkCouponModel>(_mapper).ToListAsync();
         }
 
@@ -143,6 +134,30 @@ namespace ApplicationDomain.BOA.Services
             if (!await CheckCodeExistsAsync(code))
                 return code;
             return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateMilkCouponCode(3));
+        }
+
+        public async Task<bool> UpdateStatusAsync(int id, UserIdentity<int> issuer)
+        {
+            try
+            {
+                var entity = await _milkCouponRepository.GetEntityByIdAsync(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+                entity.Status = 1;
+                entity.UpdateBy(issuer);
+                _milkCouponRepository.Update(entity);
+                if (await _uow.SaveChangesAsync() == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

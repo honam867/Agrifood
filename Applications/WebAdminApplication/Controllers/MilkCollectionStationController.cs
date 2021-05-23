@@ -111,6 +111,29 @@ namespace WebAdminApplication.Controllers
             }
         }
 
+        [Route("status/{id}")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateStatus(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection modelErrors = new Microsoft.AspNetCore.Mvc.ModelBinding.ModelErrorCollection();
+                foreach (var entry in ModelState.Values)
+                    foreach (var error in entry.Errors)
+                        modelErrors.Add(error);
+                return BadRequest(modelErrors);
+            }
+            var issuer = GetCurrentUserIdentity<int>();
+            try
+            {
+                return Ok(await _milkCollectionStationService.UpdateStatusAsync(id, issuer));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [Route("newcode")]
         [HttpGet]
         public async Task<IActionResult> AutoGenerateCodeAsync()

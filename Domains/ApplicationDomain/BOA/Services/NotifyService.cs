@@ -37,6 +37,7 @@ namespace ApplicationDomain.BOA.Services
             {
                 var entity = _mapper.Map<Notify>(model);
                 entity.Code = await AutoGenerateCodeAsync();
+                entity.Status = 0;
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _notifyRepository.Create(entity);
                 return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
@@ -122,6 +123,30 @@ namespace ApplicationDomain.BOA.Services
         public async Task<IEnumerable<NotifyModel>> GetNotifyByEmployeeIdAsync(int id)
         {
             return await _notifyRepository.GetNotifyByEmployeeId(id).MapQueryTo<NotifyModel>(_mapper).ToListAsync();
+        }
+
+        public async Task<bool> UpdateStatusAsync(int id, UserIdentity<int> issuer)
+        {
+            try
+            {
+                var entity = await _notifyRepository.GetEntityByIdAsync(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+                entity.Status = 1;
+                entity.UpdateBy(issuer);
+                _notifyRepository.Update(entity);
+                if (await _uow.SaveChangesAsync() == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

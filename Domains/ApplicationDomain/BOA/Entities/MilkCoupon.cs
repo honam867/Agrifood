@@ -18,6 +18,7 @@ namespace ApplicationDomain.BOA.Entities
         public string Session { get; set; }
         public int MilkCollectionStationId { get; set; }
         public MilkCollectionStation MilkCollectionStation { get; set; }
+        public int Status { get; set; }
 
     }
 }

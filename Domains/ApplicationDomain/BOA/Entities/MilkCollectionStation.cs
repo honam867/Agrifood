@@ -17,6 +17,7 @@ namespace ApplicationDomain.BOA.Entities
         public District District { get; set; }
         public int ProvinceId { get; set; }
         public Province Province { get; set; }
+        public int Status { get; set; }
 
     }
 }
