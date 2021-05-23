@@ -18,5 +18,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> CheckCodeExistsAsync(string code);
         Task<IEnumerable<NotifyModel>> GetNotifyByFarmerIdAsync(int id);
         Task<IEnumerable<NotifyModel>> GetNotifyByEmployeeIdAsync(int id);
+        Task<bool> UpdateStatusAsync(int id, UserIdentity<int> issuer);
     }
 }

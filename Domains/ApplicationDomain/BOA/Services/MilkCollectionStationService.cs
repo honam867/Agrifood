@@ -43,6 +43,7 @@ namespace ApplicationDomain.BOA.Services
             {
                 var entity = _mapper.Map<MilkCollectionStation>(model);
                 entity.Code = await AutoGenerateCodeAsync();
+                entity.Status = 0;
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _milkCollectionStationRepository.Create(entity);
 
@@ -152,6 +153,30 @@ namespace ApplicationDomain.BOA.Services
             if (!await CheckCodeExistsAsync(code))
                 return code;
             return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(10));
+        }
+
+        public async Task<bool> UpdateStatusAsync(int id, UserIdentity<int> issuer)
+        {
+            try
+            {
+                var entity = await _milkCollectionStationRepository.GetEntityByIdAsync(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+                entity.Status = 1;
+                entity.UpdateBy(issuer);
+                _milkCollectionStationRepository.Update(entity);
+                if (await _uow.SaveChangesAsync() == 1)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }

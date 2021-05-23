@@ -17,5 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateMilkCouponAsync(int id, MilkCouponModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
         Task<string> AutoGenerateCodeAsync(string code = "");
+        Task<bool> UpdateStatusAsync(int id, UserIdentity<int> issuer);
     }
 }
