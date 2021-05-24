@@ -1,7 +1,36 @@
 <div id="divChart">
     <mat-card class="m-2">
-        <canvas id="myChart"></canvas>
+        <canvas id="totalCowChart"></canvas>
         <h6 class="text-center">Tổng số bò: <strong>{{sumCow}}</strong></h6>
+    </mat-card>
+
+</div>
+<div id="divChartOrder">
+    <mat-card class="m-2">
+        <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-6">
+                    <mat-form-field class="input-fluid" appearance="outline">
+                        <input matInput [matDatepicker]="picker2" [(ngModel)]="startDate" [ngModelOptions]="{ standalone: true }" />
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6">
+                    <mat-form-field class="input-fluid" appearance="outline">
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="endDate" [ngModelOptions]="{ standalone: true }" />
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div style="margin:0 auto;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit">
+                        Chọn
+                    </button>
+                </div>
+            </div>
+        </form>
+        <canvas id="totalOrderChart"></canvas>
     </mat-card>
 
 </div>
