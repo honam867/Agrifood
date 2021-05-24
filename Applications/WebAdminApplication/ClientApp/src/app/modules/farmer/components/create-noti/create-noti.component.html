@@ -1,0 +1,44 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()">
+        <mat-icon style="line-height: 23px;">cancel</mat-icon>
+    </button>
+    </div>
+</div>
+<mat-card>
+    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && create()" #f="ngForm">
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Nhân viên</mat-label>
+                    <mat-select [(ngModel)]="sourceView.employeeId" name="employeeId" #employeeId="ngModel">
+                        <mat-option>---</mat-option>
+                        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{ employee.fullName }} -- ID:{{employee.id}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Tiêu đề</mat-label>
+                    <input id="name" [(ngModel)]="sourceView.name" name="name" #name="ngModel" matInput placeholder="Tiêu đề">
+                    <mat-error *ngIf="f.submitted && name.invalid && name.errors.required">Tiêu đề không được bỏ trống
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6">
+                <mat-form-field class="input-fluid" appearance="outline">
+                    <mat-label>Nội dung</mat-label>
+                    <input id="content" [(ngModel)]="sourceView.content" name="content" #content="ngModel" matInput placeholder="Nội dung">
+                </mat-form-field>
+            </div>
+        </div>
+        <div style="margin:0 auto;text-align: center;">
+            <button mat-raised-button class="btn btn-outline-success" type="submit" *ngIf="isCreate">
+              <i class="fas fa-save"></i> Thêm
+          </button>
+        </div>
+    </form>
+</mat-card>

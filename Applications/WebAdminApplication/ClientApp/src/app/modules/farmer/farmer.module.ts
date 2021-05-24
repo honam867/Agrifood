@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { FarmerListComponent } from './pages/farmer-list/farmer-list.component';
 import { CrudFarmerComponent } from './components/crud-farmer/crud-farmer.component';
 import { ViewDetailComponent } from './components/view-detail/view-detail.component';
+import { CreateNotiComponent } from './components/create-noti/create-noti.component';
 
 
 
 @NgModule({
-  declarations: [FarmerListComponent, CrudFarmerComponent, ViewDetailComponent],
+  declarations: [FarmerListComponent, CrudFarmerComponent, ViewDetailComponent, CreateNotiComponent],
   imports: [
     CommonModule,
     FarmerRoutingModule,
