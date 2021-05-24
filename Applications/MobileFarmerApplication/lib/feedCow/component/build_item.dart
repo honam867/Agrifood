@@ -68,7 +68,7 @@ class _ContaineTitleFeedState extends State<ContaineTitleFeed>
           text: TextSpan(
               text: widget.title,
               style: GoogleFonts.libreBaskerville(
-                  fontSize: ScreenUtil().setSp(60), color: Colors.black)),
+                  fontSize: 23.0, color: Colors.black)),
         ),
         
         IconButton(

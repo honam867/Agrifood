@@ -23,8 +23,9 @@ class FoodSuggestionSuccess extends MilkingSlipEvent {}
 
 class MilkingSlipAddProcess extends MilkingSlipEvent {
   final MilkingSlipItem milkingSlipItem;
+  final DateTime currentTime;
 
-  const MilkingSlipAddProcess(this.milkingSlipItem);
+  const MilkingSlipAddProcess(this.milkingSlipItem, this.currentTime);
 
   @override
   List<Object> get props => [milkingSlipItem];

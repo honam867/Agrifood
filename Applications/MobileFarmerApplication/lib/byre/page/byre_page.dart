@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
 import 'package:AgrifoodApp/byre/component/byre_detail.dart';
 import 'package:AgrifoodApp/byre/model/breed_item.dart';
@@ -23,6 +25,7 @@ class ListByres extends StatefulWidget {
 
 class _ListByresState extends State<ListByres> {
   ByreRepository byreRepository = new ByreRepository();
+
   List<BreedItem> listBreed = List<BreedItem>();
   int breedId;
   String breedName;
@@ -83,9 +86,6 @@ class _ListByresState extends State<ListByres> {
                   openPopupAddByre(
                     contextHome,
                     addByreFuction: addByreFuction,
-                    //listBreedItem: listBreed,
-                    //changeBreedFuction: changeBreed,
-                    // dropDown: builDropButton(),
                   );
                 });
               },
@@ -94,6 +94,19 @@ class _ListByresState extends State<ListByres> {
         ),
       ),
     );
+  }
+
+  Future<List<ByreItem>> getListByreFunction({List<ByreItem> byreItem}) async {
+    List<ByreItem> listByre = [];
+    List<ByreItem> result = [];
+    listByre.addAll(byreItem);
+    await Future.wait(byreItem.map((e) async {
+      BreedItem breedItem =
+          await byreRepository.getBreedNameByBreedId(breedId: e.breedId);
+      e.breedName = breedItem.name;
+      result.add(e);
+    }));
+    return result;
   }
 
   @override
@@ -119,56 +132,76 @@ class _ListByresState extends State<ListByres> {
         if (state is GetListByre) {
           final ByreModel byreModel = state.byreModel;
 
-          return SafeArea(
-            child: Scaffold(
-              backgroundColor: Colors.lightGreen[200],
-              appBar: AppBar(
-                backgroundColor: Color(0xff9CCC65),
-                title: Text('Quản lí chuồng'),
-                leading: IconButton(
-                  icon: Icon(Icons.navigate_before),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                actions: [
-                  IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () {
-                        typeTrue(context);
-                      }
-                      // {
-                      //   openPopupAddByre(context,
-                      //       addByreFuction: addByreFuction,
-                      //       listBreedItem: listBreed,
-                      //       changeBreedFuction: changeBreed,
-                      //       // dropDown: builDropButton(),
-                      //       breedId: breedId);
-                      // }
-                      )
-                ],
-              ),
-              body: Column(
-                children: <Widget>[
-                  Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
-                    child: ListView.builder(
-                      itemCount: byreModel.byreItem.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final byreItem = byreModel.byreItem[index];
-                        return SlidableWidget(
-                          child: ChapterCard(byreItem: byreItem),
-                          onDismissed: (action) => dismissSlidableItem(
-                              context, index, action, byreItem),
-                        );
-                      },
+          return FutureBuilder<List<ByreItem>>(
+              future: getListByreFunction(byreItem: byreModel.byreItem),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  print(snapshot.data);
+                  return SafeArea(
+                    child: Scaffold(
+                      backgroundColor: Colors.lightGreen[200],
+                      appBar: AppBar(
+                        backgroundColor: Color(0xff9CCC65),
+                        title: Text('Quản lí chuồng'),
+                        leading: IconButton(
+                          icon: Icon(Icons.navigate_before),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        actions: [
+                          IconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                typeTrue(context);
+                              })
+                        ],
+                      ),
+                      body: Column(
+                        children: <Widget>[
+                          Expanded(
+                              child: Padding(
+                            padding: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(50)),
+                            child: ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final byreItem = snapshot.data[index];
+                                return SlidableWidget(
+                                  child: ChapterCard(byreItem: byreItem),
+                                  onDismissed: (action) => dismissSlidableItem(
+                                      context, index, action, byreItem),
+                                );
+                              },
+                            ),
+                          )),
+                        ],
+                      ),
                     ),
-                  )),
-                ],
-              ),
-            ),
-          );
+                  );
+                } else {
+                  return SafeArea(
+                      child: Scaffold(
+                          backgroundColor: Colors.lightGreen[200],
+                          appBar: AppBar(
+                            backgroundColor: Color(0xff9CCC65),
+                            title: Text('Quản lí chuồng'),
+                            leading: IconButton(
+                              icon: Icon(Icons.navigate_before),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            actions: [
+                              IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    typeTrue(context);
+                                  })
+                            ],
+                          )));
+                }
+              });
         }
         return SplashPage();
       },
@@ -183,6 +216,7 @@ class _ListByresState extends State<ListByres> {
             updateByreFuction: updateByreFuction,
             byreItem: byreItem,
             update: true,
+            farmerId: widget.farmerId,
             listBreedItem: listBreed);
         break;
       case SlidableAction.delete:

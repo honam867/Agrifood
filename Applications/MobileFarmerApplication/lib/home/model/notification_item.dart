@@ -1,11 +1,10 @@
-class FarmerInfoModel {
+class NotificationItem {
   int id;
-  String name;
   String code;
-  String fullName;
-  String email;
-  String phoneNumber;
-  String avatarURL;
+  int farmerId;
+  int employeeid;
+  String name;
+  String content;
   String address;
   bool status;
   int userId;
@@ -14,51 +13,47 @@ class FarmerInfoModel {
   bool gender;
   DateTime birthday;
 
-  FarmerInfoModel({
+  NotificationItem({
     this.id,
     this.userId,
-    this.name,
     this.code,
     this.birthday,
     this.address,
     this.gender,
-    this.fullName,
-    this.email,
-    this.userUserName,
-    this.phoneNumber,
-    this.avatarURL,
+    this.farmerId,
+    this.employeeid,
+    this.name,
+    this.content,
     this.status,
   });
 
-  FarmerInfoModel.fromJson(Map<String, dynamic> json) {
+  NotificationItem.fromJson(Map<String, dynamic> json) {
     id = json['Id'];
-    name = json['Name'];
     code = json['Code'];
     address = json['Address'];
     birthday = DateTime.parse(json['Birthday']);
-    fullName = json['FullName'];
+    farmerId = json['FarmerId'];
     userUserName = json['UserUserName'];
     gender = json['Gender'];
-    email = json['Email'];
+    employeeid = json['EmployeeId'];
     userId = json['userId'];
-    phoneNumber = json['PhoneNumber'];
-    avatarURL = json['AvatarURL'];
+    name = json['Name'];
+    content = json['Content'];
     status = json['Status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['Id'] = this.id;
-    data['Name'] = this.name;
-    data['Email'] = this.email;
+    data['EmployeeId'] = this.employeeid;
     data['UserUserName'] = this.userUserName;
     data['Birthday'] = this.birthday;
     data['UserId'] = this.userId;
     data['Address'] = this.address;
     data['Code'] = this.code;
-    data['Fullname'] = this.fullName;
-    data['PhoneNumber'] = this.phoneNumber;
-    data['AvatarURL'] = this.avatarURL;
+    data['FarmerId'] = this.farmerId;
+    data['Name'] = this.name;
+    data['Content'] = this.content;
     data['Status'] = this.status;
     return data;
   }

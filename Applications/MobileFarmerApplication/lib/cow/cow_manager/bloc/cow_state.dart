@@ -42,6 +42,18 @@ class CowLoaded extends CowState {
   String toString() => 'TodosLoadSuccess { todos: $cowModel }';
 }
 
+class GetCowFatherMotherName extends CowState {
+  final CowItem cowItem;
+
+  const GetCowFatherMotherName([this.cowItem]);
+
+  @override
+  List<Object> get props => [cowItem];
+
+  @override
+  String toString() => 'TodosLoadSuccess { todos: $cowItem }';
+}
+
 class CowDeleted extends CowState {
   final String result;
 

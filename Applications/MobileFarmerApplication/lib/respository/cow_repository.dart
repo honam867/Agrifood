@@ -24,6 +24,16 @@ class CowRepository {
     }
   }
 
+  Future<CowItem> getCowById({int cowId }) async {
+    try {
+      Map<String, dynamic> jsonRs = await APIClient.get("api/cow/$cowId");
+      var cowItem = CowItem.fromJson(jsonRs);
+      return cowItem;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<CowModel> getCowByDateMilkingSlip({milkingSlipId}) async {
     try {
       List<dynamic> jsonRs =

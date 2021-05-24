@@ -68,9 +68,9 @@ class MilkingSlipRepository {
     return 0;
   }
 
-  Future<String> addMilkingSlip({MilkingSlipItem milkingSlipItem}) async {
+  Future<String> addMilkingSlip({MilkingSlipItem milkingSlipItem, int day, int month, int year}) async {
     Map rqData = milkingSlipItem.toJson();
-    var rs = await APIClient.post('api/milkingSlip', rqData);
+    var rs = await APIClient.post('api/milkingSlip/$day/$month/$year', rqData);
     if (rs != null) {
       var data = json.decode(rs);
       print(data);

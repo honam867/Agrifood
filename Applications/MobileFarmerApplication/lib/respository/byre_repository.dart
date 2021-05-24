@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:AgrifoodApp/byre/model/breed_item.dart';
 import 'package:AgrifoodApp/byre/model/breed_model.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
@@ -30,6 +31,16 @@ class ByreRepository {
       List<dynamic> jsonRs = await APIClient.getList("api/byre/farmer/");
       ByreModel byreModel = ByreModel.fromJson(jsonRs);
       return byreModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<BreedItem> getBreedNameByBreedId({int breedId}) async {
+    try {
+      Map<String, dynamic> jsonRs = await APIClient.get("api/breed/$breedId");
+      BreedItem breedItem = BreedItem.fromJson(jsonRs);
+      return breedItem;
     } catch (error) {
       throw error;
     }

@@ -28,8 +28,8 @@ class ChapterCard extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: ScreenUtil().setHeight(40),
             horizontal: ScreenUtil().setWidth(60)),
-        margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(60)),
-        // width: size.width - 48,
+        margin: EdgeInsets.only(bottom: 16),
+        width: size.width - 48,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15.0),
@@ -107,6 +107,28 @@ class ChapterCard extends StatelessWidget {
                                 )),
                             TextSpan(
                               text: this.byreItem.code,
+                              style: GoogleFonts.notoSans(
+                                fontSize: ScreenUtil().setSp(60),
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: "Loại bò: ",
+                                style: GoogleFonts.notoSerif(
+                                  fontSize: ScreenUtil().setSp(50),
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            TextSpan(
+                              text: this.byreItem.breedName,
                               style: GoogleFonts.notoSans(
                                 fontSize: ScreenUtil().setSp(60),
                                 color: Colors.black87,

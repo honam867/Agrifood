@@ -25,7 +25,12 @@ class CowPage extends StatefulWidget {
 }
 
 class _CowPageState extends State<CowPage> {
-  CowModel cowModel = new CowModel();
+  List<CowItem> cowModel = [];
+
+  List<CowItem> list = [];
+  TextEditingController _searchQueryController = TextEditingController();
+  bool _isSearching = false;
+  String searchQuery = "Search query";
 
   void addCow(BuildContext context, CowItem cowItem) {
     BlocProvider.of<CowBloc>(context).add(CowAddProcess(cowItem));
@@ -33,6 +38,25 @@ class _CowPageState extends State<CowPage> {
 
   void deleteCow(BuildContext context, int cowId) {
     BlocProvider.of<CowBloc>(context).add(CowDeleteProcess(cowId));
+  }
+
+  onSearchTextChanged(String text) async {
+    List<CowItem> _searchResult = [];
+    list.clear();
+    if (text.isEmpty) {
+      setState(() {});
+      return;
+    }
+
+    cowModel.forEach((cowItem) {
+      if (cowItem.name.toLowerCase().contains(text.toLowerCase())) {
+        _searchResult.add(cowItem);
+      }
+    });
+
+    setState(() {
+      list.addAll(_searchResult);
+    });
   }
 
   @override
@@ -60,20 +84,32 @@ class _CowPageState extends State<CowPage> {
           }
         }
         if (state is CowLoaded) {
-          cowModel = state.cowModel;
+          cowModel = state.cowModel.cowItem;
+          if(_isSearching == false) list.addAll(cowModel);
           return SafeArea(
               child: Scaffold(
             backgroundColor: Colors.lightGreen[200],
             appBar: AppBar(
               backgroundColor: Color(0xff9CCC65),
-              title: Text('Quản lí bò'),
-              leading: IconButton(
-                icon: Icon(Icons.navigate_before),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+              title: _isSearching == false
+                  ? Text('Quản lí bò')
+                  : _buildSearchField(),
+              leading: _isSearching == false
+                  ? IconButton(
+                      icon: Icon(Icons.navigate_before),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  : Container(),
               actions: [
+                IconButton(
+                    icon: Icon(_isSearching == false ? Icons.search : Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        _isSearching = !_isSearching;
+                      });
+                    }),
                 IconButton(
                     icon: Icon(Icons.add),
                     onPressed: () {
@@ -102,10 +138,9 @@ class _CowPageState extends State<CowPage> {
                       child: Padding(
                     padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
                     child: ListView.builder(
-                      // children: [CowCard(), CowCard(), CowCard()],
-                      itemCount: cowModel.cowItem.length,
+                      itemCount: list.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final cowItem = cowModel.cowItem[index];
+                        final cowItem = list[index];
 
                         return SlidableWidget(
                           child: CowCard(cowItem: cowItem),
@@ -125,6 +160,19 @@ class _CowPageState extends State<CowPage> {
     );
   }
 
+  Widget _buildSearchField() {
+    return TextField(
+        controller: _searchQueryController,
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: "Search Data...",
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.white30),
+        ),
+        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        onChanged: (query) => onSearchTextChanged(query));
+  }
+
   void dismissSlidableItem(
       BuildContext context, int index, SlidableAction action, CowItem cowItem) {
     switch (action) {
@@ -134,9 +182,6 @@ class _CowPageState extends State<CowPage> {
         openPopupDeleteCow(context,
             cowId: cowItem.id, deleteCowFuction: deleteCow);
         break;
-      // case SlidableAction.close:
-      //   // TODO: Handle this case.
-      //   break;
     }
   }
 }

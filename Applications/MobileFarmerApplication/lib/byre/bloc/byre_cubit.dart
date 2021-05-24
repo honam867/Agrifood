@@ -1,3 +1,4 @@
+import 'package:AgrifoodApp/byre/model/breed_item.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
@@ -21,8 +22,16 @@ class ByreCubit extends Cubit<ByreState> {
 
   Future<void> getListByreByFarmerId() async {
     try {
-      //emit(WeatherLoading());
+      // List<ByreItem> listByre = [];
+      // List<ByreItem> result = [];
       final ByreModel byre = await _byreRepository.getByreByFarmerId();
+      // listByre.addAll(byre.byreItem);
+      // listByre.forEach((element) async {
+      //   BreedItem breedItem = await _byreRepository.getBreedNameByBreedId(breedId: element.breedId);
+      //   element.breedName = breedItem.name;
+      //   result.add(element);
+      //  });
+      //  ByreModel byreModel = new ByreModel(byreItem: result);
       emit(GetListByre(byre));
     } catch (Exception) {
       emit(Exception("Kiểm tra lại kết nối của bạn"));

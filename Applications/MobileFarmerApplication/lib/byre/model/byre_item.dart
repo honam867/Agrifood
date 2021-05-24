@@ -3,6 +3,7 @@ class ByreItem {
   String code;
   String name;
   int breedId;
+  String breedName;
   int quantityCow;
   int farmerId;
   String ration;
@@ -14,12 +15,14 @@ class ByreItem {
       this.breedId,
       this.quantityCow,
       this.farmerId,
+      this.breedName,
       this.ration});
 
   ByreItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['code'];
     name = json['name'];
+    breedName = json['breedName'];
     breedId = json['breedId'];
     quantityCow = json['quantityCow'];
     farmerId = json['farmerId'];
@@ -32,6 +35,7 @@ class ByreItem {
     data['code'] = this.code;
     data['name'] = this.name;
     data['breedId'] = this.breedId;
+    data['breedName'] = this.breedName;
     data['quantityCow'] = this.quantityCow;
     data['farmerId'] = this.farmerId;
     data['ration'] = this.ration;

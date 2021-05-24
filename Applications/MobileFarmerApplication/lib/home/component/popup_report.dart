@@ -9,8 +9,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PopupReport extends StatelessWidget {
   final farmerId;
+  final routeName;
+  final DateTime currentDay;
 
-  const PopupReport({Key key, this.farmerId}) : super(key: key);
+  const PopupReport({Key key, this.farmerId, this.routeName, this.currentDay}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -118,7 +120,7 @@ class PopupReport extends StatelessWidget {
                     farmerId: farmerId,
                   );
                   BlocProvider.of<MilkingSlipBloc>(context)
-                      .add(MilkingSlipAddProcess(item));
+                      .add(MilkingSlipAddProcess(item, routeName == "History" ? currentDay : DateTime.now()));
                 },
                 child: Text('Chiều'),
                 textColor: Colors.white,
@@ -132,7 +134,7 @@ class PopupReport extends StatelessWidget {
                     farmerId: farmerId,
                   );
                   BlocProvider.of<MilkingSlipBloc>(context)
-                      .add(MilkingSlipAddProcess(item));
+                      .add(MilkingSlipAddProcess(item, routeName == "History" ? currentDay : DateTime.now()));
                 },
                 child: Text('Sáng'),
                 color: Colors.white,

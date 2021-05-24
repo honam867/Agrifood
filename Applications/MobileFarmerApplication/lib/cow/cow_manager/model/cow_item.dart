@@ -3,12 +3,15 @@ class CowItem {
   int byreId;
   String byreName;
   int motherId;
+  String motherName;
   int fatherId;
+  String fatherName;
   String name;
   String qrCode;
   String code;
   DateTime birthday;
   int ageNumber;
+  String status;
   String gender;
   DateTime weaningDate;
   int foodSuggestionId;
@@ -19,6 +22,7 @@ class CowItem {
       this.byreId,
       this.motherId,
       this.byreName,
+      this.status,
       this.fatherId,
       this.name,
       this.qrCode,
@@ -27,6 +31,8 @@ class CowItem {
       this.ageNumber,
       this.gender,
       this.weaningDate,
+      this.fatherName,
+      this.motherName,
       this.foodSuggestionId,
       this.foodSuggestionItem});
 
@@ -36,6 +42,9 @@ class CowItem {
     byreName = json['byreName'];
     motherId = json['motherId'];
     fatherId = json['fatherId'];
+    fatherName = json['fatherName'];
+    status = json['status'];
+    motherName = json['motherName'];
     name = json['name'];
     qrCode = json['qrCode'];
     code = json['code'];
@@ -57,6 +66,9 @@ class CowItem {
     data['name'] = this.name;
     data['qrCode'] = this.qrCode;
     data['code'] = this.code;
+    data['fatherName'] = this.fatherName;
+    data['status'] = this.status;
+    data['motherName'] = this.motherName;
     data['birthday'] = this.birthday.toIso8601String();
     data['ageNumber'] = this.ageNumber;
     data['gender'] = this.gender;

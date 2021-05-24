@@ -17,6 +17,18 @@ class GetCowByByreId extends CowEvent {
 }
 
 class GetCowByFarmerId extends CowEvent {
+  final String query;
+
+  GetCowByFarmerId({this.query});
+  @override
+  List<Object> get props => [];
+}
+
+class GetCowByCowId extends CowEvent {
+  final CowItem cowItem;
+  final String query;
+
+GetCowByCowId({this.cowItem, this.query});
   @override
   List<Object> get props => [];
 }
