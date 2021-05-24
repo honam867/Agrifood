@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class FloatingButtonMiking extends StatefulWidget {
+  final DateTime dateTime;
+
+  const FloatingButtonMiking({Key key, this.dateTime}) : super(key: key);
   @override
   _FloatingButtonMikingState createState() => _FloatingButtonMikingState();
 }
@@ -33,6 +36,8 @@ class _FloatingButtonMikingState extends State<FloatingButtonMiking> {
             builder:(context) =>  BlocProvider<MilkingSlipBloc>(
               create: (_) => MilkingSlipBloc()..add(MilkingSlipLoadedSucces()),
               child: PopupReport(
+                currentDay: widget.dateTime,
+                routeName: 'History',
                 farmerId: farmerId,
               ),
             ),

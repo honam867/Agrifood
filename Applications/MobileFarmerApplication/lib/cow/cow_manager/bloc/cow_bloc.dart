@@ -39,13 +39,41 @@ class CowBloc extends Bloc<CowEvent, CowState> {
       yield* _mapGetCowByByreIdState(event);
     } else if (event is GetCowByFarmerId) {
       yield* _mapGetCowByFarmerIdState(event);
+    } else if (event is GetCowByCowId) {
+      yield* _mapGetCowByCowByIdState(event);
+    }
+  }
+
+  Stream<CowState> _mapGetCowByCowByIdState(GetCowByCowId event) async* {
+    try {
+      final father = await this.cowRepository.getCowById(
+          cowId: event.cowItem.fatherId == 0 || event.cowItem.fatherId == null
+              ? 91
+              : event.cowItem.fatherId);
+      final mother = await this.cowRepository.getCowById(
+          cowId: event.cowItem.motherId == 0 || event.cowItem.motherId == null
+              ? 91
+              : event.cowItem.motherId);
+      event.cowItem.fatherName = father.name;
+      event.cowItem.motherName = mother.name;
+
+      yield GetCowFatherMotherName(event.cowItem);
+    } catch (_) {
+      yield CowError();
     }
   }
 
   Stream<CowState> _mapCowLoadedToState() async* {
     try {
+      List<CowItem> list = [];
+      CowModel cowModelList = new CowModel();
       final cowModel = await this.cowRepository.getAllCow();
-      yield CowLoaded(cowModel);
+      cowModel.cowItem.forEach((element) async {
+        final cowItem = await this.cowRepository.getCowById(cowId: element.id);
+        list.add(cowItem);
+      });
+      cowModelList = CowModel(cowItem: list);
+      yield CowLoaded(cowModelList);
     } catch (_) {
       yield CowError();
     }
@@ -63,14 +91,31 @@ class CowBloc extends Bloc<CowEvent, CowState> {
 
   Stream<CowState> _mapGetCowByFarmerIdState(GetCowByFarmerId event) async* {
     try {
-      //var farmerId = await Storage.getString("farmerId");
-      final cowModel = await this
-          .cowRepository
-          .getCowByFatmerId();
+      CowModel cowModel = await this.cowRepository.getCowByFatmerId();
+      // CowModel list = cowModel;
+      // list.cowItem.forEach((cowItem) {
+      //   if (cowItem.name.contains(event.query ?? "") ||
+      //       cowItem.code.contains(event.query ?? "")) {
+      //         list.cowItem.add(cowItem);
+      //       }
+      // });
+
       yield CowLoaded(cowModel);
     } catch (_) {
       yield CowError();
     }
+  }
+
+  Future<String> getCowFather(CowItem element) async {
+    CowItem father =
+        await this.cowRepository.getCowById(cowId: element.fatherId == 0 ?? 91);
+    return father.name;
+  }
+
+  Future<String> getCowMother(CowItem element) async {
+    CowItem mother =
+        await this.cowRepository.getCowById(cowId: element.motherId == 0 ?? 91);
+    return mother.name;
   }
 
   Stream<CowState> _mapTodoAddedToState(CowAddProcess event) async* {
@@ -100,7 +145,6 @@ class CowBloc extends Bloc<CowEvent, CowState> {
 
   Stream<CowState> _mapFoodSuggestionLoadInprocessToState() async* {
     try {
-      
       final foodSuggestionModel =
           await this.foodSuggestionRepository.getAllFoodSuggestion();
       final byreModel = await this.foodSuggestionRepository.getByreByFarmer();

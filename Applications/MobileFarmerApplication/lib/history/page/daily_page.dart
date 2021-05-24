@@ -1,14 +1,21 @@
 import 'dart:io';
+import 'package:AgrifoodApp/core/storage.dart';
+import 'package:AgrifoodApp/history/bloc/call_bloc.dart';
 import 'package:AgrifoodApp/history/bloc/history_bloc.dart';
 import 'package:AgrifoodApp/history/component/colors.dart';
 import 'package:AgrifoodApp/history/component/custom_splash.dart';
+import 'package:AgrifoodApp/history/component/datepicker_custom.dart';
+import 'package:AgrifoodApp/history/component/datepicker_startday.dart';
 import 'package:AgrifoodApp/history/component/floating_button.dart';
+import 'package:AgrifoodApp/history/component/icon.dart';
+import 'package:AgrifoodApp/history/component/item_feed_history.dart';
 import 'package:AgrifoodApp/history/component/item_history.dart';
+import 'package:AgrifoodApp/history/component/title_tab.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart' as prefix;
+import 'package:flutter_cmoon_icons/flutter_cmoon_icons.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final String defaultLocale = Platform.localeName;
@@ -21,12 +28,15 @@ class DailyPage extends StatefulWidget {
 class _DailyPageState extends State<DailyPage>
     with AutomaticKeepAliveClientMixin {
   var top = 0.0;
+  bool isFood = false;
   ScrollController _scrollController = new ScrollController();
+  CallBloc callBloc = new CallBloc();
   final _formKey = new GlobalKey<FormState>();
   int indexTab = 0;
   bool lastStatus = true;
   prefix.DatePickerController _controller = prefix.DatePickerController();
   double offset = 0.0;
+  int farmerId;
   _scrollListener() {
     if (isShrink != lastStatus) {
       setState(() {
@@ -43,15 +53,6 @@ class _DailyPageState extends State<DailyPage>
     }
   }
 
-  void refeshList({DateTime getDate, int session}) {
-    BlocProvider.of<HistoryBloc>(context)
-      ..add(HistoryLoadedSucces(
-          day: getDate.day,
-          month: getDate.month,
-          year: getDate.year,
-          session: session));
-  }
-
   bool get isShrink {
     return _scrollController.hasClients &&
         _scrollController.offset > (205 - kToolbarHeight);
@@ -62,9 +63,21 @@ class _DailyPageState extends State<DailyPage>
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.animateToDate(selectedValue);
+      getFarmerId();
     });
     _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  void changeDateFuction(DateTime date) {
+    setState(() {
+      selectStartDate = date;
+    });
+  }
+
+  void getFarmerId() async {
+    farmerId = int.parse(await Storage.getString('farmerId'));
+    print(farmerId);
   }
 
   @override
@@ -79,36 +92,48 @@ class _DailyPageState extends State<DailyPage>
     current.year,
     current.month - 1,
   );
-
-  static int daysInEnd(DateTime date) {
-    var firstDayThisMonth = new DateTime(date.year, date.month, date.day);
-    var firstDayNextMonth =
-        new DateTime(current.year, current.month, current.day + 1);
-    print(firstDayNextMonth.difference(firstDayThisMonth).inDays);
-    return firstDayNextMonth.difference(firstDayThisMonth).inDays;
+  void refeshList({DateTime getDate, int session, bool isFood}) {
+    BlocProvider.of<HistoryBloc>(context)
+      ..add(HistoryLoadedSucces(
+          day: getDate.day,
+          month: getDate.month,
+          year: getDate.year,
+          session: session,
+          isFood: isFood,
+          farmerId: farmerId));
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return DefaultTabController(
         initialIndex: 0,
         length: 2,
         child: SafeArea(
           child: Scaffold(
-              floatingActionButton: FloatingButtonMiking(),
+              floatingActionButton: FloatingButtonMiking(dateTime: selectedValue ?? DateTime.now(),),
               backgroundColor: Colors.green[100],
-              body: BlocBuilder<HistoryBloc, HistoryState>(
+              body: BlocConsumer<HistoryBloc, HistoryState>(
+                listener: (context, state) {
+                  if (state is HistoryButtonClick) {
+                    BlocProvider.of<HistoryBloc>(context)
+                      ..add(HistoryLoadedSucces(
+                          day: state.day,
+                          month: state.month,
+                          year: state.year,
+                          session: state.session,
+                          isFood: state.isFood,
+                          farmerId: state.farmerId));
+                  }
+                },
                 builder: (context, state) {
                   return CustomScrollView(
                       controller: _scrollController,
                       slivers: <Widget>[
                         SliverAppBar(
                             leading: IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.black,
-                              ),
+                              icon: IconDart.iconBack,
                               onPressed: () => Navigator.pop(context),
                             ),
                             title: Row(
@@ -116,37 +141,26 @@ class _DailyPageState extends State<DailyPage>
                               children: [
                                 title(),
                                 IconButton(
-                                  icon: Icon(
-                                    Icons.calendar_today,
-                                    color: Colors.black,
-                                  ),
-                                  onPressed: () {
-                                    DatePicker.showDatePicker(context,
-                                        showTitleActions: true,
-                                        minTime: DateTime(current.year - 1,
-                                            current.month - 2, current.day),
-                                        maxTime: DateTime(current.year,
-                                            current.month - 1, 30),
-                                        theme: DatePickerTheme(
-                                            headerColor: Colors.transparent,
-                                            backgroundColor: Colors.white,
-                                            itemStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                            doneStyle: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 16)),
-                                        onChanged: (date) {},
-                                        onConfirm: (date) {
+                                    icon: CIcon(
+                                      isFood == true ? IconMoon.icon_baidu : IconMoon.icon_about_dot_me,
+                                      color: Colors.orangeAccent,
+                                      //size: 20,
+                                    ),
+                                    onPressed: () {
                                       setState(() {
-                                        selectStartDate = date;
+                                        isFood = !isFood;
+                                        BlocProvider.of<HistoryBloc>(context)
+                                          ..add(OnClickFetchList(
+                                              day: selectedValue.day,
+                                              month: selectedValue.month,
+                                              year: selectedValue.year,
+                                              session: indexTab,
+                                              isFood: isFood,
+                                              farmerId: farmerId));
                                       });
-                                    },
-                                        currentTime: DateTime.now(),
-                                        locale: LocaleType.vi);
-                                  },
-                                )
+                                    }),
+                                DatePickerStartDay(
+                                    changeDateCallback: changeDateFuction)
                               ],
                             ),
                             pinned: true,
@@ -156,10 +170,17 @@ class _DailyPageState extends State<DailyPage>
                               preferredSize: Size.fromHeight(50),
                               child: TabBar(
                                 onTap: (int index) {
-                                  indexTab = index == 0 ? 0 : 1;
-                                  refeshList(
-                                      getDate: selectedValue,
-                                      session: indexTab);
+                                  setState(() {
+                                    indexTab = index == 0 ? 0 : 1;
+                                    BlocProvider.of<HistoryBloc>(context)
+                                      ..add(OnClickFetchList(
+                                          day: selectedValue.day,
+                                          month: selectedValue.month,
+                                          year: selectedValue.year,
+                                          session: indexTab,
+                                          isFood: isFood,
+                                          farmerId: farmerId));
+                                  });
                                 },
                                 labelColor: Colors.black87,
                                 tabs: [
@@ -201,24 +222,34 @@ class _DailyPageState extends State<DailyPage>
                                                   key: _formKey,
                                                   selectionColor: Colors.blue,
                                                   controller: _controller,
-                                                  daysCount: daysInEnd(
-                                                              selectStartDate) ==
+                                                  daysCount: callBloc.daysInEnd(
+                                                              selectStartDate,
+                                                              current) ==
                                                           0
                                                       ? 30
-                                                      : daysInEnd(
-                                                          selectStartDate),
+                                                      : callBloc.daysInEnd(
+                                                          selectStartDate,
+                                                          current),
                                                   initialSelectedDate:
                                                       DateTime.now(),
                                                   onDateChange: (date) {
                                                     setState(() {
                                                       this.selectedValue = date;
-                                                      _controller
-                                                          .animateToDate(date);
-                                                      refeshList(
-                                                          getDate:
-                                                              selectedValue,
-                                                          session: indexTab);
                                                     });
+                                                    BlocProvider.of<
+                                                        HistoryBloc>(context)
+                                                      ..add(OnClickFetchList(
+                                                          day:
+                                                              selectedValue.day,
+                                                          month: selectedValue
+                                                              .month,
+                                                          year: selectedValue
+                                                              .year,
+                                                          session: indexTab,
+                                                          isFood: isFood,
+                                                          farmerId: farmerId));
+                                                    _controller
+                                                        .animateToDate(date);
                                                   },
                                                 ),
                                               ],
@@ -235,20 +266,19 @@ class _DailyPageState extends State<DailyPage>
                         SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index1) {
-                              if (state is HistoryLoadInprocess) {
-                                BlocProvider.of<HistoryBloc>(context)
-                                  ..add(HistoryLoadedSucces(
-                                      day: current.day,
-                                      month: current.month,
-                                      year: current.year,
-                                      session: 0));
-                              }
+                              if (state is HistoryLoadInprocess)
+                                callBloc.callHistoryAddedNonStatic(
+                                    context: context,
+                                    current: current,
+                                    isFood: isFood);
                               if (state is HistoryLoading) {
                                 return CustomSplashPage();
                               }
                               if (state is HistoryLoaded) {
-                                var list =
-                                    state.historyModel.milkingSlipDetaiItem;
+                                var list = isFood == false
+                                    ? state.historyModel.milkingSlipDetaiItem
+                                    : state.feedHistoryModel.feedHistoryItem;
+                                print(state);
                                 return list.length > 0
                                     ? SingleChildScrollView(
                                         child: Column(
@@ -262,9 +292,13 @@ class _DailyPageState extends State<DailyPage>
                                                 itemCount: list.length,
                                                 itemBuilder: (context, index) {
                                                   return ListTile(
-                                                    title: ItemHistory(
-                                                      list: list[index],
-                                                    ),
+                                                    title: isFood == false
+                                                        ? ItemHistory(
+                                                            list: list[index],
+                                                          )
+                                                        : ItemFoodHistory(
+                                                            list: list[index],
+                                                          ),
                                                   );
                                                 },
                                               ),

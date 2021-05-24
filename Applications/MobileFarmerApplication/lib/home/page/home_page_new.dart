@@ -8,6 +8,7 @@ import 'package:AgrifoodApp/home/component/custom_clippath.dart';
 import 'package:AgrifoodApp/home/component/dashboard.dart';
 import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
 import 'package:AgrifoodApp/home/component/floatingbar.dart';
+import 'package:AgrifoodApp/home/component/notification.dart';
 import 'package:AgrifoodApp/home/component/total_cow_page.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
@@ -203,8 +204,12 @@ class _MyHomePageState extends State<MyHomePage>
                 onPressed: () {},
               ),
               IconButton(
-                icon: Icon(Icons.add, color: Colors.black),
-                onPressed: () {},
+                icon: Icon(Icons.notification_important,color: Colors.black),
+                onPressed: () {
+                  showDialog(context: context, builder: (context){
+                    return Dialog(child: PopupNotification());
+                  });
+                },
               )
             ],
           ),

@@ -10,15 +10,33 @@ abstract class HistoryState extends Equatable {
 
 class HistoryError extends HistoryState {}
 
+class HistoryButtonClick extends HistoryState {
+  final int day;
+  final int month;
+  final int year;
+  final int session;
+  final bool isFood;
+  final int farmerId;
+
+  HistoryButtonClick(
+      {this.day,
+      this.month,
+      this.year,
+      this.session,
+      this.isFood,
+      this.farmerId});
+      @override
+  List<Object> get props => [day, month, year, session, isFood, farmerId];
+}
+
 class HistoryLoadInprocess extends HistoryState {}
 
 class FoodSuggestionLoadInprocess extends HistoryState {}
 
-
 class HistoryLoaded extends HistoryState {
   final MilkingSlipDetailModel historyModel;
-
-  const HistoryLoaded([this.historyModel]);
+  final FeedHistoryModel feedHistoryModel;
+  const HistoryLoaded({this.historyModel, this.feedHistoryModel});
 
   @override
   List<Object> get props => [historyModel];

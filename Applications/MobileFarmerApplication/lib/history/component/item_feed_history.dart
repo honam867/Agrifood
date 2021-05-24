@@ -1,20 +1,21 @@
-import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cmoon_icons/flutter_cmoon_icons.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/screen_util.dart';
 
 import 'colors.dart';
+import 'icon.dart';
 
-class ItemHistory extends StatefulWidget {
-  final MilkingSlipDetailItem list;
+class ItemFoodHistory extends StatefulWidget {
+  final FeedHistoryItem list;
 
-  const ItemHistory({Key key, this.list}) : super(key: key);
+  const ItemFoodHistory({Key key, this.list}) : super(key: key);
   @override
-  _ItemHistoryState createState() => _ItemHistoryState();
+  _ItemFoodHistoryState createState() => _ItemFoodHistoryState();
 }
 
-class _ItemHistoryState extends State<ItemHistory> {
+class _ItemFoodHistoryState extends State<ItemFoodHistory> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -44,7 +45,7 @@ class _ItemHistoryState extends State<ItemHistory> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.list.cowName ?? "",
+                          widget.list.cowId.toString() ?? "",
                           style: TextStyle(
                               fontSize: ScreenUtil().setSp(60),
                               color: black,
@@ -54,11 +55,11 @@ class _ItemHistoryState extends State<ItemHistory> {
                         SizedBox(height: ScreenUtil().setHeight(2)),
                         RichText(
                           text: TextSpan(
-                            text: 'Ghi chú: ',
+                            text: 'Mã: ',
                             style: TextStyle(fontSize: 15, color: Colors.black),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: widget.list.note,
+                                  text: widget.list.code,
                                   style: TextStyle(
                                       fontSize: ScreenUtil().setSp(50),
                                       color: black.withOpacity(0.5),
@@ -77,19 +78,7 @@ class _ItemHistoryState extends State<ItemHistory> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                        text: widget.list.quantity.toString(),
-                        style: GoogleFonts.lato(color: Colors.redAccent, fontSize: 20),
-                        children: [
-                          TextSpan(
-                              text: " Kg",
-                              style: GoogleFonts.lato(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontStyle: FontStyle.italic))
-                        ]),
-                  )
+                  IconButton(icon: IconDart.iconBack, onPressed: (){})
                 ],
               ),
             )
@@ -106,4 +95,5 @@ class _ItemHistoryState extends State<ItemHistory> {
     );
   }
 }
+
 

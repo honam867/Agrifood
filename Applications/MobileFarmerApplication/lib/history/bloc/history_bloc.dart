@@ -1,4 +1,6 @@
 import 'package:AgrifoodApp/core/storage.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_model.dart';
+import 'package:AgrifoodApp/history/model/day_month.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_model.dart';
@@ -27,30 +29,63 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       yield* _mapGetHistoryByByreIdState(event);
     } else if (event is GetHistoryByFarmerId) {
       yield* _mapGetHistoryByFarmerIdState(event);
+    } else if (event is OnClickFetchList) {
+      yield* _mapOnClickState(event);
     }
   }
 
+  Stream<HistoryState> _mapOnClickState(
+      OnClickFetchList event) async* {
+    try {
+      yield HistoryButtonClick(
+        day: event.day,
+        farmerId: event.farmerId,
+        isFood: event.isFood,
+        month: event.month, 
+        session: event.session,
+        year: event.year
+      );
+    } catch (_) {
+      yield HistoryError();
+    }
+  }
+
+
   Stream<HistoryState> _mapHistoryLoadedToState(
       HistoryLoadedSucces event) async* {
-    yield HistoryLoading();
+    //yield HistoryLoading();
     try {
-      MilkingSlipRepository milkingSlipRepository = new MilkingSlipRepository();
-      final mikingSlipId =
-          await milkingSlipRepository.getMilkingSlipByDateAsync(
-              day: event.day,
-              month: event.month,
-              year: event.year,
-              session: event.session ?? 0);
+      if (event.isFood == false) {
+        MilkingSlipRepository milkingSlipRepository =
+            new MilkingSlipRepository();
+        final mikingSlipId =
+            await milkingSlipRepository.getMilkingSlipByDateAsync(
+                day: event.day,
+                month: event.month,
+                year: event.year,
+                session: event.session ?? 0);
 
-      if (mikingSlipId != null) {
-        final milkingSlipDetailItem =
-            await milkingSlipRepository.getMilkingSlipDetailByMilkingSlipId(
-                milkingSlipId: mikingSlipId.id);
-        yield HistoryLoaded(milkingSlipDetailItem);
-      } else {
-        yield HistoryLoaded(null);
+        if (mikingSlipId != null) {
+          final milkingSlipDetailItem =
+              await milkingSlipRepository.getMilkingSlipDetailByMilkingSlipId(
+                  milkingSlipId: mikingSlipId.id);
+          yield HistoryLoaded(historyModel: milkingSlipDetailItem);
+        }
+      } else if (event.isFood == true) {
+        FoodSuggestionRepository foodSuggestionRepository =
+            new FoodSuggestionRepository();
+        final listFeedHistory =
+            await foodSuggestionRepository.getFeedHistoryMaster(
+                day: event.day,
+                month: event.month,
+                year: event.year,
+                farmerId: event.farmerId);
+        if (listFeedHistory != null) {
+          yield HistoryLoaded(feedHistoryModel: listFeedHistory);
+        } else {
+          yield HistoryLoaded(feedHistoryModel: null);
+        }
       }
-      print(mikingSlipId);
     } catch (_) {
       yield HistoryError();
     }
@@ -71,8 +106,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       GetHistoryByFarmerId event) async* {
     try {
       //  var farmerId = await Storage.getString("farmerId");
-      
-       
+
       // final historyModel =
       //     await this.historyRepository.getHistoryByFatmerId(farmerId: int.parse(farmerId));
       // yield HistoryLoaded(historyModel);

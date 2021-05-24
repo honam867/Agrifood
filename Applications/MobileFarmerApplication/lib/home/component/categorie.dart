@@ -92,38 +92,38 @@ class CategoriesScroller extends StatelessWidget {
                   ),
                 ),
               ),
-              // Container(
-              //   width: ScreenUtil().setWidth(450.0),
-              //   margin: EdgeInsets.only(right: ScreenUtil().setWidth(20.0)),
-              //   height: categoryHeight,
-              //   decoration: BoxDecoration(
-              //       color: Colors.lightBlueAccent.shade400,
-              //       borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setSp(40.0)))),
-              //   child: Padding(
-              //     padding: EdgeInsets.all(ScreenUtil().setSp(60.0)),
-              //     child: Column(
-              //       crossAxisAlignment: CrossAxisAlignment.center,
-              //       children: <Widget>[
-              //         Text(
-              //           "Super", //saving
-              //           style: TextStyle(
-              //               fontSize: ScreenUtil().setSp(90.0),
-              //               color: Colors.white,
-              //               fontWeight: FontWeight.bold),
-              //         ),
-              //         SizedBox(
-              //           height: ScreenUtil().setHeight(50.0),
-              //         ),
-              //         Text(
-              //           "20", //items
-              //           style: TextStyle(fontSize: ScreenUtil().setSp(200.0), 
-              //           color: Colors.white,
-              //           fontWeight: FontWeight.bold),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
+              Container(
+                width: ScreenUtil().setWidth(450.0),
+                margin: EdgeInsets.only(right: ScreenUtil().setWidth(20.0)),
+                height: categoryHeight,
+                decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent.shade400,
+                    borderRadius: BorderRadius.all(Radius.circular(ScreenUtil().setSp(40.0)))),
+                child: Padding(
+                  padding: EdgeInsets.all(ScreenUtil().setSp(60.0)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "Super", //saving
+                        style: TextStyle(
+                            fontSize: ScreenUtil().setSp(90.0),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(50.0),
+                      ),
+                      Text(
+                        "20", //items
+                        style: TextStyle(fontSize: ScreenUtil().setSp(200.0), 
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

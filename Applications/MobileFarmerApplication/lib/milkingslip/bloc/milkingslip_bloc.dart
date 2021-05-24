@@ -74,17 +74,20 @@ class MilkingSlipBloc extends Bloc<MilkingSlipEvent, MilkingSlipState> {
       MilkingSlipAddProcess event) async* {
     final MilkingSlipRepository milkingSlipRepository =
         new MilkingSlipRepository();
-    final DateTime current = new DateTime.now();
+    // final DateTime current = new DateTime.now();
     try {
       var checkCreate = await milkingSlipRepository.getMilkingSlipByDateAsync(
-          day: current.day,
-          month: current.month,
-          year: current.year,
+          day: event.currentTime.day,
+          month: event.currentTime.month,
+          year: event.currentTime.year,
           session: event.milkingSlipItem.session == "Sáng" ? 0 : 1);
       CowRepository cowRepository = new CowRepository();
 
       if (checkCreate.id == -1) {
         var result = await milkingSlipRepository.addMilkingSlip(
+            day: event.currentTime.day,
+            month: event.currentTime.month,
+            year: event.currentTime.year,
             milkingSlipItem: event.milkingSlipItem);
         if (result != "0") {
           yield AddMilkingSlipDoneLoaded(milkingSlipId: int.parse(result));

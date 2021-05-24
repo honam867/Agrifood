@@ -19,7 +19,6 @@ class TotalCowPage extends StatefulWidget {
   final categoryHeight;
   final topContainer;
   final cowLength;
-  final byreLength;
   final controller;
 
   const TotalCowPage(
@@ -29,8 +28,7 @@ class TotalCowPage extends StatefulWidget {
       this.categoryHeight,
       this.topContainer,
       this.cowLength,
-      this.controller,
-      this.byreLength})
+      this.controller})
       : super(key: key);
   @override
   _TotalCowPageState createState() => _TotalCowPageState();
@@ -109,11 +107,11 @@ class _TotalCowPageState extends State<TotalCowPage> {
           return Container(
               height: widget.size.height,
               child: Column(children: <Widget>[
-                SizedBox(
-                  height: ScreenUtil().setHeight(20),
+                const SizedBox(
+                  height: 10,
                 ),
                 AnimatedOpacity(
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   opacity: widget.closeTopContainer ? 0 : 1,
                   child: AnimatedContainer(
                       duration: const Duration(milliseconds: 200),
@@ -122,7 +120,7 @@ class _TotalCowPageState extends State<TotalCowPage> {
                       height:
                           widget.closeTopContainer ? 0 : widget.categoryHeight,
                       child: CategoriesScroller(
-                        byreLength: responseListByre.length,
+                        byreLength: 1,
                         cowLength: responseList.length,
                       )),
                 ),
@@ -132,7 +130,7 @@ class _TotalCowPageState extends State<TotalCowPage> {
                         itemCount: responseList.length,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          double scale = ScreenUtil().setSp(3.5);
+                          double scale = 1.0;
                           if (widget.topContainer > 0.5) {
                             scale = index + 0.5 - widget.topContainer;
                             if (scale < 0) {

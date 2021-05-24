@@ -4,6 +4,7 @@ import 'package:AgrifoodApp/core/storage.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/feedCow/model/feed_history_detail_item.dart';
 import 'package:AgrifoodApp/feedCow/model/feed_history_item.dart';
+import 'package:AgrifoodApp/feedCow/model/feed_history_model.dart';
 import 'package:AgrifoodApp/feedCow/model/food_model.dart';
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
@@ -22,18 +23,16 @@ class FoodSuggestionRepository {
     }
   }
 
-   Future<FoodModel> getAllFood() async {
+  Future<FoodModel> getAllFood() async {
     try {
       List<dynamic> jsonRs = await APIClient.getList("Api/food/province");
       print(jsonRs);
-      FoodModel foodModel =
-          FoodModel.fromJson(jsonRs);
+      FoodModel foodModel = FoodModel.fromJson(jsonRs);
       return foodModel;
     } catch (error) {
       throw error;
     }
   }
-
 
   Future<ByreModel> getByreByFarmer() async {
     try {
@@ -76,6 +75,20 @@ class FoodSuggestionRepository {
     return 0;
   }
 
+  Future<FeedHistoryModel> getFeedHistoryMaster(
+      {int day, int month, int year, int farmerId}) async {
+    try {
+     
+      List<dynamic> jsonRs = await APIClient.getList(
+          "Api/FeedHistory/$day/$month/$year/$farmerId");
+      print(jsonRs);
+      FeedHistoryModel feedHistoryModel = FeedHistoryModel.fromJson(jsonRs);
+      return feedHistoryModel;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   Future<bool> addFeedHistoryDetail(
       {FeedHistoryDetailItem feedHistoryDetailItem}) async {
     Map rqData = feedHistoryDetailItem.toJson();
@@ -87,7 +100,7 @@ class FoodSuggestionRepository {
     }
     return false;
   }
-  
+
   Future<bool> addCow({CowItem cowItem}) async {
     Map rqData = cowItem.toJson();
     var rs = await APIClient.post('api/cow', rqData);
