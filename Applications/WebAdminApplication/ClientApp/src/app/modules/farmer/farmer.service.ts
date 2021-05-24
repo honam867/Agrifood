@@ -1,3 +1,4 @@
+import { Notify } from './models/notify';
 import { FeedHistoryDetail } from './models/feedHistoryDetail';
 import { FeedHistory } from './models/feedHistory';
 import { ValueObject } from './../../shared/models/value-object';
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { Byre } from './models/byre';
 import { Cow } from '../cow/models/cow';
+import { Employee } from '../employee/models/employee';
 
 
 // import {RoleOfUser} from './models/roleofUser';
@@ -63,6 +65,21 @@ export class FarmerService {
   }
   getFeedHistoryDetailsByFeedHistoryId(feedHistoryId: number): Observable<FeedHistoryDetail[]> {
     return this.http.get(`feedhistorydetail/feedhistory/${feedHistoryId}`);
+  }
+  getNotificationsByFarmerId(farmerId: number): Observable<Notify[]> {
+    return this.http.get(`notify/farmer/${farmerId}`);
+  }
+  deleteNotification(notiId: number) {
+    return this.http.delete(`notify/${notiId}`);
+  }
+  createNotification(notify: Notify) {
+    return this.http.post(`notify`, notify);
+  }
+  getEmployees(): Observable<Employee[]> {
+    return this.http.get(`employee`);
+  }
+  getNotificationById(notiId: number): Observable<Notify> {
+    return this.http.get(`notify/${notiId}`);
   }
   // getFeedHistories(): Observable<FeedHistory[]> {
   //   return this.http.get(`http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/feedhistory`);
