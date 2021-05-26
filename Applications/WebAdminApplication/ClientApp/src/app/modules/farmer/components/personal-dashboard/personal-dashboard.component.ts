@@ -1,16 +1,20 @@
-import { DashBoardTotalCow } from './../../models/dashboardTotalCow';
-import { DashBoardService } from './../../dashboard.service';
-import { Component, OnInit } from '@angular/core';
+import { DashBoardTotalCow } from './../../../dashboard/models/dashboardTotalCow';
+import { Farmer } from 'src/app/modules/farmer/models/farmer';
+import { DashBoardService } from './../../../dashboard/dashboard.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { StatusForm } from 'src/app/shared/enum/status-form';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Chart } from "node_modules/chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { Farmer } from 'src/app/modules/farmer/models/farmer';
+
 
 @Component({
-  selector: 'app-dashboard-list',
-  templateUrl: './dashboard-list.component.html',
-  styleUrls: ['./dashboard-list.component.scss']
+  selector: 'app-personal-dashboard',
+  templateUrl: './personal-dashboard.component.html',
+  styleUrls: ['./personal-dashboard.component.scss']
 })
-export class DashboardListComponent implements OnInit {
+export class PersonalDashboardComponent implements OnInit {
+  farmer: Farmer = new Farmer();
   totalCowChart: any;
   totalOrderChart: any;
   totalCow: DashBoardTotalCow = new DashBoardTotalCow();
@@ -35,30 +39,34 @@ export class DashboardListComponent implements OnInit {
   startDateMilkCoupon = new Date();
   endDateMilkCoupon = new Date();
   constructor(
+    public dialogRef: MatDialogRef<PersonalDashboardComponent>,
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public dashBoardService: DashBoardService
   ) { }
 
   ngOnInit(): void {
-    // this.isActive = true;
+    this.farmer = this.data.farmer;
+    console.log(this.farmer);
     this.startDate.setFullYear(this.endDate.getFullYear() - 1);
     this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth()-1);
     this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate()+1);
     this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth()-1);
     this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate()+1);
-    // this.dateRangeMilkCoupon.begin = this.startDateMilkCoupon;
-    // this.dateRangeMilkCoupon.end = this.endDateMilkCoupon
-
-    // this.dateRange.begin = this.startDate;
-    // this.dateRange.end = this.endDate;
     this.fetchTotalCow();
     this.fetchTotalOrder();
     this.fetchTotalMilkingSlip();
     this.fetchTotalMilkCoupon();
   }
 
+  close() {
+    this.dialogRef.close({
+      action: StatusForm.VIEW
+    });
+  }
 
   fetchTotalMilkingSlip() {
-    this.dashBoardService.getMilkingSlip(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip , 'a')).subscribe(
+    this.dashBoardService.getMilkingSlipByFarmerId(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip , 'a'), this.farmer.id).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkingSlipLabels.push(this.formatDate(res[index].day, 'b'));
@@ -69,7 +77,7 @@ export class DashboardListComponent implements OnInit {
   }
 
   fetchTotalMilkCoupon() {
-    this.dashBoardService.getMilkCoupon(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon , 'a')).subscribe(
+    this.dashBoardService.getMilkCouponByFarmerId(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon , 'a'), this.farmer.id).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkCouponLabels.push(this.formatDate(res[index].day, 'b'));
@@ -81,7 +89,7 @@ export class DashboardListComponent implements OnInit {
 
 
   fetchTotalOrder() {
-    this.dashBoardService.getTotalOrderFoodBytime(this.formatDate(this.startDate, 'a'), this.formatDate(this.endDate, 'a')).subscribe(
+    this.dashBoardService.getTotalOrderFoodByTimeAndFarmerId(this.formatDate(this.startDate, 'a'), this.formatDate(this.endDate, 'a'), this.farmer.id).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalOrderLabels.push(res[index].foodName);
@@ -139,7 +147,7 @@ export class DashboardListComponent implements OnInit {
   }
 
   fetchTotalCow() {
-    this.dashBoardService.getTotalCow().subscribe(
+    this.dashBoardService.getTotalCowByFarmerId(this.farmer.id).subscribe(
       res => {
         this.totalCow = res;
         this.dataTotalCow = Object.values(this.totalCow[0]);
@@ -301,5 +309,6 @@ export class DashboardListComponent implements OnInit {
       },
     });
   }
+
 
 }
