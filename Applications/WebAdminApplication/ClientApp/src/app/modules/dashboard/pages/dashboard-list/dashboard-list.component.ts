@@ -1,9 +1,9 @@
+import { MilkingSlip } from './../../models/milkingSlip';
 import { DashBoardTotalCow } from './../../models/dashboardTotalCow';
 import { DashBoardService } from './../../dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from "node_modules/chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { parseString } from 'xml2js';
 
 @Component({
   selector: 'app-dashboard-list',
@@ -16,54 +16,94 @@ export class DashboardListComponent implements OnInit {
   totalCow: DashBoardTotalCow = new DashBoardTotalCow();
   dataTotalCow: any;
   sumCow: any;
-  totalOrderlabels : string[] = [];
-  totalOrderdata: number[] =[];
-  totalOrderrandomColor: string[] =[];
+  totalOrderLabels: string[] = [];
+  totalOrderData: number[] = [];
+  totalOrderRandomColor: string[] = [];
+  dateRangeTotalOrder: any;
   endDate = new Date();
   startDate = new Date();
+  totalMilkingSlipChart: any;
+  totalMilkingSlipLabels: string[] = [];
+  totalMilkingSLipData: number[] = [];
+  dateRangeMilkingSlip: any;
+  endDateMilkingSlip = new Date();
+  startDateMilkingSlip = new Date();
   constructor(
     public dashBoardService: DashBoardService
   ) { }
 
   ngOnInit(): void {
-    this.startDate.setFullYear(this.endDate.getFullYear()-1);
+    this.startDate.setFullYear(this.endDate.getFullYear() - 1);
+    this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth()-1);
+    // this.dateRange.begin = this.startDate;
+    // this.dateRange.end = this.endDate;
     this.fetchTotalCow();
     this.fetchTotalOrder();
+    this.fetchTotalMilkingSlip();
   }
 
-  fetchTotalOrder() {
-    this.dashBoardService.getTotalOrderFoodBytime(this.formatDate(this.startDate),this.formatDate(this.endDate)).subscribe(
+  fetchTotalMilkingSlip() {
+    this.dashBoardService.getMilkingSlip(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip , 'a')).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
-          this.totalOrderlabels.push(res[index].foodName);
-          this.totalOrderdata.push(res[index].quantity);
-          let r = Math.floor(Math.random()*16777215).toString(16);
-          this.totalOrderrandomColor.push('#'+r);
+          this.totalMilkingSlipLabels.push(this.formatDate(res[index].day, 'b'));
+          this.totalMilkingSLipData.push(res[index].quantity);
+        }
+        console.log(this.totalMilkingSlipLabels);
+        console.log(this.totalMilkingSLipData);
+        this.showTotalMilkingSlipChart();
+      });
+  }
+
+
+  fetchTotalOrder() {
+    this.dashBoardService.getTotalOrderFoodBytime(this.formatDate(this.startDate, 'a'), this.formatDate(this.endDate, 'a')).subscribe(
+      res => {
+        for (let index = 0; index < res.length; index++) {
+          this.totalOrderLabels.push(res[index].foodName);
+          this.totalOrderData.push(res[index].quantity);
+          let r = Math.floor(Math.random() * 16777215).toString(16);
+          this.totalOrderRandomColor.push('#' + r);
         }
         this.showTotalOrderChart();
       });
   }
 
-  create(){
-    this.totalOrderlabels.splice(0,this.totalOrderlabels.length);
-    this.totalOrderdata.splice(0,this.totalOrderdata.length);
-    this.totalOrderrandomColor.splice(0,this.totalOrderrandomColor.length);
+  selectRangeMilkingSlip(){
+    this.totalMilkingSlipLabels.splice(0, this.totalMilkingSlipLabels.length);
+    this.totalMilkingSLipData.splice(0, this.totalMilkingSLipData.length);
+    this.startDateMilkingSlip = this.dateRangeMilkingSlip.begin;
+    this.endDateMilkingSlip = this.dateRangeMilkingSlip.end;
+    this.fetchTotalMilkingSlip();
+    // this.totalMilkingSlipChart.update();
+  }
+
+  selectRangeTotalOrder() {
+    this.totalOrderLabels.splice(0, this.totalOrderLabels.length);
+    this.totalOrderData.splice(0, this.totalOrderData.length);
+    this.totalOrderRandomColor.splice(0, this.totalOrderRandomColor.length);
+    this.startDate = this.dateRangeTotalOrder.begin;
+    this.endDate = this.dateRangeTotalOrder.end;
     this.fetchTotalOrder();
   }
 
-  formatDate(date) {
+  formatDate(date, functionName) {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
     if (month.length < 2)
-        month = '0' + month;
+      month = '0' + month;
     if (day.length < 2)
-        day = '0' + day;
+      day = '0' + day;
+    if (functionName === 'a') {
+      return [year, month, day].join('');
+    } else if (functionName === 'b') {
+      return [day, month].join('/');
+    }
 
-    return [year, month, day].join('');
-}
+  }
 
   fetchTotalCow() {
     this.dashBoardService.getTotalCow().subscribe(
@@ -75,20 +115,21 @@ export class DashboardListComponent implements OnInit {
       });
   }
 
-    showTotalOrderChart() {
+  showTotalOrderChart() {
     this.totalCowChart = new Chart("totalOrderChart", {
       type: 'bar',
       data: {
-        labels: this.totalOrderlabels,
-        datasets:[{
-          label:'',
-          backgroundColor: this.totalOrderrandomColor,
-          data: this.totalOrderdata}
-         ]
+        labels: this.totalOrderLabels,
+        datasets: [{
+          label: '',
+          backgroundColor: this.totalOrderRandomColor,
+          data: this.totalOrderData
+        }
+        ]
       },
       options: {
         responsive: true,
-        legend:{
+        legend: {
           display: false
         },
         title: {
@@ -98,6 +139,40 @@ export class DashboardListComponent implements OnInit {
           color: "#000000"
         },
         tooltips: {
+          callbacks: {
+            label: (item) => `${item.yLabel} Kg`,
+          },
+        },
+      },
+    });
+  }
+
+  showTotalMilkingSlipChart() {
+    this.totalMilkingSlipChart = new Chart("totalMilkingSlipChart", {
+      type: 'line',
+      data: {
+        labels: this.totalMilkingSlipLabels,
+        datasets: [{
+          label: '',
+          borderColor:'rgb(14, 107, 104)',
+          data: this.totalMilkingSLipData,
+          tension:0
+        }
+        ]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: `Thống kê tổng số lượng sữa được vắt bởi nông dân`,
+          position: 'top',
+          color: "#000000"
+        },
+        tooltips: {
+          displayColors: false,
           callbacks: {
             label: (item) => `${item.yLabel} Kg`,
           },

@@ -1,3 +1,4 @@
+import { MilkingSlip } from './models/milkingSlip';
 import { DashBoardTotalCow } from './models/dashboardTotalCow';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,5 +14,8 @@ export class DashBoardService {
   }
   getTotalOrderFoodBytime(startDate: string, endDate: string): Observable<OrderFood[]>{
     return this.http.get(`dashboard/orderfood/${startDate}/${endDate}`);
+  }
+  getMilkingSlip(startDate: string, endDate: string): Observable<MilkingSlip[]> {
+    return this.http.get(`dashboard/milkingslip/${startDate}/${endDate}`);
   }
 }
