@@ -1,3 +1,5 @@
+import { Farmer } from 'src/app/modules/farmer/models/farmer';
+import { MilkCoupon } from './models/milkCoupon';
 import { MilkingSlip } from './models/milkingSlip';
 import { DashBoardTotalCow } from './models/dashboardTotalCow';
 import { Injectable } from '@angular/core';
@@ -17,5 +19,14 @@ export class DashBoardService {
   }
   getMilkingSlip(startDate: string, endDate: string): Observable<MilkingSlip[]> {
     return this.http.get(`dashboard/milkingslip/${startDate}/${endDate}`);
+  }
+  getMilkCoupon(startDate: string, endDate: string): Observable<MilkCoupon[]> {
+    return this.http.get(`dashboard/milkcoupon/${startDate}/${endDate}`);
+  }
+  getMilkCouponByFarmerId(startDate: string, endDate: string, farmerId: number): Observable<MilkCoupon[]> {
+    return this.http.get(`dashboard/milkcoupon/${startDate}/${endDate}/${farmerId}`);
+  }
+  getFarmers(): Observable<Farmer[]> {
+    return this.http.get(`farmer`);
   }
 }

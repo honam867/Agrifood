@@ -1,9 +1,9 @@
-import { MilkingSlip } from './../../models/milkingSlip';
 import { DashBoardTotalCow } from './../../models/dashboardTotalCow';
 import { DashBoardService } from './../../dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Chart } from "node_modules/chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Farmer } from 'src/app/modules/farmer/models/farmer';
 
 @Component({
   selector: 'app-dashboard-list',
@@ -28,18 +28,46 @@ export class DashboardListComponent implements OnInit {
   dateRangeMilkingSlip: any;
   endDateMilkingSlip = new Date();
   startDateMilkingSlip = new Date();
+  totalMilkCouponChart: any;
+  totalMilkCouponLabels: string[] = [];
+  totalMilkCouponData: number[] = [];
+  dateRangeMilkCoupon: any;
+  startDateMilkCoupon = new Date();
+  endDateMilkCoupon = new Date();
+  isActive: boolean;
+  farmerId: 0;
+  farmers: Farmer[] = [];
+  // filteredFarmers: Farmer[] = [];
+  sourceView: Farmer = new Farmer();
   constructor(
     public dashBoardService: DashBoardService
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.startDate.setFullYear(this.endDate.getFullYear() - 1);
     this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth()-1);
+    this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate()+1);
+    this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth()-1);
+    this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate()+1);
+    // this.dateRangeMilkCoupon.begin = this.startDateMilkCoupon;
+    // this.dateRangeMilkCoupon.end = this.endDateMilkCoupon
+
     // this.dateRange.begin = this.startDate;
     // this.dateRange.end = this.endDate;
     this.fetchTotalCow();
     this.fetchTotalOrder();
     this.fetchTotalMilkingSlip();
+    this.fetchTotalMilkCoupon();
+    this.fetchFarmers();
+  }
+
+  fetchFarmers() {
+    this.dashBoardService.getFarmers().subscribe(
+      res => {
+        this.farmers = res;
+        // this.filteredFarmers = this.farmers;
+      });
   }
 
   fetchTotalMilkingSlip() {
@@ -49,9 +77,18 @@ export class DashboardListComponent implements OnInit {
           this.totalMilkingSlipLabels.push(this.formatDate(res[index].day, 'b'));
           this.totalMilkingSLipData.push(res[index].quantity);
         }
-        console.log(this.totalMilkingSlipLabels);
-        console.log(this.totalMilkingSLipData);
         this.showTotalMilkingSlipChart();
+      });
+  }
+
+  fetchTotalMilkCoupon() {
+    this.dashBoardService.getMilkCoupon(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon , 'a')).subscribe(
+      res => {
+        for (let index = 0; index < res.length; index++) {
+          this.totalMilkCouponLabels.push(this.formatDate(res[index].day, 'b'));
+          this.totalMilkCouponData.push(res[index].quantity);
+        }
+        this.showTotalMilkCoupon();
       });
   }
 
@@ -75,6 +112,15 @@ export class DashboardListComponent implements OnInit {
     this.startDateMilkingSlip = this.dateRangeMilkingSlip.begin;
     this.endDateMilkingSlip = this.dateRangeMilkingSlip.end;
     this.fetchTotalMilkingSlip();
+    // this.totalMilkingSlipChart.update();
+  }
+
+  selectRangeMilkCoupon(){
+    this.totalMilkCouponLabels.splice(0, this.totalMilkCouponLabels.length);
+    this.totalMilkCouponData.splice(0, this.totalMilkCouponData.length);
+    this.startDateMilkCoupon = this.dateRangeMilkCoupon.begin;
+    this.endDateMilkCoupon = this.dateRangeMilkCoupon.end;
+    this.fetchTotalMilkCoupon();
     // this.totalMilkingSlipChart.update();
   }
 
@@ -116,7 +162,7 @@ export class DashboardListComponent implements OnInit {
   }
 
   showTotalOrderChart() {
-    this.totalCowChart = new Chart("totalOrderChart", {
+    this.totalOrderChart = new Chart("totalOrderChart", {
       type: 'bar',
       data: {
         labels: this.totalOrderLabels,
@@ -235,5 +281,38 @@ export class DashboardListComponent implements OnInit {
     });
   }
 
+  showTotalMilkCoupon() {
+    this.totalMilkCouponChart = new Chart("totalMilkCouponChart", {
+      type: 'line',
+      data: {
+        labels: this.totalMilkCouponLabels,
+        datasets: [{
+          label: '',
+          borderColor:'rgb(14, 107, 104)',
+          data: this.totalMilkCouponData,
+          tension:0,
+        }
+        ]
+      },
+      options: {
+        responsive: true,
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: `Thống kê tổng số lượng sữa thu mua`,
+          position: 'top',
+          color: "#000000"
+        },
+        tooltips: {
+          displayColors: false,
+          callbacks: {
+            label: (item) => `${item.yLabel} Kg`,
+          },
+        },
+      },
+    });
+  }
 
 }
