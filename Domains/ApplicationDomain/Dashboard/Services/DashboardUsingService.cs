@@ -24,11 +24,11 @@ namespace ApplicationDomain.BOA.Services
 
         }
 
-        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int from, int to)
+        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int year)
         {
             try
             {
-                return await _dashboardUsingRepository.GetDashboardUsingByDayfromtoAsync(from, to);
+                return await _dashboardUsingRepository.GetDashboardUsingByDayfromtoAsync(year);
             }
             catch (Exception ex)
             {
@@ -36,11 +36,11 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
-        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int from, int to, int farmerId)
+        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int year, int farmerId)
         {
             try
             {
-                return await _dashboardUsingRepository.GetDashboardUsingByDayfromtoFarmerIdAsync(from,to,farmerId);
+                return await _dashboardUsingRepository.GetDashboardUsingByDayfromtoFarmerIdAsync(year,farmerId);
             }
             catch (Exception ex)
             {

@@ -24,16 +24,16 @@ namespace Infrastructure.Repositories.Dashboard
             _sqlProvider = new MSSQLProvider(EFConnectionString.Alias);
         }
 
-        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int from, int to)
+        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int year)
         {
-            DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_USING_BY_DAYFROMTO {0},{1}", from, to));
+            DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_USING_BY_YEAR {0}", year));
             IEnumerable<DashboardUsingModel> results = IMapperExtentions.ConvertDataTable<DashboardUsingModel>(dtResult).ToList();
             return results;
         }
 
-        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int from, int to, int farmerId)
+        public async Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int year, int farmerId)
         {
-            DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_USING_BY_DAYFROMTO_FARMER {0},{1},{2}", from,to,farmerId));
+            DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_USING_BY_YEAR_FARMER {0},{1}", year,farmerId));
             IEnumerable<DashboardUsingModel> results = IMapperExtentions.ConvertDataTable<DashboardUsingModel>(dtResult).ToList();
             return results;
         }
