@@ -9,7 +9,7 @@ namespace ApplicationDomain.Dashboard.IServices
 {
     public interface IDashboardUsingService
     {
-        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int from, int to);
-        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int from, int to, int farmerId);
+        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int year);
+        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int year, int farmerId);
     }
 }

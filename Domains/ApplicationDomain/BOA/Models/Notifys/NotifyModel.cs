@@ -9,6 +9,7 @@ namespace ApplicationDomain.BOA.Models.Notifys
         public int Id { get; set; }
         public string Code { get; set; }
         public int FarmerId { get; set; }
+        public string FarmerName { get; set; }
         public int EmployeeId { get; set; }
         public string Name { get; set; }
         public string Content { get; set; }

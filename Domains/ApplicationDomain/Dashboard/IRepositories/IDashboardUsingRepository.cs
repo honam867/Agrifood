@@ -10,7 +10,7 @@ namespace ApplicationDomain.Dashboard.IRepositories
 {
     public interface IDashboardUsingRepository
     {
-        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int from, int to);
-        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int from, int to, int farmerId);
+        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoAsync(int year);
+        Task<IEnumerable<DashboardUsingModel>> GetDashboardUsingByDayfromtoFarmerIdAsync(int year, int farmerId);
     }
 }
