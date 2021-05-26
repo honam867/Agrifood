@@ -178,6 +178,7 @@
         <div style="margin:0 auto;text-align: center;">
             <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="isView" (click)="delete()">Xóa</button>
             <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="isView" (click)="edit()">Chỉnh sửa</button>
+            <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="popUpPersonalDashboard(farmer)">Xem thống kê</button>
             <button type="button" mat-raised-button class="btn btn-outline-success" *ngIf="isView" (click)="addFarmerAccount(farmer)">Gán tài khoản</button>
             <!-- <button type="button" mat-raised-button class="btn btn-outline-primary" *ngIf="isView">Xem chuồng bò</button> -->
             <button type="button" mat-raised-button class="btn btn-outline-danger" *ngIf="!isView && !isCreate" (click)="discard()">Bỏ thay đổi</button>

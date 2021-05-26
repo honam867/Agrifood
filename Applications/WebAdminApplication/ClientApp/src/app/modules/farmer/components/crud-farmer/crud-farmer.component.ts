@@ -1,3 +1,4 @@
+import { PersonalDashboardComponent } from './../personal-dashboard/personal-dashboard.component';
 import { Notify } from './../../models/notify';
 import { ViewDetailComponent } from './../view-detail/view-detail.component';
 import { FeedHistoryDetail } from './../../models/feedHistoryDetail';
@@ -103,6 +104,18 @@ export class CrudFarmerComponent implements OnInit {
     this.farmerService.getDistrictByProvinceId(provinceId).subscribe(result => {
       this.districts = result;
       this.filteredDistricts = this.districts;
+    });
+  }
+
+  popUpPersonalDashboard(farmer: Farmer) {
+    const viewDialog = this.dialog.open(PersonalDashboardComponent, {
+      height: '90%',
+      width: '90%',
+      data: {
+        action: StatusForm.VIEW,
+        farmer:farmer
+      },
+      disableClose: true,
     });
   }
 

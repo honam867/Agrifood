@@ -1,0 +1,87 @@
+<div class="row">
+    <div class="offset-11 col-1 d-flex flex-row-reverse ">
+        <button class="fix-button" mat-icon-button (click)="close()">
+      <mat-icon style="line-height: 23px;">cancel</mat-icon>
+  </button>
+    </div>
+</div>
+
+<div id="divChart">
+    <mat-card class="m-2">
+        <canvas id="totalCowChart"></canvas>
+        <h6 class="text-center">Tổng số bò: <strong>{{sumCow}}</strong></h6>
+    </mat-card>
+
+</div>
+<div id="divChartMilkCoupon">
+    <mat-card class="m-2">
+        <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkCoupon()" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-6">
+                    <mat-form-field class="input input-fluid" appearance="outline">
+                        <input matInput [satDatepicker]="picker2" [(ngModel)]="dateRangeMilkCoupon" placeholder="Mặc định: {{startDateMilkCoupon | date: 'dd/MM/yyyy'}}-{{endDateMilkCoupon | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
+                        <sat-datepicker #picker2 [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" style="padding-top: 7px; width: 100%;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit">
+                Chọn
+            </button>
+                </div>
+            </div>
+        </form>
+        <canvas id="totalMilkCouponChart"></canvas>
+    </mat-card>
+
+</div>
+<div id="divChartMilkingSlip">
+    <mat-card class="m-2">
+        <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkingSlip()" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-6">
+                    <mat-form-field class="input input-fluid" appearance="outline">
+                        <input matInput [satDatepicker]="picker1" [(ngModel)]="dateRangeMilkingSlip" placeholder="Mặc định: {{startDateMilkingSlip | date: 'dd/MM/yyyy'}}-{{endDateMilkingSlip | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
+                        <sat-datepicker #picker1 [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" style="padding-top: 7px; width: 100%;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit">
+                  Chọn
+              </button>
+                </div>
+            </div>
+        </form>
+        <canvas id="totalMilkingSlipChart"></canvas>
+    </mat-card>
+
+</div>
+<div id="divChartOrder">
+    <mat-card class="m-2">
+        <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeTotalOrder()" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-6">
+                    <mat-form-field class="input input-fluid" appearance="outline">
+                        <input matInput [satDatepicker]="picker" [(ngModel)]="dateRangeTotalOrder" placeholder="Mặc định: {{startDate | date: 'dd/MM/yyyy'}}-{{endDate | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" style="padding-top: 7px; width: 100%;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit">
+                      Chọn
+                  </button>
+                </div>
+            </div>
+        </form>
+        <canvas id="totalOrderChart"></canvas>
+    </mat-card>
+</div>
+
+<!-- <div id="divChartMilkingSlip">
+  <mat-card class="m-2">
+      <canvas id="totalCowChart"></canvas>
+  </mat-card>
+
+</div> -->
