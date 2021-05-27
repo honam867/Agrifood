@@ -13,6 +13,30 @@
     </mat-card>
 
 </div>
+
+<div id="divChartUsing">
+    <mat-card class="m-2">
+        <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && submitYearUsing()" #f="ngForm">
+            <div class="row">
+                <div class="col-lg-6">
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="dp" [(ngModel)]="yearUsing" placeholder="Mặc định: {{date.getFullYear()}}" [ngModelOptions]="{ standalone: true }">
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp startView="multi-year" (yearSelected)="yearHandler($event, dp)">
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-6" style="padding-top: 7px; width: 100%;">
+                    <button mat-raised-button class="btn btn-outline-success" type="submit">
+              Chọn
+          </button>
+                </div>
+            </div>
+        </form>
+        <canvas id="yearUsingChart"></canvas>
+    </mat-card>
+
+</div>
 <div id="divChartMilkCoupon">
     <mat-card class="m-2">
         <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkCoupon()" #f="ngForm">

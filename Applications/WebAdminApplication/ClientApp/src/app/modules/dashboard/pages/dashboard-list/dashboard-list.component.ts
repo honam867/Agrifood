@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Chart } from "node_modules/chart.js";
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Farmer } from 'src/app/modules/farmer/models/farmer';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-dashboard-list',
@@ -34,6 +35,11 @@ export class DashboardListComponent implements OnInit {
   dateRangeMilkCoupon: any;
   startDateMilkCoupon = new Date();
   endDateMilkCoupon = new Date();
+  yearUsing: number;
+  date = new Date();
+  yearUsingChart: any;
+  yearUsingLabels: string[] = [];
+  yearUsingData: number[] = [];
   constructor(
     public dashBoardService: DashBoardService
   ) { }
@@ -41,10 +47,10 @@ export class DashboardListComponent implements OnInit {
   ngOnInit(): void {
     // this.isActive = true;
     this.startDate.setFullYear(this.endDate.getFullYear() - 1);
-    this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth()-1);
-    this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate()+1);
-    this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth()-1);
-    this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate()+1);
+    this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth() - 1);
+    this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate() + 1);
+    this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth() - 1);
+    this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate() + 1);
     // this.dateRangeMilkCoupon.begin = this.startDateMilkCoupon;
     // this.dateRangeMilkCoupon.end = this.endDateMilkCoupon
 
@@ -54,11 +60,30 @@ export class DashboardListComponent implements OnInit {
     this.fetchTotalOrder();
     this.fetchTotalMilkingSlip();
     this.fetchTotalMilkCoupon();
+    this.fetchUsingDataByYear(this.date.getFullYear());
   }
 
+  submitYearUsing() {
+    this.fetchUsingDataByYear(this.yearUsing);
+  }
+
+  yearHandler(data, datepicker: MatDatepicker<Date>) {
+    this.yearUsing = data._i.year;
+    console.log(this.yearUsing);
+    datepicker.close();
+  }
+
+  fetchUsingDataByYear(year) {
+    this.dashBoardService.getUsingDataByYear(year).subscribe(
+      res => {
+        this.yearUsingLabels = res.map(item => 'Tháng '+ item.month);
+        this.yearUsingData = res.map(item => item.dem);
+        this.showYearUsingData();
+      });
+  }
 
   fetchTotalMilkingSlip() {
-    this.dashBoardService.getMilkingSlip(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip , 'a')).subscribe(
+    this.dashBoardService.getMilkingSlip(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip, 'a')).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkingSlipLabels.push(this.formatDate(res[index].day, 'b'));
@@ -69,7 +94,7 @@ export class DashboardListComponent implements OnInit {
   }
 
   fetchTotalMilkCoupon() {
-    this.dashBoardService.getMilkCoupon(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon , 'a')).subscribe(
+    this.dashBoardService.getMilkCoupon(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon, 'a')).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkCouponLabels.push(this.formatDate(res[index].day, 'b'));
@@ -93,7 +118,7 @@ export class DashboardListComponent implements OnInit {
       });
   }
 
-  selectRangeMilkingSlip(){
+  selectRangeMilkingSlip() {
     this.totalMilkingSlipLabels.splice(0, this.totalMilkingSlipLabels.length);
     this.totalMilkingSLipData.splice(0, this.totalMilkingSLipData.length);
     this.startDateMilkingSlip = this.dateRangeMilkingSlip.begin;
@@ -102,7 +127,7 @@ export class DashboardListComponent implements OnInit {
     // this.totalMilkingSlipChart.update();
   }
 
-  selectRangeMilkCoupon(){
+  selectRangeMilkCoupon() {
     this.totalMilkCouponLabels.splice(0, this.totalMilkCouponLabels.length);
     this.totalMilkCouponData.splice(0, this.totalMilkCouponData.length);
     this.startDateMilkCoupon = this.dateRangeMilkCoupon.begin;
@@ -162,6 +187,11 @@ export class DashboardListComponent implements OnInit {
       },
       options: {
         responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
         legend: {
           display: false
         },
@@ -187,9 +217,9 @@ export class DashboardListComponent implements OnInit {
         labels: this.totalMilkingSlipLabels,
         datasets: [{
           label: '',
-          borderColor:'rgb(14, 107, 104)',
+          borderColor: 'rgb(14, 107, 104)',
           data: this.totalMilkingSLipData,
-          tension:0
+          tension: 0
         }
         ]
       },
@@ -275,14 +305,19 @@ export class DashboardListComponent implements OnInit {
         labels: this.totalMilkCouponLabels,
         datasets: [{
           label: '',
-          borderColor:'rgb(14, 107, 104)',
+          borderColor: 'rgb(14, 107, 104)',
           data: this.totalMilkCouponData,
-          tension:0,
+          tension: 0,
         }
         ]
       },
       options: {
         responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
         legend: {
           display: false
         },
@@ -301,5 +336,45 @@ export class DashboardListComponent implements OnInit {
       },
     });
   }
+
+  showYearUsingData() {
+    this.yearUsingChart = new Chart("yearUsingChart", {
+      type: 'line',
+      data: {
+        labels: this.yearUsingLabels,
+        datasets: [{
+          label: '',
+          borderColor: 'rgb(14, 107, 104)',
+          data: this.yearUsingData,
+          tension: 0,
+        }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: `Thống kê tổng lưu lượng sử dụng của nông dân`,
+          position: 'top',
+          color: "#000000"
+        },
+        tooltips: {
+          displayColors: false,
+          callbacks: {
+            label: (item) => `${item.yLabel} lần`,
+          },
+        },
+      },
+    });
+  }
+
 
 }

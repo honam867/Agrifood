@@ -1,3 +1,4 @@
+import { MatDatepicker } from '@angular/material/datepicker';
 import { DashBoardTotalCow } from './../../../dashboard/models/dashboardTotalCow';
 import { Farmer } from 'src/app/modules/farmer/models/farmer';
 import { DashBoardService } from './../../../dashboard/dashboard.service';
@@ -38,6 +39,11 @@ export class PersonalDashboardComponent implements OnInit {
   dateRangeMilkCoupon: any;
   startDateMilkCoupon = new Date();
   endDateMilkCoupon = new Date();
+  yearUsing: number;
+  date = new Date();
+  yearUsingChart: any;
+  yearUsingLabels: string[] = [];
+  yearUsingData: number[] = [];
   constructor(
     public dialogRef: MatDialogRef<PersonalDashboardComponent>,
     public dialog: MatDialog,
@@ -57,6 +63,26 @@ export class PersonalDashboardComponent implements OnInit {
     this.fetchTotalOrder();
     this.fetchTotalMilkingSlip();
     this.fetchTotalMilkCoupon();
+    this.fetchUsingDataByYear(this.date.getFullYear());
+
+  }
+
+  submitYearUsing() {
+    this.fetchUsingDataByYear(this.yearUsing);
+  }
+
+  yearHandler(data, datepicker: MatDatepicker<Date>) {
+    this.yearUsing = data._i.year;
+    datepicker.close();
+  }
+
+  fetchUsingDataByYear(year) {
+    this.dashBoardService.getUsingDataByYearAndFarmerId(year, this.farmer.id).subscribe(
+      res => {
+        this.yearUsingLabels = res.map(item => 'Tháng '+ item.month);
+        this.yearUsingData = res.map(item => item.dem);
+        this.showYearUsingData();
+      });
   }
 
   close() {
@@ -309,6 +335,46 @@ export class PersonalDashboardComponent implements OnInit {
       },
     });
   }
+
+  showYearUsingData() {
+    this.yearUsingChart = new Chart("yearUsingChart", {
+      type: 'line',
+      data: {
+        labels: this.yearUsingLabels,
+        datasets: [{
+          label: '',
+          borderColor: 'rgb(14, 107, 104)',
+          data: this.yearUsingData,
+          tension: 0,
+        }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: `Thống kê tổng lưu lượng sử dụng của nông dân`,
+          position: 'top',
+          color: "#000000"
+        },
+        tooltips: {
+          displayColors: false,
+          callbacks: {
+            label: (item) => `${item.yLabel} lần`,
+          },
+        },
+      },
+    });
+  }
+
 
 
 }
