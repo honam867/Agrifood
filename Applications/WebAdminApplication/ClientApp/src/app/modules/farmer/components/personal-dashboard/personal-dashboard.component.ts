@@ -199,12 +199,18 @@ export class PersonalDashboardComponent implements OnInit {
         legend: {
           display: false
         },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
         title: {
           display: true,
           text: `Thống kê tổng số thức ăn đã xuất theo hóa đơn`,
           position: 'top',
           color: "#000000"
         },
+
         tooltips: {
           callbacks: {
             label: (item) => `${item.yLabel} Kg`,
@@ -231,6 +237,11 @@ export class PersonalDashboardComponent implements OnInit {
         responsive: true,
         legend: {
           display: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         },
         title: {
           display: true,
@@ -319,6 +330,11 @@ export class PersonalDashboardComponent implements OnInit {
         responsive: true,
         legend: {
           display: false
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
         },
         title: {
           display: true,
