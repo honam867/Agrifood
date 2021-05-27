@@ -1,3 +1,4 @@
+import { UsingData } from './models/usingData';
 import { MilkCoupon } from './models/milkCoupon';
 import { MilkingSlip } from './models/milkingSlip';
 import { DashBoardTotalCow } from './models/dashboardTotalCow';
@@ -34,5 +35,10 @@ export class DashBoardService {
   getMilkCouponByFarmerId(startDate: string, endDate: string, farmerId: number): Observable<MilkCoupon[]> {
     return this.http.get(`dashboard/milkcoupon/${startDate}/${endDate}/${farmerId}`);
   }
-
+  getUsingDataByYear(year: number): Observable<UsingData[]> {
+    return this.http.get(`dashboard/using/${year}`);
+  }
+  getUsingDataByYearAndFarmerId(year: number, farmerId: number): Observable<UsingData[]> {
+    return this.http.get(`dashboard/using/${year}/${farmerId}`);
+  }
 }
