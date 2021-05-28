@@ -1,3 +1,4 @@
+import { UpdateCowComponent } from './../update-cow/update-cow.component';
 import { PersonalDashboardComponent } from './../personal-dashboard/personal-dashboard.component';
 import { Notify } from './../../models/notify';
 import { ViewDetailComponent } from './../view-detail/view-detail.component';
@@ -19,7 +20,6 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Byre } from '../../models/byre';
 import { Cow } from 'src/app/modules/cow/models/cow';
 import { CreateNotiComponent } from '../create-noti/create-noti.component';
-import { parseString } from 'xml2js';
 
 
 @Component({
@@ -59,7 +59,7 @@ export class CrudFarmerComponent implements OnInit {
   valueObject: ValueObject = new ValueObject();
   alert: any;
   displayedColumnsByre: string[] = ['name', 'code', 'action'];
-  displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status'];
+  displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status', 'action'];
   historySource: MatTableDataSource<FeedHistory>;
   displayedColumnsHistory: string[] = ['cowId', 'createdDate', 'action'];
   displayedColumnsNotification: string[] = ['name', 'content', 'status', 'action'];
@@ -117,6 +117,33 @@ export class CrudFarmerComponent implements OnInit {
       },
       disableClose: true,
     });
+  }
+
+  popUpUpdateCow(cow) {
+    const viewDialog = this.dialog.open(UpdateCowComponent, {
+      height: '35%',
+      width: '30%',
+      data: {
+        action: StatusForm.VIEW,
+        cow: cow
+      },
+      disableClose: true,
+    });
+    console.log(cow);
+
+    // viewDialog.afterClosed().subscribe(
+    //   result => {
+    //     this.farmerService.getNotificationById(result.data).subscribe(
+    //       createdNoti => {
+    //         if (createdNoti !== null) {
+    //           this.notifications.push(createdNoti);
+    //           this.notificationSource.data = this.notifications;
+    //         }
+    //       }
+    //     );
+    //   }
+    // );
+
   }
 
   popUpCreateNotification() {

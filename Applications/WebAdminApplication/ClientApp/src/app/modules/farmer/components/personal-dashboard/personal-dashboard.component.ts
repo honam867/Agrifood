@@ -55,10 +55,10 @@ export class PersonalDashboardComponent implements OnInit {
     this.farmer = this.data.farmer;
     console.log(this.farmer);
     this.startDate.setFullYear(this.endDate.getFullYear() - 1);
-    this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth()-1);
-    this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate()+1);
-    this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth()-1);
-    this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate()+1);
+    this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth() - 1);
+    this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate() + 1);
+    this.startDateMilkCoupon.setMonth(this.endDateMilkCoupon.getMonth() - 1);
+    this.startDateMilkCoupon.setDate(this.endDateMilkCoupon.getDate() + 1);
     this.fetchTotalCow();
     this.fetchTotalOrder();
     this.fetchTotalMilkingSlip();
@@ -79,7 +79,7 @@ export class PersonalDashboardComponent implements OnInit {
   fetchUsingDataByYear(year) {
     this.dashBoardService.getUsingDataByYearAndFarmerId(year, this.farmer.id).subscribe(
       res => {
-        this.yearUsingLabels = res.map(item => 'Tháng '+ item.month);
+        this.yearUsingLabels = res.map(item => 'Tháng ' + item.month);
         this.yearUsingData = res.map(item => item.dem);
         this.showYearUsingData();
       });
@@ -92,7 +92,7 @@ export class PersonalDashboardComponent implements OnInit {
   }
 
   fetchTotalMilkingSlip() {
-    this.dashBoardService.getMilkingSlipByFarmerId(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip , 'a'), this.farmer.id).subscribe(
+    this.dashBoardService.getMilkingSlipByFarmerId(this.formatDate(this.startDateMilkingSlip, 'a'), this.formatDate(this.endDateMilkingSlip, 'a'), this.farmer.id).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkingSlipLabels.push(this.formatDate(res[index].day, 'b'));
@@ -103,7 +103,7 @@ export class PersonalDashboardComponent implements OnInit {
   }
 
   fetchTotalMilkCoupon() {
-    this.dashBoardService.getMilkCouponByFarmerId(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon , 'a'), this.farmer.id).subscribe(
+    this.dashBoardService.getMilkCouponByFarmerId(this.formatDate(this.startDateMilkCoupon, 'a'), this.formatDate(this.endDateMilkCoupon, 'a'), this.farmer.id).subscribe(
       res => {
         for (let index = 0; index < res.length; index++) {
           this.totalMilkCouponLabels.push(this.formatDate(res[index].day, 'b'));
@@ -127,7 +127,7 @@ export class PersonalDashboardComponent implements OnInit {
       });
   }
 
-  selectRangeMilkingSlip(){
+  selectRangeMilkingSlip() {
     this.totalMilkingSlipLabels.splice(0, this.totalMilkingSlipLabels.length);
     this.totalMilkingSLipData.splice(0, this.totalMilkingSLipData.length);
     this.startDateMilkingSlip = this.dateRangeMilkingSlip.begin;
@@ -136,7 +136,7 @@ export class PersonalDashboardComponent implements OnInit {
     // this.totalMilkingSlipChart.update();
   }
 
-  selectRangeMilkCoupon(){
+  selectRangeMilkCoupon() {
     this.totalMilkCouponLabels.splice(0, this.totalMilkCouponLabels.length);
     this.totalMilkCouponData.splice(0, this.totalMilkCouponData.length);
     this.startDateMilkCoupon = this.dateRangeMilkCoupon.begin;
@@ -200,9 +200,11 @@ export class PersonalDashboardComponent implements OnInit {
           display: false
         },
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         },
         title: {
           display: true,
@@ -227,9 +229,9 @@ export class PersonalDashboardComponent implements OnInit {
         labels: this.totalMilkingSlipLabels,
         datasets: [{
           label: '',
-          borderColor:'rgb(14, 107, 104)',
+          borderColor: 'rgb(14, 107, 104)',
           data: this.totalMilkingSLipData,
-          tension:0
+          tension: 0
         }
         ]
       },
@@ -320,9 +322,9 @@ export class PersonalDashboardComponent implements OnInit {
         labels: this.totalMilkCouponLabels,
         datasets: [{
           label: '',
-          borderColor:'rgb(14, 107, 104)',
+          borderColor: 'rgb(14, 107, 104)',
           data: this.totalMilkCouponData,
-          tension:0,
+          tension: 0,
         }
         ]
       },
