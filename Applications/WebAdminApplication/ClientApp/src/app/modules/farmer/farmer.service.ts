@@ -81,6 +81,13 @@ export class FarmerService {
   getNotificationById(notiId: number): Observable<Notify> {
     return this.http.get(`notify/${notiId}`);
   }
+  getCowById(cowId: number): Observable<Cow> {
+    return this.http.get(`cow/${cowId}`);
+  }
+  updateCow(cowId: number, updatedCow: Cow): Observable<boolean> {
+    return this.http.put(`cow/${cowId}`, updatedCow);
+  }
+
   // getFeedHistories(): Observable<FeedHistory[]> {
   //   return this.http.get(`http://cntttest.vanlanguni.edu.vn:18080/CP23Team2/api/feedhistory`);
   // }

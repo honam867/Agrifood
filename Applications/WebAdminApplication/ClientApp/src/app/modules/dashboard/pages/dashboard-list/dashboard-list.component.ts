@@ -188,10 +188,12 @@ export class DashboardListComponent implements OnInit {
       options: {
         responsive: true,
         scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
+          yAxes: [{
+              ticks: {
+                  beginAtZero: true
+              }
+          }]
+      },
         legend: {
           display: false
         },
