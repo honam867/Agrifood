@@ -42,6 +42,18 @@ class CowLoaded extends CowState {
   String toString() => 'TodosLoadSuccess { todos: $cowModel }';
 }
 
+class ByreLoaded extends CowState{
+  final ByreModel byreModel;
+  
+  const ByreLoaded([this.byreModel]);
+
+  @override
+  List<Object> get props => [byreModel];
+
+  @override
+  String toString() => 'TodosLoadSuccess { todos: $byreModel }';
+}
+
 class GetCowFatherMotherName extends CowState {
   final CowItem cowItem;
 

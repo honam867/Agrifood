@@ -1,4 +1,6 @@
+import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
+import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 //import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
@@ -19,6 +21,7 @@ class TotalCowPage extends StatefulWidget {
   final categoryHeight;
   final topContainer;
   final cowLength;
+  final byreLength;
   final controller;
 
   const TotalCowPage(
@@ -28,6 +31,7 @@ class TotalCowPage extends StatefulWidget {
       this.categoryHeight,
       this.topContainer,
       this.cowLength,
+      this.byreLength,
       this.controller})
       : super(key: key);
   @override

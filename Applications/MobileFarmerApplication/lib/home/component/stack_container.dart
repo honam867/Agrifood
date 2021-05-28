@@ -49,7 +49,7 @@ class StackContainer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  this.farmerInfoModel.status == true ? "Đang hoạt động" : "Ngưng hoạt động",
+                  this.farmerInfoModel.status ?? true ? "Đang hoạt động" : "Ngưng hoạt động",
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(35),
                     color: Colors.grey[700],

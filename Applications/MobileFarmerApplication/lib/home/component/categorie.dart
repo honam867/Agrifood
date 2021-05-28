@@ -35,7 +35,7 @@ class CategoriesScroller extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Chuồng",
+                        "Trại",
                         style: TextStyle(
                             fontSize: ScreenUtil().setSp(90.0),
                             color: Colors.white,

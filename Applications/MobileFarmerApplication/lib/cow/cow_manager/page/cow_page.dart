@@ -3,7 +3,7 @@ import 'package:AgrifoodApp/cow/cow_manager/component/cow_detail.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/popup_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
-import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
+//import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/widget/slidable_widget.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';

@@ -3,7 +3,7 @@ import 'package:AgrifoodApp/feedCow/model/feed_history_detail_item.dart';
 import 'package:AgrifoodApp/feedCow/model/feed_history_item.dart';
 import 'package:AgrifoodApp/feedCow/model/food_item.dart';
 import 'package:AgrifoodApp/feedCow/model/food_model.dart';
-import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
+//import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

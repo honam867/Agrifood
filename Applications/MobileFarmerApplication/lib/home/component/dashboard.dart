@@ -30,7 +30,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   ScrollController controller = new ScrollController();
   Items item1 = new Items(
-      title: "Quản lí chuồng",
+      title: "Quản lí trại",
       //subtitle: "Danh sách các chuồng hiện có",
       event: "",
       img: "assets/layout/stable.png");
@@ -174,7 +174,7 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ));
                     });
-                  } else if (data.title == "Quản lí chuồng") {
+                  } else if (data.title == "Quản lí trại") {
                     setState(() {
                       Navigator.push(
                           context,

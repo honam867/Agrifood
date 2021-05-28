@@ -92,7 +92,7 @@ class _CowCardState extends State<CowCard> {
                                   TextSpan(
                                     text: this.widget.cowItem.name,
                                     style: GoogleFonts.notoSans(
-                                      fontSize: ScreenUtil().setSp(60),
+                                      fontSize: ScreenUtil().setSp(55),
                                       color: Colors.black87,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -119,7 +119,7 @@ class _CowCardState extends State<CowCard> {
                               TextSpan(
                                 text: widget.cowItem.code,
                                 style: TextStyle(
-                                  fontSize: ScreenUtil().setSp(50),
+                                  fontSize: ScreenUtil().setSp(55),
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),

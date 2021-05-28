@@ -1,4 +1,4 @@
-import 'package:AgrifoodApp/home/model/notification_item.dart';
+//import 'package:AgrifoodApp/home/model/notification_item.dart';
 import 'package:AgrifoodApp/home/model/notification_model.dart';
 import 'package:AgrifoodApp/respository/notification_repository.dart';
 import 'package:flutter/cupertino.dart';
