@@ -72,6 +72,13 @@ namespace WebAdminApplication.Controllers
             return Ok(await _dashboardMilkingSlipService.GetDashboardMilkingSlipByDayfromtoFarmerIdAsync(from,to,id));
         }
 
+        [Route("milkingslipCow/{from}/{to}/{id}")]
+        [HttpGet]
+        public async Task<IActionResult> GetDashboardMilkingSlipByDayfromtoCowIdAsync(int from, int to, int id)
+        {
+            return Ok(await _dashboardMilkingSlipService.GetDashboardMilkingSlipByDayfromtoCowIdAsync(from, to, id));
+        }
+
         [Route("milkcoupon/{from}/{to}")]
         [HttpGet]
         public async Task<IActionResult> GetDashboardMilkCouponByDayfromtoAsync(int from, int to)

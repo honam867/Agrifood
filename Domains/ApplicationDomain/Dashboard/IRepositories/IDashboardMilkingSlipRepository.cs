@@ -12,5 +12,6 @@ namespace ApplicationDomain.Dashboard.IRepositories
     {
         Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoAsync(int from, int to);
         Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoFarmerIdAsync(int from, int to, int farmerId);
+        Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoCowIdAsync(int from, int to, int cowId);
     }
 }
