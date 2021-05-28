@@ -6,7 +6,7 @@ namespace ApplicationDomain.Dashboard.Models.Usings
 {
     public class DashboardUsingModel
     {
-        public int Use { get; set; }
-        public int Total { get; set; }
+        public int Month { get; set; }
+        public int Dem { get; set; }
     }
 }

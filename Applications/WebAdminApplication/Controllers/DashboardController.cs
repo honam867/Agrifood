@@ -100,18 +100,18 @@ namespace WebAdminApplication.Controllers
             return Ok(await _dashboardOrderFoodService.GetDashboardOrderFoodByDayfromtoFarmerIdAsync(from, to, id));
         }
 
-        [Route("using/{from}/{to}")]
+        [Route("using/{year}")]
         [HttpGet]
-        public async Task<IActionResult> GetDashboardUsingByDayfromtoAsync(int from, int to)
+        public async Task<IActionResult> GetDashboardUsingByDayfromtoAsync(int year)
         {
-            return Ok(await _dashboardUsingService.GetDashboardUsingByDayfromtoAsync(from, to));
+            return Ok(await _dashboardUsingService.GetDashboardUsingByDayfromtoAsync(year));
         }
 
-        [Route("using/{from}/{to}/{id}")]
+        [Route("using/{year}/{id}")]
         [HttpGet]
-        public async Task<IActionResult> GetDashboardUsingByDayfromtoFarmerIdAsync(int from, int to, int id)
+        public async Task<IActionResult> GetDashboardUsingByDayfromtoFarmerIdAsync(int year, int id)
         {
-            return Ok(await _dashboardUsingService.GetDashboardUsingByDayfromtoFarmerIdAsync(from, to, id));
+            return Ok(await _dashboardUsingService.GetDashboardUsingByDayfromtoFarmerIdAsync(year, id));
         }
     }
 }

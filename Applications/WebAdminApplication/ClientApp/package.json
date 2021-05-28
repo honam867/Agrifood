@@ -49,6 +49,7 @@
     "perfect-scrollbar": "^1.5.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
+    "saturn-datepicker": "^8.0.5",
     "stream": "0.0.2",
     "timers": "^0.1.1",
     "tslib": "^1.10.0",

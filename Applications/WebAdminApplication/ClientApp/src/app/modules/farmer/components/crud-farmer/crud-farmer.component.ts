@@ -1,3 +1,5 @@
+import { PersonalDashboardComponent } from './../personal-dashboard/personal-dashboard.component';
+import { Notify } from './../../models/notify';
 import { ViewDetailComponent } from './../view-detail/view-detail.component';
 import { FeedHistoryDetail } from './../../models/feedHistoryDetail';
 import { FeedHistory } from './../../models/feedHistory';
@@ -16,6 +18,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Byre } from '../../models/byre';
 import { Cow } from 'src/app/modules/cow/models/cow';
+import { CreateNotiComponent } from '../create-noti/create-noti.component';
+import { parseString } from 'xml2js';
 
 
 @Component({
@@ -41,21 +45,24 @@ export class CrudFarmerComponent implements OnInit {
     roleName: '',
   };
   provinces: Province[] = [];
-  filteredProvinces: Province[] =[];
-  filteredDistricts: District[] =[];
+  filteredProvinces: Province[] = [];
+  filteredDistricts: District[] = [];
   byreSource: MatTableDataSource<Byre>;
   byres: Byre[] = [];
-  histories: FeedHistory[] =[];
+  histories: FeedHistory[] = [];
   cows: Cow[] = [];
-  cowsInByre: Cow[] =[];
-  cowSource:MatTableDataSource<Cow>;
+  notifications: Notify[] = [];
+  notificationSource: MatTableDataSource<Notify>;
+  cowsInByre: Cow[] = [];
+  cowSource: MatTableDataSource<Cow>;
   farmerByres: Byre[] = [];
   valueObject: ValueObject = new ValueObject();
   alert: any;
   displayedColumnsByre: string[] = ['name', 'code', 'action'];
   displayedColumnsCow: string[] = ['name', 'code', 'gender', 'birthday', 'status'];
   historySource: MatTableDataSource<FeedHistory>;
-  displayedColumnsHistory: string[] =['cowId', 'createdDate', 'action'];
+  displayedColumnsHistory: string[] = ['cowId', 'createdDate', 'action'];
+  displayedColumnsNotification: string[] = ['name', 'content', 'status', 'action'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sourceView: Farmer = new Farmer();
   constructor(
@@ -80,6 +87,7 @@ export class CrudFarmerComponent implements OnInit {
       this.fetchDistrict(this.sourceView.provinceId);
       this.fetchByre();
       this.fetchHistory();
+      this.fetchNotifications();
     } else {
       this.fetchNewcode();
     }
@@ -99,7 +107,46 @@ export class CrudFarmerComponent implements OnInit {
     });
   }
 
-  viewFeedHistoryDetail(detail: FeedHistoryDetail){
+  popUpPersonalDashboard(farmer: Farmer) {
+    const viewDialog = this.dialog.open(PersonalDashboardComponent, {
+      height: '90%',
+      width: '90%',
+      data: {
+        action: StatusForm.VIEW,
+        farmer:farmer
+      },
+      disableClose: true,
+    });
+  }
+
+  popUpCreateNotification() {
+    const createDialog = this.dialog.open(CreateNotiComponent, {
+      height: '55%',
+      width: '60%',
+      data: {
+        action: StatusForm.CREATE,
+        data:this.farmer.id
+      },
+      disableClose: true,
+    });
+
+    createDialog.afterClosed().subscribe(
+      result => {
+        this.farmerService.getNotificationById(result.data).subscribe(
+          createdNoti => {
+            if (createdNoti !== null) {
+              this.notifications.push(createdNoti);
+              this.notificationSource.data = this.notifications;
+            }
+          }
+        );
+      }
+    );
+
+  }
+
+
+  viewFeedHistoryDetail(detail: FeedHistoryDetail) {
     this.dialog.open(ViewDetailComponent, {
       height: '55%',
       width: '65%',
@@ -134,6 +181,42 @@ export class CrudFarmerComponent implements OnInit {
       this.historySource = new MatTableDataSource(this.histories);
     });
   }
+  fetchNotifications() {
+    this.farmerService.getNotificationsByFarmerId(this.sourceView.id).subscribe(result => {
+      this.notifications = result;
+      this.notificationSource = new MatTableDataSource(this.notifications);
+    });
+  }
+
+  deleteNotification(noti: Notify) {
+    const deleteDialog = this.dialog.open(ConfirmationComponent, {
+      data: {
+        message: 'Bạn có muốn xóa?',
+      },
+      disableClose: true,
+    });
+
+    deleteDialog.afterClosed().subscribe(
+      result => {
+        if (result.confirmed) {
+          this.farmerService.deleteNotification(noti.id).subscribe(
+            success => {
+              this.dialog.open(AlertComponent, {
+                data: {
+                  message: "Xóa thành công"
+                }
+              });
+              const notiIndex = this.notifications.indexOf(noti);
+              if (notiIndex !== -1) {
+                this.notifications.splice(notiIndex, 1);
+                this.notificationSource.data = this.notifications;
+              }
+            }
+          );
+        }
+      }
+    );
+  }
 
   fetchDistrict(proviceId: number) {
     this.farmerService.getDistrictByProvinceId(proviceId).subscribe(result => {
@@ -142,7 +225,7 @@ export class CrudFarmerComponent implements OnInit {
   }
 
   addFarmerAccount(farmer: Farmer) {
-    if(!farmer.userId){
+    if (!farmer.userId) {
       const addUserDialog = this.dialog.open(AddFarmerToUserComponent, {
         width: '80%',
         data: {
@@ -157,9 +240,9 @@ export class CrudFarmerComponent implements OnInit {
         }
       );
     } else {
-      this.dialog.open(AlertComponent,{
-        data:{
-          message:"Nông dân này đã có tài khoản"
+      this.dialog.open(AlertComponent, {
+        data: {
+          message: "Nông dân này đã có tài khoản"
         }
       });
     }
@@ -202,6 +285,7 @@ export class CrudFarmerComponent implements OnInit {
                 action: StatusForm.DETELE,
                 data: this.farmer,
               });
+
             }
           );
         }
@@ -234,16 +318,23 @@ export class CrudFarmerComponent implements OnInit {
       this.cowsInByre = this.cows.filter(cow => cow.byreId == byre.id);
       if (this.cowsInByre.length > 0) {
         this.cowSource = new MatTableDataSource(this.cowsInByre);
-        this.alert="";
+        this.alert = "";
       } else {
-        this.dialog.open(AlertComponent,{
-          data:{
-            message:"Nông dân chưa tạo bò trong chuồng này!"
+        this.dialog.open(AlertComponent, {
+          data: {
+            message: "Nông dân chưa tạo bò trong chuồng này!"
           }
         });
       }
-
-      // console.log(this.cowsInByre, "after filter");
     });
+  }
+
+  afterClose(result: any) {
+    const noti = result.data;
+    if (result.action === StatusForm.VIEW) {
+      const userIndex = this.notifications.map(p => p.id).indexOf(noti.id);
+      this.notifications[userIndex] = noti;
+      this.notificationSource.data = this.notifications;
+    }
   }
 }
