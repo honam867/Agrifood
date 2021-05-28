@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage>
     ),
     Tab(
       child: Text(
-        "Chuồng",
+        "Trại",
         style: GoogleFonts.openSans(
             textStyle: TextStyle(
                 color: Colors.black,

@@ -5,6 +5,7 @@ class FarmerInfoModel {
   String fullName;
   String email;
   String phoneNumber;
+  String landLine;
   String avatarURL;
   String address;
   bool status;
@@ -26,6 +27,7 @@ class FarmerInfoModel {
     this.email,
     this.userUserName,
     this.phoneNumber,
+    this.landLine,
     this.avatarURL,
     this.status,
   });
@@ -42,6 +44,7 @@ class FarmerInfoModel {
     email = json['Email'];
     userId = json['userId'];
     phoneNumber = json['PhoneNumber'];
+    landLine = json['LandLine'];
     avatarURL = json['AvatarURL'];
     status = json['Status'];
   }
@@ -58,6 +61,7 @@ class FarmerInfoModel {
     data['Code'] = this.code;
     data['Fullname'] = this.fullName;
     data['PhoneNumber'] = this.phoneNumber;
+    data['LandLine'] = this.landLine;
     data['AvatarURL'] = this.avatarURL;
     data['Status'] = this.status;
     return data;

@@ -58,7 +58,7 @@ class ChapterCard extends StatelessWidget {
               ),
             ),
             Container(
-                height: ScreenUtil().setHeight(150),
+                height: ScreenUtil().setHeight(300),
                 child: VerticalDivider(color: Colors.black)),
             InkWell(
               child: Column(
@@ -72,7 +72,7 @@ class ChapterCard extends StatelessWidget {
                         text: TextSpan(
                           children: [
                             TextSpan(
-                                text: "Tên chuồng: ",
+                                text: "Tên trại: ",
                                 style: GoogleFonts.notoSerif(
                                   fontSize: ScreenUtil().setSp(50),
                                   color: Colors.black87,
@@ -81,7 +81,7 @@ class ChapterCard extends StatelessWidget {
                             TextSpan(
                               text: this.byreItem.name,
                               style: GoogleFonts.notoSans(
-                                fontSize: ScreenUtil().setSp(60),
+                                fontSize: ScreenUtil().setSp(55),
                                 color: Colors.black87,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -91,55 +91,56 @@ class ChapterCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                      Container(
-                          width: MediaQuery.of(context).size.width /
-                              ScreenUtil().setWidth(8),
-                          child: Divider(color: Colors.transparent)),
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: "Mã: ",
-                                style: GoogleFonts.notoSerif(
-                                  fontSize: ScreenUtil().setSp(50),
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            TextSpan(
-                              text: this.byreItem.code,
-                              style: GoogleFonts.notoSans(
-                                fontSize: ScreenUtil().setSp(60),
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                  Container(
+                      width: MediaQuery.of(context).size.width /
+                          ScreenUtil().setWidth(8),
+                      child: Divider(color: Colors.transparent)),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "Mã: ",
+                            style: GoogleFonts.notoSerif(
+                              fontSize: ScreenUtil().setSp(50),
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        TextSpan(
+                          text: this.byreItem.code,
+                          style: GoogleFonts.notoSans(
+                            fontSize: ScreenUtil().setSp(55),
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: "Loại bò: ",
-                                style: GoogleFonts.notoSerif(
-                                  fontSize: ScreenUtil().setSp(50),
-                                  color: Colors.black87,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            TextSpan(
-                              text: this.byreItem.breedName,
-                              style: GoogleFonts.notoSans(
-                                fontSize: ScreenUtil().setSp(60),
-                                color: Colors.black87,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                      ],
+                    ),
+                  ),
+                  Container(
+                      width: MediaQuery.of(context).size.width /
+                          ScreenUtil().setWidth(8),
+                      child: Divider(color: Colors.transparent)),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "Giống bò: ",
+                            style: GoogleFonts.notoSerif(
+                              fontSize: ScreenUtil().setSp(50),
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        TextSpan(
+                          text: this.byreItem.breedName,
+                          style: GoogleFonts.notoSans(
+                            fontSize: ScreenUtil().setSp(55),
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    
-                  
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

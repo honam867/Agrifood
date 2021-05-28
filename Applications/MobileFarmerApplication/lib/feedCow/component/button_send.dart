@@ -2,13 +2,13 @@ import 'package:AgrifoodApp/feedCow/model/feed_history_detail_item.dart';
 import 'package:AgrifoodApp/feedCow/model/food_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
-import 'package:AgrifoodApp/ui/utils/show_toast.dart';
+//import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screen_util.dart';
 
-import '../../foodSuggestion/model/foodSuggestion_item.dart';
+//import '../../foodSuggestion/model/foodSuggestion_item.dart';
 
 class ButtonSend extends StatefulWidget {
   final List<TextEditingController> listTestEditController;

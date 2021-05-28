@@ -1,6 +1,6 @@
 import 'package:AgrifoodApp/milkingslip/model/milkingslip_detail_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cmoon_icons/flutter_cmoon_icons.dart';
+//import 'package:flutter_cmoon_icons/flutter_cmoon_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 

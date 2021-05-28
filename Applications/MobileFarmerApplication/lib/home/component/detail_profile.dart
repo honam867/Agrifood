@@ -15,10 +15,11 @@ class CardItem extends StatelessWidget {
         item(title: "Tên tài khoản", detail: this.farmerInfoModel.name ?? "", urlImage: "assets/profile/name.png"),
         item(
             title: "Trạng thái",
-            detail: this.farmerInfoModel.status ?? false == true
+            detail: this.farmerInfoModel.status ?? true
                 ? "Đang hoạt động"
                 : "Ngưng hoạt động", urlImage: "assets/profile/status.png"),
         item(title: "Số điện thoại", detail: this.farmerInfoModel.phoneNumber ?? "", urlImage: "assets/profile/phone.png"),
+        item(title: "Số điện thoại bàn", detail: this.farmerInfoModel.landLine ?? "" , urlImage: "assets/profile/landline.png" ),
         item(title: "Email", detail: this.farmerInfoModel.email ?? "", urlImage: "assets/profile/email.png"),
         item(
             title: "Đại chỉ",

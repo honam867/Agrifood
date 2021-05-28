@@ -7,7 +7,7 @@ import 'package:AgrifoodApp/foodSuggestion/bloc/foodSuggestion_bloc.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
-import 'package:AgrifoodApp/ui/utils/show_toast.dart';
+//import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,7 +89,7 @@ class _FeedCowState extends State<FeedCow> {
           BlocProvider.of<FoodSuggestionBloc>(context)
               .add(FoodLoadedSuccess(widget.cowId));
           final snackBar = SnackBar(content: Text('Gửi thất bại!'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          Scaffold.of(context).showSnackBar(snackBar);
         }
       }
     }, builder: (context, state) {

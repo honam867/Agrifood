@@ -54,7 +54,7 @@ class FormCreateCowState extends State<FormCreateCow> {
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
-  TextEditingController _noteController = new TextEditingController();
+  //TextEditingController _noteController = new TextEditingController();
 
   void initState() {
     super.initState();

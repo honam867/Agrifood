@@ -3,6 +3,7 @@ class UserInfoModel {
   String userName;
   String email;
   String phoneNumber;
+  String landLine;
   String avatarURL;
   bool status;
   DateTime createdDate;
@@ -15,6 +16,7 @@ class UserInfoModel {
       this.userName,
       this.email,
       this.phoneNumber,
+      this.landLine,
       this.avatarURL,
       this.status,
       this.createdDate,
@@ -27,6 +29,7 @@ class UserInfoModel {
     userName = json['UserName'];
     email = json['Email'];
     phoneNumber = json['PhoneNumber'];
+    landLine = json['LandLine'];
     avatarURL = json['AvatarURL'];
     status = json['Status'];
     createdDate = DateTime.parse(json['CreatedDate']);
@@ -41,6 +44,7 @@ class UserInfoModel {
     data['UserName'] = this.userName;
     data['Email'] = this.email;
     data['PhoneNumber'] = this.phoneNumber;
+    data['LandLine'] = this.landLine;
     data['AvatarURL'] = this.avatarURL;
     data['Status'] = this.status;
     data['CreatedDate'] = this.createdByUserName;
