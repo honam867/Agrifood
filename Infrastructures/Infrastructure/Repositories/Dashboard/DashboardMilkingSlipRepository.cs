@@ -32,6 +32,13 @@ namespace Infrastructure.Repositories.Dashboard
             return results;
         }
 
+        public async Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoCowIdAsync(int from, int to, int cowId)
+        {
+            DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_MILKINGSLIP_BY_DAYFROMTO_COW {0},{1},{2}", from, to, cowId));
+            IEnumerable<DashboardMilkingSlipModel> results = IMapperExtentions.ConvertDataTable<DashboardMilkingSlipModel>(dtResult).ToList();
+            return results;
+        }
+
         public async Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoFarmerIdAsync(int from, int to, int farmerId)
         {
             DataTable dtResult = await _sqlProvider.FromQueryAsync(string.Format("exec PR_DASHBOARD_MILKINGSLIP_BY_DAYFROMTO_FARMER {0},{1},{2}", from,to,farmerId));

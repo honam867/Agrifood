@@ -37,6 +37,18 @@ namespace ApplicationDomain.BOA.Services
             }
         }
 
+        public async Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoCowIdAsync(int from, int to, int cowId)
+        {
+            try
+            {
+                return await _dashboardMilkingSlipRepository.GetDashboardMilkingSlipByDayfromtoCowIdAsync(from, to, cowId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<IEnumerable<DashboardMilkingSlipModel>> GetDashboardMilkingSlipByDayfromtoFarmerIdAsync(int from, int to, int farmerId)
         {
             try
