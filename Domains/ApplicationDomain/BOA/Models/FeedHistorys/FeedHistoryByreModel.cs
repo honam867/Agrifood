@@ -4,20 +4,13 @@ using System;
 
 namespace ApplicationDomain.BOA.Models.FeedHistorys
 {
-    public class FeedHistoryModel
+    public class FeedHistoryByreModel
     {
         public int Id { get; set; }
         public string Code { get; set; }
         public int CowId { get; set; }
         public string CowName { get; set; }
         public DateTimeOffset CreatedDate { get; set; }
-    }
-    public class FeedHistoryModelMapper : Profile
-    {
-        public FeedHistoryModelMapper()
-        {
-            CreateMap<FeedHistoryModel, FeedHistory>();
-            var mapers = CreateMap<FeedHistory, FeedHistoryModel>();
-        }
+        public string ByreName { get; set; }
     }
 }

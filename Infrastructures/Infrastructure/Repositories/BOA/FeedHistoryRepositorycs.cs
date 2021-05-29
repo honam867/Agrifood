@@ -1,5 +1,6 @@
 ﻿using ApplicationDomain.BOA.Entities;
 using ApplicationDomain.BOA.IRepositories;
+using ApplicationDomain.BOA.Models.FeedHistorys;
 using AspNetCore.UnitOfWork.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,14 +32,23 @@ namespace Infrastructure.Repositories.BOA
             return dbSet.Where(r => r.Id == id);
         }
 
-        public IQueryable GetFeedHistoryByFarmerId(int id)
+        public async Task<IEnumerable<FeedHistoryByreModel>> GetFeedHistoryByFarmerId(int id)
         {
             var result = from fh in dbSet
                          join c in context.Set<Cow>() on fh.CowId equals c.Id
                          join b in context.Set<Byre>() on c.ByreId equals b.Id
                          where b.FarmerId == id
-                         select fh;
-            return result;
+                         select new FeedHistoryByreModel
+                         {
+                             Id = fh.Id,
+                             Code = fh.Code,
+                             CowId = c.Id,
+                             CowName = c.Name,
+                             CreatedDate = fh.CreatedDate,
+                             ByreName = b.Name
+                         };
+            var test = await result.ToListAsync();
+            return test;
         }
 
         public IQueryable GetFeedHistoryByDate(int day, int month, int year, int farmerId)
@@ -50,5 +60,6 @@ namespace Infrastructure.Repositories.BOA
                          select fh;
             return result;
         }
+
     }
 }
