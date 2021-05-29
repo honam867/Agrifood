@@ -1,4 +1,5 @@
 ﻿using ApplicationDomain.BOA.Entities;
+using ApplicationDomain.BOA.Models.FeedHistorys;
 using AspNetCore.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetFeedHistorys();
         IQueryable GetFeedHistoryById(int id);
         Task<bool> CheckCodeExistsAsync(string code);
-        IQueryable GetFeedHistoryByFarmerId(int id);
+        Task<IEnumerable<FeedHistoryByreModel>> GetFeedHistoryByFarmerId(int id);
         IQueryable GetFeedHistoryByDate(int day, int month, int year, int farmerId);
     }
 }

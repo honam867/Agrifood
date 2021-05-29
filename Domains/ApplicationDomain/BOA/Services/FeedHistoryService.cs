@@ -106,9 +106,9 @@ namespace ApplicationDomain.BOA.Services
             return await _feedHistoryRepository.CheckCodeExistsAsync(code);
         }
 
-        public async Task<IEnumerable<FeedHistoryModel>> GetFeedHistoryByFarmerIdAsync(int id)
+        public async Task<IEnumerable<FeedHistoryByreModel>> GetFeedHistoryByFarmerIdAsync(int id)
         {
-            return await _feedHistoryRepository.GetFeedHistoryByFarmerId(id).MapQueryTo<FeedHistoryModel>(_mapper).ToListAsync();
+            return await _feedHistoryRepository.GetFeedHistoryByFarmerId(id);
         }
 
         public async Task<IEnumerable<FeedHistoryModel>> GetFeedHistoryByDateAsync(int day, int month, int year, int farmerId)
