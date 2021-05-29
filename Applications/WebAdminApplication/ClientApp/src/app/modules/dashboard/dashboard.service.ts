@@ -41,4 +41,7 @@ export class DashBoardService {
   getUsingDataByYearAndFarmerId(year: number, farmerId: number): Observable<UsingData[]> {
     return this.http.get(`dashboard/using/${year}/${farmerId}`);
   }
+  getMilkingSlipByCowId(startDate: string, endDate: string, cowId: number): Observable<MilkingSlip[]> {
+    return this.http.get(`dashboard/milkingslip/${startDate}/${endDate}/${cowId}`);
+  }
 }

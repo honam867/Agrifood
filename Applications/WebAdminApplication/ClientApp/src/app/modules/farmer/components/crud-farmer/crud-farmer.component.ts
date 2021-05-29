@@ -1,3 +1,4 @@
+import { CowDashboardComponent } from './../cow-dashboard/cow-dashboard.component';
 import { UpdateCowComponent } from './../update-cow/update-cow.component';
 import { PersonalDashboardComponent } from './../personal-dashboard/personal-dashboard.component';
 import { Notify } from './../../models/notify';
@@ -104,6 +105,18 @@ export class CrudFarmerComponent implements OnInit {
     this.farmerService.getDistrictByProvinceId(provinceId).subscribe(result => {
       this.districts = result;
       this.filteredDistricts = this.districts;
+    });
+  }
+
+  popUpCowDashboard(cow: Cow) {
+    const viewDialog = this.dialog.open(CowDashboardComponent, {
+      height: '90%',
+      width: '90%',
+      data: {
+        action: StatusForm.VIEW,
+        cow
+      },
+      disableClose: true,
     });
   }
 

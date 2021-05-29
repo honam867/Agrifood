@@ -10,11 +10,12 @@ import { ViewDetailComponent } from './components/view-detail/view-detail.compon
 import { CreateNotiComponent } from './components/create-noti/create-noti.component';
 import { PersonalDashboardComponent } from './components/personal-dashboard/personal-dashboard.component';
 import { UpdateCowComponent } from './components/update-cow/update-cow.component';
+import { CowDashboardComponent } from './components/cow-dashboard/cow-dashboard.component';
 
 
 
 @NgModule({
-  declarations: [FarmerListComponent, CrudFarmerComponent, ViewDetailComponent, CreateNotiComponent, PersonalDashboardComponent, UpdateCowComponent],
+  declarations: [FarmerListComponent, CrudFarmerComponent, ViewDetailComponent, CreateNotiComponent, PersonalDashboardComponent, UpdateCowComponent, CowDashboardComponent],
   imports: [
     CommonModule,
     FarmerRoutingModule,

@@ -1,19 +1,32 @@
 #divChart {
-    display: block;
-    width: 400px;
     height: 400px;
+    width: 49%;
     h6 {
         font-weight: 800;
         color: grey;
     }
+    // #concac {
+    //     height: 500px;
+    // }
 }
 
 #divChartOrder {
-    width: 700px;
     height: 400px;
+    width: 49%;
 }
 
-// #divChartMilkingSlip {
-//     width: 900px;
-//     height: 600px;
-// }
+#divChartUsing {
+    height: 614px;
+    width: 1057px;
+}
+
+#divChartMilkCoupon {
+    height: 628px;
+    width: 1057px;
+}
+
+#divChartMilkingSlip {
+    height: 614px;
+    width: 1057px;
+    margin-top: 8px;
+}

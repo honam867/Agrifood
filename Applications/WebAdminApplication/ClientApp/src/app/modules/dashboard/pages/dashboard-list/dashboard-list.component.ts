@@ -40,12 +40,14 @@ export class DashboardListComponent implements OnInit {
   yearUsingChart: any;
   yearUsingLabels: string[] = [];
   yearUsingData: number[] = [];
+  isMini: boolean;
   constructor(
     public dashBoardService: DashBoardService
   ) { }
 
   ngOnInit(): void {
     // this.isActive = true;
+    this.isMini = false;
     this.startDate.setFullYear(this.endDate.getFullYear() - 1);
     this.startDateMilkingSlip.setMonth(this.endDateMilkingSlip.getMonth() - 1);
     this.startDateMilkingSlip.setDate(this.endDateMilkingSlip.getDate() + 1);
