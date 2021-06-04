@@ -1,111 +1,119 @@
-<div class="row">
-    <div id="divChart">
-        <mat-card style="padding: 86px 31px 70px; margin-left: 26px; margin-right: 14px;" class="col-xs-12">
-            <canvas id="totalCowChart"></canvas>
-            <h6 class="text-center">Tổng số bò: <strong>{{sumCow}}</strong></h6>
-        </mat-card>
-        <!-- <div class="col-lg-6" style="padding-top: 7px; width: 100%;"></div> -->
-    </div>
-    <div id="divChartOrder">
-        <mat-card class="col-xs-12">
-            <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeTotalOrder()" #f="ngForm">
-                <div class="row" style="padding: 0px 10px 0px;">
-                    <div class="col-xs-6">
-                        <mat-form-field class="input input-fluid" appearance="outline">
-                            <input matInput [satDatepicker]="picker" [(ngModel)]="dateRangeTotalOrder" placeholder="Mặc định: {{startDate | date: 'dd/MM/yyyy'}}-{{endDate | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
-                            <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
-                            <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
-                        </mat-form-field>
+<div class="pl-4 pr-4 pb-4">
+    <div class="d-flex justify-content-between row-1 w-100 h-100">
+        <div class="w-100 item" id="divChart">
+            <mat-card class="h-100">
+                <canvas height={{canvasHeight}} id="totalCowChart"></canvas>
+                <h6 class="text-center">Tổng số bò: <strong>{{sumCow}}</strong></h6>
+            </mat-card>
+        </div>
+        <div class="w-100 item" id="divChart">
+            <mat-card class="h-100">
+                <canvas height={{canvasHeight}} id="totalOrderChart"></canvas>
+                <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeTotalOrder()" #f="ngForm">
+                    <div class="d-flex">
+                        <div class="w-100">
+                            <mat-form-field class="input input-fluid" appearance="outline">
+                                <input matInput [satDatepicker]="picker" [(ngModel)]="dateRangeTotalOrder" placeholder="Mặc định: {{startDate | date: 'dd/MM/yyyy'}}-{{endDate | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
+                                <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                                <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex-shrink-1">
+                            <button mat-raised-button class="btn btn-outline-success" type="submit" style="padding: 22px 21px 17px; margin-left: 5px;">
+                                   Chọn
+                          </button>
+                        </div>
                     </div>
-                    <div class="col-xs-6">
-                        <button mat-raised-button class="btn btn-outline-success" type="submit" style="padding: 22px 21px 17px; margin-left: 5px;">
-                  Chọn
-                  </button>
-                    </div>
-                </div>
-            </form>
-            <canvas id="totalOrderChart"></canvas>
-        </mat-card>
+                </form>
+            </mat-card>
+        </div>
     </div>
-</div>
 
-<div id="divChartUsing">
-    <div class="row">
-        <mat-card class="col-md-12" style="padding: 0px 50px 0px; margin-left: 26px; margin-right: 14px; margin-top: 14px;">
-            <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && submitYearUsing()" #f="ngForm">
-                <div class="row" style="padding: 0px 10px 0px;">
-                    <div class="col-xs-6">
-                        <mat-form-field style="padding: 10px 50px 10px;" appearance="fill">
-                            <input matInput [matDatepicker]="dp" [(ngModel)]="yearUsing" placeholder="Mặc định: {{date.getFullYear()}}" [ngModelOptions]="{ standalone: true }">
-                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                            <mat-datepicker #dp startView="multi-year" (yearSelected)="yearHandler($event, dp)">
-                            </mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-xs-6">
-                        <button style="padding: 28px 21px 20px; margin-left: 5px;" mat-raised-button class="btn btn-outline-success" type="submit">
-                Chọn
-            </button>
-                    </div>
-                </div>
-            </form>
-            <canvas id="yearUsingChart"></canvas>
-        </mat-card>
-    </div>
-</div>
+    <div class="w-100 mt-3" id="divChartUsing">
+        <div class="d-flex justify-content-between row-1 w-100 h-100">
+            <div class="w-100 item" id="divChart">
+                <mat-card class="w-100 h-100">
+                    <!-- <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && submitYearUsing()" #f="ngForm">
+                        <div class="row" style="padding: 0px 10px 0px;">
+                            <div class="col-xs-6">
+                                <mat-form-field style="padding: 10px 50px 10px;" appearance="fill">
+                                    <input matInput [matDatepicker]="dp" [(ngModel)]="yearUsing" placeholder="Mặc định: {{date.getFullYear()}}" [ngModelOptions]="{ standalone: true }">
+                                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp startView="multi-year" (yearSelected)="yearHandler($event, dp)">
+                                    </mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-xs-6">
+                                <button style="padding: 28px 21px 20px; margin-left: 5px;" mat-raised-button class="btn btn-outline-success" type="submit">
+                    Chọn
+                </button>
+                            </div>
+                        </div>
+                    </form> -->
+                    <canvas height={{canvasHeight}} id="yearUsingChart"></canvas>
+                    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && submitYearUsing()" #f="ngForm">
+                        <div class="d-flex" style="padding: 0px 10px 0px;">
+                            <div class="w-100">
+                                <mat-form-field style="padding: 10px 50px 10px;" appearance="fill">
+                                    <input matInput [matDatepicker]="dp" [(ngModel)]="yearUsing" placeholder="Mặc định: {{date.getFullYear()}}" [ngModelOptions]="{ standalone: true }">
+                                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                    <mat-datepicker #dp startView="multi-year" (yearSelected)="yearHandler($event, dp)">
+                                    </mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex-shrink-1">
+                                <button style="padding: 28px 21px 20px; margin-left: 5px;" mat-raised-button class="btn btn-outline-success" type="submit">
+                                Chọn
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
+            <div class="w-100 item" id="divChart">
+                <mat-card class="w-100 h-100">
+                    <canvas height={{canvasHeight}} id="totalMilkCouponChart"></canvas>
+                    <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkCoupon()" #f="ngForm">
+                        <div class="d-flex">
+                            <div class="w-100">
+                                <mat-form-field class="input input-fluid" appearance="outline">
+                                    <input matInput [satDatepicker]="picker2" [(ngModel)]="dateRangeMilkCoupon" placeholder="Mặc định: {{startDateMilkCoupon | date: 'dd/MM/yyyy'}}-{{endDateMilkCoupon | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
+                                    <sat-datepicker #picker2 [rangeMode]="true"></sat-datepicker>
+                                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex-shrink-1">
+                                <button mat-raised-button class="btn btn-outline-success" type="submit" style="padding: 22px 21px 17px; margin-left: 5px;">
+                                     Chọn
+                            </button>
+                            </div>
+                        </div>
+                    </form>
+                </mat-card>
+            </div>
 
-<div id="divChartMilkCoupon">
-    <div class="row">
-        <mat-card class="col-md-12" style="padding: 0px 50px 0px; margin-left: 26px; margin-right: 14px; margin-top: 28px ;">
-            <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkCoupon()" #f="ngForm">
-                <div class="row" style="padding: 0px 10px 0px;">
-                    <div class="col-xs-6">
-                        <mat-form-field style="padding: 10px 5px 10px;" class="input input-fluid" appearance="outline">
-                            <input matInput [satDatepicker]="picker2" [(ngModel)]="dateRangeMilkCoupon" placeholder="Mặc định: {{startDateMilkCoupon | date: 'dd/MM/yyyy'}}-{{endDateMilkCoupon | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
-                            <sat-datepicker #picker2 [rangeMode]="true"></sat-datepicker>
-                            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-xs-6">
-                        <button style="padding: 20px 20px 20px; margin-top: 15px;" mat-raised-button class="btn btn-outline-success" type="submit">
-                  Chọn
-              </button>
-                    </div>
-                </div>
-            </form>
-            <canvas style="padding-bottom: 10px;" id="totalMilkCouponChart"></canvas>
-        </mat-card>
+        </div>
     </div>
-</div>
 
-<div id="divChartMilkingSlip">
-    <div class="row">
-        <mat-card class="col-md-12" style="padding: 0px 50px 0px; margin-left: 26px; margin-right: 14px; margin-top: 28px ;">
+    <div class="w-100 mt-3" id="divChartUsing">
+        <mat-card class="w-100 h-100">
+            <canvas height="120px" id="totalMilkingSlipChart"></canvas>
             <form class="parent-form" name="form" novalidate (ngSubmit)="f.form.valid && selectRangeMilkingSlip()" #f="ngForm">
-                <div class="row" style="padding: 0px 10px 0px;">
-                    <div class="col-xs-6">
+                <div class="d-flex justify-content-center">
+                    <div class="">
                         <mat-form-field style="padding: 10px 5px 10px;" class="input input-fluid" appearance="outline">
                             <input matInput [satDatepicker]="picker1" [(ngModel)]="dateRangeMilkingSlip" placeholder="Mặc định: {{startDateMilkingSlip | date: 'dd/MM/yyyy'}}-{{endDateMilkingSlip | date: 'dd/MM/yyyy'}}" [ngModelOptions]="{ standalone: true }" />
                             <sat-datepicker #picker1 [rangeMode]="true"></sat-datepicker>
                             <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
                         </mat-form-field>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="">
                         <button style="padding: 20px 20px 20px; margin-top: 15px;" mat-raised-button class="btn btn-outline-success" type="submit">
-                    Chọn
-                </button>
+                  Chọn
+              </button>
                     </div>
                 </div>
             </form>
-            <canvas id="totalMilkingSlipChart"></canvas>
         </mat-card>
     </div>
 </div>
-
-
-<!-- <div id="divChartMilkingSlip">
-    <mat-card class="m-2">
-        <canvas id="totalCowChart"></canvas>
-    </mat-card>
-
-</div> -->
