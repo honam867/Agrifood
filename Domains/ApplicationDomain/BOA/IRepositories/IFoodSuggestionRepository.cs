@@ -14,5 +14,6 @@ namespace ApplicationDomain.BOA.IRepositories
         IQueryable GetFoodSuggestionById(int id);
         IQueryable GetFoodSuggestionByFarmerId(int id);
         Task<bool> CheckCodeExistsAsync(string code);
+        IQueryable GetFoodSuggestionByProvinceId(int id);
     }
 }

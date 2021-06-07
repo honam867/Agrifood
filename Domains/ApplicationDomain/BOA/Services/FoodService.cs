@@ -3,6 +3,7 @@ using ApplicationDomain.BOA.IRepositories;
 using ApplicationDomain.BOA.IServices;
 using ApplicationDomain.BOA.Models;
 using ApplicationDomain.BOA.Models.Foods;
+using ApplicationDomain.BOA.Models.FoodSuggestions;
 using AspNetCore.AutoGenerate;
 using AspNetCore.Common.Identity;
 using AspNetCore.DataBinding.AutoMapper;
@@ -20,15 +21,17 @@ namespace ApplicationDomain.BOA.Services
     public class FoodService : ServiceBase, IFoodService
     {
         private readonly IFoodRepository _foodRepository;
+        private readonly IFoodSuggestionService _foodSuggestionService;
         
         public FoodService(
             IFoodRepository foodRepository,
+            IFoodSuggestionService foodSuggestionService,
             IMapper mapper,
             IUnitOfWork uow
             ) : base(mapper, uow)
         {
             _foodRepository = foodRepository;
-            
+            _foodSuggestionService = foodSuggestionService;
         }
 
         public async Task<int> CreateFoodAsync(FoodModelRq model, UserIdentity<int> issuer)
@@ -39,7 +42,17 @@ namespace ApplicationDomain.BOA.Services
                 entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _foodRepository.Create(entity);
-                return await _uow.SaveChangesAsync() == 1 ? entity.Id : 0;
+                if (await _uow.SaveChangesAsync() > 0)
+                {
+                    FoodSuggestionModelRq rq = new FoodSuggestionModelRq
+                    {
+                        Content = entity.Name,
+                        FoodId = entity.Id
+                    };
+                    await _foodSuggestionService.CreateFoodSuggestionAsync(rq, issuer);
+                    return entity.Id;
+                }
+                return 0;
             }
             catch (Exception e)
             {
@@ -52,6 +65,7 @@ namespace ApplicationDomain.BOA.Services
             try
             {
                 var entity = await _foodRepository.GetEntityByIdAsync(id);
+                await _foodSuggestionService.DeleteFoodSuggestionAsync(id);
                 _foodRepository.Delete(entity);
                 if (await _uow.SaveChangesAsync() == 1)
                 {

@@ -21,14 +21,5 @@ namespace ApplicationDomain.BOA.Models.Breeds
             var mapers = CreateMap<Breed, BreedModelRq>();
         }
     }
-    public class BreedModelRqValidator : AbstractValidator<BreedModelRq>
-    {
-        public BreedModelRqValidator()
-        {
-            RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.Name).MinimumLength(3);
-            RuleFor(p => p.Code).NotEmpty();
-            RuleFor(p => p.Code).Length(3);
-        }
-    }
+
 }

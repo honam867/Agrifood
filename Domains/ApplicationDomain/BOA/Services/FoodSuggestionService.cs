@@ -118,5 +118,10 @@ namespace ApplicationDomain.BOA.Services
                 return code;
             return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(10));
         }
+
+        public async Task<IEnumerable<FoodSuggestionModel>> GetFoodSuggestionByProvinceIdAsync(UserIdentity<int> issuer)
+        {
+            return await _foodSuggestionRepository.GetFoodSuggestionByProvinceId(issuer.Id).MapQueryTo<FoodSuggestionModel>(_mapper).ToListAsync();
+        }
     }
 }

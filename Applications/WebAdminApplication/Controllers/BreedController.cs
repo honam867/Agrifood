@@ -55,10 +55,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if (await _breedService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _breedService.CreateBreedAsync(model, issuer));
             }
             catch (Exception e)
