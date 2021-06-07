@@ -41,6 +41,7 @@ export class DashboardListComponent implements OnInit {
   yearUsingLabels: string[] = [];
   yearUsingData: number[] = [];
   isMini: boolean;
+  canvasHeight = 130;
   constructor(
     public dashBoardService: DashBoardService
   ) { }
@@ -71,14 +72,13 @@ export class DashboardListComponent implements OnInit {
 
   yearHandler(data, datepicker: MatDatepicker<Date>) {
     this.yearUsing = data._i.year;
-    console.log(this.yearUsing);
     datepicker.close();
   }
 
   fetchUsingDataByYear(year) {
     this.dashBoardService.getUsingDataByYear(year).subscribe(
       res => {
-        this.yearUsingLabels = res.map(item => 'Tháng '+ item.month);
+        this.yearUsingLabels = res.map(item => 'Tháng ' + item.month);
         this.yearUsingData = res.map(item => item.dem);
         this.showYearUsingData();
       });
@@ -191,11 +191,11 @@ export class DashboardListComponent implements OnInit {
         responsive: true,
         scales: {
           yAxes: [{
-              ticks: {
-                  beginAtZero: true
-              }
+            ticks: {
+              beginAtZero: true
+            }
           }]
-      },
+        },
         legend: {
           display: false
         },
