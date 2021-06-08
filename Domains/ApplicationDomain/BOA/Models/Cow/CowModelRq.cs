@@ -32,12 +32,5 @@ namespace ApplicationDomain.BOA.Models.Cows
             var mapers = CreateMap<Cow, CowModelRq>();
         }
     }
-    public class CowModelRqValidator : AbstractValidator<CowModelRq>
-    {
-        public CowModelRqValidator()
-        {
-            RuleFor(p => p.Code).NotEmpty();
-            RuleFor(p => p.Code).Length(3);
-        }
-    }
+
 }

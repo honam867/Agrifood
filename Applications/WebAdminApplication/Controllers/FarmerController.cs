@@ -51,10 +51,6 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if(await _FarmerService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
                 return Ok(await _FarmerService.CreateFarmerAsync(model, issuer));
             }
             catch (Exception e)

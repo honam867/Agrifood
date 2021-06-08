@@ -9,8 +9,8 @@ namespace ApplicationDomain.BOA.Models.FoodSuggestions
 {
     public class FoodSuggestionModelRq
     {
-        public string Code { get; set; }
         public string Content { set; get; }
+        public int FoodId { get; set; }
     }
 
     public class FoodSuggestionModelRqMapper : Profile

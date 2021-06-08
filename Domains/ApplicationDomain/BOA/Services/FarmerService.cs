@@ -40,6 +40,7 @@ namespace ApplicationDomain.CMMS.Services
             try
             {
                 var entity = _mapper.Map<Farmer>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _FarmerRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
@@ -73,7 +74,12 @@ namespace ApplicationDomain.CMMS.Services
                 {
                     return false;
                 }
+
                 _mapper.Map(model, entity);
+                if (entity.Code == "")
+                {
+                    entity.Code = await AutoGenerateCodeAsync();
+                }
                 entity.UpdateBy(issuer);
                 _FarmerRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)

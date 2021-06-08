@@ -36,6 +36,14 @@ namespace WebAdminApplication.Controllers
             return Ok(await _breedService.GetFoodSuggestionByIdAsync(id));
         }
 
+        [Route("province")]
+        [HttpGet]
+        public async Task<IActionResult> GetFoodSuggestionByProvinceIdAsync()
+        {
+            var issuer = GetCurrentUserIdentity<int>();
+            return Ok(await _breedService.GetFoodSuggestionByProvinceIdAsync(issuer));
+        }
+
         [Route("")]
         [HttpPost]
         public async Task<IActionResult> CreateFoodSuggestionAsync([FromBody]FoodSuggestionModelRq model)

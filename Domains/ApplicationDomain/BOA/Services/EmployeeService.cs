@@ -41,6 +41,7 @@ namespace ApplicationDomain.CMMS.Services
             try
             {
                 var entity = _mapper.Map<Employee>(model);
+                entity.Code = await AutoGenerateCodeAsync();
                 entity.CreateBy(issuer).UpdateBy(issuer);
                 _EmployeeRepository.Create(entity);
                 if (await _uow.SaveChangesAsync() == 1)
@@ -75,6 +76,10 @@ namespace ApplicationDomain.CMMS.Services
                     return false;
                 }
                 _mapper.Map(model, entity);
+                if (entity.Code == "")
+                {
+                    entity.Code = await AutoGenerateCodeAsync();
+                }
                 entity.UpdateBy(issuer);
                 _EmployeeRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)

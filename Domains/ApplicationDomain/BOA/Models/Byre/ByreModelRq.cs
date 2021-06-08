@@ -25,14 +25,5 @@ namespace ApplicationDomain.BOA.Models.Byres
             var mapers = CreateMap<Byre, ByreModelRq>();
         }
     }
-    public class ByreModelRqValidator : AbstractValidator<ByreModelRq>
-    {
-        public ByreModelRqValidator()
-        {
-            RuleFor(p => p.Name).NotEmpty();
-            RuleFor(p => p.Name).MinimumLength(3);
-            RuleFor(p => p.Code).NotEmpty();
-            RuleFor(p => p.Code).Length(3);
-        }
-    }
+
 }
