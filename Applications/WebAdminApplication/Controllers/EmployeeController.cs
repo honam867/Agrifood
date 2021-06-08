@@ -51,10 +51,7 @@ namespace WebAdminApplication.Controllers
             var issuer = GetCurrentUserIdentity<int>();
             try
             {
-                if(await _EmployeeService.CheckCodeExistsAsync(model.Code))
-                {
-                    return BadRequest("Code Exists");
-                }
+              
                 return Ok(await _EmployeeService.CreateEmployeeAsync(model, issuer));
             }
             catch (Exception e)

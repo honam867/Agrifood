@@ -37,6 +37,7 @@ export class CrudFarmerComponent implements OnInit {
   farmer: Farmer = new Farmer();
   isView = true;
   isCreate = true;
+  isEdit = true;
   districts: District[] = [];
   // roles: Role[] = [];
   // roleOfUsers: RoleOfUser[] = [];
@@ -291,6 +292,7 @@ export class CrudFarmerComponent implements OnInit {
 
   edit() {
     this.isView = false;
+    this.isEdit = true;
   }
 
   save() {

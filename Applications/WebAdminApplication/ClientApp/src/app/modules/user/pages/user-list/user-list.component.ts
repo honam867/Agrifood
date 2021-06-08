@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit {
   value = '';
   page = 1;
   showLoad = false;
-  displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'role', 'status', 'action'];
+  displayedColumns: string[] = ['userName', 'email', 'phoneNumber', 'roles', 'status', 'action'];
   dataSource: MatTableDataSource<User>;
   users: User[] = [];
   user2s: User[] = [];

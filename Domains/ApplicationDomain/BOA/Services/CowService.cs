@@ -90,7 +90,12 @@ namespace ApplicationDomain.BOA.Services
                 {
                     return false;
                 }
+                
                 _mapper.Map(model, entity);
+                if (entity.Code == "")
+                {
+                    entity.Code = await AutoGenerateCodeAsync();
+                }
                 entity.UpdateBy(issuer);
                 _cowRepository.Update(entity);
                 if (await _uow.SaveChangesAsync() == 1)
