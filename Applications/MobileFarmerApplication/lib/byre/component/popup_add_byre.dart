@@ -32,10 +32,13 @@ openPopupAddByre(BuildContext context,
   }
 
   Alert(
-      closeFunction: () => Navigator.pop(context),
+      closeFunction: () {
+         Navigator.pop(context);
+          Navigator.pop(context);
+      },
       context: context,
       onWillPopActive: false,
-      title: update == false ? "Thêm chuồng" : "Chỉnh sửa chuồng",
+      title: update == false ? "Thêm trại" : "Chỉnh sửa trại",
       content: Form(
         key: _formKey,
         child: Column(
@@ -43,27 +46,10 @@ openPopupAddByre(BuildContext context,
             TextFormField(
               controller: _nameByreController,
               validator: (value) =>
-                  value.isEmpty ? 'Tên chuồng không được bỏ trống' : null,
+                  value.isEmpty ? 'Tên trại không được bỏ trống' : null,
               decoration: InputDecoration(
                 icon: Icon(Icons.font_download),
-                labelText: 'Tên chuồng',
-              ),
-            ),
-            TextFormField(
-              controller: _codeController,
-              validator: (value) =>
-                  value.isEmpty ? 'Mã chuồng không được bỏ trống' : null,
-              decoration: InputDecoration(
-                icon: Icon(Icons.format_shapes),
-                labelText: 'Mã chuồng',
-              ),
-            ),
-            TextFormField(
-              controller: _rationController,
-              //validator: (value) => value.isEmpty ? 'Email cannot be blank':null,
-              decoration: InputDecoration(
-                icon: Icon(Icons.grass),
-                labelText: 'Khẩu phần ăn',
+                labelText: 'Tên trại',
               ),
             ),
           ],
@@ -89,7 +75,8 @@ openPopupAddByre(BuildContext context,
           },
           child: Text(
             update == false ? "Tạo" : "Cập nhật",
-            style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(60)),
           ),
         )
       ]).show();
@@ -108,7 +95,8 @@ openPopupDeleteByre(BuildContext context,
       DialogButton(
         child: Text(
           "Hủy",
-          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
+          style:
+              TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
         ),
         onPressed: () => Navigator.pop(context),
         color: Colors.grey,
@@ -117,7 +105,8 @@ openPopupDeleteByre(BuildContext context,
       DialogButton(
         child: Text(
           "Đồng ý",
-          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
+          style:
+              TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(60)),
         ),
         onPressed: () {
           deleteByreFuction(context, byreId);

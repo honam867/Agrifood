@@ -6,6 +6,7 @@ import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/feedCow/page/feedCow_page.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
@@ -19,7 +20,9 @@ import 'package:flutter_screenutil/screen_util.dart';
 class FormDetailCow extends StatefulWidget {
   final CowItem cowItem;
   final FoodSuggestionItem foodSuggestionItem;
-  const FormDetailCow({Key key, this.cowItem, this.foodSuggestionItem})
+  final FarmerInfoModel farmerInfoModel;
+  final routeName;
+  const FormDetailCow({Key key, this.cowItem, this.foodSuggestionItem, this.routeName, this.farmerInfoModel})
       : super(key: key);
   @override
   _FormDetailCowState createState() => _FormDetailCowState();
@@ -35,7 +38,8 @@ class _FormDetailCowState extends State<FormDetailCow> {
   Widget build(BuildContext context) {
     return BlocConsumer<CowBloc, CowState>(builder: (context, state) {
       if (state is CowLoadInprocess) {
-        BlocProvider.of<CowBloc>(context).add(GetCowByCowId(cowItem: widget.cowItem));
+        BlocProvider.of<CowBloc>(context)
+            .add(GetCowByCowId(cowItem: widget.cowItem));
       }
       if (state is GetCowFatherMotherName) {
         return SafeArea(
@@ -74,6 +78,7 @@ class _FormDetailCowState extends State<FormDetailCow> {
                                     FoodSuggestionRepository()),
                             child: FormCreateCow(
                                 contextCowPage: context,
+                                farmerInfoModel: widget.farmerInfoModel,
                                 routeName: "EditCow",
                                 cowItem: widget.cowItem),
                           ),
@@ -129,6 +134,21 @@ class _FormDetailCowState extends State<FormDetailCow> {
                               color: Colors.grey,
                             ),
                             builItem(
+                                title: "Mã bò: ", string: widget.cowItem.code),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                            builItem(
+                                title: "Trại: ",
+                                string: widget.cowItem.byreName ?? ""),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                            builItem(
                                 title: "Bò cha: ",
                                 string: widget.cowItem.fatherName),
                             Divider(
@@ -139,21 +159,6 @@ class _FormDetailCowState extends State<FormDetailCow> {
                             builItem(
                                 title: "Bò mẹ: ",
                                 string: widget.cowItem.motherName),
-                            Divider(
-                              height: 20,
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                            builItem(
-                                title: "Chuồng: ",
-                                string: widget.cowItem.byreName ?? ""),
-                            Divider(
-                              height: 20,
-                              thickness: 1,
-                              color: Colors.grey,
-                            ),
-                            builItem(
-                                title: "Mã bò: ", string: widget.cowItem.code),
                             Divider(
                               height: 20,
                               thickness: 1,
@@ -172,17 +177,22 @@ class _FormDetailCowState extends State<FormDetailCow> {
                                 string: Formator.convertDatatimeToString(
                                     widget.cowItem.weaningDate ??
                                         DateTime.now())),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
+                            builItem(
+                                title: "Ghi chú: ",
+                                string: widget.cowItem.note ?? ""),
+                            Divider(
+                              height: 20,
+                              thickness: 1,
+                              color: Colors.grey,
+                            ),
                           ],
                         ),
                       ),
-                      // decoration: BoxDecoration(
-                      //   color: Colors.green[100],
-                      //   borderRadius: BorderRadius.only(
-                      //     topLeft: Radius.circular(20),
-                      //     topRight: Radius.circular(20),
-                      //     bottomLeft: Radius.circular(75),
-                      //     bottomRight: Radius.circular(75),
-                      // )),
                     ),
                   )
                 ],
@@ -192,12 +202,12 @@ class _FormDetailCowState extends State<FormDetailCow> {
         );
       }
       return Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
           child: Center(
-        child: CircularProgressIndicator(),
-      ));
+            child: CircularProgressIndicator(),
+          ));
     }, listener: (context, state) {
       if (state is CowDeleted) {
         showToast(context: context, string: state.result);

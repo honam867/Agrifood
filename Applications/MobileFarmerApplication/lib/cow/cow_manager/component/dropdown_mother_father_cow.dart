@@ -28,7 +28,7 @@ Widget buildIdFather(
         ),
       );
     }).toList();
-  } else if (title == "Chuồng") {
+  } else if (title == "Trại") {
     items = byreModel.byreItem.map((car) {
       return new DropdownMenuItem(
         value: car.id,
@@ -53,7 +53,7 @@ Widget buildIdFather(
   return DropdownButton(
       value: title == "Thức ăn"
           ? foodSuggestionId
-          : title == "Chuồng"
+          : title == "Trại"
               ? byreId
               : title == "Bò cha"
                   ? cowFatherId

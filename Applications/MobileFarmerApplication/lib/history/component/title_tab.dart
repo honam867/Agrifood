@@ -7,7 +7,7 @@ import 'colors.dart';
 
 Widget title() {
   return Text(
-    "Thống kê",
+    "Nhật ký",
     style: TextStyle(
         fontSize: ScreenUtil().setSp(80),
         fontWeight: FontWeight.bold,

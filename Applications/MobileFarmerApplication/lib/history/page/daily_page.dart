@@ -141,11 +141,7 @@ class _DailyPageState extends State<DailyPage>
                               children: [
                                 title(),
                                 IconButton(
-                                    icon: CIcon(
-                                      isFood == true ? IconMoon.icon_baidu : IconMoon.icon_about_dot_me,
-                                      color: Colors.orangeAccent,
-                                      //size: 20,
-                                    ),
+                                    icon: isFood == true ? Image.asset("assets/layout/milk.png") : Image.asset("assets/layout/food.png"),
                                     onPressed: () {
                                       setState(() {
                                         isFood = !isFood;

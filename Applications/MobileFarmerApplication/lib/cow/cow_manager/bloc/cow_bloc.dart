@@ -24,7 +24,7 @@ class CowBloc extends Bloc<CowEvent, CowState> {
   @override
   Stream<CowState> mapEventToState(CowEvent event) async* {
     if (event is CowLoadedSucces) {
-      yield* _mapCowLoadedToState();
+      yield* mapCowLoadedToState();
     } else if (event is CowAddProcess) {
       yield* _mapTodoAddedToState(event);
     } else if (event is CowUpdated) {
@@ -63,7 +63,7 @@ class CowBloc extends Bloc<CowEvent, CowState> {
     }
   }
 
-  Stream<CowState> _mapCowLoadedToState() async* {
+  Stream<CowState> mapCowLoadedToState() async* {
     try {
       List<CowItem> list = [];
       CowModel cowModelList = new CowModel();

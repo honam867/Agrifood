@@ -31,7 +31,7 @@ class _DashboardState extends State<Dashboard> {
   ScrollController controller = new ScrollController();
   Items item1 = new Items(
       title: "Quản lí trại",
-      //subtitle: "Danh sách các chuồng hiện có",
+      //subtitle: "Danh sách các trại hiện có",
       event: "",
       img: "assets/layout/stable.png");
 
@@ -42,22 +42,8 @@ class _DashboardState extends State<Dashboard> {
     img: "assets/layout/cowmale.png",
   );
 
-  Items item3 = new Items(
-    title: "Quản lý Thức ăn",
-    //subtitle: "Tổng hợp lượng thức ăn",
-    event: "",
-    img: "assets/layout/harvest.png",
-  );
-
-  Items item4 = new Items(
-    title: "Quản lý sữa",
-    //subtitle: "Tổng hợp lượng sữa",
-    event: "",
-    img: "assets/layout/cow-milk.png",
-  );
-
   Items item5 = new Items(
-    title: "Thống kê",
+    title: "Nhật ký",
     //subtitle: "Chi tiết lượng sữa và thức ăn",
     event: "",
     img: "assets/layout/pie-chart.png",
@@ -83,7 +69,7 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    List<Items> myList = [item1, item2, item3, item4, item5, item6];
+    List<Items> myList = [item1, item2, item5, item6];
 
     var color = 0xff689738;
     return Flexible(
@@ -121,28 +107,6 @@ class _DashboardState extends State<Dashboard> {
                                 fontSize: ScreenUtil().setSp(50),
                                 fontWeight: FontWeight.w600)),
                       ),
-                      // SizedBox(
-                      //   height: 8,
-                      // ),
-                      // Text(
-                      //   data.subtitle,
-                      //   style: GoogleFonts.openSans(
-                      //       textStyle: TextStyle(
-                      //           color: Colors.white38,
-                      //           fontSize: 10,
-                      //           fontWeight: FontWeight.w600)),
-                      // ),
-                      // SizedBox(
-                      //   height: 14,
-                      // ),
-                      // Text(
-                      //   data.event,
-                      //   style: GoogleFonts.openSans(
-                      //       textStyle: TextStyle(
-                      //           color: Colors.white70,
-                      //           fontSize: 11,
-                      //           fontWeight: FontWeight.w600)),
-                      // ),
                     ],
                   ),
                 ),
@@ -169,6 +133,7 @@ class _DashboardState extends State<Dashboard> {
                                   foodSuggestionRepository:
                                       FoodSuggestionRepository()),
                               child: CowPage(
+                                farmerInfoModel: widget.farmerInfoModel,
                                 route: "DashBoard",
                               ),
                             ),
@@ -182,21 +147,20 @@ class _DashboardState extends State<Dashboard> {
                             builder: (context) => BlocProvider(
                               create: (context) => ByreCubit(ByreRepository()),
                               child: ListByres(
+                                farmerInfoModel: widget.farmerInfoModel,
                                 farmerId: widget.farmerInfoModel.id,
                               ),
                             ),
                           ));
                     });
-                  } else if (data.title == "Thống kê") {
+                  } else if (data.title == "Nhật ký") {
                     setState(() {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => HistoryBloc(),
-                              child:  DailyPage()
-                            )
-                          ));
+                              builder: (context) => BlocProvider(
+                                  create: (context) => HistoryBloc(),
+                                  child: DailyPage())));
                     });
                   } else {
                     showToast(

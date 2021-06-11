@@ -6,6 +6,7 @@ import 'package:AgrifoodApp/home/component/home_page.dart';
 import 'package:AgrifoodApp/home/page/home_page_new.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/notification_repository.dart';
 import 'package:AgrifoodApp/ui/utils/palette.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +71,7 @@ class App extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(1080, 2340),
       allowFontScaling: false,
-      builder:() =>  MaterialApp(
+      builder: () => MaterialApp(
         title: 'Agrifood App',
         theme: ThemeData(
           scaffoldBackgroundColor: Palette.white,
@@ -88,11 +89,9 @@ class App extends StatelessWidget {
             if (state is AuthenticationAuthenticated) {
               return BlocProvider(
                   create: (context) {
-                    return HomeCubit(byreRepository, cowRepository);
+                    return HomeCubit(
+                        byreRepository, cowRepository);
                   },
-                  // child: HomePage(
-                  //   farmerInfoModel: state.farmerInfoModel,
-                  // ));
                   child: MyHomePage(farmerInfoModel: state.farmerInfoModel));
             }
             if (state is LoginFormButtonState) {
