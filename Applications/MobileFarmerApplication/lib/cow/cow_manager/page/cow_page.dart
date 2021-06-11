@@ -1,10 +1,17 @@
+import 'package:AgrifoodApp/byre/bloc/byre_cubit.dart';
+import 'package:AgrifoodApp/byre/page/byre_page.dart';
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/cow_detail.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_create_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/popup_cow.dart';
+import 'package:AgrifoodApp/cow/cow_manager/component/reloadCow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 //import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/widget/slidable_widget.dart';
+import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
+import 'package:AgrifoodApp/home/page/home_page_new.dart';
+import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
@@ -18,7 +25,15 @@ class CowPage extends StatefulWidget {
   final int byreId;
   final int farmerId;
   final String route;
-  CowPage({this.value, this.byreId, this.route, this.farmerId});
+  final String routeName;
+  final FarmerInfoModel farmerInfoModel;
+  CowPage(
+      {this.farmerInfoModel,
+      this.value,
+      this.byreId,
+      this.route,
+      this.routeName,
+      this.farmerId});
 
   @override
   _CowPageState createState() => _CowPageState();
@@ -26,11 +41,13 @@ class CowPage extends StatefulWidget {
 
 class _CowPageState extends State<CowPage> {
   List<CowItem> cowModel = [];
-
+  int byreId;
   List<CowItem> list = [];
   TextEditingController _searchQueryController = TextEditingController();
   bool _isSearching = false;
   String searchQuery = "Search query";
+  ByreRepository byreRepository = new ByreRepository();
+  CowRepository cowRepository = new CowRepository();
 
   void addCow(BuildContext context, CowItem cowItem) {
     BlocProvider.of<CowBloc>(context).add(CowAddProcess(cowItem));
@@ -55,8 +72,34 @@ class _CowPageState extends State<CowPage> {
     });
 
     setState(() {
+      list.clear();
       list.addAll(_searchResult);
     });
+  }
+
+  void cliclBack() async {
+    if (widget.route == "DashBoard") {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                  create: (context) => HomeCubit(byreRepository, cowRepository),
+                  child: MyHomePage(
+                    farmerInfoModel: widget.farmerInfoModel,
+                  ))));
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => ByreCubit(ByreRepository()),
+              child: ListByres(
+                farmerInfoModel: widget.farmerInfoModel,
+                farmerId: widget.farmerInfoModel.id,
+              ),
+            ),
+          ));
+    }
   }
 
   @override
@@ -85,75 +128,82 @@ class _CowPageState extends State<CowPage> {
         }
         if (state is CowLoaded) {
           cowModel = state.cowModel.cowItem;
-          if(_isSearching == false) list.addAll(cowModel);
-          return SafeArea(
-              child: Scaffold(
-            backgroundColor: Colors.lightGreen[200],
-            appBar: AppBar(
-              backgroundColor: Color(0xff9CCC65),
-              title: _isSearching == false
-                  ? Text('Quản lí bò')
-                  : _buildSearchField(),
-              leading: _isSearching == false
-                  ? IconButton(
-                      icon: Icon(Icons.navigate_before),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    )
-                  : Container(),
-              actions: [
-                IconButton(
-                    icon: Icon(_isSearching == false ? Icons.search : Icons.close),
-                    onPressed: () {
-                      setState(() {
-                        _isSearching = !_isSearching;
-                      });
-                    }),
-                IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => CowBloc(
-                                  cowRepository: CowRepository(),
-                                  foodSuggestionRepository:
-                                      FoodSuggestionRepository()),
-                              child: FormCreateCow(
-                                contextCowPage: context,
-                                routeName: "CowPage",
-                              ),
-                            ),
-                          ));
-                    })
-              ],
-            ),
-            body: Container(
-              color: Colors.lightGreen[200],
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(40)),
-                    child: ListView.builder(
-                      itemCount: list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        final cowItem = list[index];
+          if (_isSearching == false) list.addAll(cowModel);
+          return WillPopScope(
+              child: SafeArea(
+                  child: Scaffold(
+                backgroundColor: Colors.lightGreen[200],
+                appBar: AppBar(
+                  backgroundColor: Color(0xff9CCC65),
+                  title: _isSearching == false
+                      ? Text('Quản lí bò')
+                      : _buildSearchField(),
+                  leading: IconButton(
+                      icon: Icon(Icons.navigate_before), onPressed: cliclBack),
+                  actions: [
+                    IconButton(
+                        icon: Icon(
+                            _isSearching == false ? Icons.search : Icons.close),
+                        onPressed: () {
+                          setState(() {
+                            _isSearching = !_isSearching;
+                            list.clear();
+                          });
+                        }),
+                    IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (context) => CowBloc(
+                                      cowRepository: CowRepository(),
+                                      foodSuggestionRepository:
+                                          FoodSuggestionRepository()),
+                                  child: FormCreateCow(
+                                    farmerInfoModel: widget.farmerInfoModel,
+                                    contextCowPage: context,
+                                    routeName: widget.route,
+                                    byreId: widget.byreId,
+                                  ),
+                                ),
+                              ));
+                        })
+                  ],
+                ),
+                body: Container(
+                  color: Colors.lightGreen[200],
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                          child: Padding(
+                        padding:
+                            EdgeInsets.only(top: ScreenUtil().setHeight(40)),
+                        child: ListView.builder(
+                          itemCount: list.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final cowItem = list[index];
 
-                        return SlidableWidget(
-                          child: CowCard(cowItem: cowItem),
-                          onDismissed: (action) => dismissSlidableItem(
-                              context, index, action, cowItem),
-                        );
-                      },
-                    ),
-                  )),
-                ],
-              ),
-            ),
-          ));
+                            return SlidableWidget(
+                              child: CowCard(
+                                cowItem: cowItem,
+                                farmerInfoModel: widget.farmerInfoModel,
+                              ),
+                              onDismissed: (action) => dismissSlidableItem(
+                                  context, index, action, cowItem),
+                            );
+                          },
+                        ),
+                      )),
+                    ],
+                  ),
+                ),
+              )),
+              onWillPop: () {
+                cliclBack();
+                return Future.value(true);
+              });
         }
         return SplashPage();
       },

@@ -1,6 +1,7 @@
 import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/component/form_detail_cow.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +13,9 @@ import 'package:google_fonts/google_fonts.dart';
 class CowCard extends StatefulWidget {
   final CowItem cowItem;
   final Function press;
-  const CowCard({
-    Key key,
-    this.cowItem,
-    this.press,
-  }) : super(key: key);
+  final FarmerInfoModel farmerInfoModel;
+  const CowCard({Key key, this.cowItem, this.press, this.farmerInfoModel})
+      : super(key: key);
 
   @override
   _CowCardState createState() => _CowCardState();
@@ -144,8 +143,11 @@ class _CowCardState extends State<CowCard> {
                               create: (context) => CowBloc(
                                   cowRepository: CowRepository(),
                                   foodSuggestionRepository:
-                                      FoodSuggestionRepository())..add(GetCowByCowId(cowItem: this.widget.cowItem)),
+                                      FoodSuggestionRepository())
+                                ..add(GetCowByCowId(
+                                    cowItem: this.widget.cowItem)),
                               child: FormDetailCow(
+                                farmerInfoModel: widget.farmerInfoModel,
                                 cowItem: this.widget.cowItem,
                               ),
                             ),

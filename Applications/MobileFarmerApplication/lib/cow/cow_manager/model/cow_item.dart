@@ -13,6 +13,7 @@ class CowItem {
   int ageNumber;
   String status;
   String gender;
+  String note;
   DateTime weaningDate;
   int foodSuggestionId;
   String foodSuggestionItem;
@@ -30,6 +31,7 @@ class CowItem {
       this.birthday,
       this.ageNumber,
       this.gender,
+      this.note,
       this.weaningDate,
       this.fatherName,
       this.motherName,
@@ -48,6 +50,7 @@ class CowItem {
     name = json['name'];
     qrCode = json['qrCode'];
     code = json['code'];
+    note = json['note'];
     birthday = DateTime.tryParse(json['birthday']);
     ageNumber = json['ageNumber'];
     gender = json['gender'];
@@ -66,6 +69,7 @@ class CowItem {
     data['name'] = this.name;
     data['qrCode'] = this.qrCode;
     data['code'] = this.code;
+    data['note'] = this.note;
     data['fatherName'] = this.fatherName;
     data['status'] = this.status;
     data['motherName'] = this.motherName;

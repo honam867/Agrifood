@@ -6,6 +6,7 @@ import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
+import 'package:AgrifoodApp/respository/notification_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,7 @@ class _HomePageState extends State<HomePage> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   ByreRepository byreRepository = new ByreRepository();
   CowRepository cowRepository = new CowRepository();
+  NotificationRepository notificationRepository = new NotificationRepository();
   
 
   @override
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     final byreCubit = context.watch<HomeCubit>();
     byreCubit.checkAmountByre(widget.farmerInfoModel);
   }
+
 
   @override
   Widget build(BuildContext context) {

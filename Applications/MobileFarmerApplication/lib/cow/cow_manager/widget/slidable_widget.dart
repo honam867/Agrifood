@@ -19,7 +19,7 @@ class SlidableWidget extends StatelessWidget {
     actionPane: SlidableDrawerActionPane(),
     secondaryActions: <Widget>[
       IconSlideAction(
-        caption: 'Thêm',
+        caption: 'Sửa',
         color: Colors.blueGrey,
         icon: Icons.more_horiz,
         onTap: () => onDismissed(SlidableAction.more),

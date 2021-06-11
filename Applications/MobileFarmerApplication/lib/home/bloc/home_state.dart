@@ -14,7 +14,8 @@ class HomeLoading extends HomeState {
 
 class CheckByreLoaded extends HomeState {
   final int amonth;
-  const CheckByreLoaded(this.amonth);
+  final int cowLength;
+  const CheckByreLoaded(this.amonth, this.cowLength);
 
   @override
   bool operator ==(Object o) {
@@ -57,12 +58,12 @@ class CheckFarmer extends HomeState {
   int get hashCode => message.hashCode;
 }
 
-class HomeMenu extends HomeState{
+class HomeMenu extends HomeState {
   final Items items;
   const HomeMenu({this.items});
 
   @override
-  bool operator == (Object o) {
+  bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
     return o is HomeMenu && o.items.title == items.title;
@@ -70,5 +71,34 @@ class HomeMenu extends HomeState{
 
   @override
   int get hashCode => items.hashCode;
+}
 
+class ResultHome extends HomeState {
+  final String message;
+  const ResultHome(this.message);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is NotiError && o.message == message;
+  }
+
+  @override
+  int get hashCode => message.hashCode;
+}
+
+class NotiError extends HomeState {
+  final String message;
+  const NotiError(this.message);
+
+  @override
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
+
+    return o is NotiError && o.message == message;
+  }
+
+  @override
+  int get hashCode => message.hashCode;
 }

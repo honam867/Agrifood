@@ -10,6 +10,7 @@ import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_model.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_item.dart';
 import 'package:AgrifoodApp/foodSuggestion/model/foodSuggestion_model.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/color.dart';
 import 'package:AgrifoodApp/ui/utils/format.dart';
@@ -24,14 +25,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class FormCreateCow extends StatefulWidget {
   final BuildContext contextCowPage;
   final CowItem cowItem;
+  final int byreId;
   final FoodSuggestionItem foodSuggestionItem;
   final String routeName;
+  final FarmerInfoModel farmerInfoModel;
 
   FormCreateCow(
       {Key key,
       this.contextCowPage,
       this.routeName,
       this.cowItem,
+      this.byreId,
+      this.farmerInfoModel,
       this.foodSuggestionItem})
       : super(key: key);
   @override
@@ -54,7 +59,7 @@ class FormCreateCowState extends State<FormCreateCow> {
 
   TextEditingController _nameController = new TextEditingController();
   TextEditingController _codeController = new TextEditingController();
-  //TextEditingController _noteController = new TextEditingController();
+  TextEditingController _noteController = new TextEditingController();
 
   void initState() {
     super.initState();
@@ -63,6 +68,7 @@ class FormCreateCowState extends State<FormCreateCow> {
       cowFatherId = widget.cowItem.fatherId ?? 0;
       cowMotherId = widget.cowItem.motherId ?? 0;
       byreId = widget.cowItem.byreId;
+      _noteController.text = widget.cowItem.note;
       _birthday = widget.cowItem.birthday;
       _nameController.text = widget.cowItem.name;
       _codeController.text = widget.cowItem.code;
@@ -75,7 +81,7 @@ class FormCreateCowState extends State<FormCreateCow> {
     setState(() {
       if (title == "Thức ăn") {
         foodSuggestionId = value;
-      } else if (title == "Chuồng") {
+      } else if (title == "Trại") {
         byreId = value;
       } else {
         if (title == "Bò cha") {
@@ -104,8 +110,10 @@ class FormCreateCowState extends State<FormCreateCow> {
     setState(() {
       if (title == "Mã bò") {
         _codeController.text = value;
-      } else {
+      } else if (title == 'Tên bò') {
         _nameController.text = value;
+      } else {
+        _noteController.text = value;
       }
     });
   }
@@ -120,10 +128,12 @@ class FormCreateCowState extends State<FormCreateCow> {
         if (state is CowLoaded) {
           showToast(context: context, string: "Tạo thành công ");
           reloadCow(
+            farmerInfoModel: widget.farmerInfoModel,
               context: context, byreId: byreId, routeName: widget.routeName);
         } else if (state is CowUpdateResult) {
           showToast(context: context, string: state.result);
           reloadCow(
+             farmerInfoModel: widget.farmerInfoModel,
               context: context, byreId: byreId, routeName: widget.routeName);
         }
       },
@@ -141,7 +151,7 @@ class FormCreateCowState extends State<FormCreateCow> {
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: colorApp,
-                title: Text('Tạo bò'),
+                title: widget.routeName == "EditCow" ? Text('Chỉnh sửa bò') : Text('Tạo bò'),
               ),
               body: Container(
                 margin: EdgeInsets.all(ScreenUtil().setSp(30.0)),
@@ -163,22 +173,16 @@ class FormCreateCowState extends State<FormCreateCow> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // buildTextForm(
-                            //     validatorText: "Vui lòng không bỏ trống",
-                            //     hint: "Mã bò",
-                            //     codeController: _codeController,
-                            //     width: width,
-                            //     setTextFuction: setTextValue),
                             buildIdFather(
                                 title: "Thức ăn",
                                 foodSuggestionModel: this.foodSuggestionModel,
                                 foodSuggestionId: foodSuggestionId,
                                 changeValueFuction: changeValue),
-                            buildIdFather(
-                                title: "Chuồng",
-                                byreModel: this.byreModel,
+                           widget.routeName != 'ByrePage' ?  buildIdFather(
+                                title: "Trại",
+                                byreModel: this.byreModel,  
                                 byreId: byreId,
-                                changeValueFuction: changeValue),
+                                changeValueFuction: changeValue) : Container(),
                           ],
                         ),
                         SizedBox(height: ScreenUtil().setHeight(40.0)),
@@ -216,7 +220,9 @@ class FormCreateCowState extends State<FormCreateCow> {
                           "Ghi chú",
                           style: TextStyles.labelTextStyle,
                         ),
-                        buildTextFormNote(),
+                        buildTextFormNote(
+                            noteController: _noteController,
+                            setTextFuction: setTextValue),
                         Padding(
                           padding: EdgeInsets.only(
                             top: ScreenUtil().setHeight(20),
@@ -230,7 +236,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                                           ? widget.cowItem.id
                                           : null,
                                       gender: gender,
-                                      byreId: byreId,
+                                      byreId:  widget.routeName == 'ByrePage' ? widget.byreId : byreId,
                                       birthday: DateTime.parse(
                                           _birthday.toIso8601String()),
                                       weaningDate: DateTime.parse(
@@ -240,6 +246,7 @@ class FormCreateCowState extends State<FormCreateCow> {
                                       ageNumber: 1,
                                       code: "VBZ",
                                       motherId: cowMotherId,
+                                      note: _noteController.text,
                                       foodSuggestionId: foodSuggestionId);
                                   setState(() {
                                     if (widget.routeName == "EditCow") {
@@ -267,37 +274,20 @@ class FormCreateCowState extends State<FormCreateCow> {
                                       borderRadius:
                                           BorderRadius.circular(10.0))),
                             ),
-                            child: Text(
+                            child: widget.routeName == "EditCow" ? Text(
+                              "Sửa bò",
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(80),
+                                  color: Colors.white),
+                            ) : 
+                            Text(
                               "Tạo bò",
                               style: TextStyle(
                                   fontSize: ScreenUtil().setSp(80),
                                   color: Colors.white),
-                            ),
+                            )
                           ),
                         )
-
-                        // Container(
-                        //   child: FlatButton(
-
-                        //     disabledColor: Colors.transparent,
-                        //     //mouseCursor: MouseCursor.uncontrolled,
-                        //     padding: EdgeInsets.all(0.0),
-                        //     child: Container(
-                        //       padding: EdgeInsets.symmetric(
-                        //           horizontal: ScreenUtil().setHeight(50),
-                        //           vertical: ScreenUtil().setWidth(40)),
-                        //       child: Text(
-                        //         "Tạo bò",
-                        //         style: TextStyle(
-                        //             fontSize: ScreenUtil().setSp(80),
-                        //             color: Colors.white),
-                        //       ),
-                        //     ),
-                        //     onPressed: () {
-
-                        //     },
-                        //   ),
-                        // ))
                       ],
                     ),
                   ),

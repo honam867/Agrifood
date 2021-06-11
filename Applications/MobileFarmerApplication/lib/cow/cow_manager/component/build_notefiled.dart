@@ -33,7 +33,7 @@ Widget buildTextFormNote(
               )),
             ),
           ),
-          maxLength: 35,
+          maxLength: 20,
           onSaved: (String value) {
             setTextFuction(value: value, title: hint);
           },

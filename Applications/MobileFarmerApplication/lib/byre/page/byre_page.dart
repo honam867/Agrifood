@@ -7,24 +7,32 @@ import 'package:AgrifoodApp/byre/model/breed_model.dart';
 import 'package:AgrifoodApp/byre/model/byre_item.dart';
 import 'package:AgrifoodApp/byre/model/byre_model.dart';
 import 'package:AgrifoodApp/cow/cow_manager/widget/slidable_widget.dart';
+import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
+import 'package:AgrifoodApp/home/model/farmer_model.dart';
+import 'package:AgrifoodApp/home/page/home_page_new.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
+import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:AgrifoodApp/ui/utils/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:AgrifoodApp/byre/component/popup_add_byre.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ListByres extends StatefulWidget {
   final int farmerId;
+  final FarmerInfoModel farmerInfoModel;
 
-  const ListByres({Key key, this.farmerId}) : super(key: key);
+  const ListByres({Key key, this.farmerInfoModel, this.farmerId})
+      : super(key: key);
   @override
   _ListByresState createState() => _ListByresState();
 }
 
 class _ListByresState extends State<ListByres> {
   ByreRepository byreRepository = new ByreRepository();
+  CowRepository cowRepository = new CowRepository();
 
   List<BreedItem> listBreed = List<BreedItem>();
   int breedId;
@@ -64,11 +72,37 @@ class _ListByresState extends State<ListByres> {
     byreCubit.getListByreByFarmerId();
   }
 
+  void cliclBack() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                create: (context) => HomeCubit(byreRepository, cowRepository),
+                child: MyHomePage(
+                  farmerInfoModel: widget.farmerInfoModel,
+                ))));
+  }
+
   typeTrue(BuildContext contextHome) {
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Loại bò"),
+    return Alert(
+        closeFunction: () => Navigator.pop(context),
+        context: context,
+        image: Container(height: 50, width: 50, child: Image.asset('assets/layout/farmer.png')),
+        onWillPopActive: true,
+        title: "Loại bò",
+        buttons: [
+         DialogButton(
+          color: Colors.green,
+          onPressed: () {
+           Navigator.pop(context);
+          },
+          child: Text(
+           "Hủy",
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(60)),
+          ),
+        )
+        ],
         content: StatefulBuilder(
           builder: (BuildContext context, state) {
             return DropdownButton(
@@ -91,9 +125,37 @@ class _ListByresState extends State<ListByres> {
               },
             );
           },
-        ),
-      ),
-    );
+        )).show();
+
+    //  showDialog(
+    //   context: context,
+    //   builder: (context) => AlertDialog(
+    //     title: Text("Loại bò"),
+    //     content: StatefulBuilder(
+    //       builder: (BuildContext context, state) {
+    //         return DropdownButton(
+    //           hint: new Text("Chọn loại"),
+    //           items: listBreed.map((item) {
+    //             return DropdownMenuItem(
+    //               value: item.id,
+    //               child: new Text(item.name),
+    //             );
+    //           }).toList(),
+    //           value: breedId,
+    //           onChanged: (val) {
+    //             setState(() {
+    //               changeBreed(contextHome, val);
+    //               openPopupAddByre(
+    //                 contextHome,
+    //                 addByreFuction: addByreFuction,
+    //               );
+    //             });
+    //           },
+    //         );
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
   Future<List<ByreItem>> getListByreFunction({List<ByreItem> byreItem}) async {
@@ -119,6 +181,7 @@ class _ListByresState extends State<ListByres> {
               state.message == "Tạo thành công") {
             showToast(context: context, string: state.message);
             Navigator.pop(context);
+            Navigator.pop(context);
             getListByre(context);
           } else {
             showToast(string: "Kiểm tra lại thông tin", context: context);
@@ -137,61 +200,65 @@ class _ListByresState extends State<ListByres> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   print(snapshot.data);
-                  return SafeArea(
-                    child: Scaffold(
-                      backgroundColor: Colors.lightGreen[200],
-                      appBar: AppBar(
-                        backgroundColor: Color(0xff9CCC65),
-                        title: Text('Quản lí chuồng'),
-                        leading: IconButton(
-                          icon: Icon(Icons.navigate_before),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                  return WillPopScope(
+                      child: SafeArea(
+                        child: Scaffold(
+                          backgroundColor: Colors.lightGreen[200],
+                          appBar: AppBar(
+                            backgroundColor: Color(0xff9CCC65),
+                            title: Text('Quản lí trại'),
+                            leading: IconButton(
+                                icon: Icon(Icons.navigate_before),
+                                onPressed: cliclBack),
+                            actions: [
+                              IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    typeTrue(context);
+                                  })
+                            ],
+                          ),
+                          body: Column(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: ScreenUtil().setHeight(50)),
+                                child: ListView.builder(
+                                  itemCount: snapshot.data.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final byreItem = snapshot.data[index];
+                                    return SlidableWidget(
+                                      child: ChapterCard(
+                                        byreItem: byreItem,
+                                        farmerInfoModel: widget.farmerInfoModel,
+                                      ),
+                                      onDismissed: (action) =>
+                                          dismissSlidableItem(
+                                              context, index, action, byreItem),
+                                    );
+                                  },
+                                ),
+                              )),
+                            ],
+                          ),
                         ),
-                        actions: [
-                          IconButton(
-                              icon: Icon(Icons.add),
-                              onPressed: () {
-                                typeTrue(context);
-                              })
-                        ],
                       ),
-                      body: Column(
-                        children: <Widget>[
-                          Expanded(
-                              child: Padding(
-                            padding: EdgeInsets.only(
-                                top: ScreenUtil().setHeight(50)),
-                            child: ListView.builder(
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final byreItem = snapshot.data[index];
-                                return SlidableWidget(
-                                  child: ChapterCard(byreItem: byreItem),
-                                  onDismissed: (action) => dismissSlidableItem(
-                                      context, index, action, byreItem),
-                                );
-                              },
-                            ),
-                          )),
-                        ],
-                      ),
-                    ),
-                  );
+                      onWillPop: () {
+                        cliclBack();
+                        return Future.value(true);
+                      });
                 } else {
                   return SafeArea(
                       child: Scaffold(
                           backgroundColor: Colors.lightGreen[200],
                           appBar: AppBar(
                             backgroundColor: Color(0xff9CCC65),
-                            title: Text('Quản lí chuồng'),
+                            title: Text('Quản lí trại'),
                             leading: IconButton(
-                              icon: Icon(Icons.navigate_before),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                            ),
+                                icon: Icon(Icons.navigate_before),
+                                onPressed: cliclBack),
                             actions: [
                               IconButton(
                                   icon: Icon(Icons.add),

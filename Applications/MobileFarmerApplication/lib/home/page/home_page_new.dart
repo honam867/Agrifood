@@ -4,6 +4,7 @@ import 'package:AgrifoodApp/cow/cow_manager/bloc/cow_bloc.dart';
 import 'package:AgrifoodApp/cow/cow_manager/model/cow_item.dart';
 import 'package:AgrifoodApp/home/bloc/home_cubit.dart';
 import 'package:AgrifoodApp/home/component/appdrawer.dart';
+import 'package:AgrifoodApp/home/component/categorie.dart';
 import 'package:AgrifoodApp/home/component/custom_clippath.dart';
 import 'package:AgrifoodApp/home/component/dashboard.dart';
 import 'package:AgrifoodApp/home/component/dialog_create_cow.dart';
@@ -11,9 +12,12 @@ import 'package:AgrifoodApp/home/component/floatingbar.dart';
 import 'package:AgrifoodApp/home/component/notification.dart';
 import 'package:AgrifoodApp/home/component/total_cow_page.dart';
 import 'package:AgrifoodApp/home/model/farmer_model.dart';
+import 'package:AgrifoodApp/notification/bloc/notification_cubit.dart';
 import 'package:AgrifoodApp/respository/byre_repository.dart';
 import 'package:AgrifoodApp/respository/cow_repository.dart';
 import 'package:AgrifoodApp/respository/foodSuggestion_repository.dart';
+import 'package:AgrifoodApp/respository/notification_repository.dart';
+import 'package:AgrifoodApp/ui/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +32,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> {
   // @override
   // bool get wantKeepAlive => true;
 
@@ -38,6 +41,7 @@ class _MyHomePageState extends State<MyHomePage>
   int _selectedIndex = 0;
   ByreRepository byreRepository = new ByreRepository();
   CowRepository cowRepository = new CowRepository();
+  NotificationRepository notificationRepository = new NotificationRepository();
   FoodSuggestionRepository foodSuggestionRepository =
       new FoodSuggestionRepository();
   List<CowItem> responseList = new List<CowItem>();
@@ -54,29 +58,6 @@ class _MyHomePageState extends State<MyHomePage>
     BreedModel breedModel = await byreRepository.getListBreeds();
     listBreed = breedModel.breedItem;
   }
-
-  List<Widget> list = [
-    Tab(
-      child: Text(
-        "Danh mục",
-        style: GoogleFonts.openSans(
-            textStyle: TextStyle(
-                color: Colors.black,
-                fontSize: ScreenUtil().setSp(60),
-                fontWeight: FontWeight.w600)),
-      ),
-    ),
-    Tab(
-      child: Text(
-        "Trại",
-        style: GoogleFonts.openSans(
-            textStyle: TextStyle(
-                color: Colors.black,
-                fontSize: ScreenUtil().setSp(60),
-                fontWeight: FontWeight.w600)),
-      ),
-    ),
-  ];
 
   void getPostsData() {
     List<Widget> listItems = [];
@@ -137,13 +118,6 @@ class _MyHomePageState extends State<MyHomePage>
     super.initState();
     this.getListBreed();
     getPostsData();
-    _tabController = TabController(length: list.length, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _selectedIndex = _tabController.index;
-        if (_selectedIndex == 1) {}
-      });
-    });
     controller.addListener(() {
       double value = controller.offset / 119;
       setState(() {
@@ -166,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    final double categoryHeight = size.height * 0.30;
+    final double categoryHeight = size.height / 4.2;
     return BlocConsumer<HomeCubit, HomeState>(listener: (context, state) {
       if (state is CheckByreLoaded) {
         if (state.amonth == 0) {
@@ -176,91 +150,79 @@ class _MyHomePageState extends State<MyHomePage>
     }, builder: (context, state) {
       if (state is HomeInitial) {
         checkAmountByreFirst(context);
-        getListCount(context);
       }
-      return SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          floatingActionButton: buildSpeedDial(
-              context: context, farmerId: widget.farmerInfoModel.id),
-          drawer: AppDrawer(
-            farmerInfoModel: widget.farmerInfoModel ??
-                FarmerInfoModel(
-                    name: "", avatarURL: "", gender: false, status: false),
-            contextHome: context,
-          ),
-          appBar: AppBar(
-            bottom: TabBar(
-              onTap: (index) {
-              },
-              controller: _tabController,
-              tabs: list,
+      if (state is CheckByreLoaded) {
+        int byreLength = state.amonth;
+        int cowLength = state.cowLength;
+        return SafeArea(
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            floatingActionButton: buildSpeedDial(
+                context: context, farmerId: widget.farmerInfoModel.id),
+            drawer: AppDrawer(
+              farmerInfoModel: widget.farmerInfoModel ??
+                  FarmerInfoModel(
+                      name: "", avatarURL: "", gender: false, status: false),
+              contextHome: context,
             ),
-            elevation: 0,
-            backgroundColor: Color(0xff9CCC65),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search, color: Colors.black),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.notification_important,color: Colors.black),
-                onPressed: () {
-                  showDialog(context: context, builder: (context){
-                    return Dialog(child: PopupNotification());
-                  });
-                },
-              )
-            ],
-          ),
-          body: Stack(
-            children: [
-              ClipPath(
-                child: Container(
-                  width: ScreenUtil().screenWidth,
-                  height: ScreenUtil().setHeight(1000),
-                  color: Color(0xff9CCC65),
-                ),
-                clipper: CustomClipPathByHomePage(),
-              ),
-              TabBarView(
-                controller: _tabController,
-                children: [
-                  Container(
-                    height: size.height,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        BlocProvider(
-                          create: (context) =>
-                              HomeCubit(byreRepository, cowRepository),
-                          child: Dashboard(
-                            contextHome: context,
-                            farmerInfoModel: widget.farmerInfoModel,
+            appBar: AppBar(
+              elevation: 0,
+              title: Text('Trang chủ'),
+              backgroundColor: Color(0xff9CCC65),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.notifications, color: Colors.black),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) =>
+                                NotificationCubit(notificationRepository),
+                            child: PopupNotification(
+                              
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ));
+                  },
+                )
+              ],
+            ),
+            body: Stack(
+              children: [
+                ClipPath(
+                  child: Container(
+                    width: ScreenUtil().screenWidth,
+                    height: ScreenUtil().setHeight(1000),
+                    color: Color(0xff9CCC65),
                   ),
-                  BlocProvider(
-                      create: (BuildContext context) => CowBloc(
-                          cowRepository: cowRepository,
-                          foodSuggestionRepository: foodSuggestionRepository),
-                      child: TotalCowPage(
-                        size: size,
-                        controller: controller,
-                        topContainer: topContainer,
-                        categoryHeight: categoryHeight,
-                        closeTopContainer: closeTopContainer,
-                      ))
-                ],
-              ),
-            ],
+                  clipper: CustomClipPathByHomePage(),
+                ),
+                Column(
+                  children: [
+                    Container(
+                      height: categoryHeight,
+                      child: CategoriesScroller(
+                        byreLength: byreLength,
+                        cowLength: cowLength,
+                      ),
+                    ),
+                    BlocProvider(
+                      create: (context) =>
+                          HomeCubit(byreRepository, cowRepository),
+                      child: Dashboard(
+                        contextHome: context,
+                        farmerInfoModel: widget.farmerInfoModel,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      }
+      return SplashPage();
     });
   }
 }
