@@ -19,5 +19,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<IEnumerable<FeedHistoryByreModel>> GetFeedHistoryByFarmerIdAsync(int id);
         Task<IEnumerable<FeedHistoryModel>> GetFeedHistoryByDateAsync(int day, int month, int year, int farmerId);
         Task<string> AutoGenerateCodeAsync(string code = "");
+        Task<bool> UpdateCodeAsync();
     }
 }

@@ -92,9 +92,16 @@ export class CowDashboardComponent implements OnInit {
           display: false
         },
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          // y: {
+          //   beginAtZero: true
+          // }
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 30,
+              stepSize: 1
+            }
+          }]
         },
         title: {
           display: true,

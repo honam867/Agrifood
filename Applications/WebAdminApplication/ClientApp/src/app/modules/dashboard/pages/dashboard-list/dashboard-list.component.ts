@@ -238,6 +238,13 @@ export class DashboardListComponent implements OnInit {
           position: 'top',
           color: "#000000"
         },
+        scales: {
+          y: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
         tooltips: {
           displayColors: false,
           callbacks: {
