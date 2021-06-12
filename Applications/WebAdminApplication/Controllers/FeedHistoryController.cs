@@ -116,6 +116,13 @@ namespace WebAdminApplication.Controllers
             }
         }
 
+        [Route("code")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCodeAsync()
+        {
+            return Ok( await _feedHistoryService.UpdateCodeAsync());
+        }
+
         [Route("newcode")]
         [HttpGet]
         public async Task<IActionResult> AutoGenerateCodeAsync()

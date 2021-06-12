@@ -124,5 +124,17 @@ namespace ApplicationDomain.BOA.Services
                 return code;
             return await AutoGenerateCodeAsync(AutoGenerate.AutoGenerateCode(10));
         }
+
+        public async Task<bool> UpdateCodeAsync()
+        {
+            var listFeed = await _feedHistoryRepository.GetEntitiesAsync();
+            foreach (var item in listFeed)
+            {
+                item.Code = await AutoGenerateCodeAsync();
+                _feedHistoryRepository.Update(item);
+                await _uow.SaveChangesAsync();
+            }
+            return true;
+        }
     }
 }
