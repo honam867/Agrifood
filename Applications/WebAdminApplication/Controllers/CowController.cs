@@ -138,5 +138,11 @@ namespace WebAdminApplication.Controllers
         {
             return OkValueObject(await _cowService.AutoGenerateCodeAsync());
         }
+        [Route("code")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCodeAsync()
+        {
+            return Ok(await _cowService.UpdateCodeAsync());
+        }
     }
 }

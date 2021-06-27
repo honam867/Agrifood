@@ -107,6 +107,12 @@ namespace WebAdminApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Route("code")]
+        [HttpPut]
+        public async Task<IActionResult> UpdateCodeAsync()
+        {
+            return Ok(await _StorageTankService.UpdateCodeAsync());
+        }
 
 
     }
