@@ -17,5 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> DeleteStorageTankAsync(int id);
         Task<bool> UpdateStorageTankAsync(int id, StorageTankModelRq model, UserIdentity<int> issuer);
         Task<IEnumerable<StorageTankModel>> GetStorageTankByMilkCollectionIdAsync(int id);
+        Task<bool> UpdateCodeAsync();
     }
 }

@@ -17,5 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateByreAsync(int id, ByreModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
         Task<IEnumerable<ByreModel>> GetByreByFarmerId(UserIdentity<int> issuer);
+        Task<bool> UpdateCodeAsync();
     }
 }

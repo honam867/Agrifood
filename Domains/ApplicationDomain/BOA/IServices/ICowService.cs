@@ -21,5 +21,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<IEnumerable<CowModel>> GetCowNotExitsByMilkingSlipIdAsync(int milkingSlipId, UserIdentity<int> issuer);
         Task<IEnumerable<CowModel>> GetCowByGenderAsync(int gd, UserIdentity<int> issuer);
         Task<string> AutoGenerateCodeAsync(string code = "");
+        Task<bool> UpdateCodeAsync();
     }
 }

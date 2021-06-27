@@ -17,5 +17,6 @@ namespace ApplicationDomain.BOA.IServices
         Task<bool> UpdateOrderAsync(int id, OrderModelRq model, UserIdentity<int> issuer);
         Task<bool> CheckCodeExistsAsync(string code);
         Task<IEnumerable<OrderModel>> GetOrderByFarmerIdAsync(int id);
+        Task<bool> UpdateCodeAsync();
     }
 }
